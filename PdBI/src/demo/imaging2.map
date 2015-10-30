@@ -1,0 +1,112 @@
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+! Imaging dirty
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+lut ?
+lut rainbow3       ! color table
+read uv co21_trial1         ! read uv from .uvt
+go uvshow         ! show scatter amp vs freq
+! go uv_stat weight
+go uvstat weight ! get beam size, noise level, pixel size for imaging
+input uv_map
+
+! if ROBUST weighting
+! let weight_mode UN  ! = robust weighting
+! let uv_cell[2] 0.1
+let uv_cell 7.5 1
+input uv_map
+uv_map
+show beam
+show dirty
+go wedge    ! ake ps file from dirty image
+hardcopy demo-dirty
+write dirty demo
+write beam demo
+
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+! change clean params !!!!!
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+read beam demo      ! read in dirty beam
+read dirty demo     ! read in dirty image
+input clean
+let niter 1000      ! stopping criterion
+let GAIN 0.1
+! let FRES    ! max abs amp of residual / max of dirty %
+! let ARES      ! max abs amp of residual [Jy / beam]
+! let BLC     ! pixel
+! let TRC     ! pixel
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+!!!!!! one cycle !!!!!!!!!!
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+hogbom /flux 0 0.6      ! deconvolve with HOGBOM (basic CLEAN), /flux 0 0.6 = pop up visuzliation of the cumulative flux deconvolved
+show residual
+show clean
+write clean one-cycle_cln
+
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+!!!!!! next cycle !!!!!!!!!!
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+!!!!!! Check noise !!!!!!!!!!
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+let name one-cycle_cln
+go noise        ! check noise level
+! compare this noise with that from that in UVMAP (compute noise from the weights)
+
+! if this is larger, => dynamic limited (bright source with high sisdelobes >> thermal noise) =>
+! let ARES 0
+! let FRES to a fraction depending on the sidelobes of the dirty Beam
+
+! Else: noise-limited
+let ARES 0.5*noise      ! set threshold
+input clean     ! check clean threshold is changed
+hogbom /flux 0 0.6
+let niter 2000
+input clean
+hogbom /flux 0 0.6
+show residual
+show clean
+
+! support per plane
+for iplane 1 to 10
+    show clean iplane
+    support
+    hogbom iplane /flux 0 0.6
+    write support "demo-"`iplane`
+next iplane
+show residual
+show clean
+write residual demo
+write clean demo
+write cct demo
+
+let name demo
+let type lmv-clean
+go cct      ! cumulative flux as a func of clean comp number
+go view
+
+let niter 4000
+hogbom /flux 0 0.6
+show residual
+show clean
+support     ! interactively define,
+write support   ! save mask
+! support   ! to read file containing mask
+
+hogbom /flux 0 0.6
+show residual
+show clean
+write beam 1mm
+write dirty 1mm
+write clean 1mm
+write residual 1mm
+write cct 1mm
+exit
+
+! noise estimation and plottting
+let name 1mm
+let type lmv-clean
+go cct      ! cumulative flux as a func of cln comp
+go noise    ! experimental noise, takes in to account remaining sidelobes after deconvolution
+let spacing `3*noise`   ! spacing between contours to 3*experiemntal noise
+go bit
+hardcopy 1mm-clean  ! color ps, named 1mm-clean.eps
+exit

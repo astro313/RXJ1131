@@ -1,0 +1,16 @@
+pause "Type CONTINUE to test PENCIL colors"
+set /def
+pen /def
+set plot 30 30
+set box 3 27 3 27
+set coor user
+lim 0 1 23 0
+set marker 6 3 1
+set char 1
+set font duplex
+for i 0 to 23
+    pen /col i
+    draw reloc 0 i
+    label "Pencil /Colour "'I'
+    draw marker .9 i
+next

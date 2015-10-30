@@ -1,0 +1,84 @@
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+!
+say "Testing UV_MAP"
+read uv gag_demo:demo-single
+uv_map
+let do_contour yes
+show dirty
+let niter 500
+let fres 0
+let ares 2e-3
+let scale -0.015 0.060
+input clean
+!
+pause "Type CONTINUE to test HOGBOM"
+support gag_demo:demo-single.pol
+let name Hogbom
+hogbom
+pause "Type CONTINUE to see HOGBOM result"
+show clean
+support gag_demo:demo-single.pol
+say " "
+stat clean
+say " "
+!
+pause "Type CONTINUE to test CLARK"
+support gag_demo:demo-single.pol
+let name Clark
+clark
+pause "Type CONTINUE to see CLARK result"
+show clean
+support gag_demo:demo-single.pol
+say " "
+stat clean
+say " "
+!
+pause "Type CONTINUE to test SDI ?"
+let nmajor 40
+support gag_demo:demo-single.pol
+let name SDI
+sdi /plot
+pause "Type CONTINUE to see SDI result"
+show clean
+support gag_demo:demo-single.pol
+say " "
+stat clean
+say " "
+!
+pause "Type CONTINUE to test MultiScale ?"
+let smooth 1.73
+support gag_demo:demo-single.pol
+let name Multi
+multi /flux 0 1
+pause "Type CONTINUE to see MultiScale result"
+show clean
+support gag_demo:demo-single.pol
+say " "
+stat clean
+say " "
+!
+pause "Type CONTINUE to test MRC ?"
+support gag_demo:demo-single.pol
+let ares 0
+let fres 5e-2
+let name MRC
+mrc
+pause "Type CONTINUE to see MRC result"
+show clean
+support gag_demo:demo-single.pol
+say " "
+stat clean
+say " "
+!
+pause "Type CONTINUE to test MX ?"
+support gag_demo:demo-single.pol
+mx /flux 0 1
+pause "Type CONTINUE to see MX result"
+let name MX
+show clean
+support gag_demo:demo-single.pol
+say " "
+stat clean
+say " "
+!
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!

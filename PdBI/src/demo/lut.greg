@@ -1,0 +1,23 @@
+define character lut_name*12 
+define integer aint
+let lut_name &1
+let saturation 1
+let value 1
+if (lut_name.eq."vla") then
+   let hue[i] 256*(lut_size-i)|lut_size
+else if (lut_name.eq."roll") then
+   let aint &2
+   let hue mod(hue+aint,360)
+else if (lut_name.eq."contour") then
+   let aint &2
+   let hue[i] 360|aint*int(i*aint|lut_size)
+else if (lut_name.eq."grey") then
+   let aint &2
+   let hue 0
+   let saturation 0
+   let value[i] 1.0|aint*int(i*aint|lut_size)
+else
+   say "w-lut,  unsupported lut" 'lut_name'
+   return
+endif
+lut

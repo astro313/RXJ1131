@@ -1,0 +1,118 @@
+sic copy s14bx-co21.uvt co21_trial1.uvt
+
+let name co21_trial1
+go uvcov
+
+! scatter plots of the amp vs spatial frequency of the uv visibilities
+! inp uvshow
+! go uvshow
+!let ERROR_BARS YES
+! let XTYPE WEIGHT    ! change x-axis to WEIGHT of the uv visibilities
+! go uvshow        ! plot scatter of amp vs weight of UV visibilities
+
+! dirty beam: .beam
+! dirty image: .lmv
+go image
+let type beam
+go bit
+let type lmv
+go bit
+let type lmv-res
+go bit
+let type lmv-clean
+go bit
+! exit
+
+! obs info
+go UVSTAT WEIGHT
+! FOV 36.2"
+! obs rest freq = 139.3 GHz
+! Recommended pixel size is  0.320 -  0.896"
+
+
+! imaging
+input uvmap
+LET MAPSIZE 512 512
+LET MAP_CELL 0.5
+LET UVSHIFT NO
+! if yes:
+! LET MAPRA <hex:hex:hex>
+! LET MAPDEC <hex:hex:hex>
+
+! LET WEIGHT_MODE UN        ! uniform
+go uvmap
+NEXT
+! Natural rms noise is     1.443 mJy/beam
+! Expected rms noise is     1.443 mJy/beam
+! Beam is     4.37" by     1.90" at PA    12.69 deg.
+! Errors (    0.02)   (    0.01)      (    0.16)
+
+show beam
+show dirty
+
+! view dirty
+go view
+go histo_simple
+
+
+! clean
+input clean
+let INPUT FILES [.lmv, and .beam]
+let output files [.lmv-clean, and .lmv-res]
+let gain 0.1
+let NITER 1000
+hogbom /flux 0 0.6
+show residual
+LET NITER 1000
+hogbom /flux 0 0.6
+show residual
+show clean
+support
+write clean 1mm
+write dirty 1mm
+write residual 1mm
+write cct 1mm
+exit
+
+
+go clean
+
+go plot beam
+got plot dirty
+go clean
+go plot cct
+go plot res
+go plot clean
+
+! cleaned cube
+go view
+go histo_simple
+
+! go MASK
+!\Greg write polygon
+
+run uv_compress !  bin uv cube along spectral axis
+run uv_average  ! average over a range of channels (to do line/continuum maps)
+
+
+! channel slice or continuum
+go bit
+input bit
+
+! spatial spectra
+go spectrum
+
+! get the first 3 moments (for LMV cube: integrated, mean velocity, and line width)
+! can clip
+go moments
+go velocity
+
+go noise
+
+! flux estimation
+go bit
+go flux     ! can do definition of polygon --> support
+
+
+! interactive PV diagram
+go 3VIEW

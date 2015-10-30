@@ -1,0 +1,45 @@
+file in August2009BGPS.dat
+file out August2009fits.dat
+multipleon error "file out August2009fits.dat"
+say "READ IN FILES"
+define character sourcelist*10[300]
+accept sourcelist /column observed_sources.txt
+on error "continue"
+get 1001
+set window -100 160
+set mask -400 -100 160 400
+set mode x -400 400
+set align velocity
+for i 1 to 161
+say "Working on SOURCE "'i'
+find /source 'sourcelist[i]' /telescope "CSO 4GHZ IF1" /offset 0 0 /quality 5
+    average
+    on error "@avplot2 'sourcelist[i]' 'i'; next"
+        base 3
+        line 0
+        min
+        plot
+        vis
+        write i
+    !    on error "continue"
+        next and file in araya-2004.cls
+
+find
+define character filename*20
+for i 1 to 20
+say "Working on source "'i'
+get next
+let filename "araya-2004_"'i'".fits"
+say "fits write "'filename'" /mode spectrum"
+fits write 'filename' /mode spectrum
+next
+!file in araya-2002.cls
+!find
+!define character filename*20
+!for i 1 to 42
+!    say "Working on source "'i'
+!    get i
+!    let filename "araya-2002_"'i'".fits"
+!    say "fits write "'filename'" /mode spectrum"
+!    fits write 'filename' /mode spectrum
+!next

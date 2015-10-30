@@ -1,0 +1,205 @@
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+!
+! Tutorial procedure about imaging. IMIS6
+! J.Pety 2002-2008
+!
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+!
+begin procedure tutorial-pause
+  !
+  g\draw relo
+  if (cursor_code.eq."E") then
+     message w tutorial-pause "Exit tutorial"
+     return base
+  endif
+  !
+end procedure tutorial-pause
+!
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+!
+! Copy the demo image into the current directory.
+!
+sic copy gag_demo:demo-single.uvt 1mm.uvt
+!
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+!
+! Base name of the UV table file
+!
+let name 1mm
+!
+! Erase everything (except uv tables) to start from scratch.
+go remove
+sys "ls -hltr"
+! Answer:
+!-rw-r----- 1 pety astro 720K Oct  7 15:22 1mm.uvt
+@ tutorial-pause
+!
+! Pipeline imaging.
+!
+go image
+@ tutorial-pause
+let do_rcoord yes
+let size 20
+go nice
+@ tutorial-pause
+!
+! Show parameters used: 1) for mapping, 2) for cleaning, 3) plotting.
+! Everything is at default values (lot's of 0).
+!
+input uv_map
+@ tutorial-pause
+input clean
+@ tutorial-pause
+input nice
+@ tutorial-pause
+!
+! Let's do imaging step by step.
+!
+go remove
+sys "ls -hltr"
+!
+! UV table inspection
+!
+go setup
+@ tutorial-pause
+go uvcov
+@ tutorial-pause
+go uvshow
+@ tutorial-pause
+let xtype weight
+go uvshow
+@ tutorial-pause
+go uvstat header
+@ tutorial-pause
+!
+! Imaging
+!
+input uvmap
+go uvmap
+@ tutorial-pause
+sys "ls -hltr"
+! Answer:
+!-rw-r----- 1 pety astro 720K Oct  7 15:22 1mm.uvt
+!-rw-r----- 1 pety astro 1.1M Oct  7 15:23 1mm.lmv
+!-rw-r----- 1 pety astro 1.1M Oct  7 15:23 1mm.beam
+@ tutorial-pause
+go plot beam
+@ tutorial-pause
+go plot dirty
+@ tutorial-pause
+!
+! Simple clean deconvolution
+!
+input clean
+@ tutorial-pause
+go clean
+@ tutorial-pause
+sys "ls -ltr"
+! Answer:
+!
+!
+go plot res
+@ tutorial-pause
+go plot clean
+@ tutorial-pause
+go plot cct
+@ tutorial-pause
+go cct 1000
+@ tutorial-pause
+!
+! Deconvolution has not gone far enough because there is a continuous,
+! low-level component
+!
+input clean
+let niter 500
+let fres 0.0125
+go clean
+@ tutorial-pause
+go plot res
+@ tutorial-pause
+go plot clean
+@ tutorial-pause
+!
+! Computes difference between final image and residuals to see the clean
+! components alone.
+!
+go clean-res
+@ tutorial-pause
+!
+! Show flux convergence
+!
+go cct
+@ tutorial-pause
+!
+! Empirical noise definition
+!
+let type lmv-clean
+go noise
+@ tutorial-pause
+let spacing 3*noise ! Use noise information for contour plotting
+go nice
+let spacing 0
+@ tutorial-pause
+!
+! Let's see tapering effect: smoothing => decrease resolution and
+! increase of brightness sentivity (but decrease of point source sensitivity).
+!
+go uvstat taper
+@ tutorial-pause
+input uvmap
+@ tutorial-pause
+let uv_taper 170 170 0
+input uvmap
+@ tutorial-pause
+go uvmap
+go plot beam
+@ tutorial-pause
+go plot dirty
+@ tutorial-pause
+go clean
+go plot clean
+@ tutorial-pause
+!
+! Let's see weighting effect: increase of resolution and noise.
+!
+go uvstat weight
+@ tutorial-pause
+input uvmap
+@ tutorial-pause
+let uv_taper 0 0 0
+let uv_cell 7.5 0.1
+let weight_mode "UN"
+input uvmap
+@ tutorial-pause
+go uvmap
+go plot beam
+@ tutorial-pause
+go plot dirty
+@ tutorial-pause
+go clean
+go plot clean
+@ tutorial-pause
+!
+! Use of a support
+!
+go support
+@ tutorial-pause
+go clean
+go plot clean
+@ tutorial-pause
+!
+! Others CLEAN algorithms
+!
+let myclean%support no
+go clean clark
+go plot clean
+@ tutorial-pause
+!
+let niter 0
+let ares 0
+let fres 2.5e-2
+go clean multi
+go plot clean
+@ tutorial-pause
+!
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!

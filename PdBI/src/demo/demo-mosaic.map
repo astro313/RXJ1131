@@ -1,0 +1,54 @@
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+!
+! Tutorial procedure about imaging. IMIS6
+! J.Pety 2008
+!
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+!
+begin procedure tutorial-pause
+  !
+  g\draw relo
+  if (cursor_code.eq."E") then
+     message w tutorial-pause "Exit tutorial"
+     return base
+  endif
+  !
+end procedure tutorial-pause
+!
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+!
+! Copy the demo image into the current directory.
+!
+for ifield 1 to 7
+   sic copy gag_demo:demo-mosaic-'ifield'.uvt 12co10-'ifield'.uvt
+next ifield
+sic copy gag_demo:demo-mosaic.tab 12co10.tab
+!
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+!
+! Base name of the UV table file
+!
+let name 12co10
+go remove
+!
+! The mapping defaults are not good for mosaics...
+let niter 5000
+let fres 0
+let ares 0
+go image
+@ tutorial-pause
+!
+go plot beam
+@ tutorial-pause
+go plot dirty
+@ tutorial-pause
+go plot res
+@ tutorial-pause
+go plot cct
+@ tutorial-pause
+!
+go snr 0.2
+go bit
+@ tutorial-pause
+!
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
