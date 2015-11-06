@@ -17,14 +17,13 @@ def get_RA_dec(f):
 
 def sigma_contour_array(sigma):
     """
-    return list of sigma multiples, starting sqrt(2)* 2sqrt(2), 3sqrt(2)...
+    return list of sigma multiples, +/- 3*n*sigma from 1 ....10
     """
-    arr = range(11)
-    arr.remove(0)
-#    arr.remove(1)
-    arr = [2 ** i * sigma for i in arr]
-    arr.append(list(np.array(arr) * -1)[0])
-    return arr
+    arr = np.arange(11) * 3
+    arr = arr[1:] * sigma
+    Narr = -1 * arr
+    arrE = np.hstack((Narr, arr))
+    return arrE
 
 
 def sigma_contour_CARMA(sigma):
