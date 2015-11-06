@@ -39,8 +39,8 @@ figC = plt.figure(1, figsize=(7, 7))
 # user define area
 ########################################
 ra_center = 172.96418        # 172.96426
-dec_center = -12.5330955    # -12.533213
-sizep = 0.00158066
+dec_center = -12.5330955     # -12.533213
+sizep = 0.002                # 0.00158066
 
 ra_cross, dec_cross = ra_center, dec_center
 row_a = 0.10
@@ -60,11 +60,10 @@ blue_line_max = 1.72505
 ########################################
 # intialize base figure
 ########################################
-
 fig1 = aplpy.FITSFigure(label['F555W'][0],
                         figure=figC, subplot=[x0, row_a, full_width, dy])
-fig1.show_grayscale(stretch='log', vmin=-0.01869, vmax=151, vmid=-0.025)
-fig1.set_theme('pulication')
+fig1.show_grayscale(stretch='log', vmin=-0.01869, vmax=151, vmid=-0.025) #, invert=True)
+# fig1.set_theme('pulication')
 ########################################
 # Contours
 ########################################
@@ -73,6 +72,12 @@ fig1.show_contour(label_pdbi['blue'][0], colors="lime", levels=sigma_contour_arr
 
 fig1.show_contour(label_pdbi['red'][0], colors="blue",
                   levels=sigma_contour_array(sigma_red), linewidths=2)
+
+########################################
+# beam
+########################################
+fig1.show_beam(major=4.44/3600, minor=1.95/3600, angle=13., edgecolor='grey', facecolor='orange', linestyle='solid', linewidth=3, frame=True, alpha=0.8)
+
 
 ########################################
 # scale bar
@@ -96,20 +101,11 @@ markers_cross(fig1, ra_cross, dec_cross, layer='marker_set_1')
 # Labels
 ########################################
 # if '_' in sym[:-1]: symf = sym.replace('_', ' ')
+put_label(fig1, 0.82, 0.90, 'HST F555W', 'titleBand1')
+put_label(fig1, 0.82, 0.95, 'CO (2-1)', 'titleBand2')
 
-put_label(fig1, 0.20, 0.95, 'HST F555W', 'titleBand')
-put_label(fig1, 0.20, 0.85, 'CO (2-1)', 'titleBand')
 ########################################
-# Colorbar
 ########################################
-# axisflin = fig.add_axes([0.92,0.19,0.02,0.68])
-# normflin = mpl.colors.Normalize(vmin=min_line, vmax=max_line)
-# cbflin = mpl.colorbar.ColorbarBase(axisflin, cmap=mpl.cm.jet, norm=normflin, orientation='vertical')
-# cbflin.set_label('mJy')
-# fig.canvas.draw()
-# fig_line.canvas.draw()
-# plt.show()
-
 if __name__ == '__main__':
     """
     run script.py True
@@ -122,12 +118,7 @@ if __name__ == '__main__':
         raise IndexError(errmsg.format(len(sys.argv)))
     saveFig = True if sys.argv[1].lower() == 'true' else False
     if saveFig == True:
-        #        os.system('rm -rf ' + C[:-1] + '.png' + ' ' + C[:-1] + '.eps')
-        #        os.system('rm -rf ' + D[:-1] + '.png' + ' ' + D[:-1] + '.eps')
-        #        os.system('rm -rf ' + CD[:-1] + '.png' + ' ' + CD[:-1] + '.eps')
-        #        figC.savefig(Plotpath + C[:-1] + '.eps', dpi=600)
-        figC.savefig(Plotpath + 'F555W_pdbi.eps', dpi=600)
-#         figRed.savefig(Plotpath + 'F555W_pdbiRed.eps', dpi=600)
+        figC.savefig(Plotpath + 'F555W_REDBLUE.png', dpi=600)
     else:
         #        figC.canvas.draw()
         plt.show()
