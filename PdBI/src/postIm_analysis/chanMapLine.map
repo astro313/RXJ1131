@@ -1,0 +1,28 @@
+! Last modfidied: 11 Nov 15
+!
+! Purpose: save a channel map
+
+define char CubeName*40
+sic\let CubeName = "sup127_155_2ndcln_noCont"
+! delete /var CubeName
+
+def char NewPath*50
+sic\let NewPath = "/Users/admin/Research/RXJ1131/PdBI/data/11Nov15/"
+
+say ""
+say ""
+sic DIRECTORY 'NewPath'
+sys "pwd"
+
+let name 'CubeName'
+let first 126
+let last 160
+let type lmv-clean
+let size 15
+let spacing 3*1.45e-3
+go nice
+
+!hard ChanMap126_160.eps /dev eps colo
+
+say "Back to script directory"
+sic DIRECTORY "/Users/admin/Research/RXJ1131/PdBI/src/postIm_analysis"

@@ -1,0 +1,49 @@
+! Last modified: Nov 10 2015
+!
+! Purpose: determine continuum flux and source size by uv_fit
+!
+!
+
+define char UVTname*40
+sic\let UVTname = "co21_trial1_cont"
+! delete /var UVTname
+
+def char NewPath*50
+sic\let NewPath = "/Users/admin/Research/RXJ1131/PdBI/data/10Nov15/"
+
+say ""
+say ""
+sic DIRECTORY 'NewPath'
+sys "pwd"
+
+say "Determine Continuum flux"
+let name 'UVTname'
+let type lmv-clean
+let size 25
+let spacing 3*0.0816e-3
+go nice
+go flux
+
+say "Detemine continuum source extent"
+say "How many beams across"
+! need uv_shift
+run uv_fit
+! co21_trial1_cont
+! 0 0
+! 0 800
+! fit
+! fitres
+! 1
+! E_GAUSS
+! 1 1 3 1 3 3 1
+! 1 1 3 1 3 3 1
+! 1 1 1 1 1 1 1
+! E_GAUSS  R.A.        =    -2.11931 (   .18227)  11:31:51.4553
+! E_GAUSS  Dec.        =    -1.29913 (   .22635) -12:31:58.2991
+! E_GAUSS  Flux        =     1.36570 (   .20869)  milliJy
+! E_GAUSS  Major       =     3.03174 (594.09415)
+! E_GAUSS  Minor       =     0.00362 (   .53387)
+! E_GAUSS  Pos.Ang.    =   -72.76842 ( 15.39338)
+! RE
+
+
