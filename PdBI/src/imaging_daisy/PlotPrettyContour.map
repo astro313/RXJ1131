@@ -1,0 +1,133 @@
+! Purpose:
+!    General: script making contours using lmv or lmv-clean format GILDAS file
+!    Here: plot continuum map
+!
+!
+!
+
+cle a
+cle
+
+!set font SIMPLEX or DUPLEX
+set font SIMPLEX
+
+!Expands all characters or markers by a factor
+set expand 1.2
+
+!Set pen as solid lines and black color and thickness 2
+pen 0 /col 0 /weight 2
+
+!Load color table rainbow4
+lut rainbow4.lut
+
+!####### CHECK NOISE AND PUT HERE #######
+let noise = 0.0816E-03 /new real
+!########################################
+
+!###########    LOAD IMAGE   ############
+image "/Users/admin/Research/RXJ1131/PdBI/data/04Sep15/co21_trial1_cont.lmv-clean"
+!########################################
+
+!######### DEFINE THE PLOT AREA #########
+tickspace 0 0 0 0
+limits 10 -10 -10 10 second /rgdata
+!########################################
+
+! Set plot size
+set box_location 4 22 4 20
+
+!Plot the image in the first place
+plot /scaling lin -1.e-3 1e-3
+
+! image frame color, weight
+pen 0 /weight 2
+
+g\box p p in /ABSOLUTE /LABEL 0 !/unit S
+pen 0 /weight 2
+
+! ### Plot the box ####
+! box p o in /unit S
+label "R.A. (J2000)" /x
+label "DEC (J2000)" /y
+! draw text -2. 0 "DEC (J2000)" 5 90 /box 4
+
+! #### Set the plot levels ###
+! levels -2.0 to 18.0 by 2.0
+level -2.0*noise 2.0*noise 4.0*noise 6.0*noise 8.0*noise 10.0*noise 12.0*noise 14.0*noise 16.0*noise 18.0*noise
+
+! rgmap /grey 1 2       ! for greyscale map
+! rgmap /per            ! contours, assuming the levels are percentages of the max. value
+rgmap       ! overlay contours
+
+! ### DRAW THE COLORBAR ###
+set expand 1.0
+WEDGE right
+set expand 1.2
+label "Jy/beam" /Y -35
+
+
+! central marker
+pen 0 /col 0 /weight 2.0
+draw relocate -0.00 -0.000-0.3-1.0 /USER seconds
+draw line -0.00 -0.000-0.3+1.0 /USER seconds
+draw line -0.00 -0.000-0.3 /USER seconds
+draw line -0.00-1.0 -0.000-0.3 /USER seconds
+draw line -0.00+1.0 -0.000-0.3 /USER seconds
+
+pen /def
+pen /wei 2
+set angle sec
+
+
+!define real x[4] y[4]
+!let x[1] = 3.2
+!let x[2] = 0.0
+!let x[3] = 0
+!let x[4] = 3.2
+
+!let y[1] = 3.2
+!let y[2] = 3.2
+!let y[3] = 0.0
+!let y[4] = 0.0
+!connect x y /fill 7
+
+
+! ######## DRAW the box for putting beam inside ########
+pen 0 /weight 3
+draw relocate 18.0 0.0 /box !seconds
+draw line 18.0 3.5 /box !seconds
+draw line 14.0 3.5 /box !seconds
+draw line 14.0 0.0 /box !seconds
+draw line 18.0 0.0 /box !seconds
+pen 0 /weight 2
+! ######################################################
+
+
+! ######### CACULATE THE BEAM AND DRAW THE BEAM #########
+!beam: PA=aa; size=bb"xcc"
+
+define real bb cc aa
+let bb = 4.44
+let cc = 1.93
+let aa = 13
+
+ellipse bb/2 cc/2 90-aa /box 16 1.5 /fill 7
+ellipse bb/2 cc/2 90-aa /box 16 1.5
+ellipse bb/2 cc/2 90-aa /box 16 1.5 /HATCH 0 45 0.2
+! #######################################################
+
+! Draw the beam using the a, b and PA given by "go view"
+
+pen 0 /col 0 /weight 5
+set character 0.9     ! font size
+! ############ PUT THE SOURCE NAME #############
+draw text 7 9.5 "RXJ1131-1231 Continuum" 3 /user
+set character 0.6
+! ##############################################
+
+! ############## OUT PUT FILENAME ##############
+! sic delete CO.eps
+! hardcopy  CO /device eps color
+! ##############################################
+
+pen 0 /default
