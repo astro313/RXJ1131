@@ -1,0 +1,68 @@
+! Deprecated
+!
+! Last modified: 5 November 2015
+!
+! Purpose:
+!   make integrated maps of two separate velocity components for overlay plot
+!
+! Note:
+!   see `OneRedOneBlue.map` for more command usage
+!
+
+!!!!!!!!!!!!!!!!!!!!!!!
+! USER define
+!!!!!!!!!!!!!!!!!!!!!!!!
+define char cln*40
+sic\let cln = "sup127_155_2ndcln_noCont"
+
+def char NewPath*50
+sic\let NewPath = "/Users/admin/Research/RXJ1131/PdBI/data/14Oct15/"
+say ""
+say ""
+sic DIRECTORY 'NewPath'
+sys "pwd"
+
+let run_window no
+
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+let name 'cln'
+let type lmv-clean
+go view
+
+
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+!! RED !!
+run map_sum
+! in: sup127_155_2ndcln_noCont.lmv-clean
+! out: Integratedmap_red.lmv-cln
+! vel: -251.39 -90.22       ! z=0 frame
+
+let name Integratedmap_red
+let size 20
+let first 0
+let last 0
+let spacing 91.35e-3
+go nice
+pause "Type Continue or Quit"
+fits Integratedmap_red.fits from Integratedmap_red.lmv-cln
+
+
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+!! BLUE !! Map
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+run map_sum
+! in: sup127_155_2ndcln_noCont.lmv-clean
+! out: Integratedmap_blue.lmv-cln
+! vel: -423.79 -251.39
+
+let name Integratedmap_blue
+let type lmv-cln
+let size 20
+let first 0
+let last 0
+let spacing 0.9
+go nice
+pause "Type Continue or Quit"
+fits Integratedmap_blue.fits from Integratedmap_blue.lmv-cln
+
+
