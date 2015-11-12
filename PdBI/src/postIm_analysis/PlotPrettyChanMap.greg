@@ -39,64 +39,70 @@ level -3.0*noise 3.0*noise 6.0*noise 9.0*noise 12.0*noise 15.0*noise 18.0*noise
 
 ! ------- 126 - 161, note 161 is dummy, should replace by empty and Beam ------
 let NXY_BOX 6 6                                 ! # of panels
-let nimages NXY_BOX[1]*NXY_BOX[2]              ! total #
+let nimages NXY_BOX[1]*NXY_BOX[2]               ! total # of channels
 let delta 5 /new int                            ! size of panel
-let raise_y 5 /new int                            ! from brc
-let pad_x 5 /new int
+let raise_y 5 /new int                          ! from blc
+let pad_x 5 /new int                            ! for Dec label
 
-let trc delta+pad_x delta*NXY_BOX[2]+raise_y
-let blc 0+pad_x NXY_BOX[1]*delta-delta+raise_y
-let ichan 126 /new int
+let trc delta+pad_x delta*NXY_BOX[2]+raise_y    ! starting box coord (x, y)
+let blc 0+pad_x NXY_BOX[1]*delta-delta+raise_y  ! (x, y)
+let ichan 126 /new int                          ! starting channel
 
 for irow 1 to NXY_BOX[1]
     for jcol 1 to NXY_BOX[2]
     exa trc
     exa blc
-    set box blc[1] trc[1] blc[2] trc[2]        ! box for image panel;=`let PLOT_POSITION 3 10 3 10`
+    set box blc[1] trc[1] blc[2] trc[2]        ! box for panel (x, x, y, y);=`let PLOT_POSITION 3 10 3 10`
+    if (irow.eq.NXY_BOX[1]).AND.(jcol.eq.NXY_BOX[2]) then
+        say "Skipping Channel 161 ... "
+    else
     say "Load in image from FILE -- "'CubeName'".lmv-clean channel: "'ichan'
     image 'CubeName'".lmv-clean" /plane ichan ichan
     extrema /compute    ! compute the extrema of your image
     plot /scaling lin -3E-02 3E-02
     !---- DEFINE THE PLOT AREA -----
     tickspace 0 0 0 0                        ! use default
-    limits 10 -15 -15 10 second /rgdata      ! define axes range
+    limits 10 -12.5 -14.5 8 second /rgdata      ! define axes range, zoom
     ! rgmap /grey 1 2       ! for greyscale map
     ! rgmap /per            ! contours, assuming the levels are percentages of the max. value
     rgmap       ! overlay contours
 
-    ! central marker
+    ! central marker; currently randomly drawn
     pen 0 /col 0 /weight 2.0
     draw relocate -0.00 -0.000-0.3-1.0 /USER seconds
     draw line -0.00 -0.000-0.3+1.0 /USER seconds
     draw line -0.00 -0.000-0.3 /USER seconds
     draw line -0.00-1.0 -0.000-0.3 /USER seconds
     draw line -0.00+1.0 -0.000-0.3 /USER seconds
+    endif
     let trc[1] trc[1]+delta
     let blc[1] blc[1]+delta
     let ichan ichan+1
 
     if (irow.eq.NXY_BOX[1]).AND.(jcol.eq.1) then
-        box p o in /ABSOLUTE /LABEL 0 /unit s    ! NEED TO FIX THIS
+        box p o in /ABSOLUTE /LABEL 0 /unit s
         label "R.A. (J2000)" /x
         label "DEC (J2000)" /y 10
-    else
+
+        say "Plot BEAM *** "
+        exa blc
+        pen /def
+        pen /wei 2
+        set angle sec
+        pen 0 /weight 3
+        draw relocate -0.00 -0.000-0.3-1.0 /USER seconds     ! relocate pen
+
+        ellipse G_MAJOR*206265/2 G_MINOR*206265/2 90-G_PA*57.3 /USER  -8.00 -0.000-8-1.0 seconds /fill 7
+        ellipse G_MAJOR*206265/2 G_MINOR*206265/2 90-G_PA*57.3 /USER  -8.00 -0.000-8-1.0 seconds
+        ellipse G_MAJOR*206265/2 G_MINOR*206265/2 90-G_PA*57.3 /USER  -8.00 -0.000-8-1.0 seconds /HATCH 0 45 ! 0.2
+    else if (.not.(irow.EQ.NXY_BOX[1].AND.jcol.EQ.NXY_BOX[2])) THEN
         box N N /ABSOLUTE /LABEL 0 /unit s !/u s
-        ! Last panel beam size
-        if (irow.eq.NXY_BOX[1]).AND.(jcol.eq.NXY_BOX[2]) then
-            pen /def
-            pen /wei 2
-            set angle sec
-            pen 0 /weight 2
-            ellipse G_MAJOR*206265/2 G_MINOR*206265/2 90-G_PA*57.3 /box irow+0.5 jcol /fill 7
-            ellipse G_MAJOR*206265/2 G_MINOR*206265/2 90-G_PA*57.3 /box irow+0.5 jcol
-            ellipse G_MAJOR*206265/2 G_MINOR*206265/2 90-G_PA*57.3 /box irow+0.5 jcol /HATCH 03 15 ! 0.2
-        endif
     endif
     next
 let trc delta+pad_x trc[2]-delta
 let blc 0+pad_x blc[2]-delta
-exa trc
-exa blc
+! exa trc
+! exa blc
 next
 
 ! --- color bar ----
@@ -110,13 +116,13 @@ label "Jy/beam" /Y -57
 ! ############ PUT THE SOURCE NAME #############
 pen 0 /col 0 /weight 5
 set character 0.9     ! font size
-draw text -3 11 "RXJ1131-1231 Channel Map" 5 /user
+draw text -3 8.8 "RXJ1131-1231 Channel Map" 5 /user
 set character 0.6
 
 
 ! ############## OUT PUT FILENAME ##############
-! sic delete CO.eps
-! hardcopy  CO /device eps color
+sic delete ChanMap.eps
+hardcopy ChanMap /device eps color
 ! ##############################################
 
 pen 0 /default
