@@ -1,0 +1,125 @@
+! Last modfidied: 11 Nov 15
+!
+! Purpose: make pretty channel map with greg
+!
+!
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+! USER DEFINE
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+define char CubeName*40
+sic\let CubeName = "sup127_155_2ndcln_noCont"
+! delete /var CubeName
+
+def char NewPath*50
+sic\let NewPath = "/Users/admin/Research/RXJ1131/PdBI/data/11Nov15/"
+
+say ""
+say ""
+sic DIRECTORY 'NewPath'
+sys "pwd"
+
+
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+!dev xlandscape white
+!set plot landscape
+cle
+
+!----- set plotting window = box_location -----
+set plot 40 40             ! define scale w.r.t. plot window
+
+set font duplex     ! SIMPLEX
+set expand 1.2
+pen 0 /col 0 /weight 2
+
+!Load color table rainbow4
+lut rainbow4.lut
+
+let noise = 1.415E-03 /new real
+level -3.0*noise 3.0*noise 6.0*noise 9.0*noise 12.0*noise 15.0*noise 18.0*noise
+
+! ------- 126 - 161, note 161 is dummy, should replace by empty and Beam ------
+let NXY_BOX 6 6                                 ! # of panels
+let nimages NXY_BOX[1]*NXY_BOX[2]              ! total #
+let delta 5 /new int                            ! size of panel
+let raise_y 5 /new int                            ! from brc
+let pad_x 5 /new int
+
+let trc delta+pad_x delta*NXY_BOX[2]+raise_y
+let blc 0+pad_x NXY_BOX[1]*delta-delta+raise_y
+let ichan 126 /new int
+
+for irow 1 to NXY_BOX[1]
+    for jcol 1 to NXY_BOX[2]
+    exa trc
+    exa blc
+    set box blc[1] trc[1] blc[2] trc[2]        ! box for image panel;=`let PLOT_POSITION 3 10 3 10`
+    say "Load in image from FILE -- "'CubeName'".lmv-clean channel: "'ichan'
+    image 'CubeName'".lmv-clean" /plane ichan ichan
+    extrema /compute    ! compute the extrema of your image
+    plot /scaling lin -3E-02 3E-02
+    !---- DEFINE THE PLOT AREA -----
+    tickspace 0 0 0 0                        ! use default
+    limits 10 -15 -15 10 second /rgdata      ! define axes range
+    ! rgmap /grey 1 2       ! for greyscale map
+    ! rgmap /per            ! contours, assuming the levels are percentages of the max. value
+    rgmap       ! overlay contours
+
+    ! central marker
+    pen 0 /col 0 /weight 2.0
+    draw relocate -0.00 -0.000-0.3-1.0 /USER seconds
+    draw line -0.00 -0.000-0.3+1.0 /USER seconds
+    draw line -0.00 -0.000-0.3 /USER seconds
+    draw line -0.00-1.0 -0.000-0.3 /USER seconds
+    draw line -0.00+1.0 -0.000-0.3 /USER seconds
+    let trc[1] trc[1]+delta
+    let blc[1] blc[1]+delta
+    let ichan ichan+1
+
+    if (irow.eq.NXY_BOX[1]).AND.(jcol.eq.1) then
+        box p o in /ABSOLUTE /LABEL 0 /unit s    ! NEED TO FIX THIS
+        label "R.A. (J2000)" /x
+        label "DEC (J2000)" /y 10
+    else
+        box N N /ABSOLUTE /LABEL 0 /unit s !/u s
+        ! Last panel beam size
+        if (irow.eq.NXY_BOX[1]).AND.(jcol.eq.NXY_BOX[2]) then
+            pen /def
+            pen /wei 2
+            set angle sec
+            pen 0 /weight 2
+            ellipse G_MAJOR*206265/2 G_MINOR*206265/2 90-G_PA*57.3 /box irow+0.5 jcol /fill 7
+            ellipse G_MAJOR*206265/2 G_MINOR*206265/2 90-G_PA*57.3 /box irow+0.5 jcol
+            ellipse G_MAJOR*206265/2 G_MINOR*206265/2 90-G_PA*57.3 /box irow+0.5 jcol /HATCH 03 15 ! 0.2
+        endif
+    endif
+    next
+let trc delta+pad_x trc[2]-delta
+let blc 0+pad_x blc[2]-delta
+exa trc
+exa blc
+next
+
+! --- color bar ----
+! w.r.t to whole frame
+set box 0+pad_x delta*NXY_BOX[1]+pad_x raise_y delta*NXY_BOX[2]+raise_y
+set expand 1.0
+WEDGE right
+set expand 1.2
+label "Jy/beam" /Y -57
+
+! ############ PUT THE SOURCE NAME #############
+pen 0 /col 0 /weight 5
+set character 0.9     ! font size
+draw text -3 11 "RXJ1131-1231 Channel Map" 5 /user
+set character 0.6
+
+
+! ############## OUT PUT FILENAME ##############
+! sic delete CO.eps
+! hardcopy  CO /device eps color
+! ##############################################
+
+pen 0 /default
+
+say "Back to script directory"
+sic DIRECTORY "/Users/admin/Research/RXJ1131/PdBI/src/postIm_analysis"
