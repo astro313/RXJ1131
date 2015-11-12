@@ -1,6 +1,9 @@
 ! Last modfidied: 11 Nov 15
 !
-! Purpose: save a channel map
+! Purpose:
+!   : Save a channel map; ad-hoc way with go bit
+!   : See new script with GREG PlotPrettyChanMap.greg
+!
 
 define char CubeName*40
 sic\let CubeName = "sup127_155_2ndcln_noCont"
@@ -21,8 +24,11 @@ let type lmv-clean
 let size 15
 let spacing 3*1.45e-3
 go nice
+hard ChanMap126_160_nice.eps /dev eps colo
 
-!hard ChanMap126_160.eps /dev eps colo
+go bit
+hard ChanMap126_160_Bit.eps /dev eps colo
+
 
 say "Back to script directory"
 sic DIRECTORY "/Users/admin/Research/RXJ1131/PdBI/src/postIm_analysis"
