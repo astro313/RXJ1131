@@ -24,7 +24,7 @@ def setup_axes(fig, header):
     gh.locator_params(nbins=3)
 
     g = axes_grid.ImageGrid(fig, 111,
-                            nrows_ncols=(5, 4),
+                            nrows_ncols=(5, 6),
                             ngrids=None,
                             direction='row',
                             axes_pad=0.02, add_all=True,
@@ -35,7 +35,7 @@ def setup_axes(fig, header):
     # make colorbar
     ax = g[-1]
     cax = inset_axes(ax,
-                     width="8%", # width = 10% of parent_bbox width
+                     width="15%", # # width = 8% width = 10% of parent_bbox width
                      height="100%", # height : 50%
                      loc=3,
                      bbox_to_anchor=(1.01, 0, 1, 1),
@@ -47,44 +47,19 @@ def setup_axes(fig, header):
 
 
 fits_cube = pyfits.open("/Users/admin/Research/RXJ1131/PdBI/data/04Sep15/sup127_155_2ndcln_noCont.fits")
+
 header = fits_cube[0].header
 
 vel = Velo(header)
 
-fig = plt.figure(1, figsize=(9, 12), dpi=70)
+fig = plt.figure(1, figsize=(12, 12), dpi=70)
 g, cax = setup_axes(fig, header)
-
-
-def zoom_image(im, crop_nx, crop_ny):
-    '''
-    input
-    -----
-        crop_nx
-        int, pixel
-
-        crop_ny
-        int, pixel
-
-    return
-    ------
-    im of size 2*zoom x 2*zoom
-
-    '''
-
-
-    sizey = len(im[0])
-    sizex = len(im[1])
-    im = im[round(sizey/2-crop_ny):round(sizey/2+crop_ny), round(sizex/2-crop_nx):round(sizex/2+crop_nx)]
-#    print("Im dimension after cropping: {:d} X {:d}").format(len(im[0]), len(im[1]))
-    return im
-
 
 
 # draw images
 i = 0
 dxy = 125
 nxy = 6 * 5
-zoom = 10  # pixel
 # cmap = plt.cm.gray_r
 cmap = plt.cm.jet
 import matplotlib.colors as mcolors
@@ -93,14 +68,13 @@ images = []
 start_channel = i*nxy+dxy
 for i, ax in enumerate(g):
     channel_number = start_channel + i
-    channel = fits_cube[0].data[0][channel_number]
-    chan = zoom_image(channel, zoom, zoom)
-    im = ax.imshow(chan, origin="lower", norm=norm, cmap=cmap)
+    channel = fits_cube[0].data[0][channel_number][110:150, 110:150]
+    im = ax.imshow(channel, origin="lower", norm=norm, cmap=cmap)
     images.append(im)
 
 
 # label with velocities
-use_path_effect = True
+use_path_effect = True         # Fancy text
 try:
     from matplotlib.patheffects import withStroke
 except ImportError:
@@ -118,13 +92,14 @@ for i, ax in enumerate(g):
 # make colorbar
 cb = plt.colorbar(im, cax=cax)
 cb.set_label("Flux Density [mJy]")
-cb.set_ticks([0, 15, 30, 45, 60])
+cb.set_ticks([0, 0.25, 0.5])
 
 # adjust norm
-norm.vmin = -0.1
-norm.vmax = 60
+norm.vmin = -0.007
+norm.vmax = 0.03
 for im in images:
     im.changed()
+
 
 plt.show()
 
