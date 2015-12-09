@@ -1,0 +1,1038 @@
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+!
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+begin procedure click-pause
+  !
+  g\draw relo
+  if (cursor_code.eq."E") then
+     message w click-pause "Exiting"
+     return base
+  endif
+  !
+end procedure click-pause
+!
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+!!!!!!!!!!!!!!!!!!!!!!!!
+! USER define
+!!!!!!!!!!!!!!!!!!!!!!!!
+define char UVTname*40
+sic\let UVTname = "co21_trial1"
+! delete /var UVTname
+
+def char NewPath*50
+sic\let NewPath = "/Users/admin/Research/RXJ1131/PdBI/data/04Sep15/"
+
+say ""
+say " *** Copying RP data cube to new Directory to work on ..."
+say "New DIR: "'NewPath'
+sic copy "/Users/admin/Research/RXJ1131/PdBI/data/RP/s14bx-co21.uvt" 'NewPath''UVTname'.uvt
+
+say ""
+say ""
+sic DIRECTORY 'NewPath'
+sys "pwd"
+
+! Erase everything (except uv tables) to start from scratch.
+go remove
+sys "ls -hltr "
+
+define integer totalchan
+let totalchan 360
+
+say " How many bad channels "
+define integer N_badchan
+let N_badchan 1
+
+say " Change the bad channel number(s)"
+IF (N_badchan.EQ.1) THEN
+  define integer badchan
+  let badchan 116
+ELSE
+  define integer badchan[N_badchan]
+  let badchan[1:N_badchan] 116 117
+ENDIF
+
+! color
+lut ?
+lut rainbow3       ! color table
+
+!!!!!!!!!!!!!!!!!!!!!!!!
+! UV table inspection
+!!!!!!!!!!!!!!!!!!!!!!!!
+let name 'UVTname'
+say "check UV"
+! mosaic off
+go setup
+@ click-pause
+go uvcov
+@ click-pause
+
+say " *** Inspect UV data in bad channel "
+let first 'badchan'
+let last 'badchan'
+go uvshow
+@ click-pause
+let first 0
+let last 0
+
+say "UV stat header"
+go uvstat header
+! shows 2 tracks, columns
+@ click-pause
+
+!!!!!!!!!!!!!!!!!!!!!!!
+! scatter plots of the amp vs spatial frequency of the uv visibilities
+! inp uvshow
+! go uvshow
+! @ click-pause
+! let ERROR_BARS YES
+! let XTYPE WEIGHT    ! change x-axis to WEIGHT of the uv visibilities
+! go uvshow        ! plot scatter of amp vs weight of UV visibilities
+! @ click-pause
+!!!!!!!!!!!!!!!!!!!!!!!
+
+
+!!!!!!!!!!!!!!!!!!!!!!!!
+! Pipeline Imaging
+! dirty beam: .beam
+! dirty image: .lmv
+!!!!!!!!!!!!!!!!!!!!!!!!
+! go image ! pipeline imaging
+! @ click-pause
+! let first 0
+! let last 0
+! let size 20     ! 20 pix by 20 pix
+! go nice     ! plotting
+! @ click-pause
+
+
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+! imaging step by step
+! 1) imaging dirty map
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+!!!!!!!!!!!!!!!!!!!!!!!!!!!
+!! Manual basic imaging !!!
+!!!!!!!!!!!!!!!!!!!!!!!!!!!
+let name 'UVTname'
+!!! determine clean parameters for uv_map
+! go uv_stat weight
+go UVSTAT WEIGHT
+say " need to change uv_cell? for best weighting scheme"
+@click-pause
+input uv_map
+@ click-pause
+let map_size 256
+let map_cell 0.5
+! LET WEIGHT_MODE UN        ! robust weighting
+! LET UV_SHIFT yes
+! LET MAPRA <hex:hex:hex>
+! LET MAPDEC <hex:hex:hex>
+go uv_map
+
+sys "ls -hltr"
+@ click-pause
+go plot dirty       ! = go view
+@ click-pause
+! look at central chans with line (dirty)
+let first 'badchan'
+let last 'badchan'
+! go map
+go bit
+
+let first 0
+let last totalchan
+
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+! repeat until happy with dirty map (i.e. map setting and no bad stuff to flag)
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+! let map_size blah
+! let map_cell blah
+! uv_map
+
+show dirty    ! find relavent channels with signifcant noise, strips, etc
+say " Identify problematic channels"
+let first 113
+let last 'badchan'
+go uvshow
+say "Inspect potential birdes"
+! help task uv_flag
+! uv_flag     ! flag some UV data
+! say "*** Saving new uvt after flagging bad uv stuff..."
+! write UV co21_withCont_Fchan116     ! to save the flagged UV-table, otherwise, will get unflagged when re-loading next time
+
+
+! uv_map      ! image again after flaggin
+! Happy, to save the dirty map, and dirty beam
+! say "*** Saving flagged bad uv-data dirty image and beam..."
+! write dirty co21_withCont_Fchan116.lmv
+! write beam co21_withCont_Fchan116.beam
+
+! quick check on channel 'badchan'
+let first 'badchan'
+let last 'badchan'
+! go map
+go bit
+
+! READ DIRTY co21_withCont_Fchan116
+! READ BEAM co21_withCont_Fchan116
+sys "ls -hltr"
+@ click-pause
+go plot dirty       ! = go view
+@ click-pause
+! look at central chans with line (dirty)
+let first 'badchan'
+let last 'badchan'
+go map
+@ click-pause
+
+let first 0
+let last 360
+let niter 50     ! approx. # of clean components from map
+let FRES 0   ! max abs amp of residual / max of dirty %
+let ARES '2*noise'      ! max abs amp of residual [Jy / beam]
+let ares
+inp clean
+@ click-pause
+
+!!!!!!!!!!!!!! All channels CLEANING !!!!!!!!!!!!!!
+!!! use clean box !!!
+let BLC 131 123
+let TRC 136 129
+LET MYCLEAN%SHOW NO       ! avoids on-the-fly plots
+go clean
+
+
+for i 125 to 157
+  let first i
+  let last i
+!  go map                  ! contour map
+  go bit
+  sic wait 0.5
+next
+
+let first 0
+let last 360
+
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+! another way of plotting --> identical to show beam, show dirty
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+! let type beam
+! go bit
+! let type lmv
+! go bit
+! let type lmv-res
+! go bit
+! let type lmv-clean
+! go bit
+
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+! Yet another way of plotting
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+! let do_contour yes
+! pause "Type CONTINUE to see dirty result"
+! @ click-pause
+! show beam
+! @ click-pause
+! show dirty  ! as a function of spatial frequency
+! @ click-pause
+! go view   ! view dirty cube
+
+
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+! 2) simple CLEAN, no mask
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+
+!!! set the files !!!
+! READ DIRTY file.lmv
+! READ BEAM file.beam
+! or
+! let name blah
+
+go plot dirty
+let last 125      ! view chan 1 to 125
+go noise
+@ click-pause
+let first 0       ! change back to 0 to 360
+let last 360
+
+examine myclean%support
+statistic Dirty
+@ click-pause
+
+! compare this noise with that in UVMAP (computed from the weights)
+! if this is larger, => dynamic limited (bright source with high sisdelobes >> thermal noise) =>
+! let ARES 0
+! let FRES 0.025
+! Else: noise-limited
+let ARES 1.0*noise      ! set threshold
+let FRES 0
+
+input clean     ! check clean threshold is changed
+LET NITER 50
+let GAIN 0.2    ! for major cycle
+
+!!!!!!!!!!!!!! All channels CLEANING !!!!!!!!!!!!!!
+!!! use clean box !!!
+let BLC 131 123
+let TRC 136 129
+go clean
+@ click-pause
+say " "
+sys "ls -ltr"
+say " "
+say "Display cleaned image and residual image "
+say " "
+
+for i 125 to 160
+  let first i
+  let last i
+!  go map                  ! contour map
+!  sic wait 0.5
+  show residual
+  sic wait 0.5
+next
+
+let first 0
+let last 360
+go view
+@ click-pause
+let type lmv-res
+go view
+@ click-pause
+
+
+!!!!!!!!!!!!!! All channels CLEANING !!!!!!!!!!!!!!!!!!
+!!! use different clean mask for different channels !!!
+! read dirty 'UVTname'
+! read beam 'UVTname'
+
+let gain 0.1
+let fres 0
+let ares 1*noise
+let blc 0 0
+let trc 0 0
+let size 20
+let myclean%support yes
+
+for i 146 to 162
+  show dirty i i
+  sup /cursor
+  hogbom i i                     ! simple clean
+  show clean i i                 ! show the cleaned image of one channel
+  sic wait 1
+  show res i i
+  sic wait 1
+!  write support file-'i'      ! save the support for this channel
+next                        ! loop over all image planes
+
+write clean sup146_162_cln      ! once all planes have been cleaned, save
+write residual sup146_162_cln
+
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+! Display
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+let name sup146_162_cln
+
+@ click-pause
+say " "
+sys "ls -ltr"
+say " "
+say "Display cleaned image and residual image "
+say " "
+let first 120
+let last 160
+show clean
+! @ click-pause
+show residual
+
+say " "
+say " !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! "
+say " Plot cube"
+say " plot clean cube"
+let first 0
+let last 0
+go plot clean
+@ click-pause
+say " plot residual cube"
+go plot res
+@ click-pause
+
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+! define mask, same for all channels
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+! examine support%oneperplane
+! let support%oneperplane no   ! yes: support will show a flatten 2D image
+! examine support%kind
+! let support%kind cursor    ! cursor/ellipse/rect
+! sup
+! @ click-pause
+
+
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+! very hard to see from `show blah`
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+! say " !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! "
+! say "Display cleaned image and residual image "
+! say " Plot channel slices "
+! say " Cleaned map "
+! show clean 127 159
+! @ click-pause
+! say " residual image "
+! show residual 127 159
+
+
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+! Empirical noise on cleaned image after 2nd cycle
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+say " line free channels noise"
+let first 0
+let last 120
+let type lmv-clean
+go noise
+@ click-pause
+let spacing 3*noise ! for contour plotting, 3sigma +
+let first 0
+let last 0
+let size 20
+
+for i 127 to 155
+    let first i
+    let last i
+    sic wait 1
+    go nice
+    sic wait 1
+    show residual i i
+    sic wait i
+next
+@ click-pause
+let first 0
+let last 0
+
+show clean 125 157
+
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+! CLEAN more:
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+LET MYCLEAN%SHOW NO       ! avoids on-the-fly plots
+let myclean%support yes
+
+input clean
+say "Change niter, threshold, etc"
+@ click-pause
+
+let ares 0.5*noise
+let first 0
+let last 0
+let gain 0.1
+let fres 0
+let blc 0 0
+let trc 0 0
+let niter 0
+input clean
+@ click-pause
+
+!!! use different clean mask for different channels !!!
+
+for i 127 to 155
+  let first i
+  let last i
+  show dirty i i
+  sup /cursor
+  hogbom i i                     ! simple clean
+  show clean i i                 ! show the cleaned image of one channel
+  sic wait 1
+  show cct i i
+  sic wait 0.8
+  show res i i
+  sic wait 1
+!  write support file2nd-'i'      ! save the support for this channel
+next
+write clean sup127_155_2ndcln      ! once all planes have been cleaned, save
+write beam sup127_155_2ndcln
+write residual sup127_155_2ndcln
+
+let first 0
+let last 0
+let name sup127_155_2ndcln
+say "Check lmv-clean"
+sys "ls -lrt"
+@ click-pause
+
+! noise check
+let myclean%support no
+stat clean
+
+! line-free channels
+let first 10
+let last 100
+stat clean
+
+let first 0
+let last 0
+! before continuum subtraction
+fits sup127_155_2ndcln_cube.fits from sup127_155_2ndcln.lmv-clean
+fits sup127_155_2ndcln_res.fits from sup127_155_2ndcln.lmv-res
+
+
+
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+! CLEAN more: (DON'T DO THIS)
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+show clean 120 160
+
+let size 35
+show residual 0 100
+@ click-pause
+let first 0
+let last 0
+let type lmv-res
+go view
+
+input clean
+say "Change niter, threshold, etc"
+@ click-pause
+let ares 0.5*noise
+let niter 0
+let fres 0
+let gain 0.1
+let size 20 20
+let blc 0 0
+let trc 0 0
+input clean
+@ click-pause
+
+
+!!! use different clean mask for different channels !!!
+
+for i 127 to 155
+  show dirty i i
+  sup /cursor
+!  clark i i /plot             ! faster clean, show residual after; but bad if high sides lobes (e.g. here)
+  hogbom i i
+  sic wait 0.75
+  show clean i i                 ! show the cleaned image of one channel
+  sic wait 0.75
+!  write support file3rd-'i'      ! save the support for this channel
+next
+write clean sup127_155_3rdcln      ! once all planes have been cleaned, save
+write beam sup127_155_3rdcln
+write residual sup127_155_3rdcln
+
+let name sup127_155_3rdcln
+say "Check lmv-clean"
+sys "ls -lrt"
+@ click-pause
+stat clean
+
+let first 0
+let last 120
+go noise
+
+let first 120
+let last 160
+show clean
+@ click-pause
+show residual
+
+let first 0
+let last 0
+let type lmv-clean
+go view
+@ click-paus
+let type lmv-res
+go view
+
+
+! before continuum subtraction
+fits sup127_155_3rdcln_cube.fits from sup127_155_3rdcln.lmv-clean
+fits sup127_155_3rdcln_res.fits from sup127_155_3rdcln.lmv-res
+
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+! Computes difference between final image & residuals to see the clean
+! components alone.
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+say "Check clean components alone = clean image - residual"
+go clean-res
+@ click-pause
+
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+!! Continuum
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+say ""
+say " *** Make continuum uvt "
+! output uvt name: co21_trial1_cont
+go uv_average
+! 1 120 165 360 << start from channel 1, error if use chan 0
+
+
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+!!! image continuum
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+let name co21_trial1_cont
+!!! determine clean parameters for uv_map
+go UVSTAT WEIGHT
+say " need to change uv_cell? for best weighting scheme"
+@click-pause
+input uv_map
+@ click-pause
+let map_size 256
+let map_cell 0.5
+! LET WEIGHT_MODE UN        ! robust weighting
+! LET UV_SHIFT yes
+! LET MAPRA <hex:hex:hex>
+! LET MAPDEC <hex:hex:hex>
+go uv_map
+
+sys "ls -hltr"
+@ click-pause
+go bit
+@ click-pause
+go noise
+@ click-pause
+
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+! clean continuum
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+inp clean
+let size 20
+let method hogbom
+let gain 0.2
+let myclean%support T
+! let BLC 131 123
+! let TRC 136 129
+! let ares 1*noise
+let ares 0.5*noise
+let niter 0
+let fres 0
+inp clean
+go bit
+sup /cursor
+hogbom
+
+let size 55
+show residual
+@ click-pause
+show clean
+@ click-pause
+show cct
+@ click-pause
+
+! save when converged
+write clean co21_trial1_cont
+write residual co21_trial1_cont
+write cct co21_trial1_cont
+
+say "*** Saving continuum image in .fits ..."
+fits co21_trial1_cont.fits from co21_trial1_cont.lmv-clean
+fits co21_trial1_cont_res.fits from co21_trial1_cont.lmv-res
+
+let name co21_trial1_cont
+let type lmv-clean
+! flux estimation
+let size 30
+
+go bit
+go flux     ! can do definition of polygon --> support
+! get the r.m.s from flux
+
+let spacing 1.99370E-04 ! approximately [Jy/Beam]
+go bit
+go flux
+! integrated ~ 1.1 mJy
+
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+! continuum-subtracted
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+say ""
+say " *** Make continuum-subtracted uvt ..."
+say " *** Duplicate UV table... "
+sic copy 'UVTname'.uvt 'UVTname'-noCont.uvt
+go uv_subtract
+! 'UVTname'-noCont.uvt
+! co21_trial1_cont.uvt
+! smoothing time 1e8
+! continuum channel 1
+! how many times 1
+
+let name co21_trial1-noCont
+!!! determine clean parameters for uv_map
+go UVSTAT WEIGHT
+say " need to change uv_cell? for best weighting scheme"
+@click-pause
+input uv_map
+@ click-pause
+let map_size 256
+let map_cell 0.5
+! LET WEIGHT_MODE UN        ! robust weighting
+! LET UV_SHIFT yes
+! LET MAPRA <hex:hex:hex>
+! LET MAPDEC <hex:hex:hex>
+go uv_map
+
+sys "ls -hltr"
+@ click-pause
+go plot dirty       ! = go view
+@ click-pause
+
+! look at central chans with line (dirty)
+let first 'badchan'
+let last 'badchan'
+! go map
+go bit
+
+let first 0
+let last totalchan
+
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+! repeat until happy with dirty map (i.e. map setting and no bad stuff to flag)
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+! let map_size blah
+! let map_cell blah
+! uv_map
+
+show dirty    ! find relavent channels with signifcant noise, strips, etc
+say " Identify problematic channels"
+let first 113
+let last 'badchan'
+go uvshow
+say "Inspect potential birdes"
+! help task uv_flag
+! uv_flag     ! flag some UV data
+! say "*** Saving new uvt after flagging bad uv stuff..."
+! write UV co21_noCont_Fchan116     ! to save the flagged UV-table, otherwise, will get unflagged when re-loading next time
+
+! uv_map      ! image again after flaggin
+! Happy, to save the dirty map, and dirty beam
+! say "*** Saving flagged bad uv-data dirty image and beam..."
+! write dirty co21_noCont_Fchan116.lmv
+! write beam co21_noCont_Fchan116.beam
+
+! quick check on channel 'badchan'
+let first 'badchan'
+let last 'badchan'
+! go map
+go bit
+
+! READ DIRTY co21_noCont_Fchan116
+! READ BEAM co21_noCont_Fchan116
+sys "ls -hltr"
+@ click-pause
+go plot dirty       ! = go view
+@ click-pause
+! look at central chans with line (dirty)
+let first 'badchan'
+let last 'badchan'
+go map
+
+let first 0
+let last 360
+let niter 50     ! approx. # of clean components from map
+inp clean
+go noise
+let ares 1*noise
+
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+! clean continuum-subtracted line channels
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+!!!!!!!!!!!!!! All channels CLEANING !!!!!!!!!!!!!!
+!!! use clean box !!!
+let BLC 131 123
+let TRC 136 129
+LET MYCLEAN%SHOW NO       ! avoids on-the-fly plots
+let myclean%support no
+go clean
+
+
+for i 125 to 157
+  let first i
+  let last i
+!  go map                  ! contour map
+  show clean i i
+  sic wait 1
+  show cct i i
+  sic wait 0.8
+  show residual i i
+  sic wait 1
+next
+
+let first 0
+let last 360
+
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+! 2) simple CLEAN, no mask
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+
+!!! set the files !!!
+! READ DIRTY file.lmv
+! READ BEAM file.beam
+! or
+! let name blah
+
+let first 0       ! change back to 0 to 360
+let last 360
+go plot clean
+@ click-pause
+let type lmv-res
+go view
+
+go plot dirty
+let last 125      ! view chan 1 to 125
+go noise
+examine myclean%support
+statistic Dirty
+@ click-pause
+
+! compare this noise with that in UVMAP (computed from the weights)
+! if this is larger, => dynamic limited (bright source with high sisdelobes >> thermal noise) =>
+! let ARES 0
+! let FRES 0.025
+! Else: noise-limited
+let ARES 1.0*noise      ! set threshold
+let FRES 0
+
+input clean     ! check clean threshold is changed
+LET NITER 50
+let GAIN 0.2    ! for major cycle
+
+!!!!!!!!!!!!!! All channels CLEANING !!!!!!!!!!!!!!
+!!! use clean box !!!
+let BLC 131 123
+let TRC 136 129
+go clean
+@ click-pause
+say " "
+sys "ls -ltr"
+say " "
+say "Display cleaned image and residual image "
+say " "
+
+for i 125 to 160
+  let first i
+  let last i
+!  go map                  ! contour map
+!  sic wait 0.5
+  show residual
+  sic wait 0.5
+next
+
+let first 0
+let last 360
+go view
+@ click-pause
+let type lmv-res
+go view
+@ click-pause
+
+
+!!!!!!!!!!!!!! All channels CLEANING !!!!!!!!!!!!!!!!!!
+!!! use different clean mask for different channels !!!
+! read dirty blah
+! read beam blah
+let gain 0.1
+let fres 0
+let ares 1.43e-3
+let blc 0 0
+let trc 0 0
+let size 20
+
+let myclean%support yes
+
+for i 126 to 157
+  show dirty i i
+  sup /cursor
+  hogbom i i                     ! simple clean
+  show clean i i                 ! show the cleaned image of one channel
+  sic wait 1
+  let first i
+  let last i
+  show cct
+  sic wait 0.8
+  show res i i
+  sic wait 1
+!  write support file-'i'      ! save the support for this channel
+next                        ! loop over all image planes
+
+let first 0
+let last 0
+write clean sup126_157_cln_noCont      ! once all planes have been cleaned, save
+write beam sup126_157_cln_noCont
+write residual sup126_157_cln_noCont
+
+let name sup126_157_cln_noCont
+
+@ click-pause
+say " "
+sys "ls -ltr"
+say " "
+say "Display cleaned image and residual image "
+say " "
+let first 120
+let last 160
+show clean
+! @ click-pause
+show residual
+say " "
+say " !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! "
+say " Plot cube"
+say " plot clean cube"
+let first 0
+let last 0
+go plot clean
+@ click-pause
+say " plot residual cube"
+go plot res
+@ click-pause
+
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+! Empirical noise on cleaned image after 2nd cycle
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+say " line free channels noise"
+let first 0
+let last 120
+let type lmv-clean
+go noise
+@ click-pause
+let spacing 3*noise      ! for contour plotting, 3sigma +
+let first 0
+let last 0
+let size 30
+
+for i 127 to 159
+    let first i
+    let last i
+    sic wait 1
+    go nice
+    sic wait 1
+next
+
+@ click-pause
+let first 0
+let last 0
+
+show clean 125 157
+
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+! CLEAN more:
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+LET MYCLEAN%SHOW NO       ! avoids on-the-fly plots
+let myclean%support yes
+
+input clean
+say "Change niter, threshold, etc"
+@ click-pause
+
+let ares 1.0*noise
+let first 0
+let last 0
+let gain 0.1
+let fres 0
+let blc 0 0
+let trc 0 0
+let niter 0
+input clean
+@ click-pause
+
+!!! use different clean mask for different channels !!!
+
+for i 127 to 157
+  let first i
+  let last i
+  show dirty i i
+  sup /cursor
+!  clark i i /plot                ! not good when there are high side lobes, like here
+  hogbom i i
+  sick wait 0.5
+  show clean i i                 ! show the cleaned image of one channel
+  sic wait 0.75
+  sic wait 1
+!  write support file2nd-'i'      ! save the support for this channel
+next
+write clean sup127_155_2ndcln_noCont     ! once all planes have been cleaned, save
+write beam sup127_155_2ndcln_noCont
+write residual sup127_155_2ndcln_noCont
+
+let first 0
+let last 0
+let name sup127_155_2ndcln_noCont
+say "Check lmv-clean"
+sys "ls -lrt"
+@ click-pause
+
+! noise check
+let myclean%support no
+! line-free channels
+let first 10
+let last 120
+go bit
+stat clean 10 120 /whole
+go noise
+
+let first 0
+let last 0
+
+
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+! Display
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+let size 40
+show clean 120 160
+
+let size 35
+show residual 120 160
+@ click-pause
+let first 0
+let last 0
+let type lmv-res
+go view
+
+
+let first 0
+let last 0
+let type lmv-clean
+go view
+@ click-paus
+let type lmv-res
+go view
+
+
+! After continuum subtraction
+fits sup127_155_2ndcln_noCont.fits from sup127_155_2ndcln_noCont.lmv-clean
+fits sup127_155_2ndcln_noCont.fits from sup127_155_2ndcln_noCont.lmv-res
+
+! spatial spectra
+let name sup127_155_2ndcln_noCont
+let type lmv-clean
+let size 10
+let center -2 -1
+let range -1000 1000
+go spectrum
+
+
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+say " *** Get moment maps: integrated, mean velocity, and line width)... "
+say " *** Without binning "
+go moments
+! input name: sup127_155_2ndcln_noCont.lmv-clean
+! output name sup127_155_2ndcln_noCont-mom
+! -540 100
+! threshold 5e-3
+let name sup127_155_2ndcln_noCont-mom
+let size 20
+go velocity
+go wedge
+! hardcopy sup127_155_2ndcln_noCont-mom /device eps color
+
+! interactive PV diagram
+go 3VIEW
+
+
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+say " *** Get moment maps: integrated, mean velocity, and line width)... "
+say " *** With binning "
+! Since we need to clip, we should figure out what's the optimal bin size for highest SNR for all channels across the line
+
+
+
+
+
+
