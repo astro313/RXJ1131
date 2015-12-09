@@ -1,0 +1,78 @@
+!
+! Author: Daisy Leung
+!
+! Using Procedure to fit Gauss
+!
+
+begin procedure plot_legend
+  g\pen /weight 2
+  g\draw relo -3700 &1 /user        ! start point for line
+  g\draw line -3500 &1 /user        ! end point for line
+  g\draw text -2500 &1 "&2" /user   ! x, y loc, "string"
+end procedure plot_legend
+
+begin procedure plot_model
+  g\set /def xlandscape white
+  g\set plot landscape
+  set box 3.6 29 5 20
+  g\clear
+  ! Plot the spectrum
+!  g\limits /var x y
+  g\limits -4000 2000 -15.0 150.0407682  ! x y range
+  g\box
+  g\pen 0 /col 0 /dash 1 /weight 2
+  g\histo /base 0 /fill 5
+  g\histo /fill 0       ! black line superpose on histogram
+!   @ plot_legend &1 "Spectrum"
+end procedure plot_model
+
+begin procedure plot_fit
+  ! Plot the fit
+  g\connect x mfit%fit
+  @ plot_legend &1 "&2"
+end procedure plot_fit
+!----------------------------------------------
+
+column x 1 y 2 /file SNR.spec
+let x 139.256-(x/299792.458*139.256)
+let x x*1.658
+let x (((230.538-x)/230.538)*299792.458)
+@ plot_model 100
+
+set expand 1.25   ! font size
+draw text -2500 135 "\\2 CO(\iJ=2-1) (z=0.658) RXJ1131" /user
+set expand 1
+label "Velocity offset [km/s]" /x
+label "Flux density [mJy]" /y
+
+say ""
+message i demo "Double Gaussian Fit:"
+mfit y=&a*Exp(-((x-&b)^2|(2*&c^2)))+&d + &e*Exp(-((x-&f)^2|(2*&g^2))) /method powell /start 50,-1300,100,0.1,122,-460,100
+
+g\pen 0 /col 1 /dash 1 /weight 5    ! red line
+@ plot_fit 90 "Double Gaussian Fit"
+
+!say ""
+!message i demo "Single Gaussian Fit Blue:"
+!mfit y=&a*Exp(-((x-&b)^2|(2*&c^2)))+&d /metho powell /start 10,-700,100,0.1 /STEP 0.1, 0.001, 0.001, 0.1
+!g\pen 0 /col 2 /dash 1 /weight 3    ! line
+!@ plot_fit 50 "Single Gaussian Blue"
+
+! say ""
+! message i demo "Single Gaussian Fit Red:"
+! mfit y=&a*Exp(-((x-&b)^2|(2*&c^2)))+&d /metho powell /start 122,-460,150,0.1
+! g\pen 0 /col 0 /dash 1 /weight 3    ! line
+! @ plot_fit 70 "Single Gaussian Fit"
+
+
+
+! --- draw baseline --------------------------------------------------
+g\pen 0 /col 0 /dash 3
+let y -0.136937    ! dotted line
+connect x y
+@ plot_legend 80 "Baseline"
+g\pen 0 /col 0 /dash 1 /weight 3
+box  ! draw box
+
+! --- Save ---------------------------------------------------------
+!hard SNR.eps /dev eps colo
