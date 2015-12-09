@@ -69,11 +69,11 @@ for irow 1 to NXY_BOX[1]
 
     ! central marker; currently randomly drawn
     pen 0 /col 0 /weight 2.0
-    draw relocate -0.00 -0.000-0.3-1.0 /USER seconds
-    draw line -0.00 -0.000-0.3+1.0 /USER seconds
-    draw line -0.00 -0.000-0.3 /USER seconds
-    draw line -0.00-1.0 -0.000-0.3 /USER seconds
-    draw line -0.00+1.0 -0.000-0.3 /USER seconds
+    draw relocate -0.00 -0.000-1.0 /USER seconds
+    draw line -0.00 -0.000+1.0 /USER seconds
+    draw line -0.00 -0.000 /USER seconds
+    draw line -0.00-1.0 -0.000 /USER seconds
+    draw line -0.00+1.0 -0.000 /USER seconds
     endif
     let trc[1] trc[1]+delta
     let blc[1] blc[1]+delta

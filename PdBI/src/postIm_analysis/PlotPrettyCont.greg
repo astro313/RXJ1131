@@ -101,15 +101,9 @@ draw line 18.0 0.0 /box !seconds
 pen 0 /weight 2
 ! ######################################################
 
-
-! ######### CACULATE THE BEAM AND DRAW THE BEAM #########
-!beam: PA=aa; size=bb"xcc"
-
+! ######### DRAW THE BEAM #########
 ! Old: manual define
 ! define real bb cc aa
-! let bb = 4.44
-! let cc = 1.93
-! let aa = 13
 
 ! auto detect beam size
 ! G_PA          ! rad
@@ -121,8 +115,6 @@ ellipse G_MAJOR*206265/2 G_MINOR*206265/2 90-G_PA*57.3 /box 16 1.5
 ellipse G_MAJOR*206265/2 G_MINOR*206265/2 90-G_PA*57.3 /box 16 1.5 /HATCH 0 45 0.2
 ! #######################################################
 
-! Draw the beam using the a, b and PA given by "go view"
-
 pen 0 /col 0 /weight 5
 set character 0.9     ! font size
 ! ############ PUT THE SOURCE NAME #############
@@ -131,8 +123,8 @@ set character 0.6
 ! ##############################################
 
 ! ############## OUT PUT FILENAME ##############
-! sic delete CO.eps
-! hardcopy  CO /device eps color
+sic delete Cont.eps
+hardcopy Cont /device eps color
 ! ##############################################
 
 pen 0 /default

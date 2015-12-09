@@ -1,8 +1,11 @@
-! Last modified: Nov 10 2015
+! Created: Nov 10 2015
 !
 ! Purpose: determine continuum flux and source size by uv_fit
 !
+! Last modified: Nov 18 2015
 !
+! History:
+!   Nov 18 2015: first find centroid in UV then shift before uv_fit
 
 define char UVTname*40
 sic\let UVTname = "co21_trial1_cont"
@@ -45,5 +48,10 @@ run uv_fit
 ! E_GAUSS  Minor       =     0.00362 (   .53387)
 ! E_GAUSS  Pos.Ang.    =   -72.76842 ( 15.39338)
 ! RE
+
+! ----------------------------------
+! with UV_center and shift
+! Added Nov 18 2015
+! ----------------------------------
 
 
