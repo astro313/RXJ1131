@@ -1,0 +1,216 @@
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+! Be very conservative at cleaning, only perform channel-by-channel cleaning at the very last loop
+! check the line flux, seems more conssitent with dirty map
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+begin procedure click-pause
+  !
+  g\draw relo
+  if (cursor_code.eq."E") then
+     message w click-pause "Exiting"
+     return base
+  endif
+  !
+end procedure click-pause
+!
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+!!!!!!!!!!!!!!!!!!!!!!!!
+! USER define
+!!!!!!!!!!!!!!!!!!!!!!!!
+define char UVTname*40
+sic\let UVTname = "co21_trial1"
+! delete /var UVTname
+
+define char UVTname2*40
+sic\let UVTname2 = "co21_trial2"
+
+def char NewPath*50
+sic\let NewPath = "/Users/admin/Research/RXJ1131/PdBI/data/13Oct15_B/"
+
+say ""
+say " *** Copying RP data cube to new Directory to work on ..."
+say "New DIR: "'NewPath'
+sic copy "/Users/admin/Research/RXJ1131/PdBI/data/RP/s14bx-co21.uvt" 'NewPath''UVTname'.uvt
+
+say ""
+say ""
+sic DIRECTORY 'NewPath'
+sys "pwd"
+
+! Erase everything (except uv tables) to start from scratch.
+go remove
+sys "ls -hltr "
+
+define integer totalchan
+let totalchan 360
+
+say " How many bad channels "
+define integer N_badchan
+let N_badchan 1
+
+say " Change the bad channel number(s)"
+IF (N_badchan.EQ.1) THEN
+  define integer badchan
+  let badchan 116
+ELSE
+  define integer badchan[N_badchan]
+  let badchan[1:N_badchan] 116 117
+ENDIF
+
+! color
+lut ?
+lut rainbow3       ! color table
+
+!!!!!!!!!!!!!!!!!!!!!!!!
+! UV table inspection
+!!!!!!!!!!!!!!!!!!!!!!!!
+let name 'UVTname'
+say "check UV"
+go uvcov
+@ click-pause
+
+say " *** Inspect UV data in bad channel "
+let first 'badchan'
+let last 'badchan'
+go uvshow
+@ click-pause
+let first 0
+let last 0
+
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+!!! average over all line channels        !!!!
+!!! Clean this channel only, get the flux !!!!
+run uv_extract
+! channel 127 157
+! co21_one.uvt
+run uv_compress
+! co21_one1.uvt
+go uv_fit       ! 35 mJy, 1 Gauss
+go uv_map
+
+inp clean
+let FRES 0      ! max abs. amp of res / max of dirty %
+let niter 0     ! to get the scaling right
+let BLC 124 114
+let TRC 141 137
+go clean
+
+let spacing noise
+go nice        ! peak ~ 15 mJy, can't be 8 beams
+go flux
+
+
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+! 1) imaging dirty map
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+let name 'UVTname'
+input uv_map
+let map_size 256
+let map_cell 0.5
+go uv_map
+
+sys "ls -hltr"
+go plot dirty       ! = go view
+@ click-pause
+! look at central chans with line (dirty)
+let first 'badchan'
+let last 'badchan'
+go bit
+@ click-pause
+go map
+
+
+let size 100
+let first 0
+let last 100
+go noise
+
+let ARES '3*noise'      ! max abs amp of residual [Jy / beam]
+inp clean
+let first 0
+let last totalchan
+let niter 50     ! approx. # of clean components from map
+let FRES 0   ! max abs amp of residual / max of dirty %
+let TRC 141 137
+let BLC 124 114
+@ click-pause
+LET MYCLEAN%SHOW NO       ! avoids on-the-fly plots
+go clean
+
+go view
+let type lmv-res
+go view
+
+
+let ares 2*noise
+go clean
+go view
+
+let first 120
+let last 160
+let type lmv-clean
+go nice
+
+let first 127
+let last 155
+let ares noise
+let ares noise*1.5
+go clean
+go view
+
+let first 125
+let last 155
+go nice
+let size 100
+go nice
+let size 20
+go nice
+go view
+
+for i 125 to 155
+  show clean i i
+  sup /cursor
+  hogbom i i
+next
+write clean dum
+write res dum
+show clean
+
+let type lmv-res
+let first 125
+let last 155
+go nice
+
+show clean
+let name dum
+let type lmv-clean
+go view
+
+let type lmv-res
+go view
+
+let first 0
+let last 110
+go noise
+let type lmv-res
+go view
+
+let type lmv-clean
+go view
+
+run moments
+! file name: dum.lmv-clean
+! out: dum_mom
+! channel: [126 156]
+! velocity: [-559.58, 81.48]
+! THRESHOLD: 5E-3
+let name dum_mom
+go velocity
+
+
+let type mean
+go nice
+let size 100
+go nice
+let size 50
+go nice
+go flux
