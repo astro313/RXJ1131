@@ -1,3 +1,16 @@
+'''
+
+Last Modified: 09 Dec 15
+
+Author: Daisy Leung
+
+History:
+09 Dec 15
+- works with CO(2-1) cube
+- but need to fix WCS, which is wrong if we zoom in on the image
+
+'''
+
 import matplotlib.pyplot as plt
 import pywcsgrid2
 import pywcs
