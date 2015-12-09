@@ -8,6 +8,7 @@ History:
 09 Dec 15
 - works with CO(2-1) cube
 - but need to fix WCS, which is wrong if we zoom in on the image
+- added contours overlay on channel map
 
 '''
 
@@ -65,7 +66,7 @@ header = fits_cube[0].header
 
 vel = Velo(header)
 
-fig = plt.figure(1, figsize=(12, 12), dpi=70)
+fig = plt.figure(1, figsize=(12, 12), dpi=100)
 g, cax = setup_axes(fig, header)
 
 
@@ -73,18 +74,21 @@ g, cax = setup_axes(fig, header)
 i = 0
 dxy = 125
 nxy = 6 * 5
+sigma = 1.451e-3           # sigma in map for contour plots
+
 # cmap = plt.cm.gray_r
 cmap = plt.cm.jet
 import matplotlib.colors as mcolors
 norm = mcolors.Normalize()
 images = []
 start_channel = i*nxy+dxy
+
 for i, ax in enumerate(g):
     channel_number = start_channel + i
     channel = fits_cube[0].data[0][channel_number][110:150, 110:150]
     im = ax.imshow(channel, origin="lower", norm=norm, cmap=cmap)
+    ax.contour(channel, [4*sigma, 8*sigma, 12*sigma, 16*sigma, 20*sigma], colors='black')
     images.append(im)
-
 
 # label with velocities
 use_path_effect = True         # Fancy text
@@ -104,7 +108,7 @@ for i, ax in enumerate(g):
 
 # make colorbar
 cb = plt.colorbar(im, cax=cax)
-cb.set_label("Flux Density [mJy]")
+cb.set_label("Flux Density [mJy B"+r"$^{-1}$]")
 cb.set_ticks([0, 0.25, 0.5])
 
 # adjust norm
