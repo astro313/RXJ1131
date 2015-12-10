@@ -89,6 +89,9 @@ dxy = 125
 nxy = 6 * 5
 sigma = 1.451e-3           # sigma in map for contour plots
 
+# mark HST knots location on channel map
+HST = True
+
 # cmap = plt.cm.gray_r
 cmap = plt.cm.jet
 import matplotlib.colors as mcolors
@@ -98,7 +101,7 @@ start_channel = i*nxy+dxy
 
 for i, ax in enumerate(g):
     channel_number = start_channel + i
-    channel = fits_cube[0].data[0][channel_number][110:150, 110:150]
+    channel = fits_cube[0].data[0][channel_number]#[110:150, 110:150]
     im = ax.imshow(channel, origin="lower", norm=norm, cmap=cmap)
     ax.contour(channel, [4*sigma, 8*sigma, 12*sigma, 16*sigma, 20*sigma],
                colors='black')
@@ -112,32 +115,29 @@ for i, ax in enumerate(g):
 #    ax.set_ylim(cropIMwcs[1].min(), cropIMwcs[1].max())
     ax.set_xlim(110, 150)
     ax.set_ylim(110, 150)
+
+    if HST:   # mark lensing knots
+
+    # DOESN'T WORK, will try using mpl marker
+
+        import astrolib.coords as coords
+        p_list = [coords.Position("11:31:51.3  -12:31:59").j2000(),
+              coords.Position("11:31:51.6  -12:31:59.6").j2000()]
+
+#        import pdb; pdb.set_trace()
+        for p1 in p_list:
+            ra, dec = p1
+            l1, = ax[wcs].plot([ra], [dec],
+                           "w+", mec="k", mew=2, ms=8,
+                           zorder=3.1)
     images.append(im)
 
 
-
-# mark HST knots location on channel map
-# HST = True
-# if HST:
-#     '''
-#     Lensing knots coordinates:
-
-#     '''
-
-#     import coords
-#     p_list = [coords.Position("06:17:29.3  +22:22:43").j2000(),
-#               coords.Position("06:18:03.7  +22:24:53").j2000(),
-#               (94.181357,22.543208)]
-#     for p1, ax in zip(p_list, [g[i], g[i], g[2]]):
-#         ra, dec = p1
-#         l1, = ax[wcs].plot([ra], [dec],
-#                            "^", mec="k", mfc="w", mew=1, ms=8,
-#                            zorder=3.1)
-
-#     # put up legend on last panel --> HST markers
-#     g[-1].legend([l1], ["HST Lensing knots"], loc=4, numpoints=1,
-#                  handlelength=1,
-#                  prop=dict(size=10))
+if HST:
+    # put up legend on last panel --> HST markers
+    g[-1].legend([l1], ["HST Lensing knots"], loc=4, numpoints=1,
+                 handlelength=1,
+                 prop=dict(size=10))
 
 
 # label with velocities
@@ -168,7 +168,6 @@ norm.vmin = -0.007
 norm.vmax = 0.03
 for im in images:
     im.changed()
-
 
 plt.show()
 
