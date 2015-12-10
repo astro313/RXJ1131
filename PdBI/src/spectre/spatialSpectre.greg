@@ -1,0 +1,235 @@
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+!
+! Last Modified: 10 Dec 15
+!
+! Author: Daisy Leung
+!
+!
+! Plot spatial spectra for CO(2-1) data
+!
+!
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+
+! ------------------ USER DEFINE ----------------
+let name sup127_155_2ndcln_noCont
+let type lmv-clean
+let size 7
+let center -2 -1
+let range -1000 1000
+set box_location 4 22 4 20
+
+def char NewPath*50
+sic\let NewPath = "/Users/admin/Research/RXJ1131/PdBI/data/11Nov15/"
+
+say ""
+say ""
+sic DIRECTORY 'NewPath'
+sys "pwd"
+
+!------------------- Program ----------------------
+if ((center[1].ne.0).or.(center[2].ne.0)) then
+   let s%center center
+endif
+if ((size[1].ne.0).or.(size[2].ne.0)) then
+   let s%size size
+endif
+!
+@ window_tools.greg
+!
+define character directory*12
+if ("&1none".eq."none") then
+   let directory "<greg"
+   gtvl\destroy all
+else
+   let directory "&1"
+   create directory 'directory' /plot_page 200 100
+   change directory 'directory'
+endif
+
+gtvl\clear alpha
+!
+!
+!
+define double xmark ymark
+define character old_type*12 cmark*12
+!
+!
+!
+let old_type 'type'
+!
+! Check frequency axis
+!
+define character filename*512
+let filename 'name'"."'type'
+if (.not.file(filename)) then
+   message e spectrum "Inexistent file: "'filename'
+   return
+endif
+if exist(bbb) then
+   delete /var bbb
+endif
+
+define header bbb 'name'"."'type' read /global
+if (bbb%f_axis.eq.3) then
+   message w spectra "Transposing "'name'.'type'" to "'name'".vxy for display"
+   vector\transpose 'name'.'type' 'name'.vxy 312
+   let type vxy
+   message w spectra "Type set to vxy"
+else
+   say " "
+   message w spectra "Third cube axis is not the frequency axis"
+   pause "W-SPECTRA, Type c to continue, q several times to quit"
+   say " "
+endif
+!
+! Load reference image and plot header
+!
+@ header_position
+@ p_load.greg  aaa
+@ p_scale.greg aaa  ! Intensity scale
+@ p_level.greg aaa
+@ p_range.greg  bbb ! Velocity  scale
+@ p_corner.greg bbb s%center s%size ! Space scales
+@ p_sampling.greg bbb ! Definition of signed sampling (default is Nyquist)
+
+greg2\rgdata aaa /variable
+!
+!
+!
+let type 'old_type'
+message w spectra "Type reset to "'old_type'
+!
+! Definition of size of plotted diagram
+!
+define double xmargin ymargin
+let xmargin 0.1*abs(true_range[2]-true_range[1])
+let ymargin 0.1*abs(true_scale[2]-true_scale[1])
+greg1\limits true_range[1]-xmargin true_range[2]+xmargin true_scale[1]-ymargin true_scale[2]+ymargin
+delete /var xmargin ymargin
+!
+! Definition of box characteristics.
+!
+let aspect_ratio no  ! Do not respect aspect ratio to maximize use of place
+let fixed_trc no     ! Top right corner is free
+let inter 0.0 0.0    ! No interspace between individual boxes (unit: % of box sizes)
+
+
+begin procedure plot_position_Daisy
+  !
+  if (plot_position[1].eq.0.0) then
+     let plot_page_aspect page_x/page_y
+     if (plot_page_aspect.ge.1.0) then
+        let position 0.1271 1.2 0.105 0.95
+     else
+        let position 0.085 0.995 0.171 1.081
+     endif
+  else
+     let position plot_position
+  endif
+  !
+end procedure plot_position_Daisy
+!
+
+
+@ plot_position_Daisy      ! Definition of total available plotting place
+let nx_box int((itrc[1]-iblc[1])/inte_sampling[1])+1 ! Compute number of boxes in the x direction
+let ny_box int((itrc[2]-iblc[2])/inte_sampling[2])+1 ! Compute number of boxes in the y direction
+@ find_size_margin 'nx_box' 'ny_box'   ! Compute individual box size and margin needed to keep aspect
+set expand min(6.0/(nx_box+ny_box),1.05) ! Define character size
+
+!
+! Plot spectra.
+!
+define real xspectrum['aaa%dim[1]']
+define real y['aaa%dim[1]']
+let y 0    ! baseline, dashed line
+let xspectrum[ichan] (ichan-aaa%convert[1,1])*aaa%convert[3,1]+aaa%convert[2,1]
+!
+let mark 'mark' /lower
+define integer ix iy
+for iwx 1 to nx_box
+   for iwy 1 to ny_box
+      set expand min(6.0/(nx_box+ny_box),1.05) ! Define character size
+      pen 0 /col 0 /dash 0 /weight 2            ! Reset bold for histogram
+
+      let ix iblc[1]+inte_sampling[1]*(iwx-1)
+      let iy iblc[2]+inte_sampling[2]*(iwy-1)
+      !
+      ! Define current box position and create corresponding directory
+      ! or directly go to this directory
+      !
+      gtvl\change directory 'directory'
+      @ find_window_position 'iwx' 'iwy'
+      gtvl\create directory p'iwx'-'iwy'
+      gtvl\change directory p'iwx'-'iwy'
+      !
+      ! Plot spectra ('ix','iy')
+      !
+      if (do_fill) then
+         greg1\histogram xspectrum aaa[ix,iy] /base 0 /fill 5
+      endif
+      greg1\histogram xspectrum aaa[ix,iy]
+
+      ! Draw Baseline
+      pen 0 /col 0 /dash 2 /weight 2
+      connect xspectrum y
+      ! Bold the inner box, hide the labels (flux density vs velo.)
+      pen 0 /dash 0 /weight 3
+      greg1\box n n
+      !
+      !
+      !
+
+      ! annotate each panel with pixel
+      let mark "pixels"
+
+      if (mark.ne."none") then
+         greg1\set coord box
+         if (mark.eq."coordinates") then
+            let xmark ((ix-aaa%convert[1,2])*aaa%convert[3,2]+aaa%convert[2,2])/sec
+            let ymark ((iy-aaa%convert[1,3])*aaa%convert[3,3]+aaa%convert[2,3])/sec
+            let xmark 0.1*nint(10*xmark)
+            let ymark 0.1*nint(10*ymark)
+            let cmark "("'xmark'","'ymark'")"
+         else if (mark.eq."pixels") then
+            let cmark "("'ix'","'iy'")"
+         else
+            let cmark " "
+         endif
+
+         ! mark at the corner
+         greg1\draw text 0.1 -0.1 'cmark' 3 /box 7
+
+      endif
+   next
+next
+
+
+greg1\set expand 1         ! reset char size
+! outer box
+@ window_xy 1 1 1
+let true_sampling true_sampling/sec
+
+! spatial offset limits for axes
+greg1\limits sblc[1]-0.5*true_sampling[1] strc[1]+0.5*true_sampling[1] sblc[2]-0.5*true_sampling[2] strc[2]+0.5*true_sampling[2]
+
+pen 0 /weight 2.5
+box p o out
+label "Spatial Spectra" /x -30.5
+label "RA Offset (arcsec)" /x 3.5      ! displace 3.5 downward
+label "DEC offset (arcsec)" /y
+!
+greg1\set expand 1
+gtvl\change directory <greg
+!
+! ----------- OUTPUT FILENAME ----------------
+sic delete spatialSpec.eps
+hardcopy spatialSpec /device eps color
+! --------------------------------------------
+!
+pen 0 /default
+!
+say "Back to script directory"
+sic DIRECTORY "/Users/admin/Research/RXJ1131/PdBI/src/spectre"
+!
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
