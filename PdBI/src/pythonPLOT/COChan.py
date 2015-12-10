@@ -10,11 +10,16 @@ History:
 - but need to fix WCS, which is wrong if we zoom in on the image
 - added contours overlay on channel map
 
+
+Note:
+depends on package - astrolib.coords for putting up markers based on Coords
+
 '''
 
 import matplotlib.pyplot as plt
 import pywcsgrid2
 import pywcs
+import numpy as np
 
 import mpl_toolkits.axes_grid1.axes_grid as axes_grid
 #from mpl_toolkits.axes_grid.colorbar import colorbar
@@ -42,7 +47,11 @@ def setup_axes(fig, header):
                             ngrids=None,
                             direction='row',
                             axes_pad=0.02, add_all=True,
-                            share_all=True, aspect=True,
+                            share_all=True,
+                            # if share_all = False, need the following
+                            # share_x = False,
+                            # share_y = False,
+                            aspect=True,
                             label_mode='L', cbar_mode=None,
                             axes_class=(pywcsgrid2.Axes, dict(grid_helper=gh)))
 
@@ -51,7 +60,7 @@ def setup_axes(fig, header):
     cax = inset_axes(ax,
                      width="15%", # # width = 8% width = 10% of parent_bbox width
                      height="100%", # height : 50%
-                     loc=3,
+                     loc=3,    # 4
                      bbox_to_anchor=(1.01, 0, 1, 1),
                      bbox_transform=ax.transAxes,
                      borderpad=0.
@@ -63,6 +72,10 @@ def setup_axes(fig, header):
 fits_cube = pyfits.open("/Users/admin/Research/RXJ1131/PdBI/data/04Sep15/sup127_155_2ndcln_noCont.fits")
 
 header = fits_cube[0].header
+cdelt1 = np.abs(header['CDELT1'] * 3600)
+cdelt2 = np.abs(header['CDELT2'] * 3600)
+
+wcs = pywcs.WCS(header).sub([1, 2])       # .sub([1,2]) needed for wcs.wcs_pix2sky(px, py, 1) later in the code
 
 vel = Velo(header)
 
@@ -87,8 +100,45 @@ for i, ax in enumerate(g):
     channel_number = start_channel + i
     channel = fits_cube[0].data[0][channel_number][110:150, 110:150]
     im = ax.imshow(channel, origin="lower", norm=norm, cmap=cmap)
-    ax.contour(channel, [4*sigma, 8*sigma, 12*sigma, 16*sigma, 20*sigma], colors='black')
+    ax.contour(channel, [4*sigma, 8*sigma, 12*sigma, 16*sigma, 20*sigma],
+               colors='black')
+
+    # correct for WCS
+#    px = np.arange(110, 150, cdelt1)
+#    py = np.arange(110, 150, cdelt2)
+#    cropIMwcs = wcs.wcs_pix2sky(px, py, 1)
+
+#    ax.set_xlim(cropIMwcs[0].max(), cropIMwcs[0].min())
+#    ax.set_ylim(cropIMwcs[1].min(), cropIMwcs[1].max())
+    ax.set_xlim(110, 150)
+    ax.set_ylim(110, 150)
     images.append(im)
+
+
+
+# mark HST knots location on channel map
+# HST = True
+# if HST:
+#     '''
+#     Lensing knots coordinates:
+
+#     '''
+
+#     import coords
+#     p_list = [coords.Position("06:17:29.3  +22:22:43").j2000(),
+#               coords.Position("06:18:03.7  +22:24:53").j2000(),
+#               (94.181357,22.543208)]
+#     for p1, ax in zip(p_list, [g[i], g[i], g[2]]):
+#         ra, dec = p1
+#         l1, = ax[wcs].plot([ra], [dec],
+#                            "^", mec="k", mfc="w", mew=1, ms=8,
+#                            zorder=3.1)
+
+#     # put up legend on last panel --> HST markers
+#     g[-1].legend([l1], ["HST Lensing knots"], loc=4, numpoints=1,
+#                  handlelength=1,
+#                  prop=dict(size=10))
+
 
 # label with velocities
 use_path_effect = True         # Fancy text
@@ -100,7 +150,9 @@ except ImportError:
 for i, ax in enumerate(g):
     channel_number = start_channel + i
     v = vel.to_vel(channel_number) / 1.e3
-    t = ax.add_inner_title(r"$v=%4.1f$ km s$^{-1}$" % (v), loc=2, frameon=False)
+    t = ax.add_inner_title(r"$v=%4.1f$ km s$^{-1}$" % (v),
+                           loc=2,
+                           frameon=False)
     if use_path_effect:
         t.txt._text.set_path_effects([withStroke(foreground="w",
                                                  linewidth=3)])
