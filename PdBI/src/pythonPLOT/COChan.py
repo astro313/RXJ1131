@@ -7,9 +7,10 @@ Author: Daisy Leung
 History:
 09 Dec 15
 - works with CO(2-1) cube
-- but need to fix WCS, which is wrong if we zoom in on the image
 - added contours overlay on channel map
-
+- Need to make it plot markers for HST positions
+- will zoom on image with correct axes
+- only show axes label in one panel
 
 Note:
 depends on package - astrolib.coords for putting up markers based on Coords
@@ -40,7 +41,7 @@ class Velo(object):
 def setup_axes(fig, header):
 
     gh = pywcsgrid2.GridHelper(wcs=header)
-    gh.locator_params(nbins=3)
+    gh.locator_params(nbins=4)
 
     g = axes_grid.ImageGrid(fig, 111,
                             nrows_ncols=(5, 6),
@@ -52,8 +53,15 @@ def setup_axes(fig, header):
                             # share_x = False,
                             # share_y = False,
                             aspect=True,
-                            label_mode='L', cbar_mode=None,
+                            label_mode='1',  # 'L'
+                            cbar_mode=None,
                             axes_class=(pywcsgrid2.Axes, dict(grid_helper=gh)))
+
+    # only show xylabel at that panel, depending on nrows_ncols in axes_grid.ImageGrid()
+    # if comment out the following block, will shorten to Greek Letters
+    ax = g[-6]
+    ax.set_xlabel("Right Ascension (J2000)")
+    ax.set_ylabel("Declination (J2000)")
 
     # make colorbar
     ax = g[-1]
@@ -85,9 +93,9 @@ g, cax = setup_axes(fig, header)
 
 # draw images
 i = 0
-dxy = 125
-nxy = 6 * 5
-sigma = 1.451e-3           # sigma in map for contour plots
+dxy = 125                 # starting channel
+nxy = 6 * 5               # total number of channels
+sigma = 1.451e-3          # sigma in map for contour plots
 
 # mark HST knots location on channel map
 HST = True
@@ -101,35 +109,26 @@ start_channel = i*nxy+dxy
 
 for i, ax in enumerate(g):
     channel_number = start_channel + i
-    channel = fits_cube[0].data[0][channel_number]#[110:150, 110:150]
+    channel = fits_cube[0].data[0][channel_number]
     im = ax.imshow(channel, origin="lower", norm=norm, cmap=cmap)
     ax.contour(channel, [4*sigma, 8*sigma, 12*sigma, 16*sigma, 20*sigma],
                colors='black')
 
-    # correct for WCS
-#    px = np.arange(110, 150, cdelt1)
-#    py = np.arange(110, 150, cdelt2)
-#    cropIMwcs = wcs.wcs_pix2sky(px, py, 1)
-
-#    ax.set_xlim(cropIMwcs[0].max(), cropIMwcs[0].min())
-#    ax.set_ylim(cropIMwcs[1].min(), cropIMwcs[1].max())
+    # zoom-in on pixels
     ax.set_xlim(110, 150)
     ax.set_ylim(110, 150)
 
+
     if HST:   # mark lensing knots
-
     # DOESN'T WORK, will try using mpl marker
-
         import astrolib.coords as coords
         p_list = [coords.Position("11:31:51.3  -12:31:59").j2000(),
               coords.Position("11:31:51.6  -12:31:59.6").j2000()]
-
-#        import pdb; pdb.set_trace()
         for p1 in p_list:
             ra, dec = p1
             l1, = ax[wcs].plot([ra], [dec],
-                           "w+", mec="k", mew=2, ms=8,
-                           zorder=3.1)
+                          "w+", mec="k", mew=2, ms=8,
+                          zorder=3.1)
     images.append(im)
 
 
