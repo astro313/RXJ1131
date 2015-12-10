@@ -1,16 +1,21 @@
 '''
+TODO:
+- Need to make it plot markers for HST positions
+
 
 Last Modified: 09 Dec 15
 
+
 Author: Daisy Leung
+
 
 History:
 09 Dec 15
 - works with CO(2-1) cube
 - added contours overlay on channel map
-- Need to make it plot markers for HST positions
 - will zoom on image with correct axes
 - only show axes label in one panel
+
 
 Note:
 depends on package - astrolib.coords for putting up markers based on Coords
@@ -163,8 +168,8 @@ cb.set_label("Flux Density [mJy B"+r"$^{-1}$]")
 cb.set_ticks([0, 0.25, 0.5])
 
 # adjust norm
-norm.vmin = -0.007
-norm.vmax = 0.03
+norm.vmin = -0.007        # min in map
+norm.vmax = 0.03          # max in map
 for im in images:
     im.changed()
 
