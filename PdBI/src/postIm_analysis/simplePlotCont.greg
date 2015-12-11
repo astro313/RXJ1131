@@ -25,11 +25,9 @@ let type lmv-clean
 let size 25
 let do_header no
 let do_wedge yes
+let DO_NICE yes
+let DO_RCOORD no
 !########################################
-!Plot the image in the first place
-extrema /compute    ! compute the extrema of your image
-say "Max: "'RGMAX'" and MIN: "'RGMIN'
-
 ! image frame color, weight
 pen 0 /weight 5
 
@@ -37,12 +35,15 @@ pen 0 /weight 5
 ! levels -2.0 to 2n.0 by 2.0
 let spacing 2.0*noise
 
+
+! ### Change map contrast ###
+let SCALE -7.59186E-04 8e-4
 go nice
 
 pen 0 /col 0 /weight 5
 set character 0.9     ! font size
 ! ############ PUT THE SOURCE NAME #############
-draw text 7 9.5 "RXJ1131-1231 Continuum" 3 /user
+draw text 10.5 18.5 "RXJ1131-1231 Continuum"
 set character 0.6
 ! ##############################################
 
