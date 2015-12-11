@@ -1,0 +1,54 @@
+! Purpose:
+!    General: script making contours using lmv or lmv-clean format GILDAS file
+!    Here: plot continuum map with go nice
+!
+!
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+
+cle a
+cle
+
+!set font SIMPLEX or DUPLEX
+set font SIMPLEX
+!Load color table rainbow4
+lut rainbow4.lut
+
+!####### CHECK NOISE AND PUT HERE #######
+let noise = 0.0816E-03 /new real
+!########################################
+!###########    LOAD IMAGE   ############
+let name "/Users/admin/Research/RXJ1131/PdBI/data/04Sep15/co21_trial1_cont"
+let type lmv-clean
+!########################################
+
+!######### DEFINE THE PLOT AREA #########
+let size 25
+let do_header no
+let do_wedge yes
+!########################################
+!Plot the image in the first place
+extrema /compute    ! compute the extrema of your image
+say "Max: "'RGMAX'" and MIN: "'RGMIN'
+
+! image frame color, weight
+pen 0 /weight 5
+
+! #### Set the plot levels ###
+! levels -2.0 to 2n.0 by 2.0
+let spacing 2.0*noise
+
+go nice
+
+pen 0 /col 0 /weight 5
+set character 0.9     ! font size
+! ############ PUT THE SOURCE NAME #############
+draw text 7 9.5 "RXJ1131-1231 Continuum" 3 /user
+set character 0.6
+! ##############################################
+
+! ############## OUT PUT FILENAME ##############
+! sic delete Cont_simple.eps
+! hardcopy Cont_simple /device eps color
+! ##############################################
+
+pen 0 /default
