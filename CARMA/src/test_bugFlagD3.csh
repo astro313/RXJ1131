@@ -261,13 +261,6 @@ if ($ans == "Y" || $ans == "y" || $ans == "1") then
   set ans = "$<"
 endif
 
-# first attempt to map the data
-# rm -rf map0 beam0
-# invert vis=$vis map=map0 beam=beam0 robust=$robust cell=$cell options=mosaic,mfs,systemp select="source($science)" imsize=$imsize
-# cgdisp device=/xs in=map0 labtyp=arcsec options=full,beambr,wedge,3val region=quarter labtyp=hms,dms csize=1,1,1
-# echo -n "*** HIT RETURN TO CONTINUE ***"
-# set ans = "$<"
-
 
 ##############################################################################
 # Flag data based on poor linecal phase v.s. time plot (see below)
@@ -282,34 +275,11 @@ uvflag vis=$vis flagval=flag select="ant(10),time(09:00:00.0,09:30:00.0)"
 uvflag vis=$vis flagval=flag select="ant(12)(5,14)"
 
 
-####################################
-# Flag some data of MARS
-# Amp too high for some baselines
-####################################
-rm -rf $fname
-cp -r $vis $fname
-
-uvflag vis=$fname flagval=flag select="source($flux_planet),ant(2)(4)"
-uvflag vis=$fname flagval=flag select="source($flux_planet),ant(3)(10)"
-uvflag vis=$fname flagval=flag select="source($flux_planet),ant(5)(6)"
-uvflag vis=$fname flagval=flag select="source($flux_planet),ant(6)(14)"
-uvflag vis=$fname flagval=flag select="source($flux_planet),ant(8)(9,12,13,14,15)"
-uvflag vis=$fname flagval=flag select="source($flux_planet),ant(9)(13,14)"
-uvflag vis=$fname flagval=flag select="source($flux_planet),ant(10)(11,13)"
-uvflag vis=$fname flagval=flag select="source($flux_planet),ant(11)(13)"
-uvflag vis=$fname flagval=flag select="source($flux_planet),ant(12)(13,15)"
-
-####################################
-# Choose which vis file to use
-# with MARS data flagged or not
-####################################
-linecal:
-set vis = $fname
-# set vis = out_base
-
 ##############################
 #### SEPARATE NOISE ########
 ###############################
+linecal:
+set vis = out_base
 
 # This is needed since linecal should not be applied to noise source data.
 # select out only the data (cut out the NOISE source and auto correlations
@@ -327,7 +297,6 @@ uvcat vis=$vis select='-source(NOISE),-auto' out=$vis_astro
 # No auto correlation passband calibration (amplitude only)
 # No noise source passband calibration (amplitude and phase)
 ##################################################################
-
 # line length calibration
 set out_line = "line_cal.vis"
 rm -rf $out_line
@@ -459,6 +428,7 @@ if ("$flux_object" != "") then
     echo -n "*** HIT RETURN TO CONTINUE ***"
     set ans = "$<"
 endif
+
 
 ####################################
 ### FLUX CALIBRATION #########
