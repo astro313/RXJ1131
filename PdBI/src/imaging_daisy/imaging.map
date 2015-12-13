@@ -941,7 +941,7 @@ for i 127 to 157
   sup /cursor
 !  clark i i /plot                ! not good when there are high side lobes, like here
   hogbom i i
-  sick wait 0.5
+  sic wait 0.5
   show clean i i                 ! show the cleaned image of one channel
   sic wait 0.75
   sic wait 1
