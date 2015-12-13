@@ -67,6 +67,7 @@ if (!(-e $dataPATH/"$dir_reduced")) mkdir $dataPATH/$dir_reduced
 # Move into temporary directory
 set starting_dir = `pwd`
 cd $dataPATH/$dir_tmp
+echo "*** Current directory ***"
 echo `pwd`
 echo -n "*** HIT RETURN TO CONTINUE ***"
 set ans = "$<"
@@ -81,21 +82,26 @@ endif
 set mir_raw        = "raw.mir"
 set mir_cal_wide   = $dataPATH/$dir_reduced/${root}_wide.mir
 set mir_cal_narrow = $dataPATH/$dir_reduced/${root}_narrow.mir
+set out_base       = "base.vis"
+set fname          = "base_flagMars.mir"
 
 # Gain-calibrator flux used in mfcal
 set mfcal_flux = ""
 if ($flux_gaincal != "") set mfcal_flux = "flux=$flux_gaincal"
 
-# goto sanity
+goto base
 # ***********************
 # **** COPY RAW DATA ****
 # ***********************
 # Only need to run once
 set out = $mir_raw
 # rm -rf $dataPATH/$dir_tmp/$out
-# # echo ""
-# echo "*** Making copy of raw data  (vis=$dataPATH/$dir_vis/$vis out=$dataPATH/$dir_tmp/$out)"
-# uvcat vis=$dataPATH/$dir_vis/$vis out=$dataPATH/$dir_tmp/$out options=nowide
+
+if (!(-e $dataPATH/$dir_tmp/$out)) then
+  echo ""
+  echo "*** Making copy of raw data  (vis=$dataPATH/$dir_vis/$vis out=$dataPATH/$dir_tmp/$out)"
+  uvcat vis=$dataPATH/$dir_vis/$vis out=$dataPATH/$dir_tmp/$out options=nowide
+endif
 set vis=$out
 
 ##############################
@@ -110,6 +116,14 @@ echo "*** Check auto flagged data, how many active flags you have now ***"
 uvflag vis=$vis options=noapply flagval=flag
 echo -n "*** HIT RETURN TO CONTINUE ***"
 set ans = "$<"
+# Good:        8243274
+# Bad:        13247286
+
+
+echo "*** Check what would happen if unflag data ***"
+uvflag vis=$vis options=noapply flagval=unflag
+echo -n "*** HIT RETURN TO CONTINUE, and unflag all data ***"
+set ans = "$<"
 echo " "
 echo " *** Unflagging all data "
 uvflag vis=$vis flagval=unflag
@@ -122,35 +136,34 @@ uvlist vis=$vis options=spectra
 ########################
 # look at data quality #
 ########################
-# look at the phase vs time: it should have a smooth trend
-uvplt vis=$vis select="-auto,source($gain)" device=/xs line=$WIDE axis=time,phase
-echo -n "*** HIT RETURN TO CONTINUE ***"
+echo -n "*** Do you want to inspect data before flagging (Y/N)? "
 set ans = "$<"
+if ($ans == "Y" || $ans == "y" || $ans == "1") then
 
-# look at the amplitude vs. time: it should be constant and the same
-# for all antennas
-uvplt vis=$vis select="-auto,source($gain)" device=/xs line=$WIDE axis=time,amp
-echo -n "*** HIT RETURN TO CONTINUE ***"
-set ans = "$<"
+  # look at the phase vs time: it should have a smooth trend
+  uvplt vis=$vis select="-auto,source($gain)" device=/xs line=$WIDE axis=time,phase
+  echo -n "*** HIT RETURN TO CONTINUE ***"
+  set ans = "$<"
 
-# look at the source phase vs time: if it has no continuum it
-# should be just random. Any trends would be due to false fringes
-uvplt vis=$vis select="-auto,source($science)" device=/xs line=$WIDE axis=time,phase
-echo -n "*** HIT RETURN TO CONTINUE ***"
-set ans = "$<"
+  # look at the amplitude vs. time: it should be constant and the same
+  # for all antennas
+  uvplt vis=$vis select="-auto,source($gain)" device=/xs line=$WIDE axis=time,amp
+  echo -n "*** HIT RETURN TO CONTINUE ***"
+  set ans = "$<"
 
-echo "*** Plot amplitude, phase versus time for lsb wideband"
-uvplt vis=$vis select="-auto,source($gain)" device=/xs axis=time,ampl line=wide,1,1
-uvplt vis=$vis select="-auto,source($gain)" device=/xs axis=time,phase line=wide,1,1
-echo -n "*** HIT RETURN TO CONTINUE ***"
-set ans = "$<"
+  # look at the source phase vs time: if it has no continuum it
+  # should be just random. Any trends would be due to false fringes
+  uvplt vis=$vis select="-auto,source($science)" device=/xs line=$WIDE axis=time,phase
+  echo -n "*** HIT RETURN TO CONTINUE ***"
+  set ans = "$<"
+endif
 
 ##################################
 #### BASELINE CALIBRATION ########
 ##################################
-base:
-set out_base='base.vis'
 rm -rf $out_base
+
+base:
 uvedit vis=$vis out=$out_base apfile=$antpos
 set vis=$out_base
 
@@ -185,22 +198,13 @@ echo "*** Flagging $edgechan edge channels in all windows (vis=$vis)"
 uvflag vis=$vis flagval=flag edge=$edgechan
 
 #FLAG
-uvflag vis=$vis flagval=flag select="ant(12),time(07:50:00.0,08:05:00)"
-uvflag vis=$vis flagval=flag select="ant(1)(4),time(08:10:00,08:20:00)"
-uvflag vis=$vis flagval=flag select="ant(1)(12),time(07:27:39.5,07:45:00)"
-uvflag vis=$vis flagval=flag select="ant(2)(11),time(07:27:39.5,07:30:00.0)"
-uvflag vis=$vis flagval=flag select="ant(3)(4),time(09:30:00,09:56:47.0)"
-uvflag vis=$vis flagval=flag select="ant(4)(5),time(07:40:00.0,08:00:00)"
-
-# # wide sperad in phase
-# uvflag vis=$vis.basicflags.cont flagval=flag select="ant(1)(14),time(07:27:39.5,07:40:00)"
-# uvflag vis=$vis.basicflags.cont flagval=flag select="ant(4)(15)"
-# uvflag vis=$vis.basicflags.cont flagval=flag select="ant(5)(11)"
-#  uvflag vis=$vis.basicflags.cont flagval=flag select="ant(5)(12),time(07:30:00,07:40:00)"
-# uvflag vis=$vis.basicflags.cont flagval=flag select="ant(5)(15)"
-# uvflag vis=$vis.basicflags.cont flagval=flag select="ant(6)(15)"
-# uvflag vis=$vis.basicflags.cont flagval=flag select="ant(9)(11)"
-# uvflag vis=$vis.basicflags.cont flagval=flag select="ant(11)(14)"
+uvflag vis=$vis flagval=flag select="ant(1)(4),time(08:10:00.0,08:20:00.0)"
+uvflag vis=$vis flagval=flag select="ant(3)(4),time(09:30:00.0,09:56:47.0)"
+uvflag vis=$vis flagval=flag select="ant(4)(5),time(07:30:00.0,09:00:00.0)"
+uvflag vis=$vis flagval=flag select="ant(5)(11),time(07:30:00.0,07:40:00.0)"
+uvflag vis=$vis flagval=flag select="ant(5)(12),time(08:10:00.0,08:20:00.0)"
+echo -n "*** HIT RETURN TO CONTINUE ***"
+set ans = "$<"
 
 ##################################
 #### PLOT TRACK ########
@@ -240,7 +244,7 @@ if ($ans == "Y" || $ans == "y" || $ans == "1") then
   echo ""
   echo "*** Raw phases in window $win_track ***"
   echo "*** Look for incoherent phases on calibrators."
-  smauvplt device=/xs vis=$vis select="-source(noise),win($win_track),-auto" axis=time,phase
+  smauvplt device=/xs vis=$vis select="-source(noise),-source($science),win($win_track),-auto" axis=time,phase
   echo -n "*** HIT RETURN TO CONTINUE ***"
   set ans = "$<"
 endif
@@ -265,22 +269,57 @@ endif
 # set ans = "$<"
 
 
+##############################################################################
+# Flag data based on poor linecal phase v.s. time plot (see below)
+##############################################################################
+uvflag vis=$vis flagval=flag select="ant(10),time(09:00:00.0,09:30:00.0)"
+
+##############################################################################
+# Flag some data of Ant 12,
+# phase noisy in some channels for some baselines after passband calibration (below) for the gain calibrator
+# flag here, and re-calibrate the passband below
+##############################################################################
+uvflag vis=$vis flagval=flag select="ant(12)(5,14)"
+
+
+####################################
+# Flag some data of MARS
+# Amp too high for some baselines
+####################################
+rm -rf $fname
+cp -r $vis $fname
+
+uvflag vis=$fname flagval=flag select="source($flux_planet),ant(2)(4)"
+uvflag vis=$fname flagval=flag select="source($flux_planet),ant(3)(10)"
+uvflag vis=$fname flagval=flag select="source($flux_planet),ant(5)(6)"
+uvflag vis=$fname flagval=flag select="source($flux_planet),ant(6)(14)"
+uvflag vis=$fname flagval=flag select="source($flux_planet),ant(8)(9,12,13,14,15)"
+uvflag vis=$fname flagval=flag select="source($flux_planet),ant(9)(13,14)"
+uvflag vis=$fname flagval=flag select="source($flux_planet),ant(10)(11,13)"
+uvflag vis=$fname flagval=flag select="source($flux_planet),ant(11)(13)"
+uvflag vis=$fname flagval=flag select="source($flux_planet),ant(12)(13,15)"
+
+####################################
+# Choose which vis file to use
+# with MARS data flagged or not
+####################################
+linecal:
+set vis = $fname
+# set vis = out_base
+
 ##############################
 #### SEPARATE NOISE ########
 ###############################
-linecal:
+
 # This is needed since linecal should not be applied to noise source data.
 # select out only the data (cut out the NOISE source and auto correlations
 # leaving only the cross correlations)
 set vis_astro = "no_noise_no_auto.vis"
-set vis_noise = "noise_no_auto.vis"
-rm -rf $vis_astro $vis_noise
+rm -rf $vis_astro
 echo ""
 echo "*** Creating file with astronomical data only  (vis=$vis out=$vis_astro)"
 uvcat vis=$vis select='-source(NOISE),-auto' out=$vis_astro
-echo ""
-echo "*** Creating file with noise source data  (vis=$vis out=$vis_noise)"
-uvcat vis=$vis select="source(noise),-auto" out=$vis_noise
+
 
 
 #################################################################
@@ -320,21 +359,15 @@ set vis_astro = $out_line
 # **** SPLIT ASTRONOMICAL DATA INTO WIDE AND NARROW BAND ****
 # ***********************************************************
 # Create file with wideband windows
-set out = "split_wide.mir"
-rm -rf $out
 echo ""
-echo "*** Creating wideband data file  (vis=$vis_astro out=$out)"
-uvcat vis=$vis_astro out=$out select="-auto"
-set vis_wide = $out
-
-# NO NARROWBAND for RXJ1131
+echo " *** NO NARROWBAND for RXJ1131 *** "
+set vis_wide = $vis_astro
 
 # ******************************************
 # **** ASTRONOMICAL PASSBAND - WIDEBAND ****
 # ******************************************
 # This section will remove phase and amplitude offsets between windows.
 # For the wide bands, we assume channel-by-channel passband is ok.
-
 
 # Create copy of wide-band passband calibrator
 set wb = "tmp_wb.mir"
