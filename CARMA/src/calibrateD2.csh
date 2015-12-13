@@ -205,15 +205,6 @@ echo ""
 echo "*** Flagging $edgechan edge channels in all windows (vis=$vis)"
 uvflag vis=$vis flagval=flag edge=$edgechan
 
-#FLAG
-# uvflag vis=$vis flagval=flag select="ant(1)(4),time(08:10:00.0,08:20:00.0)"
-# uvflag vis=$vis flagval=flag select="ant(3)(4),time(09:30:00.0,09:56:47.0)"
-# uvflag vis=$vis flagval=flag select="ant(4)(5),time(07:30:00.0,09:00:00.0)"
-# uvflag vis=$vis flagval=flag select="ant(5)(11),time(07:30:00.0,07:40:00.0)"
-# uvflag vis=$vis flagval=flag select="ant(5)(12),time(08:10:00.0,08:20:00.0)"
-# echo -n "*** HIT RETURN TO CONTINUE ***"
-set ans = "$<"
-
 ##################################
 #### PLOT TRACK ########
 ##################################
