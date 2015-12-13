@@ -18,5 +18,6 @@ LSB_cln.fits:
 
 
 # NOTE:
-- want to calibrate 2nd observations data as well, will place here
-- will combine reduced data from both observations to form one dataset if 2nd observations data is acceptable
+- wanted to calibrate 2nd observations data and planned to place reduced file here
+    + However, didn't and won't calibrate that set beacuse of terrible phase
+- wanted to combine reduced data from both observations to form one dataset, but 2nd observations data is NOT acceptable
