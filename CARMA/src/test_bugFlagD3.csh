@@ -83,26 +83,24 @@ set mir_raw        = "raw.mir"
 set mir_cal_wide   = $dataPATH/$dir_reduced/${root}_wide.mir
 set mir_cal_narrow = $dataPATH/$dir_reduced/${root}_narrow.mir
 set out_base       = "base.vis"
-set fname          = "base_flagMars.mir"
 
 # Gain-calibrator flux used in mfcal
 set mfcal_flux = ""
 if ($flux_gaincal != "") set mfcal_flux = "flux=$flux_gaincal"
 
-goto base
+goto temp_Im
 # ***********************
 # **** COPY RAW DATA ****
 # ***********************
 # Only need to run once
-set out = $mir_raw
-# rm -rf $dataPATH/$dir_tmp/$out
+# rm -rf $dataPATH/$dir_tmp/$mir_raw
 
-if (!(-e $dataPATH/$dir_tmp/$out)) then
+if (!(-e $dataPATH/$dir_tmp/$mir_raw)) then
   echo ""
-  echo "*** Making copy of raw data  (vis=$dataPATH/$dir_vis/$vis out=$dataPATH/$dir_tmp/$out)"
-  uvcat vis=$dataPATH/$dir_vis/$vis out=$dataPATH/$dir_tmp/$out options=nowide
+  echo "*** Making copy of raw data  (vis=$dataPATH/$dir_vis/$vis out=$dataPATH/$dir_tmp/$mir_raw)"
+  uvcat vis=$dataPATH/$dir_vis/$vis out=$dataPATH/$dir_tmp/$mir_raw
 endif
-set vis=$out
+set vis=$mir_raw
 
 ##############################
 #### INSPECT DATA LOG ########
@@ -161,11 +159,13 @@ endif
 ##################################
 #### BASELINE CALIBRATION ########
 ##################################
-rm -rf $out_base
-
 base:
+set vis=$mir_raw
+rm -rf $out_base
 uvedit vis=$vis out=$out_base apfile=$antpos
 set vis=$out_base
+echo -n "*** HIT RETURN TO CONTINUE ***"
+set ans = "$<"
 
 ##########################
 #### FLAGGING ############
@@ -279,7 +279,7 @@ uvflag vis=$vis flagval=flag select="ant(12)(5,14)"
 #### SEPARATE NOISE ########
 ###############################
 linecal:
-set vis = out_base
+set vis = $out_base
 
 # This is needed since linecal should not be applied to noise source data.
 # select out only the data (cut out the NOISE source and auto correlations
@@ -404,30 +404,6 @@ echo ""
 echo "*** Applying passband to wideband data  (vis=$vis_wide out=$out)"
 uvcat vis=$vis_wide out=$out options=nocal
 set vis_wide = $out
-
-#######################################################
-### Check passband calibration with point source ######
-#######################################################
-if ("$flux_object" != "") then
-    set vis_wide = "astro_pb_wide.mir"
-    set second = $flux_object
-    # Continuum image - MFS
-    echo ""
-    echo "*** Making continum image of $second  (vis=$vis_wide)"
-    echo "*** Units are in Janskys"
-    echo ""
-    echo "*** Should look like a Point source "
-    set map="$second.cont.temp.map"
-    set beam="$second.cont.temp.beam"
-    set model="$second.cont.temp.cc"
-    set cm="$second.cont.temp.cm"
-    set res="$second.cont.temp.res"
-    rm -rf $map $beam $model $res $cm
-    invert vis=$vis_wide map=$map beam=$beam robust=$robust cell=$cell options=mosaic,mfs,systemp select="source($second)" imsize=$imsize
-    cgdisp device=/xs in=$map labtyp=arcsec options=full,beambr,wedge,3val region=quarter labtyp=hms,dms csize=0.5,0.5,0.5
-    echo -n "*** HIT RETURN TO CONTINUE ***"
-    set ans = "$<"
-endif
 
 
 ####################################
@@ -557,7 +533,7 @@ set ans = "$<"
 # Amplitude vs. uv distance on phase gain calibrator
 echo ""
 echo "*** Plotting amplitude vs uvdistance on gain calibrator"
-echo "*** Amplitudes should be centered on flux calibrator flux."
+echo "*** Amplitudes should be centered on calibrator flux."
 smauvplt device=/xs vis=$vis_wide select="source($gain)" options=nobase axis=uvdist,amp
 echo -n "*** HIT RETURN TO CONTINUE ***"
 set ans = "$<"
@@ -566,20 +542,46 @@ set ans = "$<"
 echo "*** This will go into part of another imaging script *** "
 echo "*** We'll continue making rough images for now"
 
+
+#######################################################
+### Check calibration with source
+### Create Images in tmp
+#######################################################
 temp_Im:
-#Create Images in tmp
+
 #set sources = `echo $science | sed 's/,/ /g'`
 set vis_wide = "astro_pb_wide.mir"
+
+if ("$flux_object" != "") then
+    set second = $flux_object
+    # Continuum image - MFS
+    echo ""
+    echo "*** Making continum image of $second  (vis=$vis_wide)"
+    echo "*** Units are in Janskys"
+    echo ""
+    echo "*** Should look like a Point source "
+    set map   = "$second.cont.temp.map"
+    set beam  = "$second.cont.temp.beam"
+    set model = "$second.cont.temp.cc"
+    set cm    = "$second.cont.temp.cm"
+    set res   = "$second.cont.temp.res"
+    rm -rf $map $beam $model $res $cm
+    invert vis=$vis_wide map=$map beam=$beam robust=$robust cell=$cell options=mosaic,mfs,systemp select="source($second)" imsize=$imsize
+    cgdisp device=/xs in=$map labtyp=arcsec options=full,beambr,wedge,3val region=quarter labtyp=hms,dms csize=0.5,0.5,0.5
+    echo -n "*** HIT RETURN TO CONTINUE ***"
+    set ans = "$<"
+endif
+
 set sources = $science
 # Continuum image - MFS
 echo ""
 echo "*** Making continum image of $sources  (vis=$vis_wide)"
 echo "*** Units are in Janskys"
-set map="$sources.cont.temp.map"
-set beam="$sources.cont.temp.beam"
-set model="$sources.cont.temp.cc"
-set cm="$sources.cont.temp.cm"
-set res="$sources.cont.temp.res"
+set map   = "$sources.cont.temp.map"
+set beam  = "$sources.cont.temp.beam"
+set model = "$sources.cont.temp.cc"
+set cm    = "$sources.cont.temp.cm"
+set res   = "$sources.cont.temp.res"
 rm -rf $map $beam $model $res $cm
 invert vis=$vis_wide map=$map beam=$beam robust=$robust cell=$cell options=mosaic,mfs,systemp select="source($sources)" imsize=$imsize
 cgdisp device=/xs in=$map labtyp=arcsec options=full,beambr,wedge,3val region=quarter labtyp=hms,dms csize=0.5,0.5,0.5
@@ -624,6 +626,11 @@ restor model=$model map=$map beam=$beam out=$cm fwhm=$bmaj,$bmin pa=$bpa
 restor out=$res map=$map beam=$beam model=$model mode=residual
 
 echo ""
+echo "*** Plotting map after mossdi cleaning"
+cgdisp device=/xs in=$cm labtyp=arcsec options=full,beambr,wedge,3val region=quarter labtyp=hms,dms csize=1,1,1
+echo -n "*** HIT RETURN TO CONTINUE ***"
+set ans = "$<"
+echo ""
 echo "*** Plotting residuals with mossdi cleaning"
 cgdisp device=/xs in=$res labtyp=arcsec options=full,beambr,wedge,3val region=quarter labtyp=hms,dms csize=1,1,1
 echo -n "*** HIT RETURN TO CONTINUE ***"
@@ -661,5 +668,4 @@ fits in=$cm out=$f_mossdi.fits op=xyout
 # fits in=$cm out=$f_clean.fits op=xyout
 
 cd $starting_dir
-
 
