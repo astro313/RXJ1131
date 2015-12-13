@@ -194,6 +194,7 @@ set ans = "$<"
 
 ##########################
 #### FLAGGING ############
+# # uvplt, varplt, uvflag, blflag, uvimage, uvlist option=bfmask (identify why data was flagged)
 ##########################
 # Flag shadowed baselines
 echo ""
@@ -435,6 +436,9 @@ set vis_wide = $out
 ### FLUX CALIBRATION #########
 ####################################
 fluxcal:
+echo ""
+echo "*** Starting flux calibration"
+
 set vis_wide = "astro_pb_wide.mir"
 if ("$flux_gaincal" == "" && "$flux_planet" != "") then
     echo ""
@@ -517,7 +521,7 @@ mfcal vis=$vis_wide select="source($gain)" refant=$ant options=nopass $mfcal_flu
 echo "*** Plotting wideband amplitudes (vis=$vis_wide)"
 echo "*** Amplitudes should vary smoothly in time and should have a value of ~ 1."
 #plot result amp
-smagpplt device=4/xs vis=$vis_wide nxy=5,3 options=dot,nofit dotsize=$dotsize yrange=0.5,1.2
+smagpplt device=1/xs vis=$vis_wide nxy=5,3 options=dot,nofit dotsize=$dotsize yrange=0.5,1.5
 echo -n "*** HIT RETURN TO CONTINUE ***"
 set ans = "$<"
 
