@@ -56,7 +56,7 @@ set imsize         = 256
 set cell           = 0.75
 set imsize_mfs     = 256
 set cellsize_mfs   = 0.75
-set sig            = 2.0
+set sig_two        = 2.0
 set sig_conserve   = 3
 
 set redshift        = 0.655
@@ -82,7 +82,8 @@ if ($contops =~ *'mosaic'* ) then
     set contbeam = $src.contbeam.mosaic
     set linmap   = $src.linmap.mosaic
     set linbeam  = $src.linbeam.mosaic
-    set offRegion_slab       = "boxes(30,30,110,110)(80,140)"
+    set offRegion_slab_bin2       = "boxes(30,30,110,110)(80,140)"
+    set offRegion_slab_bin5       = "boxes(30,30,110,110)(30,55)"
     set offRegion            = "boxes(30,30,110,110)"         # for continuum
     set offRegion_lineNoCont = "boxes(30,30,110,110)(80,140)"
 else
@@ -91,12 +92,14 @@ else
     set contbeam = $src.contbeam
     set linmap   = $src.linmap
     set linbeam  = $src.linbeam
-    set offRegion_slab       = "boxes(30,30,110,110)(80,140)"
+    set offRegion_slab_bin2       = "boxes(30,30,110,110)(80,140)"
+    set offRegion_slab_bin5       = "boxes(30,30,110,110)(30,55)"
     set offRegion            = "boxes(30,30,110,110)"         # for continuum
     set offRegion_lineNoCont = "boxes(30,30,110,110)(80,140)"
 endif
 
-set region_LSB           = "boxes(125,125,130,130)(55,65)"
+# set region_LSB           = "boxes(125,125,130,130)(55,65)"
+set region_LSB           = "boxes(125,125,130,130)(22,26)"
 # #set region_lineNoCont    = "boxes(124,129,132,135)(65,85)"
 # set region_lineNoCont    = "boxes(124,129,132,135)"
 # set region_mfs           = "boxes(149,153,151,155)"
@@ -144,7 +147,7 @@ else
     set src     = RXJ1131.LSB_linewithCont
 endif
 
-set bin      = 2
+set bin      = 5
 set onebin_v = 17.935
 set bluest   = -2192.49
 set redest   = 3134.27
@@ -163,7 +166,7 @@ rm -rf $sourcefits
 fits in=$LSBmap out=$sourcefits op=xyout
 # CASAviewer to adjust region
 
-histo in=$LSBmap region=$offRegion_slab  # off source
+histo in=$LSBmap region=$offRegion_slab_bin5  # off source
 # rms: 1.60419E-02
 echo -n "Cick Enter"
 set ans ="$<"
@@ -171,8 +174,9 @@ set ans ="$<"
 
 echo ""
 echo "*** Cleaning Image"
-set cutoff      = `histo in=$LSBmap region=$offRegion_slab | grep Rms | awk '{printf "%.3e", $4}'`
+set cutoff      = `histo in=$LSBmap region=$offRegion_slab_bin5 | grep Rms | awk '{printf "%.3e", $4}'`
 echo $cutoff
+set cutoff      = `calc "$sig_two*$cutoff"`
 set threshold   = `calc "$sig_conserve*$cutoff"`
 
 if ($lineops =~ *'mosaic'* ) then
@@ -199,7 +203,7 @@ if ($lineops =~ *'mosaic'* ) then
     echo ""
     echo "*** Cleaning Image"
     rm -rf $src.cc
-    mossdi map=$LSBmap beam=$LSBbeam out=$src.cc niters=10000 cutoff=$threshold region=$region_LSB
+    mossdi map=$LSBmap beam=$LSBbeam out=$src.cc niters=10000 cutoff=$cutoff region=$region_LSB
     echo ""
     echo "*** Restoring Cleaned Image"
     rm -rf $src.cm
@@ -221,9 +225,8 @@ restor model=$src.cc map=$LSBmap beam=$LSBbeam out=$src.res mode=residual
 echo ""
 echo " *** # check distribution plotting histogram on line residual "
 echo ""
-imhist in=$src.res region=$offRegion_slab device=/xs options=nbin,100
-histo in=$src.cm region=$offRegion_slab
-# imlist options=stat in=$src.cm region=$offRegion_slab
+imhist in=$src.res region=$offRegion_slab_bin5 device=/xs options=nbin,100
+histo in=$src.cm region=$offRegion_slab_bin5
 echo -n "*** HIT RETURN TO CONTINUE ***"
 set ans = "$<"
 
