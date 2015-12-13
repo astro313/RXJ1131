@@ -1,11 +1,36 @@
 #! /bin/csh -f
-
-
-# Author: Daisy
-# Last Update :
-# Purpose: Calibrate RX J1131 Data using Miriad
-# Test how well it is calibrated without fixing the original flag, also run with old script that I have applied to other data
 #
+# Purpose: Fully calibrate the dataset
+#
+# Author: Daisy Leung
+#
+# Last Modified: Dec 13 2015
+#
+#
+# Inputs
+# ------
+# - using the 3rd observation
+#
+#
+# Outputs
+# -------
+# - Everything is under $dir_tmp except for the fully calibrated .mir which is under $dir_reduced
+#
+#
+# History
+# -------
+# Dec 13 2015
+# - flagged more, amp on gain calibrator after calibration has scatter
+# Sept 2 2015
+# - created script, ran and maybe need more flagging
+#
+# Note:
+# - may want to change interval_gain?
+# - The phase calibrator is far away for this set
+# - also make dirty and clean mfs image of the whole image cube
+#
+# Further analysis such as shifting header rest freq and imaging
+# is in another script
 #
 
 #################################
