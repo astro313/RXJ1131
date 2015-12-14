@@ -1,7 +1,7 @@
 #! /bin/csh -f
 
 # Author : Daisy Leung
-# Last Modified: Dec 13 2015
+# Last Modified: Dec 14 2015
 #
 #
 # Todo:
@@ -11,6 +11,10 @@
 #
 # History:
 # --------
+# Dec-14-2015:
+#    - continuum subtraction -> line cube, moment map
+#    - Image plane cont. sub. moment 0 map is weird, similar issue before with NA.v1.489 (don't know why)
+#    - contiuum map
 # Dec-13-2015:
 #   - change USB to LSB (where line is)
 #   - used script to make line cube
@@ -83,7 +87,7 @@ if ($contops =~ *'mosaic'* ) then
     set contbeam = $src.contbeam.mosaic
     set linmap   = $src.linmap.mosaic
     set linbeam  = $src.linbeam.mosaic
-    set offRegion_slab_bin2       = "boxes(30,30,110,110)(80,140)"
+    set offRegion_slab_bin2  = "boxes(30,30,110,110)(80,140)"
     set offRegion            = "boxes(30,30,110,110)"         # for continuum
     set offRegion_lineNoCont = "boxes(30,30,110,110)(80,140)"
 else
@@ -92,11 +96,12 @@ else
     set contbeam = $src.contbeam
     set linmap   = $src.linmap
     set linbeam  = $src.linbeam
-    set offRegion_slab_bin2       = "boxes(30,30,110,110)(80,140)"
+    set offRegion_slab_bin2  = "boxes(30,30,110,110)(80,140)"
     set offRegion            = "boxes(30,30,110,110)"         # for continuum
     set offRegion_lineNoCont = "boxes(30,30,110,110)(80,140)"
 endif
 
+# on source regions
 set region_LSB           = "boxes(125,125,130,130)(55,65)"
 # #set region_lineNoCont    = "boxes(124,129,132,135)(65,85)"
 # set region_lineNoCont    = "boxes(124,129,132,135)"
@@ -113,7 +118,7 @@ echo "*** Change cleaning mask as needed ****"
 echo -n "Cick Enter"
 set ans ="$<"
 
-# goto LSB
+goto LSB
 # ===============================
 # Take out Science object ONLY
 rm -rf $outscience
@@ -146,6 +151,8 @@ if ($lineops =~ *'mosaic'* ) then
 else
     set src     = RXJ1131.LSB_linewithCont
 endif
+
+goto LSBcont
 
 set bin      = 2
 set onebin_v = 17.935
@@ -233,93 +240,74 @@ set ans = "$<"
 
 rm -rf $LSB_cln
 fits in=$src.cm out=$LSB_cln op=xyout
-exit
 # goto cont
-
-# ############################################
-# ###########  MOMENT Maps for CO(3-2) ########
-# BLAH contains line in LSB without continuum subtraction
-#################################################
-mom0:
-set src=lsb
-echo ""
-echo "*** Inspect USB spectrum near source center and channels before subtracting cont."
-echo ""
-imspect in=$src.cm device=/xs hann=1 region="relcenter,boxes(-5,-5,5,5)(130,220)"
-
-echo ""
-echo "*** Moment 0 map of CO(3-2) in the inner quarter map, no continuum subtraction"
-echo ""
-rm -rf $src.co32_quarter.cm
-imsub in=$src.cm region="quarter(150,200)" out=$src.co32_quarter.cm
-cgdisp in=$src.co32_quarter.cm type=p xybin=1,1 device=/xs nxy=1,1 options=full,beambr,wedge,trlab,3val labtyp=arcsec,arcsec csize=1,1,1  range=0,0.045,lin,2
-rm -rf $src.co32.mom0
-moment mom=0 in=$src.co32_quarter.cm out=$src.co32.mom0
-cgdisp in=$src.co32.mom0,$src.co32.mom0 type=p,c xybin=1,1 device=/xs nxy=1,1 options=full,beambr,wedge,trlab,3val labtyp=arcsec,arcsec csize=1,1,1  range=0,20,lin,2 slev=a,1.350 levs1=-6,-3,3,5,7,10
-rm -rf $src.co32.mom0.fits
-fits in=$src.co32.mom0 out=$src.co32.mom0.fits op=xyout
 
 # #############################################################################
 # Image plane continuum subtraction and make mom0 map of CO(3-2)
-##############################################################################
-# =======
-# Alternative way to subtract continuum in image plane DO in casa
+#
+# Alternative way to subtract continuum in image plane in casa
 # 1: get average map with channels excluding the line
 # 2: get mfs image with line channels
 # 3: subtract the entire map with line and continuum from the image from step 1
-
-
+#
+###############################################################################
+LSBcont:
 echo ""
 echo "*** Image plane continuum subtraction"
 echo ""
 rm -rf $src.imcontsub.line.cm $src.cont.cm
-contsub in=$src.cm contchan="(1,150)(200,355)" out=$src.imcontsub.line.cm cont=$src.cont.cm region="images(150,200)" # mode="poly,1"  verbose=true
+contsub in=$src.cm contchan="(1,45)(73,146)" out=$src.imcontsub.line.cm cont=$src.cont.cm region="images(58,65)" verbose=true
 
 echo ""
-echo "*** Inspect USB spectrum near source center and channels after subtracting cont."
+echo "*** Inspect LSB spectrum near source center and channels after subtracting cont."
 echo ""
-imspect in=$src.imcontsub.line.cm device=/xs hann=1 region="relcenter,boxes(-5,-5,5,5)"
+imspect in=$src.imcontsub.line.cm device=/xs hann=3 region="boxes(128,124,135,130)"
+echo -n "*** HIT RETURN TO CONTINUE ***"
+set ans = "$<"
 
 echo ""
-echo "*** Inspect USB Continuum RMS"
-histo in=$src.cont.cm region="relcenter,boxes(-25,-25,-10,-10)"
-# 3.33418E-3
-cgdisp in=$src.cont.cm,$src.cont.cm type=p,c xybin=1,1 device=/xs nxy=1,1 options=full,beambr,wedge,3val labtyp=hms,dms csize=1,1,1 range=0,0.02,log,2 slev=a,0.003341 levs1=-6,-3,3,5,7,10 region="relcenter,boxes(-25,-25,25,25)"
+echo "*** Inspect LSB Continuum RMS"
+histo in=$src.cont.cm region="boxes(20,20,100,100)"
+#6.83944E-03
+cgdisp in=$src.cont.cm,$src.cont.cm type=p,c xybin=1,1 device=/xs nxy=1,1 options=full,beambr,wedge,3val labtyp=hms,dms csize=1,1,1 range=0,2.738700E-02,log,2 slev=a,6.83944E-03 levs1=-6,-3,-2,2,3,5,7,10 region="relcenter,boxes(-10,-10,10,10)"
 
 echo ""
-echo "*** USB Continuum by poly-fit of first order ***"
+echo "*** export LSB Continuum to fits ***"
 echo ""
 rm -rf $src.cont.cm.fits
 fits in=$src.cont.cm out=$src.cont.cm.fits op=xyout
+echo -n "*** HIT RETURN TO CONTINUE ***"
+set ans = "$<"
 
 echo ""
 echo "*** Make Moment 0 map of CO(3-2) in the inner quarter map"
 echo ""
-rm -rf $src.150_200_co32_contsub.mom0 $src.imcontsub.line.quarter.cm
+rm -rf $src.58_65_co32_contsub.mom0 $src.imcontsub.line.quarter.cm
 imsub in=$src.imcontsub.line.cm out=$src.imcontsub.line.quarter.cm # region="quarter"
 histo in=$src.imcontsub.line.cm region="relcenter,boxes(-25,-25,-10,-10)"
+# 1.16896E-02
 echo -n "Cick Enter"
 set ans ="$<"
-moment mom=0 in=$src.imcontsub.line.quarter.cm out=$src.150_200_co32_contsub.mom0  		# << making weird image
+moment mom=0 in=$src.imcontsub.line.quarter.cm out=$src.58_65_co32_contsub.mom0  		# << making weird image, ridiculous pixel values, can't figure out, same problem as with NAv1.489
 
 echo ""
 echo "*** RMS of Moment 0 map of CO(3-2) -- Off emission for contour"
 echo ""
-histo in=$src.150_200_co32_contsub.mom0 region="relcenter,boxes(-25,-25,-5,-5)"
+histo in=$src.58_65_co32_contsub.mom0 region="boxes(10,10,120,50)"
 echo -n "Cick Enter"
 set ans ="$<"
 echo ""
 echo "*** MAX of Moment 0 map of CO(3-2) -- on emission for cgdisp range"
 echo ""
-# imlist in=$src.150_200_co32_contsub.mom0 options=statistics
+# imlist in=$src.58_65_co32_contsub.mom0 options=statistics
 echo -n "Cick Enter"
 set ans ="$<"
-histo in=$src.150_200_co32_contsub.mom0 # region="relcenter,boxes(-5,-5,5,5)"
+histo in=$src.58_65_co32_contsub.mom0 # region="relcenter,boxes(-5,-5,5,5)"
 echo -n "Cick Enter"
 set ans ="$<"
 
 rm -rf $src.co32_imcontsub.quarter.mom0
-imsub in=$src.150_200_co32_contsub.mom0 out=$src.co32_imcontsub.quarter.mom0 region="relcenter,boxes(-15,-15,15,15)"
+imsub in=$src.58_65_co32_contsub.mom0 out=$src.co32_imcontsub.quarter.mom0 region="relcenter,boxes(-15,-15,15,15)"
 
 rm -rf $src.co32_imcontsub.quarter.mom0.fits
 fits in=$src.co32_imcontsub.quarter.mom0  out=$src.co32_imcontsub.quarter.mom0.fits op=xyout
@@ -329,7 +317,7 @@ set ans ="$<"
 
 exit
 # ===================== CONTINUUM =========================
-# ======= chan BLAH of lsb.cm is line emission
+# ======= chan 43-72 of LSB line cube is line emission
 #====== Separate out the Line-free and line channels in LSB =========
 # ========== and clean them again separately ============
 # =========================================================
@@ -344,13 +332,13 @@ endif
 echo " "
 echo "*** Determine line-free spectrum"
 echo " "
-# smauvspec vis=$shiftedscience options=nobase,avall interval=1000 hann=5 axis=chan,amp device=1/xs nxy=1,1 line=channel,156,1000,2,2
+#smauvspec vis=$shiftedscience options=nobase,avall interval=1000 hann=5 axis=chan,amp device=1/xs nxy=1,1 line=channel,156,1000,2,2
 
 # smauvspec vis=$shiftedscience options=nobase,avall interval=1000 hann=5 axis=freq,amp device=2/xs nxy=1,1 line=channel,156,1000,2,2
 #smauvspec vis=$shiftedscience options=nobase,avall interval=1000 hann=5 axis=vel,amp device=3/xs nxy=1,1 line=channel,313,1000
 # echo -n "Cick Enter"
 # set ans ="$<"
-# 1-761, 761-920, 1371-1521 are line free in $shiftedscience (LSB and USB combined uvfile)
+# 1-761, 761-920, 1371-1521 are line free in $shiftedscience (LSB and LSB combined uvfile)
 
 echo " "
 echo "*** Continuum subtraction"
@@ -358,7 +346,7 @@ rm -rf $src.uvcont $src.uvlin
 uvlin vis=$shiftedscience chans=1,920,1371,1521 out=$src.uvcont mode=cont options=nowindow
 uvlin vis=$shiftedscience chans=1,920,1371,1521 out=$src.uvlin line=channel,156,1000,2,2 mode=line options=nowindow 	# the line data after continuum subtraction			line=channel,313,1000
 
-# to compare noise with USB cube before removing continuum
+# to compare noise with LSB cube before removing continuum
 # which is consistent,
 # will continue using line=channel,156,100,2,2 for mom0 (post-cont.sub) because the way I coded it uses the channels that corresponds to that cube (i.e., cube generated with line=channel,156,100,2,2)
 rm -rf $src.uvlin.vel
