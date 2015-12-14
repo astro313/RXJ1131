@@ -29,7 +29,7 @@ begin procedure plot_model
   g\clear
   ! Plot the spectrum
 !  g\limits /var x y
-  g\limits -2000 2000 -25.0 120  ! x y range
+  g\limits -2000 2000 -35.0 120  ! x y range
   g\box
   g\pen 0 /col 0 /dash 1 /weight 2
   g\histo /base 4.40 /fill 5
