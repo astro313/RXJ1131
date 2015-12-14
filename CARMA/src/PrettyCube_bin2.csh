@@ -13,7 +13,7 @@
 # --------
 # Dec-14-2015:
 #    - continuum subtraction -> line cube, moment map
-#    - Image plane cont. sub. moment 0 map is weird, similar issue before with NA.v1.489 (don't know why)
+#    - Image plane LSB cont. sub. moment 0 map is weird, similar issue before with NA.v1.489 (don't know why) --> remove that block of code to avoid confusion
 #    - contiuum map
 # Dec-13-2015:
 #   - change USB to LSB (where line is)
@@ -286,31 +286,6 @@ rm -rf $src.58_65_co32_contsub.mom0 $src.imcontsub.line.quarter.cm
 imsub in=$src.imcontsub.line.cm out=$src.imcontsub.line.quarter.cm # region="quarter"
 histo in=$src.imcontsub.line.cm region="relcenter,boxes(-25,-25,-10,-10)"
 # 1.16896E-02
-echo -n "Cick Enter"
-set ans ="$<"
-moment mom=0 in=$src.imcontsub.line.quarter.cm out=$src.58_65_co32_contsub.mom0  		# << making weird image, ridiculous pixel values, can't figure out, same problem as with NAv1.489
-
-echo ""
-echo "*** RMS of Moment 0 map of CO(3-2) -- Off emission for contour"
-echo ""
-histo in=$src.58_65_co32_contsub.mom0 region="boxes(10,10,120,50)"
-echo -n "Cick Enter"
-set ans ="$<"
-echo ""
-echo "*** MAX of Moment 0 map of CO(3-2) -- on emission for cgdisp range"
-echo ""
-# imlist in=$src.58_65_co32_contsub.mom0 options=statistics
-echo -n "Cick Enter"
-set ans ="$<"
-histo in=$src.58_65_co32_contsub.mom0 # region="relcenter,boxes(-5,-5,5,5)"
-echo -n "Cick Enter"
-set ans ="$<"
-
-rm -rf $src.co32_imcontsub.quarter.mom0
-imsub in=$src.58_65_co32_contsub.mom0 out=$src.co32_imcontsub.quarter.mom0 region="relcenter,boxes(-15,-15,15,15)"
-
-rm -rf $src.co32_imcontsub.quarter.mom0.fits
-fits in=$src.co32_imcontsub.quarter.mom0  out=$src.co32_imcontsub.quarter.mom0.fits op=xyout
 echo -n "Cick Enter"
 set ans ="$<"
 
