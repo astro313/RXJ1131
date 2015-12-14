@@ -120,15 +120,17 @@ rm -rf $outscience
 uvcat vis=$vis out=$outscience select="source(RXJ1131)"
 uvlist options=spec vis=$outscience
 
-# *******  Shift velocity of SOURCE UV  ********
-#  Calculated rest_velocity, see aftercal_uv2fits.csh
+# ======== Shift velocity of SOURCE UV ==========
 set restfreq=`calc -f f0.10 "$Linefreq/($redshift+1)"`
 rm -rf $shiftedscience
 uvputhd vis=$outscience hdvar=restfreq varval=$restfreq out=$shiftedscience
-uvlist options=spec vis=$shiftedscience  # to check
+uvlist options=spec vis=$shiftedscience  # to confirm it's shifted
 
+# check total observation time on-source after flagging
+uvindex vis=$shiftedscience
 # goto cont
-#####################################
+
+# ================================================
 echo " "
 echo "*** Check for spectra of RXJ1131"
 smauvspec vis=$shiftedscience interval=1000 hann=5 axis=chan,amp device=/xs nxy=3,5
