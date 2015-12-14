@@ -1,0 +1,76 @@
+! Author: Daisy Leung
+!
+! Last Modified: 13 Dec 2015
+!
+! Purpose:
+!     Using Procedure to fit Gaussian to Spectrum for data binned by 5 channels
+!
+! History:
+! 13 Dec 2015: copied script from LTKpy
+!
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+
+begin procedure plot_legend
+  g\pen /weight 2
+  g\draw relo -3700 &1 /user        ! start point for line
+  g\draw line -3500 &1 /user        ! end point for line
+  g\draw text -1500 &1 "&2" /user   ! x, y loc, "string"
+end procedure plot_legend
+
+begin procedure plot_model
+  g\set /def xlandscape white
+  g\set plot landscape
+  set box 3.6 29 5 20
+  g\clear
+  ! Plot the spectrum
+!  g\limits /var x y
+  g\limits -2000 2000 -25.0 70  ! x y range
+  g\box
+  g\pen 0 /col 0 /dash 1 /weight 2
+  g\histo /base 5 /fill 5
+  g\histo /fill 0       ! black line superpose on histogram
+!   @ plot_legend &1 "Spectrum"
+end procedure plot_model
+
+begin procedure plot_fit
+  ! Plot the fit
+  g\connect x mfit%fit
+!  @ plot_legend &1 "&2"
+end procedure plot_fit
+!----------------------------------------------
+
+column x 1 y 2 /file co32_bin5.spec
+let x 208.9401-(x/299792.458*208.9401)
+let x x*1.655
+let x (((345.7959899-x)/345.7959899)*299792.458)
+@ plot_model 100
+
+set expand 1.25   ! font size
+draw text -1000 65 "\\2 CO(\iJ=3-2) (z=0.655) RXJ1131" /user
+set expand 1
+label "Velocity offset [km/s]" /x
+label "Flux density [mJy]" /y
+
+!say ""
+!message i demo "Double Gaussian Fit:"
+!mfit y=&a*Exp(-((x-&b)^2|(2*&c^2)))+&d + &e*Exp(-((x-&f)^2|(2*&g^2))) /metho !powell /start 50,-1300,100,0.1,122,-460,100
+!
+!g\pen 0 /col 1 /dash 1 /weight 5    ! red line
+! @ plot_fit 65
+
+say ""
+message i demo "Single Gaussian Fit:"
+mfit y=&a*Exp(-((x-&b)^2|(2*&c^2)))+&d /metho powell /start 50,0,200,3 /STEP 0.1, 0.001, 0.001, 0.1
+g\pen 0 /col 0 /dash 1 /weight 3    ! line
+@ plot_fit
+
+! --- draw baseline --------------------------------------------------
+g\pen 0 /col 0 /dash 3
+let y 5    ! dotted line
+connect x y
+! @ plot_legend 80 "Baseline"
+g\pen 0 /col 0 /dash 1 /weight 3
+box  ! draw box
+
+! --- Save ---------------------------------------------------------
+hard co32_spec_bin5.eps /dev eps colo
