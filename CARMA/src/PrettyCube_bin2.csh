@@ -103,9 +103,8 @@ endif
 
 # on source regions
 set region_LSB           = "boxes(125,125,130,130)(55,65)"
-# #set region_lineNoCont    = "boxes(124,129,132,135)(65,85)"
-# set region_lineNoCont    = "boxes(124,129,132,135)"
-# set region_mfs           = "boxes(149,153,151,155)"
+set region_lineNoCont    = "boxes(125,125,130,130)"
+# set region_mfs           = "boxes(125,125,130,130)"
 
 
 cd $dataPATH/$dir_cal
@@ -118,7 +117,7 @@ echo "*** Change cleaning mask as needed ****"
 echo -n "Cick Enter"
 set ans ="$<"
 
-goto LSB
+goto cont
 # ===============================
 # Take out Science object ONLY
 rm -rf $outscience
@@ -152,7 +151,7 @@ else
     set src     = RXJ1131.LSB_linewithCont
 endif
 
-goto LSBcont
+# goto LSBcont
 
 set bin      = 2
 set onebin_v = 17.935
@@ -290,9 +289,8 @@ echo -n "Cick Enter"
 set ans ="$<"
 
 
-exit
 # ===================== CONTINUUM =========================
-# ======= chan 43-72 of LSB line cube is line emission
+# ======= chan 58-65 of LSB line cube is line emission
 #====== Separate out the Line-free and line channels in LSB =========
 # ========== and clean them again separately ============
 # =========================================================
@@ -303,43 +301,61 @@ else
     set src=RXJ1131
 endif
 
-# 1. In uv-plane: uvlin
-echo " "
-echo "*** Determine line-free spectrum"
-echo " "
-#smauvspec vis=$shiftedscience options=nobase,avall interval=1000 hann=5 axis=chan,amp device=1/xs nxy=1,1 line=channel,156,1000,2,2
 
-# smauvspec vis=$shiftedscience options=nobase,avall interval=1000 hann=5 axis=freq,amp device=2/xs nxy=1,1 line=channel,156,1000,2,2
-#smauvspec vis=$shiftedscience options=nobase,avall interval=1000 hann=5 axis=vel,amp device=3/xs nxy=1,1 line=channel,313,1000
-# echo -n "Cick Enter"
-# set ans ="$<"
-# 1-761, 761-920, 1371-1521 are line free in $shiftedscience (LSB and LSB combined uvfile)
+echo -n "*** Do you want to plot the spectrum to select / confirm line channels (Y/N)? "
+set ans = "$<"
+if ($ans == "Y" || $ans == "y" || $ans == "1") then
+    # 1. In uv-plane: uvlin
+    echo " "
+    echo "*** Determine line-free spectrum"
+    echo " "
+    smauvspec vis=$shiftedscience options=nobase,avall interval=1000 hann=5 axis=chan,amp device=1/xs nxy=1,1 line=channel,39,79,1,1
+    # total channels: uvlist $shiftedscience option=spec --> 586+39 = 625
+    # the window containing the line: [79: 79+39]
+    #
+    smauvspec vis=$shiftedscience options=nobase,avall interval=1000 hann=5 axis=freq,amp device=2/xs nxy=1,1 line=channel,146,1,2,2
+    smauvspec vis=$shiftedscience options=nobase,avall interval=1000 hann=5 axis=vel,amp device=3/xs nxy=1,1 line=channel,146,1,2,2
+    echo -n "Cick Enter"
+    set ans ="$<"
+endif
+
 
 echo " "
 echo "*** Continuum subtraction"
 rm -rf $src.uvcont $src.uvlin
-uvlin vis=$shiftedscience chans=1,920,1371,1521 out=$src.uvcont mode=cont options=nowindow
-uvlin vis=$shiftedscience chans=1,920,1371,1521 out=$src.uvlin line=channel,156,1000,2,2 mode=line options=nowindow 	# the line data after continuum subtraction			line=channel,313,1000
+uvlin vis=$shiftedscience chans=1,79,140,600 out=$src.uvcont order=1 mode=cont # options=nowindow
+uvlin vis=$shiftedscience chans=1,79,140,600 out=$src.uvlin order=1 mode=line
+uvlist vis=$src.uvlin options=spec
+echo -n "Cick Enter"
+set ans ="$<"
 
-# to compare noise with LSB cube before removing continuum
-# which is consistent,
-# will continue using line=channel,156,100,2,2 for mom0 (post-cont.sub) because the way I coded it uses the channels that corresponds to that cube (i.e., cube generated with line=channel,156,100,2,2)
 rm -rf $src.uvlin.vel
-uvlin vis=$shiftedscience chans=1,920,1371,1521 out=$src.uvlin.vel line=vel,355,-5042.6200,29.088,29.088 mode=line options=nowindow
+# echo ""
+# echo "*** LSB line cube chan selection (see above) ** "
+#  imsize=256, cell=0.75, bin=2, velocity width=35.870
+# uvlin vis=$shiftedscience chans=1,79,120,625 out=$src.uvlin.vel mode=line # options=nowindow
+# uvlist vis=$src.uvlin.vel options=spec
+#
 
 echo " "
 echo "*** Make a dirty image of line data and cont data, Binned in uvlin line=channel..."
 echo " "
 rm -rf $contmap $contbeam $linmap $linbeam $linmap.vel $linbeam.vel
-invert vis=$src.uvlin map=$linmap beam=$linbeam imsize=$imsize cell=$cell sup=0 robust=2 options=$lineops
-invert vis=$src.uvlin.vel map=$linmap.vel beam=$linbeam.vel imsize=$imsize cell=$cell sup=0 robust=2 options=$lineops
 invert vis=$src.uvcont map=$contmap beam=$contbeam imsize=$imsize_mfs cell=$cellsize_mfs robust=2 options=$contops
+# Mean Frequency(GHz):     215.
+# Theoretical rms noise: 7.497E-04
+invert vis=$src.uvlin map=$linmap beam=$linbeam imsize=$imsize cell=$cell robust=+2 options=$lineops line=vel,146,-2192.491,35.870,35.870 sup=0
+# invert vis=$src.uvlin.vel map=$linmap.vel beam=$linbeam.vel imsize=$imsize cell=$cell robust=2 options=$lineops
+exit
 
+echo -n "Cick Enter"
+set ans ="$<"
+exit
 echo " "
 echo "*** Determine noise level"
 echo " "
-histo in=$linmap region=$offRegion
-histo in=$linmap.vel region=$offRegion
+histo in=$linmap region=$offRegion_lineNoCont
+histo in=$linmap.vel region=$offRegion_lineNoCont
 histo in=$contmap region=$offRegion
 echo -n "Cick Enter"
 set ans ="$<"
@@ -347,9 +363,9 @@ set ans ="$<"
 echo ""
 echo "*** Cleaning Image"
 set cutoff        = `histo in=$linmap region=$offRegion_lineNoCont | grep Rms | awk '{printf "%.3e", $4}'`
-set threshold     = `calc "$sig*$cutoff"`
+set threshold     = `calc "$sig_two*$cutoff"`
 set cutoff_vel        = `histo in=$linmap.vel region=$offRegion_lineNoCont | grep Rms | awk '{printf "%.3e", $4}'`
-set threshold_vel     = `calc "$sig*$cutoff_vel"`
+set threshold_vel     = `calc "$sig_two*$cutoff_vel"`
 set cutoff_mfs    = `histo in=$contmap region=$offRegion | grep Rms | awk '{printf "%.3e", $4}'`
 set threshold_mfs = `calc "$sig_conserve*$cutoff_mfs"`
 
