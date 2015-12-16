@@ -1,6 +1,23 @@
 !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-! Be very conservative at cleaning, only perform channel-by-channel cleaning at the very last loop
-! check the line flux, seems more conssitent with dirty map
+!
+! Author: Daisy Leung
+! Created: 13 Oct 15
+! Last Modified: 13 Oct 15
+!
+! Be very conservative at cleaning, only perform chan-by-chan cleaning at the very last loop
+! checked the line flux, seems more conssitent with dirty map
+!
+!
+! History:
+! --------
+!
+!
+! Note:
+! -----
+! Is it even ok to cleaning in sequence using GILDAS? (seems GILDAS support this, see mapping.pdf)
+!
+!
+!
 !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 begin procedure click-pause
   !

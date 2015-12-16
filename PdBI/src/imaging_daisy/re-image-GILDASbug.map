@@ -1,0 +1,272 @@
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+!
+! Author: Daisy Leung
+! Created: 15 Dec 15
+! Last Modified: 15 Dec 15
+!
+! Output:
+! -------
+! /Users/admin/Research/RXJ1131/PdBI/data/15Dec15_B
+!
+!
+! History:
+! --------
+!
+!
+! Note:
+! -----
+! follow approach in mapping.pdf, just in case I wasn't using `hogbom i i` correctly
+! Found consistent cleaned map line intensity as in 04Sept15
+!
+!
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+!!!!!!!!!!!!!!!!!!!!!!!!
+! USER define
+!!!!!!!!!!!!!!!!!!!!!!!!
+define char UVTname*40
+sic\let UVTname = "co21_trial1"
+! delete /var UVTname
+
+define char UVTname2*40
+sic\let UVTname2 = "co21_trial2"
+
+def char NewPath*50
+sic\let NewPath = "/Users/admin/Research/RXJ1131/PdBI/data/15Dec15_B/"
+
+say ""
+say " *** Copying RP data cube to new Directory to work on ..."
+say "New DIR: "'NewPath'
+sic copy "/Users/admin/Research/RXJ1131/PdBI/data/RP/s14bx-co21.uvt" 'NewPath''UVTname'.uvt
+
+say ""
+say ""
+sic DIRECTORY 'NewPath'
+sys "pwd"
+
+! Erase everything (except uv tables) to start from scratch.
+go remove
+sys "ls -hltr "
+
+define integer totalchan
+let totalchan 360
+
+say " How many bad channels "
+define integer N_badchan
+let N_badchan 1
+
+say " Change the bad channel number(s)"
+IF (N_badchan.EQ.1) THEN
+  define integer badchan
+  let badchan 116
+ELSE
+  define integer badchan[N_badchan]
+  let badchan[1:N_badchan] 116 117
+ENDIF
+
+! color
+lut ?
+lut rainbow3       ! color table
+
+!!!!!!!!!!!!!!!!!!!!!!!!
+! UV table inspection
+!!!!!!!!!!!!!!!!!!!!!!!!
+let name 'UVTname'
+say "check UV"
+go uvcov
+sic wait 1
+
+say " *** Inspect UV data in bad channel "
+let first 'badchan'
+let last 'badchan'
+go uvshow
+sic wait 1
+let first 0
+let last 0
+
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+! 1) imaging dirty map
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+let name 'UVTname'
+input uv_map
+let map_size 256
+let map_cell 0.5
+go uv_map
+!
+!
+! Clean by box
+let type lmv
+inp clean
+let first 0
+let last 0
+let FRES 0      ! max abs. amp of res / max of dirty %
+let ares 3*1.443e-3
+let niter 50     ! to get the scaling right
+let BLC 124 114
+let TRC 141 137
+let size 20
+hogbom /flux 0 1
+!
+!
+! inspect after one sequence cleaning with box
+let first 126
+let last 156
+show residual
+show clean
+!
+!
+! save that one sequence clean and the corresponding dirty cube (which is same as co21_trial1.lmv)
+write clean demo
+write dirty demo
+write res demo
+stat clean
+! For the whole cube
+! I-STAT,  Using current support
+!  Found      432 pixels on,    50193 off source
+!  Map maximum:      0.012 at  132 124
+!  Map minimum:     -0.004 at  126 134
+! Mean:       2.70 mJy/beam
+!  rms:  On:      3.67  Off:      1.74 mJy/beam
+!  Total flux in CLEAN map:    29.727 mJy
+!  Tb scale for CLEAN map: 1  K = 137.4 mJy/beam
+!  Clean Beam is   4.445 x   1.950 sec at PA =   13. deg
+stat dirty
+
+let name demo
+say "Choosing the brightest channel to look at stat"
+let first 130
+let last 130
+let type lmv
+go noise
+let spacing 3*noise
+go bit
+extrema /compute                ! I think its based on the whole cube as I get the same numbers for different channels
+! Zmin = -1.12094E-02  at X = -9.69627E-06  Y =  2.73920E-04
+! Zmax =  2.77656E-02  at X = -1.69685E-05  Y = -4.84814E-06
+stat dirty
+! I-STAT,  Using current support
+!  Found      432 pixels on,    50193 off source
+!  Map maximum:      0.028 at  136 127
+!  Map minimum:     -0.007 at  124 126
+! Mean:       6.35 mJy
+!  rms:  On:      8.62  Off:      4.45 mJy
+
+
+! can only run `go flux` after clean
+let type lmv-clean
+go noise
+let spacing 3*noise
+go nice
+extrema /compute
+! Zmin = -8.47151E-03  at X = -2.42407E-06  Y =  3.07857E-04
+! Zmax =  2.97375E-02  at X = -1.69685E-05  Y = -7.27221E-06
+stat clean
+! I-STAT,  Using current support
+!  Found      432 pixels on,    50193 off source
+!  Map maximum:      0.030 at  136 126
+!  Map minimum:     -0.004 at  124 135
+! Mean:       7.46 mJy/beam
+!  rms:  On:      8.90  Off:      1.74 mJy/beam
+!  Total flux in CLEAN map:    82.048 mJy
+!  Tb scale for CLEAN map: 1  K = 137.4 mJy/beam
+!  Clean Beam is   4.445 x   1.950 sec at PA =   13. deg
+!
+! The two cubes (demo.lmv and demo.lmv-clean) seems to have comparable max
+!
+let first 0
+let last 0
+
+! ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+!
+! clean to 3sigma with more iterations, still using box, i.e. second sequence
+!
+let name demo
+let type lmv-res
+go noise
+let ares 3*noise
+inp clean
+let niter 1000
+hogbom /flux 0 1
+!
+let size 20
+let first 126
+let last 156
+show res
+show clean
+!
+let first 0
+let last 0
+go noise               ! histogram of whole cube
+!
+!
+! compare stat with demo.lmv-clean
+let first 130
+let last 130
+extrema /compute ! not reliable??? why lower peak than demo.lmv-clean
+! Zmin = -5.55313E-03  at X = -3.87851E-05  Y = -7.02980E-05
+! Zmax =  8.60733E-03  at X =  2.42407E-06  Y = -1.45444E-05
+stat clean
+! I-STAT,  Using current support
+!  Found      432 pixels on,    50193 off source
+!  Map maximum:      0.030 at  136 126
+!  Map minimum:     -0.004 at  124 135
+! Mean:       7.38 mJy/beam
+!  rms:  On:      8.87  Off:      1.84 mJy/beam
+!  Total flux in CLEAN map:    81.182 mJy
+!  Tb scale for CLEAN map: 1  K = 137.4 mJy/beam
+!  Clean Beam is   4.445 x   1.950 sec at PA =   13. deg
+!
+!
+! continue to clean (using clean mask, and only selected channels)
+!
+let myclean%support yes
+
+for i 126 to 156
+  show clean i i
+!  read support "chan-"'i'
+! exa myclean%support
+  sup /cursor
+  hogbom i i /flux 0 1
+  write support "chan-"'i'
+next
+!
+show res
+show clean
+let first 0
+let last 0
+show res
+show clean
+!
+! save it
+write clean chan
+write beam chan
+write residual chan
+write cct chan
+!
+!
+let name chan
+let type lmv-clean
+let first 110
+let last 160
+go noise
+go cct
+let first 0
+let last 0
+go noise
+go view
+
+let type lmv-res
+go view
+
+let type lmv-clean
+let first 0
+let last 110
+go noise
+let spacing 3*noise
+let size 20
+let first 125
+let last 160
+go nice
+
+
+sic directory "/Users/admin/Research/RXJ1131/PdBI/src/imaging_daisy"
+
