@@ -151,7 +151,7 @@ else
     set src     = RXJ1131.LSB_linewithCont
 endif
 
-# goto LSBcont
+goto LSBcont
 
 set bin      = 2
 set onebin_v = 17.935
@@ -166,8 +166,9 @@ echo "*** Making image with imsize=$imsize, cell=$cell, bin=$bin, velocity width
 rm -rf $LSBmap $LSBbeam
 
 invert vis=$shiftedscience map=$LSBmap beam=$LSBbeam imsize=$imsize cell=$cell slop=1 robust=+2 options=$lineops line=vel,$nchan,$start,$width,$width
-# theoretical rms noise: 1.190E-02
-
+### theoretical rms noise: 1.190E-02
+### Visibilities accepted: 15807
+### Warning [invert]:  Visibilities rejected: 3828
 rm -rf $sourcefits
 fits in=$LSBmap out=$sourcefits op=xyout
 # CASAviewer to adjust region
@@ -279,10 +280,10 @@ echo -n "*** HIT RETURN TO CONTINUE ***"
 set ans = "$<"
 
 echo ""
-echo "*** Make Moment 0 map of CO(3-2) in the inner quarter map"
+echo "*** Make cube of CO(3-2) using the inner quarter region"
 echo ""
 rm -rf $src.58_65_co32_contsub.mom0 $src.imcontsub.line.quarter.cm
-imsub in=$src.imcontsub.line.cm out=$src.imcontsub.line.quarter.cm # region="quarter"
+imsub in=$src.imcontsub.line.cm out=$src.imcontsub.line.quarter.cm region="quarter"
 histo in=$src.imcontsub.line.cm region="relcenter,boxes(-25,-25,-10,-10)"
 # 1.16896E-02
 echo -n "Cick Enter"
@@ -290,7 +291,7 @@ set ans ="$<"
 
 
 # ===================== CONTINUUM =========================
-# ======= chan 58-65 of LSB line cube is line emission
+# ======= chan 58-65 of LSB line cube (binned by 2) is line emission
 #====== Separate out the Line-free and line channels in LSB =========
 # ========== and clean them again separately ============
 # =========================================================
@@ -309,36 +310,41 @@ if ($ans == "Y" || $ans == "y" || $ans == "1") then
     echo " "
     echo "*** Determine line-free spectrum"
     echo " "
-    smauvspec vis=$shiftedscience options=nobase,avall interval=1000 hann=5 axis=chan,amp device=1/xs nxy=1,1 line=channel,39,79,1,1
+    # plot only channels around line channels
+    smauvspec vis=$shiftedscience options=nobase,avall interval=1000 hann=5 axis=chan,amp device=1/xs nxy=1,1 line=channel,80,79,1,1
     # total channels: uvlist $shiftedscience option=spec --> 586+39 = 625
     # the window containing the line: [79: 79+39]
     #
+    # Plot all in terms of channel
+    uvlist vis=$shiftedscience options=spec
+    smauvspec vis=$shiftedscience options=nobase,avall interval=1000 hann=5 axis=chan,amp device=1/xs nxy=1,1 line=channel,624,1,1,1
     smauvspec vis=$shiftedscience options=nobase,avall interval=1000 hann=5 axis=freq,amp device=2/xs nxy=1,1 line=channel,146,1,2,2
-    smauvspec vis=$shiftedscience options=nobase,avall interval=1000 hann=5 axis=vel,amp device=3/xs nxy=1,1 line=channel,146,1,2,2
+    smauvspec vis=$shiftedscience options=nobase,avall interval=500 hann=5 axis=vel,amp device=3/xs nxy=1,1 line=channel,146,1,2,2
+
+    # plot spectral chunk at different baselines
+#    smauvspec vis=$shiftedscience interval=1000 hann=5 axis=chan,amp device=1/xs nxy=4,4
+#    smauvspec vis=$shiftedscience interval=1000 hann=5 axis=chan,phas device=2/xs nxy=4,4
+    # check antenna delay
+#    smauvspec vis=$shiftedscience interval=30 hann=5 axis=freq,phas device=3/xs nxy=4,4
+
     echo -n "Cick Enter"
     set ans ="$<"
 endif
-
+# exit
 
 echo " "
-echo "*** Continuum subtraction"
+echo "*** Continuum subtraction (ISSUE)***"
 rm -rf $src.uvcont $src.uvlin
 uvlin vis=$shiftedscience chans=1,79,140,600 out=$src.uvcont order=1 mode=cont # options=nowindow
-uvlin vis=$shiftedscience chans=1,79,140,600 out=$src.uvlin order=1 mode=line
-uvlist vis=$src.uvlin options=spec
+uvlin vis=$shiftedscience chans=1,79,140,600 out=$src.uvlin order=1 mode=line # options=nowindow
+# uvlist vis=$src.uvlin options=spec
 echo -n "Cick Enter"
 set ans ="$<"
 
-rm -rf $src.uvlin.vel
-# echo ""
-# echo "*** LSB line cube chan selection (see above) ** "
-#  imsize=256, cell=0.75, bin=2, velocity width=35.870
-# uvlin vis=$shiftedscience chans=1,79,120,625 out=$src.uvlin.vel mode=line # options=nowindow
-# uvlist vis=$src.uvlin.vel options=spec
-#
-
+echo ""
+echo "*** LSB line cube chan selection (see above) ** "
 echo " "
-echo "*** Make a dirty image of line data and cont data, Binned in uvlin line=channel..."
+echo "*** Make a dirty image of line data and cont data, Binned in uvlin line=velocity... imsize=256, cell=0.75, bin=2, velocity width=35.870"
 echo " "
 rm -rf $contmap $contbeam $linmap $linbeam $linmap.vel $linbeam.vel
 invert vis=$src.uvcont map=$contmap beam=$contbeam imsize=$imsize_mfs cell=$cellsize_mfs robust=2 options=$contops
