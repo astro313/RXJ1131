@@ -331,7 +331,7 @@ if ($ans == "Y" || $ans == "y" || $ans == "1") then
     set ans ="$<"
 endif
 # exit
-
+>>>>>>>>>>>>>>>>>>
 echo " "
 echo "*** Continuum subtraction (ISSUE)***"
 rm -rf $src.uvcont $src.uvlin

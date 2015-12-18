@@ -39,7 +39,7 @@ set dir_reduced    = "reduced_testflag" # Directory with reduced data
 set cal_file       = "cf0098.1D_215RXJ113.2_wide.mir"
 set vis            = $dataPATH/$dir_reduced/$cal_file
 set dir_cal        = "reduced_pretty_D2/bin2/"           # output
-if (!(-e $dataPATH/"$dir_cal"))     mkdir $dataPATH/$dir_cal
+if (!(-e $dataPATH/"$dir_cal"))     mkdir $dataPATH/"$dir_cal"
 
 set outscience     = "RXJ1131_calibrated.mir"
 set shiftedscience = "RXJ1131only_Calibrated_shift_vel.mir"
