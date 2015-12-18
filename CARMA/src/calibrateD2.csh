@@ -5,7 +5,7 @@
 # Fully calibrate the 2nd obs. dataset
 #
 # Author: Daisy Leung
-# Last Modified: Dec 13 2015
+# Last Modified: Dec 16 2015
 #
 # Inputs
 # ------
@@ -19,13 +19,14 @@
 #
 # History
 # -------
-# Dec 13 2015
-# - generated script by copying from that used to reduce D3 data
+# Dec 16 2015 -
+#
+# Dec 13 2015 - generated script by copying from that used to reduce D3 data
 #
 #
 # Note:
 # -----
-# Phase of gain calibrator is terrible, don't think its worth using this set
+#
 #
 
 #################################
@@ -107,7 +108,7 @@ set out_base       = "base.vis"
 set mfcal_flux = ""
 if ($flux_gaincal != "") set mfcal_flux = "flux=$flux_gaincal"
 
-# goto temp_Im
+# goto fluxcal
 # ***********************
 # **** COPY RAW DATA ****
 # ***********************
@@ -204,6 +205,31 @@ set ans = "$<"
 echo ""
 echo "*** Flagging $edgechan edge channels in all windows (vis=$vis)"
 uvflag vis=$vis flagval=flag edge=$edgechan
+
+
+echo ""
+echo "*** Additional flagging *** "
+# uvflag vis=$vis flagval=flag select="ant(1)(2),time(12:20:00.0,13:00:00.0)"
+# uvflag vis=$vis flagval=flag select="ant(1)(3),time(11:06:49.0,11:20:00.0)"
+uvflag vis=$vis flagval=flag select="ant(1)(6),time(12:40:00.0,13:20:00.0)"
+uvflag vis=$vis flagval=flag select="ant(1)(7),time(11:06:49.0,11:30:00.0)"
+uvflag vis=$vis flagval=flag select="ant(1)(5,11,12)"
+uvflag vis=$vis flagval=flag select="ant(1)(9)" #,time(12:00:00.0,12:20:00.0)"
+# uvflag vis=$vis flagval=flag select="ant(1)(14),time(12:00:00.0,13:20:00.0)"
+# uvflag vis=$vis flagval=flag select="ant(1)(15),time(11:06:49.0,11:30:00.0)"
+uvflag vis=$vis flagval=flag select="ant(2)(4),time(12:00:00.0,12:15:00.0)"
+uvflag vis=$vis flagval=flag select="ant(2)(11)"
+uvflag vis=$vis flagval=flag select="ant(3)(9,11,12,15)"
+uvflag vis=$vis flagval=flag select="ant(4)(5,9,11,15)"
+uvflag vis=$vis flagval=flag select="ant(5)(9,10,11,12,13,15)"
+uvflag vus=$vis flagval=flag select="ant(5),time(11:07:00.0,11:30:00.0)"
+uvflag vis=$vis flagval=flag select="ant(6)(11)"
+uvflag vis=$vis flagval=flag select="ant(9)(11)"
+uvflag vis=$vis flagval=flag select="ant(10)(11,13)"
+uvflag vis=$vis flagval=flag select="ant(11)(12,13,15)"
+uvflag vis=$vis flagval=flag select="ant(15),time(11:25:00.0:11:30:00.0)"
+
+
 
 ##################################
 #### PLOT TRACK ########
