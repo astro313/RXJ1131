@@ -24,6 +24,18 @@ from sys import argv
 # for the HST images of this object
 ext = 1
 
+PATH = '/Users/admin/Research/RXJ1131/HST/'
+filename = 'HST_9744_75_ACS_WFC_F555W_drz.fits'
+file2 = 'HST_9744_74_ACS_WFC_F814W_drz.fits'
+file3 = 'HST_9744_41_NIC_NIC2_F160W_drz.fits'
+ra_center = 172.96418  # 172.96426
+dec_center = -12.5330955  # -12.533213
+# ra_center_px = 1942
+# dec_center_px = 2406
+#
+size = 200  # px, one side
+
+
 def load_fits_image(filename, xDeg, yDeg, ext=0):
     header = pf.getheader(filename, ext=ext)
     wcs = pywcs.WCS(header)
@@ -89,16 +101,19 @@ def cropfits(dirname, xctr, yctr, xbdr, ybdr, infits=None, extension=0):
         print "Cut image %s with dims %s to %s.  xrange: %f:%f, yrange: %f:%f \n" % (fname, hdulist[extension].data.shape, im.shape, xmin, xmax, ymin, ymax)
         print outname, 'successfully cropped!'
 
-PATH = '/Users/admin/Research/RXJ1131/HST/'
-filename = 'HST_9744_75_ACS_WFC_F555W_drz.fits'
-ra_center = 172.96418  # 172.96426
-dec_center = -12.5330955  # -12.533213
-# ra_center_px = 1942
-# dec_center_px = 2406
-#
-
+#F555W
 xctr, yctr = load_fits_image(
     join(PATH, filename), ra_center, dec_center, ext=ext)
-size = 70  # px
 cropfits(PATH, int(round(xctr)), int(round(yctr)), size,
          size, infits=join(PATH, filename), extension=ext)
+
+#F814W
+xctr, yctr = load_fits_image(
+    join(PATH, file2), ra_center, dec_center, ext=ext)
+cropfits(PATH, int(round(xctr)), int(round(yctr)), size,
+         size, infits=join(PATH, file2), extension=ext)
+#F160W
+xctr, yctr = load_fits_image(
+    join(PATH, file3), ra_center, dec_center, ext=ext)
+cropfits(PATH, int(round(xctr)), int(round(yctr)), size,
+         size, infits=join(PATH, file3), extension=ext)
