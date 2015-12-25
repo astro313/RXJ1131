@@ -3,10 +3,11 @@
 ! Last modified: 5 November 2015
 !
 ! Purpose:
-!   make integrated maps of two separate velocity components for overlay plot
+!   make integrated maps of two separate velocity components for overlay plots on HST
+!   i.e. 0th moment maps of two velocity components
 !
 ! Note:
-!   see `OneRedOneBlue.map` for more command usage
+!   see `OneRedOneBlue.map` for more command usage, which generated average maps of multiple channels for modelling.
 !
 
 !!!!!!!!!!!!!!!!!!!!!!!

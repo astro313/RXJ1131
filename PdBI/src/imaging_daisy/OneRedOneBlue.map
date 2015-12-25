@@ -3,10 +3,12 @@
 ! Last modified: Sep 23 2015
 !
 ! Purpose:
-!   make average maps of two velocity components for lens model
+!   make average maps of two velocity components for an initial lens model, before using average channel maps.
 !
-
-
+! Note:
+!   For modelling, its average maps
+!   For overplotting, its 0th moment (line-integrated) maps, see WingsMap.map
+!
 !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 ! For modeling -- binning
 !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
