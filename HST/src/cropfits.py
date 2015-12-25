@@ -1,9 +1,10 @@
 '''
-Last Modified: 24 Dec 2015
+Last Modified: 25 Dec 2015
 
 
 History:
 --------
+25 Dec 2015: fix minor bugs
 24 Dec 2015: cropped image has correct wcs
 
 
@@ -53,7 +54,7 @@ def cropfits(dirname, xctr, yctr, xbdr, ybdr, infits=None, extension=0):
         hdulist = pf.open(fname)
 #        print hdulist
         header = hdulist[0].header.copy()
-        if ext != 0:
+        if extension != 0:
             header = hdulist[extension].header.copy()
 
         if header['NAXIS'] > 2:
@@ -76,6 +77,8 @@ def cropfits(dirname, xctr, yctr, xbdr, ybdr, infits=None, extension=0):
         # crop region
         ymin, ymax = yctr - ybdr, yctr + ybdr
         xmin, xmax = xctr - xbdr, xctr + xbdr
+        New_xctr = int((xmax - xmax)/2)
+        New_yctr = int((y_max - ymin)/2)
 
         # shift the ref. pix s.t. the ref. wcs corresponds to where this pixel
         # is w.r.t to the cropped image, where xmin --> 0, ymin --> 0
@@ -84,8 +87,8 @@ def cropfits(dirname, xctr, yctr, xbdr, ybdr, infits=None, extension=0):
 
         # Another way to do this might be ....
         # shift the ref. point to new x, y ctr that we are interested in.
-        # header['CRPIX1'] = xctr
-        # header['CRPIX2'] = yctr
+        # header['CRPIX1'] = New_xctr
+        # header['CRPIX2'] = New_yctr
         # header['CRVAL1'] = ra_center
         # header['CRVAL2'] = dec_center
 
