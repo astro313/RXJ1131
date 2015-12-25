@@ -6,7 +6,11 @@ Author: Daisy Leung
 
 
 History:
-24 Dec 15
+25 Dec 2015
+- Markers corresponds to HST features
+- removed super title code.. doesn't work with saved figure
+
+24 Dec 2015
 - added compass
 - added super title
 - show markers
@@ -72,6 +76,7 @@ def setup_axes(fig, header, nx, ny):
     ax = g[-1*nx]     # display in the bottom left corner only
     ax.set_xlabel("Right Ascension (J2000)")
     ax.set_ylabel("Declination (J2000)")
+    # other attributes: http://matplotlib.org/mpl_toolkits/axes_grid/api/axis_artist_api.html
 
     # make colorbar
     ax = g[-1]
@@ -84,21 +89,9 @@ def setup_axes(fig, header, nx, ny):
                      borderpad=0.
                      )
 
-    # super title
-    at = AnchoredText(
-                     "RXJ 1131-1231 CO(2-1) Channel Map",
-                     loc=3,
-                     prop=dict(size=24),
-                     frameon=False,
-                     bbox_to_anchor=(0.05, 0.925, 0.75, 1),
-                     bbox_transform=ax.transAxes
-                     # bbox_transform=gcf().transFigure
-                     )
-    g[-4].add_artist(at)
-
     return g, cax
 
-
+Plotpath = '/Users/admin/Research/RXJ1131/Figures/'
 fits_cube = pyfits.open("/Users/admin/Research/RXJ1131/PdBI/data/04Sep15/sup127_155_2ndcln_noCont.fits")
 dxy = 125                   # starting channel
 nx = 6
@@ -134,18 +127,25 @@ for i, ax in enumerate(g):
     channel_number = start_channel + i
     channel = fits_cube[0].data[0][channel_number]
     im = ax.imshow(channel, origin="lower", norm=norm, cmap=cmap)
-    ax.contour(channel, [4*sigma, 8*sigma, 12*sigma, 16*sigma, 20*sigma],
+    ax.contour(channel,
+               [-4*sigma, 4*sigma, 8*sigma, 12*sigma, 16*sigma, 20*sigma],
                colors='black')
 
     # zoom-in on pixels
-    ax.set_xlim(100, 150)
-    ax.set_ylim(100, 150)
+    ax.set_xlim(113, 148)
+    ax.set_ylim(107, 142)
 
 
     if HST:   # mark lensing knots
         import astrolib.coords as coords
-        p_list = [coords.Position("11:31:51.3  -12:31:59").j2000(),
-              coords.Position("11:31:51.6  -12:31:59.6").j2000()]
+        # to convert sexidesimal coord --> deg in tuple
+        p_list = [
+                  coords.Position("11:31:51.402  -12:31:59.23").j2000(), # FG G
+                  coords.Position("11:31:51.53712 -12:31:59.8396").j2000(), # A
+                  coords.Position("11:31:51.53927 -12:31:58.6515").j2000(), # B
+                  coords.Position("11:31:51.4968 -12:32:00.9596").j2000(),  # C
+                  coords.Position("11:31:51.324 -12:31:58.9556").j2000()    # D
+                ]
         for p1 in p_list:
             ra, dec = p1
             ra_px, dec_px = wcs.wcs_sky2pix(ra, dec, 1)
@@ -159,10 +159,11 @@ if HST:
    # put up legend on last panel --> HST markers
     g[0].legend([l1],
                 ["HST QSO lensing knots"],
-                loc=0,
+                loc=3,
                 numpoints=1,
-                handlelength=0.75,
-                frameon=False,
+                handlelength=1,
+                frameon=True,
+                framealpha=0.8,
                 prop=dict(size=8),
                 fancybox=True)
 
@@ -197,7 +198,7 @@ g[-1].add_beam_size(minor_px, major_px, BPA_deg,      # y, x, angle
 
 # make colorbar
 cb = plt.colorbar(im, cax=cax)
-cb.set_label("Flux Density [mJy B"+r"$^{-1}$]")
+cb.set_label("Flux Density [Jy B"+r"$^{-1}$]")
 cb.set_ticks([0, 0.01, 0.02, 0.03])
 
 # adjust norm
@@ -207,9 +208,12 @@ norm.vmax = 0.03          # max in map
 for im in images:
     im.changed()
 
-
 plt.show()
 fits_cube.close()
 
-if 0:
-    plt.savefig("co_channel_maps.eps", dpi=70, bbox_inches="tight")
+User_input = raw_input('Save figure? (Y/N): ')
+if User_input == 'Y':
+    filename = "co_channel_maps.eps"
+    plt.savefig(Plotpath + filename, dpi=70, bbox_inches="tight", pad_inches=0.1)
+    print "-- Saved figure as : %s --" %(Plotpath + filename)
+
