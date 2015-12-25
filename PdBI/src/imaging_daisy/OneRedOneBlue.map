@@ -1,0 +1,158 @@
+! Deprecated
+!
+! Last modified: Sep 23 2015
+!
+! Purpose:
+!   make average maps of two velocity components for lens model
+!
+
+
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+! For modeling -- binning
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+! run uv_compress !  bin uv cube by a given bins
+! MAP_SUM -> integrated
+! In the real thing, we want each chnanel to have same bin width,
+! i.e., bin across the same number of channels
+!
+! As a prelim step, I am just eye-balling the channels separating for red and blue resp., so don't have the same bin width, so
+!
+UV_EXTRACT       Extract channels from a UV table
+--> UV_compress
+
+!!!!!!!!!!!!!!!!!!!!!!!
+! USER define
+!!!!!!!!!!!!!!!!!!!!!!!!
+define char cln*40
+sic\let cln = "CheckFlux_sup127_155_2ndcln_noCont"
+
+def char NewPath*50
+sic\let NewPath = "/Users/admin/Research/RXJ1131/PdBI/data/10Sep15/"
+say ""
+say ""
+sic DIRECTORY 'NewPath'
+sys "pwd"
+
+let run_window no
+
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+let name 'cln'
+let type lmv-clean
+go view
+
+
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+!! RED !!
+! uv_extract + uv_compress == uv_average (see below)
+! run uv_extract
+! ! in: co21_trial1-noCont
+! ! out: noCont_line_red
+! ! start, end: -304.03 120.49
+! ! type: velocity
+! !
+! let name noCont_line_red
+! say "** Get number of channels to average across ** "
+! go uvstat header
+! run uv_compress
+! ! in: noCont_line_red
+! ! out: noCont_line_red_onebin.uvt
+! ! number: 21
+
+run uv_average
+! in: co21_trial1-noCont
+! out: noCont_line_red_oneBin
+! start, end: -304.03 120.49
+! type: velocity
+! fits noCont_line_red_oneBin.uvfits from noCont_line_red_oneBin.uvt
+fits noCont_line_red_oneBin_styleCASA.uvfits from noCont_line_red_oneBin.uvt /style casa
+! I-TO_UVFITS,   Extremum :   0.149376884
+! I-TO_UVFITS,   Maximum weight :    4.21186816E-03
+! I-TO_UVFITS,   Extrema :   -126.456436       173.890167      -99.2108307       86.9374924
+! I-TO_UVFITS,   Weight Scale    35.4657059
+
+
+run map_sum         ! this is integrated, inconsistent with uv_average which is averaged uv data, look at `MAP_AVER`
+! in: CheckFlux_sup127_155_2ndcln_noCont.lmv-clean
+! out: test2Dmap_red.lmv-cln
+! vel: -304.03 120.49
+
+let size 30
+let first 0
+let last 0
+go nice
+pause "Type Continue or Quit"
+fits test2Dmap_red.fits from test2Dmap_red.lmv-cln
+
+
+! average across channels of clean image cube
+run MAP_AVER
+! in: CheckFlux_sup127_155_2ndcln_noCont.lmv-clean
+! out: red_average.lmv-cln
+! first last: 124 144
+
+let name red_average
+let type lmv-clean
+go nice
+fits red_average.fits from red_average.lmv-cln /STYLE STANDARD
+
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+!! BLUE !!
+run uv_average
+! in: co21_trial1-noCont
+! out: noCont_line_blue_oneBin
+! start, end: -684.11 -304.03
+! type: velocity
+! fits noCont_line_blue_oneBin.uvfits from noCont_line_blue_oneBin.uvt
+
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+! Exporting the uvt into uvfits
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+fits noCont_line_blue_oneBin_CASA.uvfits from noCont_line_blue_oneBin.uvt /style casa /BITS -32
+! I-TO_UVFITS,   Extremum :   0.153939411
+! I-TO_UVFITS,   Maximum weight :    3.61017277E-03
+! I-TO_UVFITS,   Extrema :   -126.456436       173.890167      -99.2108307       86.9374924
+! I-TO_UVFITS,   Weight Scale    42.6404572
+
+FITS noCont_line_blue_oneBin_styleUV.uvfits from noCont_line_blue_oneBin.uvt /STYLE UVFITS /BITS -32
+
+I-TO_UVFITS,   Extremum :   0.153939411
+I-TO_UVFITS,   Maximum weight :    3.61017277E-03
+I-TO_UVFITS,   Extrema :   -126.456436       173.890167      -99.2108307       86.9374924
+I-TO_UVFITS,   Weight Scale    42.6404572
+
+FITS noCont_line_blue_oneBin_styleAIPS.uvfits from noCont_line_blue_oneBin.uvt /STYLE AIPSFITS /BITS -32
+I-TO_UVFITS,   Extremum :   0.153939411
+I-TO_UVFITS,   Maximum weight :    3.61017277E-03
+I-TO_UVFITS,   Extrema :   -126.456436       173.890167      -99.2108307       86.9374924
+I-TO_UVFITS,   Weight Scale    42.6404572
+I-TO_UVFITS,   Number of antennas :            6
+I-TO_UVFITS,  AIPS style
+
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+! Map
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+run map_sum         ! this is integrated, inconsistent with uv_average which is averaged uv data, look at `MAP_AVER`
+! in: CheckFlux_sup127_155_2ndcln_noCont.lmv-clean
+! out: test2Dmap_blue.lmv-cln
+! vel: -684.11 -304.03
+
+let name test2Dmap_blue
+let type lmv-cln
+let size 30
+let first 0
+let last 0
+go nice
+pause "Type Continue or Quit"
+fits test2Dmap_blue.fits from test2Dmap_blue.lmv-cln
+
+
+! average across channels of clean image cube
+run MAP_AVER
+! in: CheckFlux_sup127_155_2ndcln_noCont.lmv-clean
+! out: blue_average.lmv-cln
+! first last: 144 162
+
+let name blue_average
+let type lmv-cln
+go nice
+fits blue_average.fits from blue_average.lmv-cln /STYLE STANDARD
