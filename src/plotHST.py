@@ -4,9 +4,10 @@ Author: Daisy Leung
 Last edited: Sept 19 2015
 
 Purpose:
-- Plot HST image F555W as one panel, plot mom0 of all channels overlay on HST as another panel
+- Plot HST image F555W (left), plot mom0 of all channels overlay on HST (right)
 
 History:
+- added option to plot left panel HST image in inverted grayscale
 
 """
 
@@ -39,8 +40,8 @@ figC = plt.figure(1, figsize=(12, 7))
 ########################################
 # user define area
 ########################################
-ra_center = 172.96418        # 172.96426
-dec_center = -12.5330955    # -12.533213
+ra_center = 172.96418
+dec_center = -12.5330955
 sizep = 0.00258066
 
 ra_cross, dec_cross = ra_center, dec_center
@@ -50,42 +51,36 @@ full_width = 0.8
 x_gap = 0.05
 x0 = 0.15
 dy = 0.90
-sigma_blue = 0.43    # 0.32e-3 Jy/B
+sigma = 0.43    # 0.32e-3 Jy/B
 
 line_min = 0.035668
 line_max = 7.56445
 
-
+inverted_HSTleft = True
 ########################################
 # intialize base figure
 ########################################
 # fig1 = aplpy.FITSFigure(label['F555W'][0],
-#                         figure=figC, subplot=[x0, row_a, full_width, dy])#, north=True)
-# # fig1.show_grayscale(stretch='log', vmin=-0.45869, vmax=250, vmid=-0.85)
+#                         figure=figC, subplot=[x0, row_a, full_width, dy])
 # fig1.show_grayscale(stretch='log', vmin=-0.01869, vmax=151, vmid=-0.025)
 # #fig1.set_theme('publication')   # inverted grayscale
 
 fig1 = aplpy.FITSFigure(label['F555W'][0], \
         figure=figC, subplot=[x0,row_a,width,dy])
 fig1.show_grayscale(stretch='log', vmin=-0.01869, vmax=151, vmid=-0.025)
+if inverted_HSTleft: fig1.set_theme('publication')
+
+
 figO = aplpy.FITSFigure(label['F555W'][0], \
         figure=figC, subplot=[x0+width+2*x_gap, row_a, width, dy])
 figO.show_grayscale(stretch='log', vmin=-0.01869, vmax=151, vmid=-0.025)
 
 
-# figHST = aplpy.FITSFigure(label['F555W'][0], \
-#         figure=figRed, subplot=[x0,row_a,width,dy])
-# figHST.show_grayscale(stretch='log', vmin=-0.01869, vmax=151, vmid=-0.025)
-# figred = aplpy.FITSFigure(label['F555W'][0], \
-#         figure=figRed, subplot=[x0+width+2*x_gap, row_a, width, dy])
-# figred.show_grayscale(stretch='log', vmin=-0.01869, vmax=151, vmid=-0.025)
-
 ########################################
 # Contours
 ########################################
-figO.show_contour(label_pdbi['mom0'][0], colors="lime", levels=sigma_contour_array(sigma_blue), linewidths=2)#, layer='fg')
+figO.show_contour(label_pdbi['mom0'][0], colors="lime", levels=sigma_contour_array(sigma), linewidths=2)#, layer='fg')
 
-# figred.show_contour(label_pdbi['red'][0], colors="lime", levels=sigma_contour_array(sigma_red), linewidths=2)
 
 ########################################
 # scale bar
@@ -98,10 +93,10 @@ lg_1arcsec = 1. / 3600
 ########################################
 # axes
 ########################################
-standard_plot_setup(fig1, ra_center, dec_center, sizep, tickc='white')
+tickcolor = 'k' if inverted_HSTleft else 'white'
+standard_plot_setup(fig1, ra_center, dec_center, sizep, tickc=tickcolor)
 standard_plot_setup(figO, ra_center, dec_center, sizep, tickc='white')
-# standard_plot_setup(figHST, ra_center, dec_center, sizep, tickc='white')
-# standard_plot_setup(figred, ra_center, dec_center, sizep, tickc='white')
+
 figO.tick_labels.hide()
 figO.axis_labels.hide()
 # figred.tick_labels.hide()
@@ -118,22 +113,17 @@ markers_cross(figO, ra_cross, dec_cross, layer='marker_set_1')
 ########################################
 # Labels
 ########################################
-# if '_' in sym[:-1]: symf = sym.replace('_', ' ')
-
-put_label(fig1, 0.20, 0.95, 'HST F555W', 'titleBand')
+put_label(fig1, 0.20, 0.95, 'HST F555W', 'titleBand', c=tickcolor)
 put_label(figO, 0.40, 0.95, 'HST F555W, CO (2-1)', 'titleBand')
 put_label(figO, 0.4025, 0.9, 'RXJ1131', 'titleObj')
 # put_label(figHST, 0.20, 0.95, 'HST F555W', 'titleBand')
 # put_label(figHST, 0.1825, 0.9, 'RXJ1131', 'titleObj')
-# put_label(figred, 0.40, 0.95, 'HST F555W, CO Red wing', 'titleBand')
-# put_label(figred, 0.4025, 0.9, 'RXJ1131', 'titleObj')
 
 labsize = 'xx-large'
 labc = 'white'
 #put_label(fvla, 0.80, 0.925, '(a)', 'ref', c=labc, s=labsize)
 #put_label(fcont, 0.80, 0.925, '(b)', 'ref', c=labc, s=labsize)
-#put_label(flin, 0.80, 0.925, '(c)', 'ref', c=labc, s=labsize)
-#put_label(fSMA, 0.80, 0.925, '(d)', 'ref', c=labc, s=labsize)
+
 
 ########################################
 # Colorbar
@@ -157,13 +147,10 @@ if __name__ == '__main__':
         errmsg = "Invalid number of arguments: {0:d}\n  run script.py Save_True"
         raise IndexError(errmsg.format(len(sys.argv)))
     saveFig = True if sys.argv[1].lower() == 'true' else False
-    if saveFig == True:
-        #        os.system('rm -rf ' + C[:-1] + '.png' + ' ' + C[:-1] + '.eps')
-        #        os.system('rm -rf ' + D[:-1] + '.png' + ' ' + D[:-1] + '.eps')
-        #        os.system('rm -rf ' + CD[:-1] + '.png' + ' ' + CD[:-1] + '.eps')
-        #        figC.savefig(Plotpath + C[:-1] + '.eps', dpi=600)
-        figC.savefig(Plotpath + 'F555W_pdbi.eps', dpi=600)
-#         figRed.savefig(Plotpath + 'F555W_pdbiRed.eps', dpi=600)
+    if saveFig:
+        outname = 'F555WCO21_mom0.eps'
+        if inverted_HSTleft: outname = outname.replace('.eps', '.invertedgray.eps')
+        figC.savefig(Plotpath + outname, dpi=600)
     else:
 #        figC.canvas.draw()
         plt.show()
