@@ -1,9 +1,9 @@
-! Deprecated
+! Deprecated, was using cube from 10Sep15
 !
 ! Last modified: Sep 23 2015
 !
 ! Purpose:
-!   make average maps of two velocity components for an initial lens model, before using average channel maps.
+!   make average maps of two velocity components for an initial lens model, before using average channel maps. --> later realized the flux in 10Sep15 is wrong
 !
 ! Note:
 !   For modelling, its average maps
