@@ -1,0 +1,116 @@
+!!!!!!!!!!!!!!!!!!!!!!!
+! USER define
+!!!!!!!!!!!!!!!!!!!!!!!!
+define char cln*40
+sic\let cln = "sup127_155_2ndcln_noCont"
+
+def char NewPath*50
+sic\let NewPath = "/Users/admin/Research/RXJ1131/PdBI/data/14Oct15/"
+say ""
+say ""
+sic DIRECTORY 'NewPath'
+sys "pwd"
+
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+! Average 4 channels into 1 (as a test)
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+! run uv_compress                           !  bin uv cube by a given bins
+! ! in: co21_trial1-noCont
+! ! out: test1
+! ! bin: 4
+! let name test1
+! go uvstat weight                          ! -> 90 Channels
+
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+! average 5 channels into 1
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+let run_window no
+
+run uv_average * /edit                  ! takes the given range and average into one
+
+! In principle, since now I know the channel range for FWZI, FWHM, may want to just bin by 4~5 channels using run uv_average on the original .uvt instead of doing uv_compress and then uv_average
+! This way, I can also supply the same channels in combining the cleaned images
+
+! co21_trial1-noCont.uvt
+! noCont126_130.uvt
+! 126 130
+! channel
+
+! out: noCont131_135
+! out: noCont136_140
+! out: noCont141_145
+! out: noCont146_150
+! out: noCont151_155
+! out: noCont156_160
+
+
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+! use AIPS -> incorrect npol, nfreq
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! !!!!!!!!!
+! fits noCont126_130.uvfits from noCont126_130.uvt /STYLE AIPSFITS /BITS -32
+! fits noCont131_135.uvfits from noCont131_135.uvt /STYLE AIPSFITS /BITS -32
+! fits noCont136_140.uvfits from noCont136_140.uvt /STYLE AIPSFITS /BITS -32
+! fits noCont141_145.uvfits from noCont141_145.uvt /STYLE AIPSFITS /BITS -32
+! fits noCont146_150.uvfits from noCont146_150.uvt /STYLE AIPSFITS /BITS -32
+! fits noCont151_155.uvfits from noCont151_155.uvt /STYLE AIPSFITS /BITS -32
+! fits noCont156_160.uvfits from noCont156_160.uvt /STYLE AIPSFITS /BITS -32
+
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+! for correct npol, nfreq, use UV style
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! !!!!!!!!!
+fits noCont126_130.UVstyle.uvfits from noCont126_130.uvt /STYLE UVFITS /BITS -32
+fits noCont131_135.UVstyle.uvfits from noCont131_135.uvt /STYLE UVFITS /BITS -32
+fits noCont136_140.UVstyle.uvfits from noCont136_140.uvt /STYLE UVFITS /BITS -32
+fits noCont141_145.UVstyle.uvfits from noCont141_145.uvt /STYLE UVFITS /BITS -32
+fits noCont146_150.UVstyle.uvfits from noCont146_150.uvt /STYLE UVFITS /BITS -32
+fits noCont151_155.UVstyle.uvfits from noCont151_155.uvt /STYLE UVFITS /BITS -32
+fits noCont156_160.UVstyle.uvfits from noCont156_160.uvt /STYLE UVFITS /BITS -32
+
+!!!!!!!!!!!!!!!!!!!!!!!!
+! Then for the map:
+!!!!!!!!!!!!!!!!!!!!!!!!
+!run MAP_SUM     -> integrated across velocity channel
+! in: sup127_155_2ndcln_noCont.lmv-clean
+! out: BLAH.lmv-cln
+! vel:
+
+run MAP_AVER * /edit   ! average several planes of 3D to produce a 2-D image
+! in: sup127_155_2ndcln_noCont.lmv-clean
+! out: noCont126_130.lmv-cln
+! out: noCont131_135.lmv-cln
+! out: noCont136_140.lmv-cln
+! out: noCont141_145.lmv-cln
+! out: noCont146_150.lmv-cln    << shifting to blue from here onward
+! out: noCont151_155.lmv-cln
+! out: noCont156_160.lmv-cln   << low SNR in these channels
+
+say "Enter name for average map, inspect"
+let name =
+let type lmv-cln
+let size 30
+let first 0
+let last 0
+go nice
+pause "Type Continue or Quit"
+fits noCont126_130.fits from noCont126_130.lmv-cln
+fits noCont131_135.fits from noCont131_135.lmv-cln
+fits noCont136_140.fits from noCont136_140.lmv-cln
+fits noCont141_145.fits from noCont141_145.lmv-cln
+fits noCont146_150.fits from noCont146_150.lmv-cln
+fits noCont151_155.fits from noCont151_155.lmv-cln
+fits noCont156_160.fits from noCont156_160.lmv-cln
+
+
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+! Just one average map over all channels (for modelling)
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+run uv_average
+! noCont126_160.uvt
+! 126 160
+fits noCont126_160.uvfits from noCont126_160.uvt /STYLE AIPSFITS /BITS -32
+FITS noCont126_160.UVstyle.uvfits from noCont126_160.uvt /STYLE UVFITS /BITS -32
+
+run map_aver
+! noCont126_160.lmv-cln
+! 126 160
+fits noCont126_160.fits from noCont126_160.lmv-cln
