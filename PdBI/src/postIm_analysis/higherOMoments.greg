@@ -1,0 +1,227 @@
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+! Plot 1st and 2nd moment maps, clipped @ 5sigma (26Dec15/)
+!
+! Last modified: 25 Dec 2015
+!
+! History:
+! --------
+!
+!
+! Notes:
+! -------
+!
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+
+cle
+
+!set font SIMPLEX or DUPLEX
+set font SIMPLEX
+
+!Expands all characters or markers by a factor
+set expand 1.2
+
+!Set pen as solid lines and black color and thickness 2
+pen 0 /col 0 /weight 2
+
+!Load color table rainbow4
+lut rainbow4.lut
+
+! Spacing
+let velo_spacing 21.528154*2    ! channel width in 1st moment
+let width_spacing 100           ! channel width in 2nd moment
+
+
+!###########    LOAD IMAGE   ############
+image "/Users/admin/Research/RXJ1131/PdBI/data/26Dec15/sup127_155_2ndcln_noCont-momCLIP5sigma.velo"
+!########################################
+
+!######### DEFINE THE PLOT AREA #########
+tickspace 0 0 0 0
+limits 7 -13 -10 8 second /rgdata     ! zoom
+define real hbox_x[2] hbox_y[2]
+let hbox_x box_xmax page_x-0.13
+let hbox_y box_ymin page_y-0.1
+let box_aspect aspect
+!########################################
+!
+! Definition of box characteristics.
+!
+! OLD way
+! Set plot size
+! set box_location 5 22 4 20
+
+@ window_tools.greg
+let aspect_ratio yes  ! Do not respect aspect ratio to maximize use of place
+let fixed_trc no     ! Top right corner is free
+let inter 0.0 0.0    ! No interspace between individual boxes (unit: % of box sizes)
+begin procedure plot_position_Daisy
+  !
+  if (plot_position[1].eq.0.0) then
+     let plot_page_aspect page_x/page_y
+     if (plot_page_aspect.ge.1.0) then
+        let position 0.253 1.2 0.3 0.9
+     else
+        let position 0.085 0.995 0.171 1.081
+     endif
+  else
+     let position plot_position
+  endif
+  !
+end procedure plot_position_Daisy
+!
+
+@ plot_position_Daisy      ! Definition of total available plotting place
+
+
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+!
+@ window_xy 2 1 1    ! col, row, n, first figure
+!Plot the image in the first place
+extrema /compute    ! compute the extrema of your image
+say "Max: "'RGMAX'" and MIN: "'RGMIN'
+plot !/scaling lin -1.e-3 1e-3
+
+! image frame color, weight
+pen 0 /weight 2
+! set up the frame
+box p o in /ABSOLUTE /LABEL 0 !/unit S
+! box p o in /unit S          ! parallel RA, orthogonal Dec
+label "R.A. (J2000)" /x
+! label "DEC (J2000)" /y 10
+draw text -4.5 2.5 "DEC (J2000)" 7 90 /box 4
+
+! #### Set the plot levels ###
+! levels -2.0 to 18.0 by 2.0
+levels RGMIN RGMIN+VELO_SPACING to RGMAX by VELO_SPACING
+pen 0 /weight 2
+! rgmap /grey 1 2       ! for greyscale map
+! rgmap /per            ! contours, assuming the levels are percentages of the max. value
+rgmap       ! overlay contours
+
+! ### DRAW THE COLORBAR ###
+set expand 1.0
+WEDGE top
+set expand 1.2
+label "Observed Frame Velocity" /X -12.5
+
+
+! central marker
+! pen 0 /col 0 /weight 2.0
+! draw relocate -0.00 -0.000-0.3-1.0 /USER seconds
+! draw line -0.00 -0.000-0.3+1.0 /USER seconds
+! draw line -0.00 -0.000-0.3 /USER seconds
+! draw line -0.00-1.0 -0.000-0.3 /USER seconds
+! draw line -0.00+1.0 -0.000-0.3 /USER seconds
+
+pen /def
+pen /wei 2
+set angle sec
+
+! ######## DRAW the box for putting beam inside ########
+pen 0 /weight 3
+draw relocate 9.25 0.0 /box !seconds
+draw line 9.25 3 /box !seconds
+draw line 7 3 /box !seconds
+draw line 7 0.0 /box !seconds
+draw line 9.25 0.0 /box !seconds
+pen 0 /weight 2
+! ######################################################
+
+
+! ######### CACULATE THE BEAM AND DRAW THE BEAM #########
+!beam: PA=aa; size=bb"xcc"
+
+! auto detect beam size
+! G_PA          ! rad
+! G_MINOR       ! rad
+! G_MAJOR       ! rad
+
+ellipse G_MAJOR*206265/2 G_MINOR*206265/2 90-G_PA*57.3 /box 8 1.5 /fill 7
+ellipse G_MAJOR*206265/2 G_MINOR*206265/2 90-G_PA*57.3 /box 8 1.5
+ellipse G_MAJOR*206265/2 G_MINOR*206265/2 90-G_PA*57.3 /box 8 1.5 /HATCH 0 45 0.2
+! #######################################################
+
+
+
+@ window_xy 2 1 2    ! col, row, n, second figure
+!###########    LOAD IMAGE   ############
+image "/Users/admin/Research/RXJ1131/PdBI/data/26Dec15/sup127_155_2ndcln_noCont-momCLIP5sigma.width"
+!########################################
+!Plot the image in the first place
+extrema /compute    ! compute the extrema of your image
+say "Max: "'RGMAX'" and MIN: "'RGMIN'
+plot !/scaling lin -1.e-3 1e-3
+
+! image frame color, weight
+pen 0 /weight 2
+! set up the frame
+box n n
+! box p o in /ABSOLUTE /LABEL 0 !/unit S
+
+
+! #### Set the plot levels ###
+! levels -2.0 to 18.0 by 2.0
+levels RGMIN RGMIN+VELO_SPACING to RGMAX by width_spacing
+pen 0 /weight 2
+! rgmap /grey 1 2       ! for greyscale map
+! rgmap /per            ! contours, assuming the levels are percentages of the max. value
+rgmap       ! overlay contours
+
+! ### DRAW THE COLORBAR ###
+set expand 1.0
+WEDGE top
+set expand 1.2
+label "Observed Frame Velocity" /X -12.5
+
+
+! central marker
+! pen 0 /col 0 /weight 2.0
+! draw relocate -0.00 -0.000-0.3-1.0 /USER seconds
+! draw line -0.00 -0.000-0.3+1.0 /USER seconds
+! draw line -0.00 -0.000-0.3 /USER seconds
+! draw line -0.00-1.0 -0.000-0.3 /USER seconds
+! draw line -0.00+1.0 -0.000-0.3 /USER seconds
+
+pen /def
+pen /wei 2
+set angle sec
+
+! ######## DRAW the box for putting beam inside ########
+pen 0 /weight 3
+draw relocate 9.25 0.0 /box !seconds
+draw line 9.25 3 /box !seconds
+draw line 7 3 /box !seconds
+draw line 7 0.0 /box !seconds
+draw line 9.25 0.0 /box !seconds
+pen 0 /weight 2
+! ######################################################
+
+
+! ######### CACULATE THE BEAM AND DRAW THE BEAM #########
+!beam: PA=aa; size=bb"xcc"
+
+! auto detect beam size
+! G_PA          ! rad
+! G_MINOR       ! rad
+! G_MAJOR       ! rad
+
+ellipse G_MAJOR*206265/2 G_MINOR*206265/2 90-G_PA*57.3 /box 8 1.5 /fill 7
+ellipse G_MAJOR*206265/2 G_MINOR*206265/2 90-G_PA*57.3 /box 8 1.5
+ellipse G_MAJOR*206265/2 G_MINOR*206265/2 90-G_PA*57.3 /box 8 1.5 /HATCH 0 45 0.2
+! #######################################################
+
+
+
+pen 0 /col 0 /weight 5
+set character 0.9     ! font size
+! ############ PUT THE SOURCE NAME #############
+draw text 25 13.5 "RXJ1131-1231 1st & 2nd Moments" 3 /user
+set character 0.6
+! ##############################################
+
+! ############## OUT PUT FILENAME ##############
+sic delete "/Users/admin/Research/RXJ1131/PdBI/data/26Dec15/CO_highOmom_CLIP5sigma.eps"
+hardcopy "/Users/admin/Research/RXJ1131/PdBI/data/26Dec15/CO_highOmom_CLIP5sigma" /device eps color
+! ##############################################
+
+pen 0 /default
