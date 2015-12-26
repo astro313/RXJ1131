@@ -1,3 +1,32 @@
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+!
+! Make averaged channel maps, binned by 5 channels and their corresponding
+! UVfits file in diffferent styles for lens model on serenity.
+!
+! Author: Daisy Leung
+!
+! Last Modified: 25 Dec 2015
+!
+! History
+! -------
+! 
+!
+! Note
+! ----
+! - use the ad-hoc approach to fix exported uvfits issue.
+!- AIPS & CASA stype filler ok, but wrong polarization info. (browsetable() shows RR only)
+!  	-> hence the first attempt on uvmcmcfit wasn't fitting to anything (see /data/dleung/DATA/RXJ1131/model/AIPSstyle)
+! 	- checkvis() real and imaginary plots shows randomly scatterred visibilities
+! - UVFITS style output uvfits file doesn't contain AN Table and FEED Table, but handles polarization propertly (browsetable() shows I)
+!   	-> model looks reasonable, was fitting to something, but can't visualize because the uvfits file cannot be imported into .ms in CASA
+! - The fix:
+!   	1.export uvt into two separate uvfits files using both AIPS or CASA style and UVFITS style   
+!		 i. apply scalewt() to them, for lens modeling
+!	2. import both uvfits in CASA to make separate .ms files
+!	3. copy AN and FEED Table from the AIPS or CASA style uvfits to the UVFITS style .ms
+!	4. then use the UVFITS style .ms to image model properly
+!
+!
 !!!!!!!!!!!!!!!!!!!!!!!
 ! USER define
 !!!!!!!!!!!!!!!!!!!!!!!!
