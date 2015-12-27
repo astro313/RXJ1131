@@ -1,0 +1,73 @@
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+!
+! use uv_extract to make separate .uvt centered around H2CO lines
+! my attempt to do stacking
+!
+! -----------------------------------------------
+! around ~ 300 km/s around the each H2CO line
+!
+! first: [0, 17]
+! second: [167, 181]
+! third: [267, 281]
+! -----------------------------------------------
+!
+! Last Modified: 27 Dec 2015
+!
+! Author: Daisy Leung
+!
+! History
+! -------
+!
+!
+!
+! Note
+! -----
+! - can run task automatically without GUI !!!
+!
+!
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+
+
+define char UVTname*40
+sic\let UVTname = "co21_trial1-noCont"
+! delete /var UVTname
+
+def char NewPath*50
+sic\let NewPath = "/Users/admin/Research/RXJ1131/PdBI/data/27Dec15/"
+
+say ""
+say ""
+sic DIRECTORY 'NewPath'
+sys "pwd"
+
+!
+! setup init file with parameters so we can parse them in
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+!
+begin data tmp_uvextract.init
+  !
+  TASK\CHARACTER "Input UV table"                UV_INPUT$  'uvextract%name'".uvt"
+  TASK\CHARACTER "Output UV table"               UV_OUTPUT$ 'uvextract%name'"-ext"'uvextract%first'"_"'uvextract%last'".uvt"
+  TASK\REAL      "Start and End values of range" RANGES$[2] 'uvextract%first' 'uvextract%last'
+  TASK\CHARACTER "Type of value"                 CTYPE$     "CHANNEL"
+  TASK\GO
+  !
+end data tmp_uvextract.init
+!
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+
+let uvextract%name 'UVTname'
+let uvextract%first 0
+let uvextract%last 17
+run uv_extract tmp_uvextract.init /nowin
+
+let uvextract%first 167
+let uvextract%last 181
+run uv_extract tmp_uvextract.init /nowin
+
+let uvextract%first 267
+let uvextract%last 281
+run uv_extract tmp_uvextract.init /nowin
+
+say "Back to script directory"
+sic DIRECTORY "/Users/admin/Research/RXJ1131/PdBI/src/stacking"
