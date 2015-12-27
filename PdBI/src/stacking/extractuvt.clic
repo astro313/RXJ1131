@@ -55,19 +55,34 @@ begin data tmp_uvextract.init
 end data tmp_uvextract.init
 !
 !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-
+!
 let uvextract%name 'UVTname'
 let uvextract%first 0
 let uvextract%last 17
 run uv_extract tmp_uvextract.init /nowin
-
+!
+fits 'uvextract%name'"-ext"'uvextract%first'"_"'uvextract%last'".uvfits" from 'uvextract%name'"-ext"'uvextract%first'"_"'uvextract%last'".uvt" /STYLE UVFITS /BITS -32
+fits 'uvextract%name'"-ext"'uvextract%first'"_"'uvextract%last'"AIPS.uvfits" from 'uvextract%name'"-ext"'uvextract%first'"_"'uvextract%last'".uvt" /STYLE AIPSFITS /BITS -32
+!
+!
+!
 let uvextract%first 167
 let uvextract%last 181
 run uv_extract tmp_uvextract.init /nowin
+!
+fits 'uvextract%name'"-ext"'uvextract%first'"_"'uvextract%last'".uvfits" from 'uvextract%name'"-ext"'uvextract%first'"_"'uvextract%last'".uvt" /STYLE UVFITS /BITS -32
+fits 'uvextract%name'"-ext"'uvextract%first'"_"'uvextract%last'"AIPS.uvfits" from 'uvextract%name'"-ext"'uvextract%first'"_"'uvextract%last'".uvt" /STYLE AIPSFITS /BITS -32
+!
+!
+!
 
 let uvextract%first 267
 let uvextract%last 281
 run uv_extract tmp_uvextract.init /nowin
+!
+fits 'uvextract%name'"-ext"'uvextract%first'"_"'uvextract%last'".uvfits" from 'uvextract%name'"-ext"'uvextract%first'"_"'uvextract%last'".uvt" /STYLE UVFITS /BITS -32
+fits 'uvextract%name'"-ext"'uvextract%first'"_"'uvextract%last'"AIPS.uvfits" from 'uvextract%name'"-ext"'uvextract%first'"_"'uvextract%last'".uvt" /STYLE AIPSFITS /BITS -32
+
 
 say "Back to script directory"
 sic DIRECTORY "/Users/admin/Research/RXJ1131/PdBI/src/stacking"
