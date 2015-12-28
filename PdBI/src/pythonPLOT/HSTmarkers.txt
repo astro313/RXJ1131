@@ -1,4 +1,4 @@
-# Object RA Dec, offset based on Claeskens+10 Table 2
+# Object RA Dec, offset based on Claeskens+06 Table 2
 G 11:31:51.40200, -12:31:59.23 <=> 172.964175, -12.53311944
 A 11:31:51.53712, -12:31:59.8396 <=> 172.964738027, -12.53328
 # B_ra_deg = A_ra_deg + 0.032 / cos(-12.533*pi/360) / 3600
