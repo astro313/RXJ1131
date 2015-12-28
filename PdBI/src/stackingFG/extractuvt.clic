@@ -1,0 +1,88 @@
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+!
+! use uv_extract to make separate .uvt centered around H2CO lines
+! my attempt to do stacking
+!
+! -----------------------------------------------
+! around ~ 300 km/s around the each H2CO line
+!
+! first: [69, 83]
+! second: [175, 189]
+! third: [220, 234]
+! -----------------------------------------------
+!
+! Last Modified: 27 Dec 2015
+!
+! Author: Daisy Leung
+!
+! History
+! -------
+!
+!
+!
+! Note
+! -----
+!
+!
+!
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+
+
+define char UVTname*40
+sic\let UVTname = "co21_trial1-noCont"
+! delete /var UVTname
+
+def char NewPath*50
+sic\let NewPath = "/Users/admin/Research/RXJ1131/PdBI/data/28Dec15/"
+
+say ""
+say ""
+sic DIRECTORY 'NewPath'
+sys "pwd"
+
+!
+! setup init file with parameters so we can parse them in
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+!
+begin data tmp_uvextract.init
+  !
+  TASK\CHARACTER "Input UV table"                UV_INPUT$  'uvextract%name'".uvt"
+  TASK\CHARACTER "Output UV table"               UV_OUTPUT$ 'uvextract%name'"-ext"'uvextract%first'"_"'uvextract%last'".uvt"
+  TASK\REAL      "Start and End values of range" RANGES$[2] 'uvextract%first' 'uvextract%last'
+  TASK\CHARACTER "Type of value"                 CTYPE$     "CHANNEL"
+  TASK\GO
+  !
+end data tmp_uvextract.init
+!
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+!
+let uvextract%name 'UVTname'
+let uvextract%first 69
+let uvextract%last 83
+run uv_extract tmp_uvextract.init /nowin
+!
+fits 'uvextract%name'"-ext"'uvextract%first'"_"'uvextract%last'".uvfits" from 'uvextract%name'"-ext"'uvextract%first'"_"'uvextract%last'".uvt" /STYLE UVFITS /BITS -32
+fits 'uvextract%name'"-ext"'uvextract%first'"_"'uvextract%last'"AIPS.uvfits" from 'uvextract%name'"-ext"'uvextract%first'"_"'uvextract%last'".uvt" /STYLE AIPSFITS /BITS -32
+!
+!
+!
+let uvextract%first 175
+let uvextract%last 189
+run uv_extract tmp_uvextract.init /nowin
+!
+fits 'uvextract%name'"-ext"'uvextract%first'"_"'uvextract%last'".uvfits" from 'uvextract%name'"-ext"'uvextract%first'"_"'uvextract%last'".uvt" /STYLE UVFITS /BITS -32
+fits 'uvextract%name'"-ext"'uvextract%first'"_"'uvextract%last'"AIPS.uvfits" from 'uvextract%name'"-ext"'uvextract%first'"_"'uvextract%last'".uvt" /STYLE AIPSFITS /BITS -32
+!
+!
+!
+
+let uvextract%first 220
+let uvextract%last 234
+run uv_extract tmp_uvextract.init /nowin
+!
+fits 'uvextract%name'"-ext"'uvextract%first'"_"'uvextract%last'".uvfits" from 'uvextract%name'"-ext"'uvextract%first'"_"'uvextract%last'".uvt" /STYLE UVFITS /BITS -32
+fits 'uvextract%name'"-ext"'uvextract%first'"_"'uvextract%last'"AIPS.uvfits" from 'uvextract%name'"-ext"'uvextract%first'"_"'uvextract%last'".uvt" /STYLE AIPSFITS /BITS -32
+
+
+say "Back to script directory"
+sic DIRECTORY "/Users/admin/Research/RXJ1131/PdBI/src/stackingFG"
