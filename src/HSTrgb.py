@@ -13,6 +13,7 @@ History:
 Note:
 -----
 - works for HST images for RXJ1131, need pre-process image to have just one extension using script: ../HST/src/cropimage.py
+- another way to make RGB image is use numpy and append the array then imshow(), and the axes are generated using wcsaxes.WCS()
 '''
 
 import numpy as np

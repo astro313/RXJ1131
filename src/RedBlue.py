@@ -27,7 +27,7 @@ for k in label.iterkeys():
 # print label
 
 label_pdbi = dict.fromkeys(['red', 'blue'])
-path_pdbi = '../PdBI/data/5Nov15/'
+path_pdbi = '../PdBI/data/5Nov15/'    # copied from 14Oct15
 
 for k in label_pdbi.iterkeys():
     file_pdBI = glob.glob(path_pdbi + '*' + k + '.fits')
