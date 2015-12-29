@@ -208,6 +208,7 @@ norm.vmax = 0.03          # max in map
 for im in images:
     im.changed()
 
+fig.suptitle("CO(2-1) Channel Maps", fontsize=22)
 plt.show()
 fits_cube.close()
 
