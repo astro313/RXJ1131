@@ -12,3 +12,4 @@ spatialSpec.eps:
     - spatial spectra plot
     - see script: /Users/admin/Research/RXJ1131/PdBI/src/spectre/spatialSpectre.greg
     - using data cube: sup127_155_2ndcln_noCont.lmv-clean in this directory
+    - 0,0 doesn't corespond to anything phyiscally..  --> 25 Dec 2015 shifted to Foreground galaxy
