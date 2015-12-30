@@ -12,6 +12,7 @@ History:
 Note:
 -----
 - for GILDAS go spectrum to have (0,0) offset at the desire wcs -> need to change header as well, not just shifting the image to center on that wcs, which only cause the central pixel of the image to land on the desire WCS. But the (0,0) in go spectrum corresponds to HEADER
+- Turns out we can shift phase center of map in GILDAS when calling `uv_map`, but we will have to clean it again..
 
 '''
 
