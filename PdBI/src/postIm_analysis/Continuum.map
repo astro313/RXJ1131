@@ -4,9 +4,14 @@
 ! Last modified: Dec 30 2015
 !
 ! History:
-!   Dec 30 2015: can run tasks non-interactively in script; implemented uv_fit after uv_center and uv_shift
-!   Nov 18 2015: first find centroid in UV then shift before uv_fit (not implemented)
-!   Nov 10 2015: created script
+!   Dec 30 2015:
+!       Implement code to run tasks non-interactively in script;
+!       Implemented uv_fit after uv_center and uv_shift.
+!       Also fitting C_GAUSS and Double Gauss after shifting phase center.
+!   Nov 18 2015:
+!       First find centroid in UV then shift before uv_fit (not implemented)
+!   Nov 10 2015:
+!       created script
 !
 !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 !
@@ -43,7 +48,6 @@ begin data tmp_uv-fit.init
   TASK\CHARACTER "UVtable name"   UVTABLE$ 'name'".uvt"
   TASK\INTEGER   "Channels: first, last (0,0 for all)" CHANNEL$[2]  'first' 'last'
   TASK\REAL      "UV range (max, min) in meters"  UV_RANGE$[2] 'uvfit%range[1]' 'uvfit%range[2]'
-  TASK\CHARACTER "residuals UVtable"        RESIDUALS$ 'name'".uv_fit-res.uvt"
   TASK\INTEGER   "Number of functions" NF$ 'uvfit%nf'
   !
   ! valid functions are POINT, C_GAUSS, E_GAUSS, C_DISK, E_DISK, RING,
@@ -96,6 +100,7 @@ let uvfit%range01 0 0 0 0 0 0 0       ! starting range
 let uvfit%start01 1 1 1 1 1 1 1       ! number of starts
 run uv_fit tmp_uv-fit.init /nowindow
 
+! r.m.s.=     0.0124 Jy.
 ! E_GAUSS  R.A.        =    -2.11931 (   .18227)  11:31:51.4553
 ! E_GAUSS  Dec.        =    -1.29913 (   .22635) -12:31:58.2991
 ! E_GAUSS  Flux        =     1.36570 (   .20869)  milliJy
@@ -152,7 +157,7 @@ end data tmp_uv-shift.init
 !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 !
 !
-! using offset from uv_fit with E_gauss
+! using offset from uv_fit with E_gauss to shift phase center
 !
 say ".. make a new copy of UVT to be shifted with new phase center.."
 sic copy 'UVTname'.uvt 'UVTname'.uv_shift.uvt
@@ -165,8 +170,9 @@ let uvshift%dec  -12:31:58.2991
 let uvshift%angle 0         ! rotate the UVT to new North
 run uv_shift tmp_uv-shift.init /nowin
 
-say "Detemine continuum source extent"
-
+!
+say "Fit again in UV plane after shifting"
+!
 let name 'UVTname'".uv_shift"
 let first 0
 let last 0
@@ -178,9 +184,65 @@ let uvfit%range01 0 0 0 0 0 0 0       ! starting range
 let uvfit%start01 1 1 1 1 1 1 1       ! number of starts
 run uv_fit tmp_uv-fit.init /nowindow
 
+! r.m.s.=     0.0124 Jy.
 ! E_GAUSS  R.A.        =    -0.00383 (   .18160)  11:31:51.4550
 ! E_GAUSS  Dec.        =     0.00111 (   .22602) -12:31:58.2980
 ! E_GAUSS  Flux        =     1.36260 (   .20820)  milliJy
 ! E_GAUSS  Major       =     3.01647 (365.39810)
 ! E_GAUSS  Minor       =     0.00587 (   .53198)
 ! E_GAUSS  Pos.Ang.    =   -72.77988 ( 15.48605)
+
+!
+say "Fit with C_GAUSS in UV plane after shifting"
+!
+let name 'UVTname'".uv_shift"
+let first 0
+let last 0
+let uvfit%range 0 800
+let uvfit%nf 1
+let uvfit%funct01 C_Gauss
+let uvfit%param01 1 1 3 4 3 3 1       ! parameters
+let uvfit%range01 0 0 0 0 0 0 0       ! starting range
+let uvfit%start01 1 1 1 1 1 1 1       ! number of starts
+run uv_fit tmp_uv-fit.init /nowindow
+
+! r.m.s.=     0.0124 Jy.
+! R.A.        =    -0.10163 (   .14901)  11:31:51.4484
+! Dec.        =     0.06940 (   .23643) -12:31:58.2297
+! Flux        =     1.28496 (   .18507)  milliJy
+! F.W.H.P.    =     2.14503 (   .40583)
+
+!
+say "Fit with Double E_Gauss in UV plane"
+!
+!
+! `uv_fit` with more than one fit functions throws error when attempting to fit to the phase-center-shifted uvt
+say " -- Fitting to UVT before shifting phase center -- "
+let name 'UVTname'
+let first 0
+let last 0
+let uvfit%range 0 800
+let uvfit%nf 2
+let uvfit%funct01 E_Gauss
+let uvfit%param01 1 1 3 4 3 3 1       ! parameters
+let uvfit%range01 0 0 0 0 0 0 0       ! starting range
+let uvfit%start01 1 1 1 1 1 1 1       ! number of starts
+let uvfit%funct02 E_Gauss
+let uvfit%param02 1 1 3 4 3 3 1
+let uvfit%range02 1 1 1 1 1 1 1
+let uvfit%start02 1 1 1 1 1 1 1
+run uv_fit tmp_uv-fit.init /nowindow
+!
+! r.m.s.=     0.0125 Jy.
+! R.A.        =    -6.68012 (      Inf)  11:31:51.1438
+! Dec.        =    42.77865 (      Inf) -12:31:14.2213
+! Flux        =   324.12138 (      Inf)  Jy
+! Major       =   616.19074 (      Inf)
+! Minor       =   244.74343 (      Inf)
+! Pos.Ang.    =     6.61935 (      Inf)
+! R.A.        =     8.67984 (      Inf)  11:31:52.1928
+! Dec.        =   -40.77913 (      Inf) -12:32:37.7791
+! Flux        =  -324.12062 (      Inf)  Jy
+! Major       =   624.19198 (      Inf)
+! Minor       =   238.74247 (      Inf)
+! Pos.Ang.    =    -0.55870 (      Inf)
