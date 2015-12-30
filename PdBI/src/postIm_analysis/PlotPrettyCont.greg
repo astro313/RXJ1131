@@ -123,8 +123,8 @@ set character 0.6
 ! ##############################################
 
 ! ############## OUT PUT FILENAME ##############
-sic delete Cont.eps
-hardcopy Cont /device eps color
+sic delete "/Users/admin/Research/RXJ1131/PdBI/data/04Sep15/Cont.eps"
+hardcopy "/Users/admin/Research/RXJ1131/PdBI/data/04Sep15/Cont" /device eps color
 ! ##############################################
 
 pen 0 /default
