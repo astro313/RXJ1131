@@ -1,0 +1,109 @@
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+!
+! Clean Continuum with different mask to see if the East blob is real
+!
+!
+! Last Modified: 30 Dec 2015
+!
+! History:
+!   30 Dec 2015:
+!
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+
+!!!!!!!!!!!!!!!!!!!!!!!!
+! USER define
+!!!!!!!!!!!!!!!!!!!!!!!!
+define char UVTname*40
+sic\let UVTname = "co21_trial1_cont"
+! delete /var UVTname
+
+def char NewPath*50
+sic\let NewPath = "/Users/admin/Research/RXJ1131/PdBI/data/30Dec15/"
+
+say ""
+say " *** Copying RP data cube to new Directory to work on ..."
+say "New DIR: "'NewPath'
+sic copy "/Users/admin/Research/RXJ1131/PdBI/data/04Sep15/"'UVTname'.uvt 'NewPath''UVTname'.uvt
+
+say ""
+say ""
+sic DIRECTORY 'NewPath'
+sys "pwd"
+
+! Erase everything (except uv tables) to start from scratch.
+go remove
+sys "ls -hltr "
+
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+!!! image continuum
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+let name 'UVTname'
+!!! determine clean parameters for uv_map
+go UVSTAT WEIGHT
+input uv_map
+let map_size 256
+let map_cell 0.5
+! LET WEIGHT_MODE UN        ! robust weighting
+! LET UV_SHIFT yes
+! LET MAPRA <hex:hex:hex>
+! LET MAPDEC <hex:hex:hex>
+go uv_map
+
+sys "ls -hltr"
+go bit
+PAUSE "Press enter to continue"
+go noise
+PAUSE "Press enter to continue"
+
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+! clean continuum
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+inp clean
+let size 20
+let method hogbom
+let gain 0.2
+let myclean%support yes
+! let BLC 131 123
+! let TRC 136 129
+let ares 1.5*noise
+let niter 0
+let fres 0
+inp clean
+go bit
+sup /cursor
+hogbom
+
+let size 55
+show residual
+pause "Enter to continue"
+let size 25
+show clean
+pause "Enter to continue"
+show cct
+pause "Enter to continue"
+
+! save when converged
+write clean 'UVTname'
+write residual 'UVTname'
+write cct 'UVTname'
+
+say "*** Saving continuum image in .fits ..."
+fits 'UVTname'.fits from 'UVTname'.lmv-clean
+fits 'UVTname'_res.fits from 'UVTname'.lmv-res
+
+let name 'UVTname'
+let type lmv-clean
+
+go noise     ! 9.1782378E-05
+let size 100
+go nice
+poly
+mean         ! r.m.s.:  9.12896E-05
+
+! flux estimation
+let size 30
+let spacing 3*9.12896E-05 ! approximately [Jy/Beam]
+go nice
+go flux
+! integrated ~ 1.2 mJy
+
