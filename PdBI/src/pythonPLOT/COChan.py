@@ -53,7 +53,7 @@ class Velo(object):
 def setup_axes(fig, header, nx, ny):
 
     gh = pywcsgrid2.GridHelper(wcs=header)
-    gh.locator_params(nbins=4)
+    gh.locator_params('x', nbins=3)
 
     g = axes_grid.ImageGrid(fig, 111,
                             nrows_ncols=(ny, nx),
@@ -109,9 +109,10 @@ major_px = header['BMAJ'] * 3600 / cdelt1                 # arcsrc/pix
 minor_px = header['BMIN'] * 3600 / cdelt2
 BPA_deg = header['BPA']         # should be 13 deg
 
-wcs = pywcs.WCS(header).sub([1, 2])       # .sub([1,2]) needed for wcs.wcs_pix2sky(px, py, 1) later in the code
+wcs = pywcs.WCS(header).sub([1, 2])       # .sub([1,2]) needed for wcs.wcs_pix2sky(px, py, 1) later in the code, flattens cube axes
 vel = Velo(header)
-fig = plt.figure(1, figsize=(12, 12), dpi=100)      # don't change dpi, disastrous
+fig = plt.figure(figsize=(12, 12), dpi=100)      # don't change dpi, disastrous
+plt.subplots_adjust(top=0.9)
 g, cax = setup_axes(fig, header, nx, ny)
 
 # draw images
@@ -208,7 +209,7 @@ norm.vmax = 0.03          # max in map
 for im in images:
     im.changed()
 
-fig.suptitle("CO(2-1) Channel Maps", fontsize=22)
+fig.suptitle("CO(2-1) Channel Maps", fontsize=22, x=0.5, y=0.92)
 plt.show()
 fits_cube.close()
 
