@@ -1,4 +1,7 @@
 '''
+!!!!
+31 Dec 2015: The astrometry of these HST images are not corrected
+!!!
 
 Use APLpy to generate RGB cube, and crop image if needed
 Then generate a publication quality image
