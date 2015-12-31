@@ -1,11 +1,14 @@
 '''
-Last Modified: 25 Dec 15
+Last Modified: 31 Dec 15
 
 
 Author: Daisy Leung
 
 
 History:
+31 Dec 2015
+- update HST coordinates, see HSTmarkers.txt
+
 25 Dec 2015
 - Markers corresponds to HST features
 - removed super title code.. doesn't work with saved figure
@@ -136,16 +139,15 @@ for i, ax in enumerate(g):
     ax.set_xlim(113, 148)
     ax.set_ylim(107, 142)
 
-
     if HST:   # mark lensing knots
         import astrolib.coords as coords
         # to convert sexidesimal coord --> deg in tuple
         p_list = [
-                  coords.Position("11:31:51.402  -12:31:59.23").j2000(), # FG G
-                  coords.Position("11:31:51.53712 -12:31:59.8396").j2000(), # A
-                  coords.Position("11:31:51.53927 -12:31:58.6515").j2000(), # B
-                  coords.Position("11:31:51.4968 -12:32:00.9596").j2000(),  # C
-                  coords.Position("11:31:51.324 -12:31:58.9556").j2000()    # D
+                  coords.Position("11:31:51.44295 -12:31:58.30659").j2000(), # FG G
+                  coords.Position("11:31:51.5769 -12:31:58.9708").j2000(), # A
+                  coords.Position("11:31:51.5678 -12:31:57.8143").j2000(), # B
+                  coords.Position("11:31:51.5366 -12:32:00.1192").j2000(),  # C
+                  coords.Position("11:31:51.3658 -12:31:58.1183").j2000()    # D
                 ]
         for p1 in p_list:
             ra, dec = p1
