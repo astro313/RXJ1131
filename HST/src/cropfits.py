@@ -1,9 +1,10 @@
 '''
-Last Modified: 25 Dec 2015
+Last Modified: 31 Dec 2015
 
 
 History:
 --------
+31 Dec 2015: add function to shift images "ad-hoc astrometric correction"
 25 Dec 2015: fix minor bugs
 24 Dec 2015: cropped image has correct wcs
 
@@ -104,11 +105,61 @@ def cropfits(dirname, xctr, yctr, xbdr, ybdr, infits=None, extension=0):
         print "Cut image %s with dims %s to %s.  xrange: %f:%f, yrange: %f:%f \n" % (fname, hdulist[extension].data.shape, im.shape, xmin, xmax, ymin, ymax)
         print outname, 'successfully cropped!'
 
+
+def linear_astrometry(dirname, ra_offset, dec_offset, infits=None):
+    '''
+    Perform linear transformation to correct for astrometry offset assuming no geometric distortion
+
+    This function is generic, i.e. designed to not only work for the weird HST image we have at hand, but also to any normal fits image. Hence, for this set of HST images, call this function after it's been cropped and has only single extension.
+
+
+    Parameters
+    ----------
+    dirname: str
+        directory of fits files
+
+    ra_offset: float
+        RA offset to shift by for CRPIX1 to get the correct RA (deg)
+
+    dec_offset: float
+        dec offset to shift by for CRPIX2 to get the correct dec (deg)
+
+    infits: list
+        fits files
+
+
+    '''
+    import os
+    files = [infits]
+    for i, fname in enumerate(files):
+        name, ext = os.path.splitext(fname)
+        shortfiles = name + 'linearShift' + ext
+        hdulist = pf.open(fname)
+        print hdulist
+        header = hdulist[0].header.copy()
+
+        # linear transformation
+        header['CRVAL1'] += ra_offset
+        header['CRVAL2'] += dec_offset
+
+        im = hdulist[0].data
+
+        outObj = pf.PrimaryHDU(data=im, header=header)
+        outname = join(dirname, shortfiles)
+        outObj.writeto(outname, clobber=True)
+        print outname, 'successfully Shifted reference WCS!'
+
+
 #F555W
 xctr, yctr = load_fits_image(
     join(PATH, filename), ra_center, dec_center, ext=ext)
 cropfits(PATH, int(round(xctr)), int(round(yctr)), size,
          size, infits=join(PATH, filename), extension=ext)
+
+ff = 'HST_9744_75_ACS_WFC_F555W_drzcrop.fits'
+ra_shift, dec_shift = 0.5963/3600., 0.8372/3600.    # deg
+linear_astrometry(PATH, ra_shift, dec_shift, infits=join(PATH, ff))
+
 
 #F814W
 xctr, yctr = load_fits_image(
