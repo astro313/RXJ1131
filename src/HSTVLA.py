@@ -1,12 +1,14 @@
 """
 Author: Daisy Leung
 
-Last edited: Dec 30 2015
+Last edited: Dec 31 2015
 
 Purpose:
 - Plot single panel 5GHz VLA continuum on HST F555W, investigate continuum offset
 
 History:
+Dec 31 2015:
+    plot as well the astrometric corrected image - F555W_ContVLA_astrometry.eps
 Dec 30 2015:
     create script
 
@@ -22,11 +24,10 @@ from APLpySetup import *
 path = '../HST/'
 Plotpath = '../Figures/'
 
-label = dict.fromkeys(['F555W'])
+label = dict.fromkeys(['F555W_drzcrop.','F555W_drzcroplinearShift'])
 for k in label.iterkeys():
-    files = glob.glob(path + '*' + k + '*.fits')
+    files = glob.glob(path + '*' + k + '*fits')
     label[k] = files
-# print label
 
 path_vla = '../Radio/Cband/'
 label_vla  = dict.fromkeys(['C_R0'])
@@ -57,24 +58,24 @@ sigma = 1.3e-5
 ########################################
 # intialize base figure
 ########################################
-# fig1 = aplpy.FITSFigure(label['F555W'][0],
+# fig1 = aplpy.FITSFigure(label['F555W_drzcrop.'][0],
 #                         figure=figC, subplot=[x0, row_a, full_width, dy])#, north=True)
 # # fig1.show_grayscale(stretch='log', vmin=-0.45869, vmax=250, vmid=-0.85)
 # fig1.show_grayscale(stretch='log', vmin=-0.01869, vmax=151, vmid=-0.025)
 # #fig1.set_theme('publication')   # inverted grayscale
 
-fig1 = aplpy.FITSFigure(label['F555W'][0], \
+fig1 = aplpy.FITSFigure(label['F555W_drzcrop.'][0], \
         figure=figC, subplot=[x0,row_a,full_width,dy])
 fig1.show_grayscale(stretch='log', vmin=-0.01869, vmax=151, vmid=-0.025)
-#figO = aplpy.FITSFigure(label['F555W'][0], \
+#figO = aplpy.FITSFigure(label['F555W_drzcrop.'][0], \
 #        figure=figC, subplot=[x0+width+2*x_gap, row_a, width, dy])
 #figO.show_grayscale(stretch='log', vmin=-0.01869, vmax=151, vmid=-0.025)
 
 
-# figHST = aplpy.FITSFigure(label['F555W'][0], \
+# figHST = aplpy.FITSFigure(label['F555W_drzcrop.'][0], \
 #         figure=figRed, subplot=[x0,row_a,width,dy])
 # figHST.show_grayscale(stretch='log', vmin=-0.01869, vmax=151, vmid=-0.025)
-# figred = aplpy.FITSFigure(label['F555W'][0], \
+# figred = aplpy.FITSFigure(label['F555W_drzcrop.'][0], \
 #         figure=figRed, subplot=[x0+width+2*x_gap, row_a, width, dy])
 # figred.show_grayscale(stretch='log', vmin=-0.01869, vmax=151, vmid=-0.025)
 
@@ -82,6 +83,7 @@ fig1.show_grayscale(stretch='log', vmin=-0.01869, vmax=151, vmid=-0.025)
 # Contours
 ########################################
 fig1.show_contour(label_vla['C_R0'][0], colors="blue", levels=sigma_contour_VLA(sigma), linewidths=2)#, layer='fg')
+fig1.show_contour(label['F555W_drzcroplinearShift'][0], colors='red', levels=sigma_contour_VLA(0.07048), linewidths=2)
 
 # figred.show_contour(label_vla['red'][0], colors="lime", levels=sigma_contour_array(sigma_red), linewidths=2)
 
@@ -156,7 +158,7 @@ if __name__ == '__main__':
         raise IndexError(errmsg.format(len(sys.argv)))
     saveFig = True if sys.argv[1].lower() == 'true' else False
     if saveFig == True:
-        figC.savefig(Plotpath + 'F555W_ContVLA.eps', dpi=600)
+        figC.savefig(Plotpath + 'F555W_ContVLA_astrometry.eps', dpi=600)
     else:
 #        figC.canvas.draw()
         plt.show()
