@@ -4,7 +4,7 @@ Author: Daisy Leung
 Last edited: Dec 30 2015
 
 Purpose:
-- Plot HST image F555W as one panel, plot Cont of all channels overlay on HST as another panel
+- Overlay 2mm Cont contour on HST
 
 History:
 Dec 30 2015:
