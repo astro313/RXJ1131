@@ -14,6 +14,30 @@ def get_RA_dec(f):
     t = atpy.Table(f)
     return t.ra, t.dec
 
+def sigma_contour_VLA(sigma):
+    """
+    Return a list of contour levels, (4, 8, 16, 32..)*sqrt(2)*sigma
+
+    +/- 2^(n/2)*sigma; n from 2
+
+    Parameters
+    ----------
+    sigma: float
+        map rms
+
+    Returns
+    -------
+    arr: list
+    contour levels
+
+    """
+    arr = range(11)
+    arr.remove(0)
+    arr.remove(1)
+    arr = [2 ** i * np.sqrt(2) * sigma for i in arr]
+    arr.append(list(np.array(arr) * -1)[0])
+    return arr
+
 
 def sigma_contour_array(sigma):
     """
