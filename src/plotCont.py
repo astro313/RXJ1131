@@ -1,12 +1,14 @@
 """
 Author: Daisy Leung
 
-Last edited: Dec 30 2015
+Last edited: Dec 31 2015
 
 Purpose:
 - Overlay 2mm Cont contour on HST
 
 History:
+Dec 31 2015:
+    use linear shifted F555W image
 Dec 30 2015:
     make pretty layout
 Sept 19 2015:
@@ -24,7 +26,7 @@ from APLpySetup import *
 path = '../HST/'
 Plotpath = '../Figures/'
 
-label = dict.fromkeys(['F555W'])
+label = dict.fromkeys(['F555W_drzcroplinearShift'])
 for k in label.iterkeys():
     files = glob.glob(path + '*' + k + '*.fits')
     label[k] = files
@@ -59,24 +61,24 @@ sigma = 0.085e-3     # theoretical: 0.0816E-03; off-region in map: 0.0888e-3
 ########################################
 # intialize base figure
 ########################################
-# fig1 = aplpy.FITSFigure(label['F555W'][0],
+# fig1 = aplpy.FITSFigure(label['F555W_drzcroplinearShift'][0],
 #                         figure=figC, subplot=[x0, row_a, full_width, dy])#, north=True)
 # # fig1.show_grayscale(stretch='log', vmin=-0.45869, vmax=250, vmid=-0.85)
 # fig1.show_grayscale(stretch='log', vmin=-0.01869, vmax=151, vmid=-0.025)
 # #fig1.set_theme('publication')   # inverted grayscale
 
-fig1 = aplpy.FITSFigure(label['F555W'][0], \
+fig1 = aplpy.FITSFigure(label['F555W_drzcroplinearShift'][0], \
         figure=figC, subplot=[x0,row_a,full_width,dy])
 fig1.show_grayscale(stretch='log', vmin=-0.01869, vmax=151, vmid=-0.025)
-#figO = aplpy.FITSFigure(label['F555W'][0], \
+#figO = aplpy.FITSFigure(label['F555W_drzcroplinearShift'][0], \
 #        figure=figC, subplot=[x0+width+2*x_gap, row_a, width, dy])
 #figO.show_grayscale(stretch='log', vmin=-0.01869, vmax=151, vmid=-0.025)
 
 
-# figHST = aplpy.FITSFigure(label['F555W'][0], \
+# figHST = aplpy.FITSFigure(label['F555W_drzcroplinearShift'][0], \
 #         figure=figRed, subplot=[x0,row_a,width,dy])
 # figHST.show_grayscale(stretch='log', vmin=-0.01869, vmax=151, vmid=-0.025)
-# figred = aplpy.FITSFigure(label['F555W'][0], \
+# figred = aplpy.FITSFigure(label['F555W_drzcroplinearShift'][0], \
 #         figure=figRed, subplot=[x0+width+2*x_gap, row_a, width, dy])
 # figred.show_grayscale(stretch='log', vmin=-0.01869, vmax=151, vmid=-0.025)
 

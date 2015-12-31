@@ -6,12 +6,12 @@ Plot mom0 of all channels overlay on HST (single panel)
 Author: Daisy Leung
 
 
-Last edited: Dec 25 2015
+Last edited: Dec 31 2015
 
 
 History:
 --------
-
+31 Dec 2015: use the linear shifted HST F555W image
 
 Note:
 -----
@@ -30,7 +30,7 @@ from APLpySetup import *
 path = '../HST/'
 Plotpath = '../Figures/'
 
-label = dict.fromkeys(['F555W'])
+label = dict.fromkeys(['F555W_drzcroplinearShift'])
 for k in label.iterkeys():
     files = glob.glob(path + '*' + k + '*.fits')
     label[k] = files
@@ -69,7 +69,7 @@ tickcolor = 'k' if inverted_HSTleft else 'white'
 ########################################
 # intialize base figure
 ########################################
-fig1 = aplpy.FITSFigure(label['F555W'][0],
+fig1 = aplpy.FITSFigure(label['F555W_drzcroplinearShift'][0],
                         figure=figC, subplot=[x0, row_a, full_width, dy])
 fig1.show_grayscale(stretch='log', vmin=-0.01869, vmax=151, vmid=-0.025)
 if inverted_HSTleft: fig1.set_theme('publication')

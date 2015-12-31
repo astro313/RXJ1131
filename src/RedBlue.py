@@ -1,9 +1,11 @@
 """
 Author: Daisy Leung
 
-Last edited: November 5 2015
+Last edited: Dec 31 2015
 
 Purpose:
+31 Dec 2015: Use linear shifted F555W image
+
 - Plot Red wing and Blue wing different color overlay on HST
 
 History:
@@ -20,7 +22,7 @@ from APLpySetup import *
 path = '../HST/'
 Plotpath = '../Figures/'
 
-label = dict.fromkeys(['F555W'])
+label = dict.fromkeys(['F555W_drzcroplinearShift'])
 for k in label.iterkeys():
     files = glob.glob(path + '*' + k + '*.fits')
     label[k] = files
@@ -60,7 +62,7 @@ blue_line_max = 1.72505
 ########################################
 # intialize base figure
 ########################################
-fig1 = aplpy.FITSFigure(label['F555W'][0],
+fig1 = aplpy.FITSFigure(label['F555W_drzcroplinearShift'][0],
                         figure=figC, subplot=[x0, row_a, full_width, dy])
 fig1.show_grayscale(stretch='log', vmin=-0.01869, vmax=151, vmid=-0.025) #, invert=True)
 # fig1.set_theme('pulication')
