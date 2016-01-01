@@ -1,18 +1,21 @@
 '''
 Shift PdBI image to desire WCS
 
-Last Modified: 25 Dec 2015
+Last Modified: 31 Dec 2015
 
 
 History:
 --------
+31 Dec 2015: use astrometric corrected coord for lens gal., G: 172.9643456388, -12.532862944; before changed HDR: 133.6, 126.4 (x,y)
 25 Dec 2015: copied from RXJ1131/HST/src/cropfits.py, modify with astropy (cropfits.py handles wcs in HST images. astropy.wcs.WCS deals better with radio line cube)
+    - G: 172.96418, -12.5330955; before changed HDR: 134.8 124.7 (x,y)
 
 
 Note:
 -----
-- for GILDAS go spectrum to have (0,0) offset at the desire wcs -> need to change header as well, not just shifting the image to center on that wcs, which only cause the central pixel of the image to land on the desire WCS. But the (0,0) in go spectrum corresponds to HEADER
+- for GILDAS go spectrum to have (0,0) offset at the desire wcs -> need to change header as well, not just shifting the image to center on that wcs, which only cause the central pixel of the image to land on the desire WCS. But the (0,0) offset in abs. coord. in `go spectrum` corresponds to HEADER CRVAL & CRPIX (see code and comments)
 - Turns out we can shift phase center of map in GILDAS when calling `uv_map`, but we will have to clean it again..
+- !! Remember to remove BLAHcropBLAH.vxy and BLAHcropBLAH.lmv-clean before running spatialSpectre.greg if a new fits cube is generated with this script. !!
 
 '''
 
@@ -28,8 +31,7 @@ ext = 0
 PATH = '/Users/admin/Research/RXJ1131/PdBI/data/25Dec15'
 filename = 'sup127_155_2ndcln_noCont.fits'
 
-ra_center = 172.96418
-dec_center = -12.5330955
+ra_center, dec_center = 172.9643456388, -12.532862944
 size = 50  # px, one side
 
 

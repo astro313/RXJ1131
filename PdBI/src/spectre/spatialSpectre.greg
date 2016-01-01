@@ -254,8 +254,8 @@ greg1\set expand 1
 gtvl\change directory <greg
 !
 ! ----------- OUTPUT FILENAME ----------------
-sic delete 'outfile'.eps
-hardcopy 'outfile' /device eps color
+! sic delete 'outfile'.eps
+! hardcopy 'outfile' /device eps color
 ! --------------------------------------------
 !
 pen 0 /default
