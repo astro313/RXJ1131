@@ -131,7 +131,7 @@ def setup_beam2(sp, major, minor, angle, idx, loc='top right', c='black', hatch=
     sp.beam[idx].set_frame(True)
 
 
-def markers_cross(sp, ra, dec, layer=None, ec='yellow', fc='none', mk='+', s=500, a=1.0, lw=2):
+def markers_cross(sp, ra, dec, layer=None, ec='yellow', fc='none', mk='+', s=500, a=1.0, lw=2, zorder=50):
     """
     Inputs:
     -------
@@ -139,7 +139,7 @@ def markers_cross(sp, ra, dec, layer=None, ec='yellow', fc='none', mk='+', s=500
     dec: float
     layer: str
     """
-    sp.show_markers(ra, dec, layer=layer, edgecolor=ec, facecolor=fc, marker=mk, s=s, alpha=a, linewidth=lw)
+    sp.show_markers(ra, dec, layer=layer, edgecolor=ec, facecolor=fc, marker=mk, s=s, alpha=a, linewidth=lw, zorder=50)
 
 
 def put_label(sp, x, y, text, layer, c='yellow', s='x-large', w='bold'):
