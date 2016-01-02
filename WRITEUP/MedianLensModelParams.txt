@@ -1,6 +1,8 @@
 01 Jan 2016:
 - ran independent channel models using centroid after correcting for astrometry
 - on Serenity: /data/dleung/DATA/RXJ1131/PdBI/model/src/medianLens0Param.dat
+- DecCentroid: -12.5328629
+- RACentroid: 172.96434563888
 # theta_E,Delta_dec,Delta_RA,Axial_Ratio, PA
 # Row 1: not-weighted median of combined
 # Row 2: weighted mean of median of each
