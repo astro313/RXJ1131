@@ -1,13 +1,14 @@
 """
 Author: Daisy Leung
 
-Last edited: 30 Dec 2015
+Last edited: 01 Jan 2016
 
 Purpose:
 - Plot VLA C band continuum as grayscale, overlay 2 mm PdBI continuum contours
 
 History:
-
+01 Jan 2016: update marker
+30 Dec 2015: initial
 """
 
 from astropy import log
@@ -39,8 +40,8 @@ fig2 = plt.figure(2, figsize=(12, 5))
 ########################################
 # user define area
 ########################################
-ra_center = 172.96418
-dec_center = -12.5330955
+ra_center = 172.96434563888
+dec_center = -12.5328629
 sizeVLA = 0.00135
 sizep = 0.00235066
 
@@ -100,9 +101,9 @@ figO.axis_labels.hide()
 ########################################
 # markers
 ########################################
-markers_cross(fig1, ra_cross, dec_cross, layer='marker_set_1', ec='y')
-markers_cross(figVLA, ra_cross, dec_cross, layer='marker_set_1')
-markers_cross(figO, ra_cross, dec_cross, layer='marker_set_1')
+markers_cross(fig1, ra_cross, dec_cross, layer='marker_set_1', ec='red')
+markers_cross(figVLA, ra_cross, dec_cross, layer='marker_set_1', ec='red')
+markers_cross(figO, ra_cross, dec_cross, layer='marker_set_1', ec='red')
 
 ########################################
 # Labels
