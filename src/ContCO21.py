@@ -1,12 +1,14 @@
 """
 Author: Daisy Leung
 
-Last edited: 30 Dec 2015
+Last edited: 01 Jan 2016
 
 Purpose:
 - Plot continuum as grayscale overlay CO(2-1) mom0
 
 History:
+01 Jan 2016: update marker postion
+30 Dec 2015: initial file
 
 """
 
@@ -39,8 +41,8 @@ figC = plt.figure(1, figsize=(7, 7))
 ########################################
 # user define area
 ########################################
-ra_center = 172.96418
-dec_center = -12.5330955
+ra_center = 172.96434563888
+dec_center = -12.5328629
 sizep = 0.00408066
 
 ra_cross, dec_cross = ra_center, dec_center
@@ -86,7 +88,7 @@ lg_1arcsec = 1. / 3600
 ########################################
 # axes
 ########################################
-standard_plot_setup(fig1, ra_center, dec_center, sizep, tickc='white')
+standard_plot_setup(fig1, ra_center, dec_center, sizep, tickc='black')
 #standard_plot_setup(figO, ra_center, dec_center, sizep, tickc='white')
 # standard_plot_setup(figHST, ra_center, dec_center, sizep, tickc='white')
 # standard_plot_setup(figred, ra_center, dec_center, sizep, tickc='white')

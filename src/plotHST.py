@@ -1,14 +1,17 @@
 """
 Author: Daisy Leung
 
-Last edited: Sept 19 2015
+Last edited: 01 Jan 2016
 
 Purpose:
 - Plot HST image F555W (left), plot mom0 of all channels overlay on HST (right)
 
 History:
-Dec 31 2015: use the linear shifted F555W image
-- added option to plot left panel HST image in inverted grayscale
+Jan 01 2016:
+    update marker
+Dec 31 2015:
+    use the linear shifted F555W image
+    added option to plot left panel HST image in inverted grayscale
 
 """
 
@@ -27,7 +30,6 @@ for k in label.iterkeys():
     files = glob.glob(path + '*' + k + '*.fits')
     label[k] = files
 print label
-import sys; sys.exit()
 
 label_pdbi = dict.fromkeys(['mom0'])
 path_pdbi = '../PdBI/data/14Oct15/'
@@ -42,9 +44,9 @@ figC = plt.figure(1, figsize=(12, 7))
 ########################################
 # user define area
 ########################################
-ra_center = 172.96418
-dec_center = -12.5330955
-sizep = 0.00258066
+ra_center = 172.96434563888
+dec_center = -12.5328629
+sizep = 0.00178066
 
 ra_cross, dec_cross = ra_center, dec_center
 row_a = 0.10
@@ -74,7 +76,7 @@ if inverted_HSTleft: fig1.set_theme('publication')
 
 
 figO = aplpy.FITSFigure(label['F555W_drzcroplinearShift'][0], \
-        figure=figC, subplot=[x0+width+2*x_gap, row_a, width, dy])
+        figure=figC, subplot=[x0+width, row_a, width, dy])
 figO.show_grayscale(stretch='log', vmin=-0.01869, vmax=151, vmid=-0.025)
 
 

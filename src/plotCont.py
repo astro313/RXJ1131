@@ -1,12 +1,14 @@
 """
 Author: Daisy Leung
 
-Last edited: Dec 31 2015
+Last edited: 01 Jan 2016
 
 Purpose:
 - Overlay 2mm Cont contour on HST
 
 History:
+Jan 01 2016:
+    update marker
 Dec 31 2015:
     use linear shifted F555W image
 Dec 30 2015:
@@ -45,8 +47,8 @@ figC = plt.figure(1, figsize=(7, 7))
 ########################################
 # user define area
 ########################################
-ra_center = 172.96418
-dec_center = -12.5330955
+ra_center = 172.96434563888
+dec_center = -12.5328629
 sizep = 0.00258066
 
 ra_cross, dec_cross = ra_center, dec_center

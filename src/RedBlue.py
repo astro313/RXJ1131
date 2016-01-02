@@ -1,14 +1,14 @@
 """
 Author: Daisy Leung
 
-Last edited: Dec 31 2015
+Last edited: 01 Jan 2016
 
 Purpose:
-31 Dec 2015: Use linear shifted F555W image
-
-- Plot Red wing and Blue wing different color overlay on HST
+    Plot Red wing and Blue wing different color overlay on HST
 
 History:
+01 Jan 2016: update marker
+31 Dec 2015: Use linear shifted F555W image
 
 """
 
@@ -40,8 +40,8 @@ figC = plt.figure(1, figsize=(7, 7))
 ########################################
 # user define area
 ########################################
-ra_center = 172.96418        # 172.96426
-dec_center = -12.5330955     # -12.533213
+ra_center = 172.96434563888
+dec_center = -12.5328629
 sizep = 0.002                # 0.00158066
 
 ra_cross, dec_cross = ra_center, dec_center

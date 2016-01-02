@@ -1,12 +1,14 @@
 """
 Author: Daisy Leung
 
-Last edited: Dec 31 2015
+Last edited: 01 Jan 2016
 
 Purpose:
 - Plot single panel 5GHz VLA continuum on HST F555W, investigate continuum offset
 
 History:
+Jan 01 2016:
+    - update marker
 Dec 31 2015:
     - don't plot HST comparison, only use the astrometric correct F555W image
     - plot as well the astrometric corrected image - F555W_ContVLA_astrometry.eps
@@ -43,8 +45,8 @@ figC = plt.figure(1, figsize=(7, 7))
 ########################################
 # user define area
 ########################################
-ra_center = 172.96418
-dec_center = -12.5330955
+ra_center = 172.96434563888
+dec_center = -12.5328629
 sizep = 0.002
 
 ra_cross, dec_cross = ra_center, dec_center

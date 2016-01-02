@@ -6,11 +6,12 @@ Plot mom0 of all channels overlay on HST (single panel)
 Author: Daisy Leung
 
 
-Last edited: Dec 31 2015
+Last edited: 01 Jan 2016
 
 
 History:
 --------
+01 Jan 2016: update marker
 31 Dec 2015: use the linear shifted HST F555W image
 
 Note:
@@ -48,8 +49,8 @@ figC.clf()
 ########################################
 # user define area
 ########################################
-ra_center = 172.96418
-dec_center = -12.5330955
+ra_center = 172.96434563888
+dec_center = -12.5328629
 sizep = 0.0025
 
 ra_cross, dec_cross = ra_center, dec_center
