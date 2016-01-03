@@ -1,11 +1,12 @@
 '''
 Shift PdBI image to desire WCS
 
-Last Modified: 31 Dec 2015
+Last Modified: 03 Jan 2016
 
 
 History:
 --------
+03 Jan 2016: remove cropfileName.vxy and .lmv-clean after the fits file is generated, to ensure spatialSpectre.greg runs on the new cropped file
 31 Dec 2015: use astrometric corrected coord for lens gal., G: 172.9643456388, -12.532862944; before changed HDR: 133.6, 126.4 (x,y)
 25 Dec 2015: copied from RXJ1131/HST/src/cropfits.py, modify with astropy (cropfits.py handles wcs in HST images. astropy.wcs.WCS deals better with radio line cube)
     - G: 172.96418, -12.5330955; before changed HDR: 134.8 124.7 (x,y)
@@ -100,6 +101,12 @@ def cropfits(dirname, xctr, yctr, xbdr, ybdr, infits=None, extension=0):
         cutout.writeto(outname, clobber=True)
         print "Cut image %s with dims %s to %s.  xrange: %f:%f, yrange: %f:%f \n" % (fname, f[extension].data.shape, im.shape, xmin, xmax, ymin, ymax)
         print outname, 'successfully cropped!'
+        print("")
+        print(" -- Cleaning up {:s}.vxy and {:s}.lmv-clean").format(outname, outname)
+        import os
+        cmd = 'rm ' + outname + '.vxy ' + outname+'.lmv-clean'
+        os.system(cmd)
+
 
 xctr, yctr = load_fits_image(
     join(PATH, filename), ra_center, dec_center, ext=ext)
