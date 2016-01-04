@@ -11,3 +11,9 @@ SED_ParamProb__thinNopower.eps from ../src/SED/
 ### Pseudointegrated_datamodel.eps:
 - from /data/dleung/DATA/RXJ1131/PdBI/model/Median/modelONnoCont/
 - "integrated data on model"
+
+### ChanMap.eps
+- generated using GILDAS, without HST markers
+
+### hst_rgb_cube.eps
+- not corrected for astrometry
