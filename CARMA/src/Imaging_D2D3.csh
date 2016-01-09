@@ -1,22 +1,25 @@
 #! /bin/csh -f
+##############################################################################
+#
+# Combining D2 and D3 dataset, using the mir/ files that have `uvputhd` applied, shifting restfreq to desired
 #
 # Author : Daisy Leung
-# Last Modified: Dec 17 2015
+# Last Modified: Jan 08 2016
 #
 #
-# Combining D2 and D3 dataset, using the mir/ files that
-# have `uvputhd` applied, shifting restfreq to desired
-# Line in USB for CO(3-2) at 0.655
+# Note
+# ----
+# Line in LSB for CO(3-2) at 0.655
 #
 #
-# try different bin size, as well as channels for moment 0, manipulate in GILDAS before making the mom0 map
 #
-# Last Edited: July 3 2015
-#
-#
-# History:
-# ==============
-# Dec 17 2015: Created
+# History
+# -------
+# Jan 08 2016:
+#   - change cell size 0.75 -> 0.25
+#   - make MFS image to get limit on 1.5-mm continuum
+# Dec 17 2015:
+#   - Created
 #
 #
 ###############################################################################
@@ -36,15 +39,16 @@ cd $dataPATH/"$dir_im"
 
 set D3             = "/Users/admin/Research/RXJ1131/CARMA/reduced_pretty/bin2/RXJ1131only_Calibrated_shift_vel.mir"
 set D2             = "../reduced_pretty_D2/bin2/RXJ1131only_Calibrated_shift_vel.mir"
-
+# output name for combined vis
+set D23            = "RXJ1131only_shiftVel_D23.mir"
 
 # Imaging
 set lineops        = systemp,double #,mosaic
 set contops        = systemp,mfs,double #,mosaic
 set imsize         = 256
-set cell           = 0.75
+set cell           = 0.25            # FOV:
 set imsize_mfs     = 256
-set cellsize_mfs   = 0.75
+set cellsize_mfs   = 0.25
 set sig_two        = 2.0
 set sig_conserve   = 3
 
@@ -84,10 +88,8 @@ else
 endif
 
 # on source regions
-set region_LSB           = "boxes(125,125,130,130)(55,65)"
-set region_lineNoCont    = "boxes(125,125,130,130)"
-# set region_mfs           = "boxes(125,125,130,130)"
-
+set region_LSB     = "boxes(128,111,150,137)(55,65)"
+set region_flat    = "boxes(128,111,150,137)"
 
 cd $dataPATH/$dir_im
 echo "*** Current directory ***"
@@ -99,7 +101,16 @@ echo "*** Change cleaning mask as needed ****"
 echo -n "Cick Enter"
 set ans ="$<"
 
-#  ========= LSB ============
+goto cont
+
+# --------------------------------
+# combine the two sets
+# --------------------------------
+uvcat vis=$D2,$D3 out=$D23
+
+# --------------------------------
+#  LSB
+# ---------------------------------
 LSB:
 
 if ($lineops =~ *'mosaic'* ) then
@@ -122,7 +133,7 @@ set start     = `calc -f f0.3 "$bluest+$edge*$onebin_v"`
 echo "*** Making image with imsize=$imsize, cell=$cell, bin=$bin, velocity width=$width ***"
 rm -rf $LSBmap $LSBbeam
 
-invert vis=$D2,$D3 map=$LSBmap beam=$LSBbeam imsize=$imsize cell=$cell slop=1 robust=+2 options=$lineops line=vel,$nchan,$start,$width,$width
+invert vis=$D23 map=$LSBmap beam=$LSBbeam imsize=$imsize cell=$cell slop=1 robust=+2 options=$lineops line=vel,$nchan,$start,$width,$width
 # Visibilities accepted: 21959
 ### Warning [invert]:  Visibilities rejected: 16576
 ### Warning [invert]:  Number of channels with no good data: 7
@@ -199,6 +210,119 @@ set ans = "$<"
 rm -rf $LSB_cln
 fits in=$src.cm out=$LSB_cln op=xyout
 
+###############################################################################
+#
+# No continuum at position of CO emission, see if we can get a limit from cont. map
+#
+#############################################################################
+cont:
+if ($contops =~ *'mosaic'* ) then
+    set src=RXJ1131.mosaic
+else
+    set src=RXJ1131
+endif
+
+echo " "
+echo "*** Continuum subtraction (ISSUE) check number of uv points ***"
+rm -rf $src.uvcont
+uvlin vis=$D23 chans=1,118,160,600 out=$src.uvcont order=1 mode=cont options=nowindow
+echo -n "Cick Enter"
+set ans ="$<"
+
+echo " "
+echo "*** Make a dirty image cont data "
+echo " "
+rm -rf $contmap $contbeam
+invert vis=$src.uvcont map=$contmap beam=$contbeam imsize=$imsize_mfs cell=$cellsize_mfs robust=2 options=$contops sup=0
+# Making MFS images
+# Visibilities accepted: 10616694
+### Warning [invert]:  Visibilities rejected: 13429146
+# Mean Frequency(GHz):     216.
+#Theoretical rms noise: 5.582E-04
+
+echo " "
+echo "** export dirty cont. map"
+rm -rf $contmap.dirty.fits
+fits in=$contmap out=$contmap.dirty.fits op=xyout
+echo -n "Cick Enter"
+set ans ="$<"
+
+echo " "
+echo "*** Determine noise level"
+echo " "
+histo in=$contmap region=$offRegion       # rms: 8.30807E-04
+echo -n "Cick Enter"
+set ans ="$<"
+
+
+echo ""
+echo "*** Cleaning Image"
+set cutoff_mfs    = `histo in=$contmap region=$offRegion | grep Rms | awk '{printf "%.3e", $4}'`
+set threshold_mfs = `calc "$cutoff_mfs"`
+
+if ($contops =~ *'mosaic'* ) then   # should make it check with $lineops as well
+    echo " "
+    echo "*** Making psf for imfit for continuum"
+    ### create one synth beam out of ovro-ovro, bima-bima, ovro-bima
+    # Get FWHM beam size of the mosaic
+    # create psf using beam file from invert
+    rm -rf $src.psf
+    mospsf beam=$contbeam out=$src.psf
+
+    echo " "
+    echo "*** imfit a beam"
+    set log_cont = $src.psf.log
+    rm -rf $log_cont
+    imfit in=$src.psf object=beam region="relcenter,boxes(-5,-5,5,5)" > $log_cont
+
+    set bmaj        = `grep "Major axis" $log_cont | awk '{print $4}'`
+    set bmin        = `grep "Minor axis" $log_cont | awk '{print $4}'`
+    set bpa         = `grep "  Position angle" $log_cont | awk '{print $4}'`
+    echo "Beam size = $bmaj x $bmin arcsec at PA = $bpa deg"
+
+    echo " "
+    echo "*** Clean the dirty images"
+    echo " "
+    rm -rf $contmap.cc
+    mossdi map=$contmap beam=$contbeam out=$contmap.cc cutoff=$threshold_mfs region=$region_flat
+
+
+    echo " "
+    echo "*** Restore cleaned continuum image"
+    echo " "
+    rm -rf $contmap.res $contmap.cm
+    restor model=$contmap.cc map=$contmap beam=$contbeam out=$contmap.cm fwhm=$bmaj,$bmin pa=$bpa
+    restor model=$contmap.cc map=$contmap beam=$contbeam out=$contmap.res mode=residual
+else
+    echo " "
+    echo "*** Clean the dirty image"
+    echo " "
+    rm -rf $contmap.cc
+    clean map=$contmap beam=$contbeam out=$contmap.cc cutoff=$threshold_mfs region=$region_flat
+
+    echo " "
+    echo "*** Restore cleaned continuum image"
+    echo " "
+    rm -rf $contmap.res $contmap.cm
+    restor model=$contmap.cc map=$contmap beam=$contbeam out=$contmap.cm
+    restor model=$contmap.cc map=$contmap beam=$contbeam out=$contmap.res mode=residual
+endif
+
+echo ""
+echo " *** # check distribution plotting histogram on continuum residual "
+echo ""
+imhist in=$contmap.res region=$offRegion device=/xs options=nbin,100
+echo " "
+echo "*** Check continuum cm rms"
+echo " "
+imlist options=stat in=$contmap.cm region=$offRegion
+echo -n "*** HIT RETURN TO CONTINUE ***"
+set ans = "$<"
+
+rm -rf $contmap.cm.fits
+fits in=$contmap.cm out=$contmap.cm.fits op=xyout
+
+exit
 end:
 exit 0
 end
