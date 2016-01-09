@@ -311,10 +311,10 @@ if ($ans == "Y" || $ans == "y" || $ans == "1") then
     echo "*** Determine line-free spectrum"
     echo " "
     # plot only channels around line channels
-    smauvspec vis=$shiftedscience options=nobase,avall interval=1000 hann=5 axis=chan,amp device=1/xs nxy=1,1 line=channel,80,79,1,1
+    smauvspec vis=$shiftedscience options=nobase,avall interval=1000 hann=5 axis=chan,amp device=1/xs nxy=1,1 line=channel,80,118,1,1
     # total channels: uvlist $shiftedscience option=spec --> 586+39 = 625
-    # the window containing the line: [79: 79+39]
-    #
+    # the window containing the line: [118: 118+39]
+    #    #
     # Plot all in terms of channel
     uvlist vis=$shiftedscience options=spec
     smauvspec vis=$shiftedscience options=nobase,avall interval=1000 hann=5 axis=chan,amp device=1/xs nxy=1,1 line=channel,624,1,1,1
@@ -335,8 +335,8 @@ endif
 echo " "
 echo "*** Continuum subtraction (ISSUE)***"
 rm -rf $src.uvcont $src.uvlin
-uvlin vis=$shiftedscience chans=1,79,140,600 out=$src.uvcont order=1 mode=cont # options=nowindow
-uvlin vis=$shiftedscience chans=1,79,140,600 out=$src.uvlin order=1 mode=line # options=nowindow
+uvlin vis=$shiftedscience chans=1,118,160,600 out=$src.uvcont order=1 mode=cont # options=nowindow
+uvlin vis=$shiftedscience chans=1,118,160,600 out=$src.uvlin order=1 mode=line # options=nowindow
 # uvlist vis=$src.uvlin options=spec
 echo -n "Cick Enter"
 set ans ="$<"

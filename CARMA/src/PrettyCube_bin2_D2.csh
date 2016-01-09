@@ -1,7 +1,7 @@
 #! /bin/csh -f
 
 # Author : Daisy Leung
-# Last Modified: Dec 17 2015
+# Last Modified: 08 Jan 2016
 #
 #
 # Todo:
@@ -9,8 +9,10 @@
 # - modify script to make moment maps, continuum map, and cont-sub. line maps
 #
 #
-# History:
-# --------
+# History
+# -------
+# Jan-08-2016:
+#   - try to make image after removing continuum with uvlin --> still getting ridiculous number of visibilities in invert .uvcont, and no visibilities in .uvlin
 # Dec-17-2015:
 #    - copied script used to make images for D3 dataset
 #
@@ -107,7 +109,7 @@ echo "*** Change cleaning mask as needed ****"
 echo -n "Cick Enter"
 set ans ="$<"
 
-goto LSB
+goto cont
 # ===============================
 # Take out Science object ONLY
 rm -rf $outscience
@@ -286,9 +288,10 @@ set ans ="$<"
 
 
 # ===================== CONTINUUM =========================
-# ======= chan 58-65 of LSB line cube (binned by 2) is line emission
-#====== Separate out the Line-free and line channels in LSB =========
+#
+# ====== Separate out the Line-free and line channels in LSB ===
 # ========== and clean them again separately ============
+#
 # =========================================================
 cont:
 if ($contops =~ *'mosaic'* ) then
@@ -306,9 +309,9 @@ if ($ans == "Y" || $ans == "y" || $ans == "1") then
     echo "*** Determine line-free spectrum"
     echo " "
     # plot only channels around line channels
-    smauvspec vis=$shiftedscience options=nobase,avall interval=1000 hann=5 axis=chan,amp device=1/xs nxy=1,1 line=channel,80,79,1,1
+    smauvspec vis=$shiftedscience options=nobase,avall interval=1000 hann=5 axis=chan,amp device=4/xs nxy=1,1 line=channel,80,118,1,1
     # total channels: uvlist $shiftedscience option=spec --> 586+39 = 625
-    # the window containing the line: [79: 79+39]
+    # the window containing the line: [118: 118+39]
     #
     # Plot all in terms of channel
     uvlist vis=$shiftedscience options=spec
@@ -328,13 +331,21 @@ endif
 # exit
 
 echo " "
-echo "*** Continuum subtraction (ISSUE)***"
+echo "*** Continuum subtraction (ISSUE) check number of uv points ***"
 rm -rf $src.uvcont $src.uvlin
-uvlin vis=$shiftedscience chans=1,79,140,600 out=$src.uvcont order=1 mode=cont # options=nowindow
-uvlin vis=$shiftedscience chans=1,79,140,600 out=$src.uvlin order=1 mode=line # options=nowindow
-# uvlist vis=$src.uvlin options=spec
+uvlin vis=$shiftedscience chans=1,118,160,600 out=$src.uvcont order=1 mode=cont options=nowindow
+uvlin vis=$shiftedscience chans=1,118,160,600 out=$src.uvlin order=1 mode=line options=nowindow line=vel,140,-2192.483,35.870,35.870
+
+uvlist vis=$src.uvlin options=spec
 echo -n "Cick Enter"
 set ans ="$<"
+
+echo " "
+echo "Plot the continuum-free spectrum"
+# smauvspec device=/xs vis=$src.uvlin interval=1000 axis=vel,amp nxy=1,1 options=nobase,avall
+# echo -n "Cick Enter"
+# set ans ="$<"
+
 
 echo ""
 echo "*** LSB line cube chan selection (see above) ** "
@@ -345,9 +356,10 @@ rm -rf $contmap $contbeam $linmap $linbeam $linmap.vel $linbeam.vel
 invert vis=$src.uvcont map=$contmap beam=$contbeam imsize=$imsize_mfs cell=$cellsize_mfs robust=2 options=$contops
 # Mean Frequency(GHz):     215.
 # Theoretical rms noise: 7.497E-04
-invert vis=$src.uvlin map=$linmap beam=$linbeam imsize=$imsize cell=$cell robust=+2 options=$lineops line=vel,146,-2192.491,35.870,35.870 sup=0
-# invert vis=$src.uvlin.vel map=$linmap.vel beam=$linbeam.vel imsize=$imsize cell=$cell robust=2 options=$lineops
-exit
+
+# invert vis=$src.uvlin map=$linmap beam=$linbeam imsize=$imsize cell=$cell robust=+2 options=$lineops line=vel,146,-2192.483,35.870,35.870 sup=0
+invert vis=$src.uvlin map=$linmap.vel beam=$linbeam.vel imsize=$imsize cell=$cell robust=2 options=$lineops sup=0
+# exit
 
 echo -n "Cick Enter"
 set ans ="$<"
