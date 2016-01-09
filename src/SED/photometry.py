@@ -6,6 +6,14 @@ wavelength [µm], freq [GHz], flux density [mJy], flux_err [mJy], instrument
 
 Last Modified: Jan 08 2016
 
+
+TODO
+- add VLA radio data
+- add CARMA continuum as upper limit
+- add PdBI continuum data
+- add code to plot points on SED, put MIR and radio data on plot for background source but don't include in fit, maybe use IRAS 60, 100 µm to constrain SED peak
+
+
 History
 -------
 Jan 08 2016:
