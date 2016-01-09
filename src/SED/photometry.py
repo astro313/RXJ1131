@@ -8,18 +8,14 @@ Last Modified: Jan 09 2016
 
 
 TODO
-- add VLA radio data
-- add CARMA continuum as upper limit
-- add PdBI continuum data
-- add code to plot points on SED, put MIR and radio data on plot for background source but don't include in fit, maybe use IRAS 60, 100 µm to constrain SED peak
-  - mark continuum for foreground and background differently
-
+- add VLA radio data LCX
 
 History
 -------
 Jan 09 2016:
     combine flux col with flux err col in latex table
     separate out column name with unit in latex table
+    added CARAMA, PdBI, VLA C Band continuum data
 Jan 08 2016:
     created, added 2MASS, WISE, Spitzer, Herschel, IRAS data
 
@@ -69,12 +65,24 @@ data_rows = [(1.25, (1.25*u.micron).to(u.GHz, equivalencies=u.spectral()).value
               56.781866, 8.81188, 'Herschel/SPIRE')
              ]
 
-data_upperLim = [(12, (12*u.micron).to(u.GHz, equivalencies=u.spectral()).value              , 0.4e3, None, 'IRAS'),
+data_IRAS = [(12, (12*u.micron).to(u.GHz, equivalencies=u.spectral()).value              , 0.4e3, None, 'IRAS'),
                  (25, (25*u.micron).to(u.GHz, equivalencies=u.spectral()).value
                   , 0.5e3, None, 'IRAS'),
                  (60, (60*u.micron).to(u.GHz, equivalencies=u.spectral()).value
                   , 0.6e3, None, 'IRAS'),
                  (100, (100*u.micron).to(u.GHz, equivalencies=u.spectral()).value, 1.0e3, None, 'IRAS')]
+
+
+data_VLA = [((4.8815*u.GHz).to(u.micron, equivalencies=u.spectral()).value,
+            4.8815, 1.273277, 4.208577829e-02, 'VLA/Cband-arc'),
+            ((4.8815*u.GHz).to(u.micron, equivalencies=u.spectral()).value,
+            4.8815,  8.662040e-01, 2.746052e-02, 'VLA/Cband-core')]
+
+
+data_PdBI = [((139.256*u.GHz).to(u.micron, equivalencies=u.spectral()).value, 139.256, 1.23, 0.22, 'PdBI')]
+
+rmsCARMA_cont = 8.30807E-01   # mJy
+data_CARMA = [((216*u.GHz).to(u.micron, equivalencies=u.spectral()).value, 216, 3*rmsCARMA_cont, None, 'CARMA')]
 
 
 # fill table
@@ -84,11 +92,35 @@ tbl = Table(rows=data_rows, names=tableColHead,
             # dtype=[(str, 20), (str, 10), int, int, float, float, float, float, float, float, int]
 # len(tbl)
 
-# append IRAS data
-for i in np.arange(len(data_upperLim)):
-    tbl.add_row(data_upperLim[i])
+def append_table(table, data):
+    """
+    append row to exiting astropy table
 
-tbl.write('IRphotometry.dat', format='ascii', overwrite=True)
+    Parameters
+    ----------
+    table: astropy.table.Table
+        exisiting object
+
+    data: list
+        data to append to table
+
+    """
+
+    for i in np.arange(len(data)):
+        tbl.add_row(data[i])
+
+append_table(tbl, data_IRAS)
+append_table(tbl, data_VLA)
+append_table(tbl, data_PdBI)
+append_table(tbl, data_CARMA)
+
+formatsTbl = {
+              tbl.colnames[0]: lambda x: '{0:.2f}'.format(x),
+              tbl.colnames[1]: lambda x: '{0:.1f}'.format(x),
+              tbl.colnames[2]: lambda x: '{0:.4f}'.format(x),
+              tbl.colnames[3]: lambda x: '{0:.4f}'.format(x),
+             }
+tbl.write('IRphotometry.dat', format='ascii', formats=formatsTbl)
 
 # ---------------------------------------------------------------------
 # LaTexify table
