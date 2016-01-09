@@ -4,7 +4,7 @@ Organize RXJ1131 IR photometry data using astropy table
 wavelength [µm], freq [GHz], flux density [mJy], flux_err [mJy], instrument
 
 
-Last Modified: Jan 08 2016
+Last Modified: Jan 09 2016
 
 
 TODO
@@ -12,10 +12,14 @@ TODO
 - add CARMA continuum as upper limit
 - add PdBI continuum data
 - add code to plot points on SED, put MIR and radio data on plot for background source but don't include in fit, maybe use IRAS 60, 100 µm to constrain SED peak
+  - mark continuum for foreground and background differently
 
 
 History
 -------
+Jan 09 2016:
+    combine flux col with flux err col in latex table
+    separate out column name with unit in latex table
 Jan 08 2016:
     created, added 2MASS, WISE, Spitzer, Herschel, IRAS data
 
@@ -33,6 +37,8 @@ import numpy as np
 
 # Utilize a row oriented table
 #
+tableColHead = ('Wavelength [micron]', 'Frequency [GHz]', 'Flux Density [mJy]', 'Flux Err [mJy]', 'Instrument')
+
 data_rows = [(1.25, (1.25*u.micron).to(u.GHz, equivalencies=u.spectral()).value
               , 1.009, 0.090, '2MASS/J-Band'),
              (1.65, (1.65*u.micron).to(u.GHz, equivalencies=u.spectral()).value
@@ -72,12 +78,10 @@ data_upperLim = [(12, (12*u.micron).to(u.GHz, equivalencies=u.spectral()).value 
 
 
 # fill table
-tbl = Table(rows=data_rows, names=('Wavelength [micron]', 'Frequency [GHz]', 'Flux density [mJy]', 'Flux_err [mJy]', 'Instrument'), dtype=['f4', 'f4', 'f4', 'f4', (str, 20)])
-    #dtype=('f8, 'f8', 'f8', 'f8', 'S20')
-    # dtype=[(str, 20), (str, 10), int, int, float, float, float, float, float, float, int]
-
-# tbl.rename_column('a', 'A')
-# tbl.colnames
+tbl = Table(rows=data_rows, names=tableColHead,
+            dtype=['f4', 'f4', 'f4', 'f4', (str, 20)])
+            # dtype=('f8, 'f8', 'f8', 'f8', 'S20')
+            # dtype=[(str, 20), (str, 10), int, int, float, float, float, float, float, float, int]
 # len(tbl)
 
 # append IRAS data
@@ -86,30 +90,100 @@ for i in np.arange(len(data_upperLim)):
 
 tbl.write('IRphotometry.dat', format='ascii', overwrite=True)
 
-
-# Latex table format
-# perform some operations to conform to latex syntax
-# sort according to wavelength?
-# change np.nan to \nodata
-# combine flux and flux_err column -> with $\pm$
-# format to show {:.1f}
-# strip off unit in colhead
-#for row in tbl:
-    # avoid _ --> subscript
-#    if "_" in row['Object Name']:
-#        row['Object Name'] = row['Object Name'].replace("_", "\_")
-
+# ---------------------------------------------------------------------
+# LaTexify table
 from astropy.io.ascii.latex import latexdicts
 from astropy.io.ascii.latex import AASTex
 from astropy.io import ascii
 
-# setup table Class
-# simplest, with \begin{table}
+# sort table according to wavelength
+import natsort
+col_sort = tbl.colnames[0]
+tbl = tbl[natsort.index_natsorted(tbl[col_sort])]
+
+### avoid '_' --> subscript,
+# same as using kwarg formats={row['Object Name']: lambda x: x.replace("_", "\_")}
+# for row in tbl:
+#    if "_" in row['Object Name']:
+#        row['Object Name'] = row['Object Name'].replace("_", "\_")
+
+
+### strip off unit in colhead, unit is a separate row in .tex
+split1 = [x.find('[') for x in tbl.colnames]
+for i, idx in enumerate(split1):
+    # if '[' exists in column name
+    if idx != -1:
+        tbl.rename_column(tbl.colnames[i], tbl.colnames[i][:idx])
+
+
+def combine_col(table, colname, errcolname, outcolname, unit=None, formatstr="{0:0.2f} $\pm$ {1:s}"):
+
+    """
+    combine flux and flux_err column -> with $\pm$
+
+    Parameters
+    ----------
+    table: astropy.table.Table
+        table containing data, and original columns
+
+    colname: str
+        of table
+
+    errcolname: str
+        of table
+
+    outcolname: str
+        column name for the combined column
+
+    unit: astropy unit
+        e.g. u.km/u.s
+
+    formatstr: str
+        how to format the data in the new column
+
+    Returns
+    -------
+    astropy.table.Column
+        data is str, with # of bits changes depending on data
+
+    """
+
+    # for upper limits, Err column = np.nan
+    if np.isnan(table[errcolname]).any():
+        tmpCol = table.columns[errcolname]
+
+        # map the formatting function that changes np.nan to \nodata, else 2 decimal place
+        # map(f, list)
+        tmpCol = map(lambda x: r'\nodata' if np.isnan(x) else '{:.2f}'.format(x), tmpCol)
+
+    data = [formatstr.format(aa, err) for aa, err in zip(table[colname], tmpCol)]
+    return Column(data=data, name=outcolname, unit=unit)
+
+print tbl.colnames
+idx = tbl.colnames.index('Flux Err ')
+tableColHeadNew = tbl.colnames
+tableColHeadNew.pop(idx)
+
+newTbl = Table([tbl[tbl.colnames[0]],
+                tbl[tbl.colnames[1]],
+                combine_col(tbl, tbl.colnames[2], tbl.colnames[3], tbl.colnames[2]),
+                tbl[tbl.colnames[-1]]])
+
+
+### format table content
+formats = {newTbl.colnames[1]: lambda x: '{0:0.1f}'.format(x)
+          }
+
+
+### setup table Class
+### simplest, with \begin{table}
 simplest = latexdicts['AA']
 simplest['tablealign'] = 'tbpH'
 simplest['header_start'] = r'\label{tab:photometry}'
-tbl.write('table_photometry_AA.tex',
-          latexdict=simplest)
+simplest['units'] = {newTbl.colnames[0]: r'\micron', newTbl.colnames[1]: 'GHz', newTbl.colnames[2]: 'mJy', newTbl.colnames[3]: ' '}
+newTbl.write('table_photometry_AA.tex',
+          latexdict=simplest,
+          formats=formats)
 
 # more flexibility
 flex = latexdicts['template']
@@ -123,34 +197,33 @@ flex['data_start'] = ' '
 flex['data_end'] = ' '
 flex['tablefoot'] = r'\caption{blah blah, \label{tab:blah}}'
 
-tbl.colnames
-flex['units'] = {tbl.colnames[0]: 'micron', tbl.colnames[1]: 'GHz', tbl.colnames[2]: 'mJy', tbl.colnames[3]: 'mJy', tbl.colnames[4]: 'blah'}
-tbl.write('table_photometry_flex.tex',
+newTbl.colnames
+flex['units'] = {newTbl.colnames[0]: r'\micron', newTbl.colnames[1]: 'GHz', newTbl.colnames[2]: 'mJy', newTbl.colnames[3]: ' '}
+newTbl.write('table_photometry_flex.tex',
           latexdict=flex)
 
 # less flexibility, astropy API
 # only have the basics - begin, header, data, end
-tbl.write('table_photometry_AASsimple.tex', format='ascii.aastex')
+newTbl.write('table_photometry_AASsimple.tex', format='ascii.aastex')
 
 
-pream = r'\tabletypesize{\scriptsize}' + '\n' + r'\tablecolumns{' + str(len(tbl.colnames)) + '}\n' + r'\tablecaption{Photometry data}'
+pream = r'\tabletypesize{\scriptsize}' + '\n' + r'\tablecolumns{' + str(len(newTbl.colnames)) + '}\n' + r'\tablecaption{Photometry data}'
 
 # deluxetable with customization
-cus = {'col_align': '|rrccc|',
+cus = {'col_align': '|rrcc|',
        'tablealign': 'tbpH',
        'preamble': pream,
-       'units': {tbl.colnames[0]: 'micron',
-                 tbl.colnames[1]: 'GHz',
-                 tbl.colnames[2]: 'mJy',
-                 tbl.colnames[3]: 'mJy',
-                 tbl.colnames[4]: 'blah'},
+       'units': {newTbl.colnames[0]: 'micron',
+                 newTbl.colnames[1]: 'GHz',
+                 newTbl.colnames[2]: 'mJy',
+                 newTbl.colnames[3]: ' '},
        'tablefoot': r'\label{tab:BLAH}' + '\n'
                     r'\tablecomments{blah}' + '\n TablenotegoesBetween \n' +
                     r'\tablerefs{blah}'
        }
 # stdout
-ascii.write(tbl, Writer=ascii.AASTex, latexdict=cus)
+ascii.write(newTbl, Writer=ascii.AASTex, latexdict=cus)
 # save as a tex file
-ascii.write(tbl, 'table_photometry_AAScustomized.tex', Writer=ascii.AASTex, latexdict=cus)
+ascii.write(newTbl, 'table_photometry_AAScustomized.tex', Writer=ascii.AASTex, latexdict=cus)
 
 
