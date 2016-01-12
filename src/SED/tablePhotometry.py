@@ -1,7 +1,8 @@
 '''
 
-Organize RXJ1131 IR photometry data using astropy table
-wavelength [µm], freq [GHz], flux density [mJy], flux_err [mJy], instrument
+Organize RXJ1131 IR photometry data using astropy table:
+wavelength [um], freq [GHz], flux density [mJy], flux_err [mJy], instrument
+Save table as latex file
 
 
 Last Modified: Jan 09 2016
@@ -22,6 +23,7 @@ Jan 08 2016:
 '''
 
 from astropy.table import Table, Column
+from astropy.io import ascii
 from astropy.constants import c      # m/s
 from astropy import units as u
 import numpy as np
@@ -79,7 +81,11 @@ data_VLA = [((4.8815*u.GHz).to(u.micron, equivalencies=u.spectral()).value,
             4.8815,  8.662040e-01, 2.746052e-02, 'VLA/Cband-core')]
 
 
-data_PdBI = [((139.256*u.GHz).to(u.micron, equivalencies=u.spectral()).value, 139.256, 1.23, 0.22, 'PdBI')]
+data_PdBI = [((139.256*u.GHz).to(u.micron, equivalencies=u.spectral()).value,
+              139.256, 1.23, 0.22, 'PdBI-integrated'),
+             ((139.256*u.GHz).to(u.micron, equivalencies=u.spectral()).value,
+              139.256, 0.799, 1.3e-2, 'PdBI-peak')
+            ]
 
 rmsCARMA_cont = 8.30807E-01   # mJy
 data_CARMA = [((216*u.GHz).to(u.micron, equivalencies=u.spectral()).value, 216, 3*rmsCARMA_cont, None, 'CARMA')]
@@ -120,13 +126,14 @@ formatsTbl = {
               tbl.colnames[2]: lambda x: '{0:.4f}'.format(x),
               tbl.colnames[3]: lambda x: '{0:.4f}'.format(x),
              }
-tbl.write('IRphotometry.dat', format='ascii', formats=formatsTbl)
+tbl.write('RXJ1131photometry.dat', format='ascii.commented_header', formats=formatsTbl)
+# Equvalently,
+# ascii.write(tbl, 'RXJ1131photometry.dat', format='commented_header', formats=formatsTbl)
 
 # ---------------------------------------------------------------------
 # LaTexify table
 from astropy.io.ascii.latex import latexdicts
 from astropy.io.ascii.latex import AASTex
-from astropy.io import ascii
 
 # sort table according to wavelength
 import natsort
@@ -208,40 +215,43 @@ formats = {newTbl.colnames[1]: lambda x: '{0:0.1f}'.format(x)
 
 
 ### setup table Class
-### simplest, with \begin{table}
-simplest = latexdicts['AA']
-simplest['tablealign'] = 'tbpH'
-simplest['header_start'] = r'\label{tab:photometry}'
-simplest['units'] = {newTbl.colnames[0]: r'\micron', newTbl.colnames[1]: 'GHz', newTbl.colnames[2]: 'mJy', newTbl.colnames[3]: ' '}
-newTbl.write('table_photometry_AA.tex',
-          latexdict=simplest,
-          formats=formats)
+demo = False       # testing out different formats
 
-# more flexibility
-flex = latexdicts['template']
-flex['tablealign'] = 'tbpH'
-flex['preamble'] = r'\centering'
-# l['caption'] = ' '   # after preamble; uncomment if want caption above table
-flex['col_align'] = '|lllcc| \hline'       # default is all c
-flex['header_start'] = ' '
-flex['header_end'] = ' '
-flex['data_start'] = ' '
-flex['data_end'] = ' '
-flex['tablefoot'] = r'\caption{blah blah, \label{tab:blah}}'
+if demo:
+    ### simplest, with \begin{table}
+    simplest = latexdicts['AA']
+    simplest['tablealign'] = 'tbpH'
+    simplest['header_start'] = r'\label{tab:photometry}'
+    simplest['units'] = {newTbl.colnames[0]: r'\micron', newTbl.colnames[1]: '  GHz', newTbl.colnames[2]: 'mJy', newTbl.colnames[3]: ' '}
+    newTbl.write('table_photometry_AA.tex',
+                 latexdict=simplest,
+                 formats=formats)
 
-newTbl.colnames
-flex['units'] = {newTbl.colnames[0]: r'\micron', newTbl.colnames[1]: 'GHz', newTbl.colnames[2]: 'mJy', newTbl.colnames[3]: ' '}
-newTbl.write('table_photometry_flex.tex',
-          latexdict=flex)
+    # more flexibility
+    flex = latexdicts['template']
+    flex['tablealign'] = 'tbpH'
+    flex['preamble'] = r'\centering'
+    # l['caption'] = ' '   # after preamble; uncomment if want caption above table
+    flex['col_align'] = '|lllcc| \hline'       # default is all c
+    flex['header_start'] = ' '
+    flex['header_end'] = ' '
+    flex['data_start'] = ' '
+    flex['data_end'] = ' '
+    flex['tablefoot'] = r'\caption{blah blah, \label{tab:blah}}'
 
-# less flexibility, astropy API
-# only have the basics - begin, header, data, end
-newTbl.write('table_photometry_AASsimple.tex', format='ascii.aastex')
+    newTbl.colnames
+    flex['units'] = {newTbl.colnames[0]: r'\micron', newTbl.colnames[1]: 'GHz',
+                     newTbl.colnames[2]: 'mJy', newTbl.colnames[3]: ' '}
+    newTbl.write('table_photometry_flex.tex',
+                 latexdict=flex)
 
+    # less flexibility, astropy API
+    # only have the basics - begin, header, data, end
+    newTbl.write('table_photometry_AASsimple.tex', format='ascii.aastex')
 
-pream = r'\tabletypesize{\scriptsize}' + '\n' + r'\tablecolumns{' + str(len(newTbl.colnames)) + '}\n' + r'\tablecaption{Photometry data}'
 
 # deluxetable with customization
+pream = r'\tabletypesize{\scriptsize}' + '\n' + r'\tablecolumns{' + str(len(newTbl.colnames)) + '}\n' + r'\tablecaption{Photometry data}'
 cus = {'col_align': '|rrcc|',
        'tablealign': 'tbpH',
        'preamble': pream,
