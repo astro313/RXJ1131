@@ -28,24 +28,28 @@
   - 5sigma point source sensitivity = 6 mJy
   - 5 sigma photometry sensitivity = 5.4 mJy
 - cite: WISE: Wright+10
-- ref: http://irsa.ipac.caltech.edu/workspace/TMP_hnVOAb_17886/Gator/irsa/30414/tbview.html
 3. 2MASS
 - there are also values on NED, but with much larger aperture
 - The ones listed below ~ enclosing the Einstein Ring
-- J band (1.25 µm):
+- J band (1.25 µm; instrumental FWHM = 2.9"):
   - F_nu = 1.009 +/- 0.090 mJy
-- H band (1.65 µm): 
+- H band (1.65 µm; instrumental FWMH = 2.8"): 
   - F_nu = 1.448 +/- 0.1214 mJy
-- Ks band (2.17 µm): 
+- Ks band (2.17 µm; instrumental FWHM = 2.9"): 
   - F_nu = 2.064 +/- 0.1597 mJy
-- ref: http://irsa.ipac.caltech.edu/workspace/TMP_hnVOAb_17886/Gator/irsa/30414/tbview.html
-4. Spitzer/IRAC:
-- 3.6 (nope)
-- 4.5: 6.241 +/- 0.00207 mJy
-- 5.8: 9.354 +/- 0.005694 mJy
-- 8.9: 13.56 +/- 0.004518 mJy
-5. Spitzer/MIPS:
-- 24: 47.18 +/- 0.02621 mJy
+4. Spitzer/IRAC 
+- (3.8" diameter --> 5.8" diameter):
+- 3.6 (PSF FWHM = 1.7"; use 3.8" aperpho: )
+  * need aperature correction, --> get flux uncertainties 
+- listed below are from db, applied aperture correction 
+  - 4.5: 6.241 +/- 0.00207 mJy --> 7.803 +/- 2.082e-2 mJy
+  - 5.8: 9.354 +/- 0.005694 mJy --> 1.072e-1 +/- 5.124e-2 mJy
+  - 8.9: 13.56 +/- 0.004518 mJy --> 1.447e-1 +/- 4.122e-2 mJy
+5. Spitzer/MIPS
+- 24: 47.18 +/- 0.02621 mJy (PSF fit with native FWHM = 6"; use this)
+  + for aperture fitting (12" diameter): 46.66 +/- 0.0181 mJy
+    * aperture correction not applied, need to multiply by 1.488
+  + since source size < FWHM --> ~ point source --> aperphot ~ PSFfit 
 - 70 (nope)
 - 160 (nope)
 6. IRAS
@@ -143,6 +147,7 @@ Map Noise:
 # added 25 Dec 2015
 HST: 
 - quadruply imaged AGN with Einstein ring
+- ring size: 1.83" radius
 - lensed AGN ~ 4 point-like image A,B,C,D on a ring around G
 - ring <=> host gal.
 - quasar
