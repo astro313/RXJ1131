@@ -232,7 +232,7 @@ if demo:
     flex['tablealign'] = 'tbpH'
     flex['preamble'] = r'\centering'
     # l['caption'] = ' '   # after preamble; uncomment if want caption above table
-    flex['col_align'] = '|lllcc| \hline'       # default is all c
+    flex['col_align'] = 'lccc \hline'       # default is all c
     flex['header_start'] = ' '
     flex['header_end'] = ' '
     flex['data_start'] = ' '
@@ -252,7 +252,7 @@ if demo:
 
 # deluxetable with customization
 pream = r'\tabletypesize{\scriptsize}' + '\n' + r'\tablecolumns{' + str(len(newTbl.colnames)) + '}\n' + r'\tablecaption{Photometry data}'
-cus = {'col_align': '|rrcc|',
+cus = {'col_align': 'lccc',
        'tablealign': 'tbpH',
        'preamble': pream,
        'units': {newTbl.colnames[0]: 'micron',
@@ -260,7 +260,7 @@ cus = {'col_align': '|rrcc|',
                  newTbl.colnames[2]: 'mJy',
                  newTbl.colnames[3]: ' '},
        'tablefoot': r'\label{tab:BLAH}' + '\n'
-                    r'\tablecomments{blah}' + '\n TablenotegoesBetween \n' +
+                    r'\tablecomments{blah}' + '\n %TablenotegoesBetween \n' +
                     r'\tablerefs{blah}'
        }
 # stdout
