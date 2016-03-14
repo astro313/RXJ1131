@@ -74,7 +74,7 @@
 - map off region rms: 1.31957E-02 Jy/B per channel (before clean);  1.32997E-02 Jy/B per channel (after clean)
 - image cubes: /Users/admin/Research/RXJ1131/CARMA/imagingD23/
 - Line intensity FWZI = sqrt(2*pi)*a*c = **37.509 Jy km/s**, see /Users/admin/Research/RXJ1131/CARMA/imagingD23/GILDAS/Gaussfit_bin2.greg
-  - ~ chan [-49,70]
+  - ~ chan [49,70]
   - ~ vel [-429.58, 546.19] km/s
 
 #### ~1.4mm Continuum

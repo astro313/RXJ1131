@@ -1,3 +1,4 @@
+
 \documentclass[]{emulateapj}
 \usepackage{amsmath}
 \begin{document}
@@ -5,45 +6,100 @@
 
 
 
+\section{HST astrometry}
+We adopt the VLA 5\,GHz map as the reference coordinate frame and shift the
+coordinate frame in the optical image to this one to align the emission.
+
+Employed local phase calibrator, with positions known to $\sim$1 mas, estimate
+the absolute alignment of the 5 GHz and CO(J=2-1) coordinate frames should
+be better than 0.1", leaving aside uncertainties relating to SNR and beam size.
+
+The astrometry of the HST images was firstly calibrated against a wider-field
+optical image of the cluster which had in turn been aligned onto the FK5
+coordinate system to an rms precision of ~0.2".
+
+%The align the IRAM data (2-mm continuum and CO(J=2-1)) with the VLA 5-GHz
+%continuum emission, we shifted the former to the east by BLAH" in R.A., which is
+%consistent with the claimed astrometric precision of the PdBI images.
+
+To align the optical/NIR data with the VLA 5-GHz continuum emission, we
+shifted the former in Dec. by +BLAH".
+
+
 
 \section{CO($J$ = 3 $\rightarrow$ 2) line emission}
+
+Analysis using both set 2 and set 3 observations. 
+
+natural weighting beam size:  3.19 x 1.86 PA: 8 deg
+channel width = 2x17.935 = 35.87 km/s
+rms = 1.32997E-02 Jy/B/channel
+
+ Integrated line flux = 37.509 Jy km/s over chan=[49,70] (FWZI)
 %- ! Parameters and Errors:
 %- ! MFIT%PAR[01]  
 %- ! MFIT%PAR[02]  
 %- ! MFIT%PAR[03]  
 %- ! MFIT%PAR[04]  
-%- channel [, ]
 %- velocity range [,] km/s
-%- Integrated line flux =
-%- rms =
 
-%We have detected unresolved CO($J$ = 3 $\rightarrow$ 2) line emission toward SMM J0939+8315 at peak flux
-%of blah sigma  of $ \sigma$ = blah mJy beam$^{-1}$.
+We have detected unresolved CO($J$ = 3 $\rightarrow$ 2) line emission toward
+SMM J0939+8315 at peak flux at blah $\sigma$ signifcance of $ \sigma$ = 13.2997
 
-We detect unresolved CO($J$ = 3 $\rightarrow$ 2) line emission toward the background galaxies in RXJ1131-1231. 
-We extract the spectrum and fit a single-component Gaussian as shown in Figure \ref{fig:CO32mom0}, 
-yielding peak flux density of BLAH $\pm$ BLAH mJy, the FWHM of the Gaussian fit is BLAH $\pm$ BLAH km s$^{-1}$. 
+mJy beam$^{-1}$.
+
+We detect unresolved CO($J$ = 3 $\rightarrow$ 2) line emission toward the
+background galaxies in RXJ1131-1231. 
+We extract the spectrum and fit a single-component Gaussian as shown in Figure
+\ref{fig:}
+yielding peak flux density of BLAH $\pm$ BLAH mJy, the FWHM of the Gaussian fit
+is BLAH $\pm$ BLAH km s$^{-1}$. 
+
+\begin{figure}[tbph]
+\centering
+\includegraphics[width=0.5\textwidth]{../Figures/co32_spec_bin2.eps}	  
+\caption{
+CO32 line spectrum
+ \label{fig:}}
+\end{figure}
 
 
-%No significant continuum emission is detected from the line-free region down to a 1$\sigma$ limit of blah mJy. 
+We made a 1.4mm continuum map using line-free channels, $\sigma$ = 8.30807E-04
+Jy/B
+
+At spatial position of CO emission, No significant continuum emission was
+detected from the line-free region down to a 3$\sigma$ limit of blah mJy
+(burried in noise - 
+2.2 $\pm$ 3.0 mJy). Hence, we place a 3$\sigma$ upper limit of BLAH. 
 
 
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \section{CO($J$ = 2 $\rightarrow$ 1) line emission}
-We detect dynamically resolved CO($J$ = 3 $\rightarrow$ 2) line emission toward the background galaxies in RXJ1131-1231. 
+natural weighting beam size: 4.44 x 1.95, PA 13deg
+rms = ~ 1.451 mJy/ Beam/ch
+velocity resolution per bin: 21.528154 km/s
+source extent?
 
-We construct the velocity-integrated (0th moment) map of the CO($J$ = 2 $\rightarrow$ 1) emission using the uv-continuum subtracted data, the velocity-integrated CO($J$ = 2 $\rightarrow$ 1) line flux is BLAH $\pm$ BLAH Jy km s$^{-1}$.
+We detect dynamically resolved CO($J$ = 2 $\rightarrow$ 1) line emission toward
+the background galaxies in RXJ1131-1231. 
+
+We construct the velocity-integrated (0th moment) map of the CO($J$ = 2
+$\rightarrow$ 1) emission using the uv-continuum subtracted data, the
+velocity-integrated 
+CO($J$ = 2 $\rightarrow$ 1) line flux is 20.3 $\pm$ BLAH Jy km s$^{-1}$.
+
+
 
 % upper limit on other lines 
-% in the background source -- H2CO 
+% in the foreground galaxy -- HNC (J=2-1)
 
-% in the foreground galaxy -- H2CO, HNC (J=2-1)
 \begin{figure*}[tbph]
 \centering
-\includegraphics[width=0.35\textwidth]{../Figures/F555WCO21_mom0_single_invertedgray.eps}       % figures are in ../Figures/ for now, before we decided which ones will definitely go into paper
+\includegraphics[width=0.35\textwidth]{../Figures/{F555WCO21_mom0_single.invertedgray}.eps}	   
 \includegraphics[width=0.35\textwidth]{../Figures/F555W_REDCentBLUE.png}
 \includegraphics[width=0.55\textwidth]{../Figures/SpecCO21_twinx.eps}
 \caption{
-0th Moment map of CO(2-1) emission on HST F555W.
+0th Moment map of CO(2-1) emission on HST F555W. moment-0: no clipping
 Spectrum. Velocity scale w.r.t z=0.655
  \label{fig:CO21mom0}}
 \end{figure*}
@@ -51,9 +107,9 @@ Spectrum. Velocity scale w.r.t z=0.655
 
 \begin{figure}[tbph]
 \centering
-\includegraphics[width=0.5\textwidth]{../Figures/CO_highOmom_CLIP5sigma}       % figures are in ../Figures/ for now, before we decided which ones will definitely go into paper
+\includegraphics[width=0.5\textwidth]{../Figures/CO_highOmom_CLIP5sigma}       
 \caption{
-1st and 2nd order moments
+1st and 2nd order moments, clipped at 5 $\sigma$
  \label{fig:}}
 \end{figure}
 
@@ -62,40 +118,68 @@ Spectrum. Velocity scale w.r.t z=0.655
 
 \begin{figure*}[tbph]
 \centering
-\includegraphics[width=\textwidth]{../Figures/co_channel_maps.eps}       % figures are in ../Figures/ for now, before we decided which ones will definitely go into paper
+\includegraphics[width=\textwidth]{../Figures/co_channel_maps.eps}	 %
+figures are in ../Figures/ for now, before we decided which ones will
+definitely go into 
+paper
 \caption{
-Black crosses indicate the position of the lensed AGN (components ABCD) and the foreground lensing galaxy (component G) in the HST image.
+Black crosses indicate the position of the lensed AGN (components ABCD) and the
+foreground lensing galaxy (component G) in the HST image.
  \label{fig:chanmap}}
 \end{figure*}
 
 \begin{figure*}[tbph]
 \centering
-\includegraphics[width=\textwidth]{../Figures/spatialSpec_offsetShifted.eps}       % figures are in ../Figures/ for now, before we decided which ones will definitely go into paper
+\includegraphics[width=\textwidth]{../Figures/spatialSpec_offsetShifted.eps}   
+   % figures are in ../Figures/ for now, before we decided which ones will
+definitely go 
+into paper
 \caption{ 
 Spatial spectra, binned by 3 pixels in each direction (1\farcs5)
  \label{fig:spatialSpec}}
 \end{figure*}
 
-%
-%\begin{figure*}[tbph]
-%\centering
-%\includegraphics[width=0.8\textwidth]{}       % figures are in ../Figures/ for now, before we decided which ones will definitely go into paper
-%\includegraphics[width=0.65\textwidth]{}
-%\caption{
-% \label{fig:}}
-%\end{figure*}
+
 
 \section{Continuum}
 
-%
-%\begin{figure*}[tbph]
-%\centering
-%\includegraphics[width=0.80\textwidth]{}
-%\caption{Left: Contours of the CARMA BLAH GHz continuum emission (red) in the foreground radio galaxy 3C220.3 overlaid on the image and contours of the VLA 6 GHz continuum emission (lime). The rms in the VLA 6 GHz continuum image is $\sigma$ = 0.0641 mJy beam$^{-1}$. The synthesized beam size is 0$\farcs$596 $\times$ 0$\farcs$229, at P.A. 75.79$\degr$. Lime contour levels start at $\pm$4$\times\sigma$ = x mJy beam$^{-1}$ and increment at steps of $\pm$2$\sigma$ for the VLA data; red contour levels start at $\pm$2$\sigma$, incrementing at steps of $\pm$1$\sigma$ = 0.24 mJy beam$^{-1}$.
-%Right:
-%Contour map of the 90.7 GHz continuum emission. The beam size is 16\farcs67$\pm
-%$0\farcs69 $\times$ 7\farcs17$\pm$1\farcs60, at P.A. = -57.9$\degr$. The contour levels start at $\pm$2$\sigma$ and increment at steps of $\pm$1$\sigma$ =0.5 mJy beam$^{-1}$.\label{fig:cont}}
-%\end{figure*}
+
+\begin{figure*}[tbph]
+\centering
+\includegraphics[width=0.8\textwidth]{../Figures/ContCO21.eps}	  
+\caption{CO 21 moment0 with coninuum
+ \label{fig:}}
+\end{figure*}
+
+\begin{figure*}[tbph]
+\centering
+\includegraphics[width=0.8\textwidth]{../Figures/Cont2mm_5GHz_double.eps}    
+\caption{VLA 5GHz continuum and PdBI 2mm continuum
+ \label{fig:}}
+\end{figure*}
+
+
+\begin{figure*}[tbph]
+\centering
+\includegraphics[width=0.35\textwidth]{../Figures/F555W_ContPdBI.eps}
+\includegraphics[width=0.55\textwidth]{../Figures/F555W_ContVLA.eps}
+\caption{
+radio continuum contours on HST image
+ \label{fig:}}
+\end{figure*}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section{SED}
+\begin{figure*}[tbph]
+\centering
+\includegraphics[width=0.8\textwidth]{../Figures/FullSED.eps}	 
+\caption{VLA 5GHz continuum and PdBI 2mm continuum
+ \label{fig:}}
+\end{figure*}
+
+\input{table_photometry_AAScustomized}
+
 
 
 
