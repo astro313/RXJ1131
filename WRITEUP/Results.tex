@@ -110,6 +110,7 @@ Spectrum. Velocity scale w.r.t z=0.655
 \includegraphics[width=0.5\textwidth]{../Figures/CO_highOmom_CLIP5sigma}       
 \caption{
 1st and 2nd order moments, clipped at 5 $\sigma$
+TODO: enlarge and choose better velocity interval
  \label{fig:}}
 \end{figure}
 
@@ -119,23 +120,19 @@ Spectrum. Velocity scale w.r.t z=0.655
 \begin{figure*}[tbph]
 \centering
 \includegraphics[width=\textwidth]{../Figures/co_channel_maps.eps}	 %
-figures are in ../Figures/ for now, before we decided which ones will
-definitely go into 
-paper
 \caption{
 Black crosses indicate the position of the lensed AGN (components ABCD) and the
 foreground lensing galaxy (component G) in the HST image.
+TODO: Change sym for fg gal., add one chan before and after first and last.; change colorbar scale to mJy/B, add tick in negative direction. try 3sigma steps to see if can show more structures in channel slice
  \label{fig:chanmap}}
 \end{figure*}
 
 \begin{figure*}[tbph]
 \centering
 \includegraphics[width=\textwidth]{../Figures/spatialSpec_offsetShifted.eps}   
-   % figures are in ../Figures/ for now, before we decided which ones will
-definitely go 
-into paper
 \caption{ 
 Spatial spectra, binned by 3 pixels in each direction (1\farcs5)
+TODO: add velo scale; larger labels for pixel pos
  \label{fig:spatialSpec}}
 \end{figure*}
 
@@ -164,7 +161,8 @@ Spatial spectra, binned by 3 pixels in each direction (1\farcs5)
 \includegraphics[width=0.35\textwidth]{../Figures/F555W_ContPdBI.eps}
 \includegraphics[width=0.55\textwidth]{../Figures/F555W_ContVLA.eps}
 \caption{
-radio continuum contours on HST image
+can kill left figure eventually by combining this to ContCO21.eps
+Right: alignment of HST and VLA 5 GHz continuum
  \label{fig:}}
 \end{figure*}
 
@@ -175,6 +173,11 @@ radio continuum contours on HST image
 \centering
 \includegraphics[width=0.8\textwidth]{../Figures/FullSED.eps}	 
 \caption{VLA 5GHz continuum and PdBI 2mm continuum
+TODO: change sym indicating the VLA data, (now two points at the same frequency), change sym for the 2 points on 2mm PdBI (now integrated and peak), might want to extract flux after removing a point source model.
+WANT TO MAKE SED FITTING with POWER LAW including the one point from 24.0\micron, from Spitzer/MIPS .
+Note THAT the WISE flux is higher than the IRAC data, probably just due to the smaller aperture used in Spitzer flux extraction, which might not be resolving the source and not including everything. 
+Might want to add NVSS constraints.
+
  \label{fig:}}
 \end{figure*}
 

@@ -40,7 +40,7 @@
 4. Spitzer/IRAC 
 - (3.8" diameter --> 5.8" diameter):
 - 3.6 (PSF FWHM = 1.7"; use 3.8" aperpho: )
-  * need aperature correction, --> get flux uncertainties 
+  * need aperture correction, --> get flux uncertainties 
 - listed below are from db, applied aperture correction 
   - 4.5: 6.241 +/- 0.00207 mJy --> 7.803 +/- 2.082e-2 mJy
   - 5.8: 9.354 +/- 0.005694 mJy --> 1.072e-1 +/- 5.124e-2 mJy
