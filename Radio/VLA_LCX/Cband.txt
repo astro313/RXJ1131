@@ -51,11 +51,9 @@ go
 uc
 AIPS 1: Catalog on disk  1
 AIPS 1:  Cat Usid Mapname      Class   Seq  Pt     Last access      Stat
-AIPS 1:    1  101 20030623    .L BAND.    1 UV 18-MAR-2016 18:28:08
-AIPS 1:    2  101 20030623    .C BAND.    1 UV 18-MAR-2016 18:28:08
-AIPS 1:    3  101 20030623    .X BAND.    1 UV 18-MAR-2016 18:28:09
-AIPS 1: Catalog on disk  2
-AIPS 1:  Cat Usid Mapname      Class   Seq  Pt     Last access      Stat
+AIPS 1:    1  101 20030623    .L BAND.    1 UV 19-MAR-2016 01:09:07
+AIPS 1:    2  101 20030623    .C BAND.    1 UV 19-MAR-2016 01:09:07
+AIPS 1:    3  101 20030623    .X BAND.    1 UV 19-MAR-2016 01:09:08
 
 
 getn 2     # get C band file in catalog 2
@@ -65,10 +63,10 @@ getn 2     # get C band file in catalog 2
 task 'PRTAN'; docrt 124; invers 1
 go
 
-serenity  PRTAN(31DEC15)    101     18-MAR-2016  18:38:12    Page    6
+ serenity  PRTAN(31DEC15)    101     19-MAR-2016  01:09:52    Page    8
 File=20030623    .C BAND.   1     An.ver=   1     Vol= 1     User=  101
 Array= VLA          Freq=  4885.100000 MHz     Ref.date= 23-JUN-2003
-
+ 
                       Location of VLA antennas
  
                                N72 ( 1)
@@ -92,8 +90,7 @@ Array= VLA          Freq=  4885.100000 MHz     Ref.date= 23-JUN-2003
                           VLA:_OUT (13)
                           VPT:_OUT (29)
 
-# refant: 6
-
+--> refant: 6
 
 
 # LISTR (to find out the observational setup)
@@ -203,14 +200,21 @@ tvin      # initalized TV display or refresh or clear current
 go
 
 In the TV display:
+Adjust contrast
 mouse-click TVFILDLE
 keyboard press 'a'
+then 'a' again
 drag left-click on mouse to change contrast
 keyword control: a, b, c, d
 d: to return to TV control page
 b: zoom out
 a: select/exec selection option
 note: bottom left lists what is being shown (e.g. AMPLITUDE, STOKES)
+(1) - check value
+1. 'd'
+2. FLAG PIXEL
+3. 'a'
+4. click around 
 Important: 
 (1) - switch Polarization
 1. mouse-click DISPLAY STOKES BLAH
@@ -232,7 +236,7 @@ IMPORTANT: make sure in bottom left `SHOW BLAH & FLAG BLAH`, BLAH is the same fo
 # select which polarization
 1. click ENTER STOKES FLAG     
 2. 'a'
-3. in shell: Enter Stokes flag string or mask: 4 chars must begin in col 1
+3. in shell: Enter Stokes flag string or mask: 4 chars must begin in col 1 (e.g. rr)
 # inspect
 4. click FLAG PIXEL, drag mouse around
 # Flag
@@ -244,6 +248,7 @@ IMPORTANT: make sure in bottom left `SHOW BLAH & FLAG BLAH`, BLAH is the same fo
 10. mouse-click to select where to end antenna flag
 11. 'b'
 12. in shell: *****  Enter antenna to be flagged (1 integer, Q quit)  *****   
+# Repeat for other IF and polarization
 # apply the flags
 13. in TV: click EXIT
 14. 'a'
@@ -258,7 +263,6 @@ imhead
 - at this point, still have multiple sources, so RA, DEC are 0s
 - ANTENNA TABLE FG has been created after applying the flags
 
-(Don't think this is needed)
 # inspect data again after the FLAG table has been created
 task 'TVFLG'; Docat -1; Dohist -1; Sources ''; Calcode '*'
 Timerang 0; Stokes ''; Selband -1; Selfreq -1; Freqid 1; Bif 0; Eif 0
@@ -272,7 +276,9 @@ Smooth 0; Dparm(6)=10; Baddisk=0
 - Dparm(6) 10       <--- integration time, same as previous TVFLAG
 
 inp
+tvin
 
+go
 -----------------------------------------------
 CALIB (writes amp and phase for all cal in SN table)
 
@@ -283,7 +289,7 @@ Run calib first for primary calibration
 Task 'CALIB'; Calsour '1331+305'; Qual -1; Calcode '';
 Selband -1; Selfreq -1; Freqid 1; Timerang 0; Bchan 1; Echan 0;
 Antennas 0; Dofit 0; Antuse 0; Subarray 0; Uvrange 0 0; Wtuv 0; 
-Docalib -1; Gainuse 1; Flagver 1; Doband -1; Bpver -1; Smooth 0;
+Docalib -1; Gainuse 1; Flagver 2; Doband -1; Bpver -1; Smooth 0;
 In2name ''; In2class ''; In2seq 0; In2disk 0; Invers 0; Ncomp 0; 
 Flux 0; Nmaps 0; Cmethod ''; Cmodel ''; Smodel 0; Outname ''; 
 Outclass ''; Outseq 0; Outdisk 0; Refant 6; Solint 0; 
@@ -305,20 +311,23 @@ inp
 - GAINUSE 1                <-- should still be 1 at this point
 - Snver 1                  <-- output table, careful
 
+# becuase of more flagging
+flagver 5
 go
 
-SERENI> CALIB2: RPOL, IF= 1 The average gain over these antennas is  3.223E+00
-SERENI> CALIB2: RPOL, IF= 2 The average gain over these antennas is  3.561E+00
-SERENI> CALIB2: LPOL, IF= 1 The average gain over these antennas is  5.890E+00
-SERENI> CALIB2: LPOL, IF= 2 The average gain over these antennas is  6.873E+00
-SERENI> CALIB2: Found          215 good solutions
-SERENI> CALIB2: Average closure rms =  0.00134 +-  0.00025
-SERENI> CALIB2: No data were found > 99.0 rms from solution
-SERENI> CALIB2: Adjusting solutions to a common reference antenna
+SERENI> CALIB1: UVGET: Using flag table version   4 to edit data
+SERENI> CALIB1: Writing SN table    1
+SERENI> CALIB1: RPOL, IF= 1 The average gain over these antennas is  3.223E+00
+SERENI> CALIB1: RPOL, IF= 2 The average gain over these antennas is  3.244E+00
+SERENI> CALIB1: LPOL, IF= 1 The average gain over these antennas is  3.209E+00
+SERENI> CALIB1: LPOL, IF= 2 The average gain over these antennas is  3.192E+00
+SERENI> CALIB1: Found          212 good solutions
+SERENI> CALIB1: Average closure rms =  0.00144 +-  0.00028
+
 
 #Note:
-SERENI> CALIB2: Found          215 good solutions
-SERENI> CALIB2: Average closure rms =  0.00134 +-  0.00025
+SERENI> CALIB1: Found          212 good solutions
+SERENI> CALIB1: Average closure rms =  0.00144 +-  0.00028
 
 --> looks good
 
@@ -328,7 +337,7 @@ Gain calibrator:
 Task 'CALIB'; Calsour '1130-148',''; Qual -1; Calcode '';
 Selband -1; Selfreq -1; Freqid 1; Timerang 0; Bchan 1; Echan 0;
 Antennas 0; Dofit 0; Antuse 0; Subarray 0; Uvrange 0 0; Wtuv 0; 
-Docalib -1; Gainuse 1; Flagver 1; Doband -1; Bpver -1; Smooth 0;
+Docalib -1; Gainuse 1; Flagver 2; Doband -1; Bpver -1; Smooth 0;
 In2name ''; In2class ''; In2seq 0; In2disk 0; Invers 0; Ncomp 0; 
 Flux 0; Nmaps 0; Cmethod ''; Cmodel ''; Smodel 0; Outname ''; 
 Outclass ''; Outseq 0; Outdisk 0; Refant 6; Solint 0; 
@@ -347,19 +356,33 @@ inp
 
 go
 
-SERENI> CALIB2: RPOL, IF= 1 The average gain over these antennas is  1.639E+00
-SERENI> CALIB2: RPOL, IF= 2 The average gain over these antennas is  1.648E+00
-SERENI> CALIB2: LPOL, IF= 1 The average gain over these antennas is  1.657E+00
-SERENI> CALIB2: LPOL, IF= 2 The average gain over these antennas is  1.646E+00
-SERENI> CALIB2: Found          539 good solutions
-SERENI> CALIB2:                  1 solutions had no data
-SERENI> CALIB2: Average closure rms =  0.00271 +-  0.00123
-SERENI> CALIB2: No data were found > 99.0 rms from solution
+(OLD)
+SERENI> CALIB1: UVGET: Using flag table version   2 to edit data
+SERENI> CALIB1: Writing SN table    1
+SERENI> CALIB1: RPOL, IF= 1 The average gain over these antennas is  1.634E+00
+SERENI> CALIB1: RPOL, IF= 2 The average gain over these antennas is  1.639E+00
+SERENI> CALIB1: LPOL, IF= 1 The average gain over these antennas is  1.652E+00
+SERENI> CALIB1: LPOL, IF= 2 The average gain over these antennas is  1.643E+00
+SERENI> CALIB1: Found          519 good solutions
+SERENI> CALIB1:                 11 solutions had no data
+SERENI> CALIB1: Average closure rms =  0.00275 +-  0.00126
+
+(NEW)
+SERENI> CALIB1: UVGET: Using flag table version   5 to edit data
+SERENI> CALIB1: RPOL, IF= 1 The average gain over these antennas is  3.185E+00
+SERENI> CALIB1: RPOL, IF= 2 The average gain over these antennas is  3.200E+00
+SERENI> CALIB1: LPOL, IF= 1 The average gain over these antennas is  3.221E+00
+SERENI> CALIB1: LPOL, IF= 2 The average gain over these antennas is  3.208E+00
+SERENI> CALIB1: Found          519 good solutions
+SERENI> CALIB1:                 11 solutions had no data
+SERENI> CALIB1: Average closure rms =  0.00076 +-  0.00043
+
+
 
 imh 
 
 # Note
-- new SN table
+- SN table
     - AIPS 2: Maximum version number of extension files of type SN is   1
 -------------------------------
 
@@ -371,11 +394,12 @@ Sources '';
 Calcode '*'; Timerang 0; Stokes ''; Selband -1;
 Selfreq -1; Freqid 1; Bif 0; Eif 0; Bchan 1; Echan 0; Antennas 0;
 Baseline 0; Uvrange 0 0; Subarray 0; Docalib -1 ;Gainuse 1;Dopol -1;
-Blver -1;Flagver 1; Doband -1; Bpver -1; Smooth 0; Dparm 5,0; 
+Blver -1;Flagver 2; Doband -1; Bpver -1; Smooth 0; Dparm 5,0; 
 Factor 0; Docrt 132; Outprint ''; Baddisk 0; Tput 'LISTR'
 
 # Note
 - Inext 'Sn'
+- inver 0         <-- highest SN table
 - Optype 'Gain'
 - flagver BLAH
 
@@ -414,6 +438,14 @@ inp
 
 go
 
+SERENI> GETJY1: Calibrator robust averaging used    212 of    212 gain samples
+SERENI> GETJY1:    Source:Qual      CALCODE IF  Flux (Jy)
+SERENI> GETJY1: 1130-148        :  0   A     1    3.80025 +/-   0.01685  0.01877
+SERENI> GETJY1:                              2    3.81087 +/-   0.01384  0.01577
+SERENI> GETJY1:    Source:Qual    CALCODE    used   total     bad used  tot  bad
+SERENI> GETJY1: 1130-148        :  0 A        519     519       0  102  104    0
+
+
 # Note:
 - can check against the other C BAND data DR calibrated
 ------------------------------------------------------------
@@ -444,8 +476,15 @@ inp
 
 go
 
-imh
+SERENI> CLCAL1: Processing SN table    1
+SERENI> CLCAL1: SNMRG: Merging SN table
+SERENI> CLCAL1: SNMRG: Write     188 merged records from     188 input records
+SERENI> CLCAL1: SNSMO: Smoothing SN table
+SERENI> CLCAL1: SN2CL: Applying SN tables to CL table   1, writing CL table  2
 
+imh
+# Note:
+- AIPS 1: Maximum version number of extension files of type CL is   2
 ---------------------------------------------------------
 # plot phases (interpolated solution in CAL table)
 
@@ -456,13 +495,23 @@ optype ''; opcode ''; nplots 9; dotv 1; inext 'cl'
 
 # note
 - pixrange      <-- yaxis from -200 to 200 for phase plot
-- STOKES 'RR'
+- STOKES rr     <-- iterate different polarizations
 - nplots 9      <-- number of pannels
 - dotv 1        <-- TV display
 - INEXT 'CL'    <-- solution in CAL table
+- bif 1; eif 1  <-- IF 1
 
 go
 
+stokes 'll'
+go
+
+bif 2; eif 2
+stokes 'll'
+go 
+
+stokes 'rr'
+go
 ----------------------------------------------------------
 TVFLAG
 
@@ -471,67 +520,22 @@ TVFLAG
 task 'TVFLG'; Docat -1; Dohist -1; Sources 'RXSJ'; Calcode ''
 Timerang 0; Stokes ''; Selband -1; Selfreq -1; Freqid 1; Bif 0; Eif 0
 Bchan 1; Echan 0; Antennas 0; Baseline 0; Uvrange 0; Subarray 0
-Docalib 2; Gainuse 2; Blver -1; Flagver 1; Doband -1; Bpver -1
+Docalib 2; Gainuse 2; Blver -1; Flagver 2; Doband -1; Bpver -1
 Smooth 0; Dparm(6)=10; Baddisk=0
 
 # NOTE:
-- inspect science target and apply CAL table on-the-fly (temporarily)
+- inspect science target
 - FLAGVER BLAH
 - Sources 'BLAH'      <-- BLAH = science target
-- docalib BLAH
-- GAINUSE 2
-- FLAGver 1
+- docalib 2           <-- apply CAL table on-the-fly (temporarily)
+- GAINUSE 2           <-- of docalib 2, which CL table
 - DPARM(6) 10         <-- integration time
 
---------------------------------------------------------
-At this point, we realized we screwed up the CLCAL step because the source name is 'RXSJ' and not 'J1131-1231', so the CALIBRATION didn't interpolate correctly
-
-# Remove CL 2 table, screwed up
-task 'extdest'
-inp 
-invers 2
-INEXT CL
-inp
-
-# right before go extdest
-imh
-
-#Note 
-- AIPS 2: Maximum version number of extension files of type CL is   2
-
-
-go extdest
-
-
-# after go extdest
-imh
-
-#Note 
-- AIPS 2: Maximum version number of extension files of type CL is   1
-
-# re-run CLCAL again with the correct source name
-Task 'CLCAL'; Sources '1130-148','RXSJ',''; 
-Soucode ''; 
-Calsour '1130-148',''; Qual -1; Calcode ''; Timerang 0; Subarray 0;
-Antennas 0; Selband -1; Selfreq -1; Freqid 1; Opcode 'CALI'; 
-Interpol '2PT'; Cutoff 0; Samptype 'BOX'; Bparm 0.2 0.2 0.2 0.2 0.2 0;
-Icut 0; Doblank 1; dobtween 0; smotype '';
-Snver 1; Gainver 1; Gainuse 2; Refant 6; Baddisk 0
-
 go
 
-task 'TVFLG'; Docat -1; Dohist -1; Sources 'RXSJ'; Calcode ''
-Timerang 0; Stokes ''; Selband -1; Selfreq -1; Freqid 1; Bif 0; Eif 0
-Bchan 1; Echan 0; Antennas 0; Baseline 0; Uvrange 0; Subarray 0
-Docalib 2; Gainuse 2; Blver -1; Flagver 1; Doband -1; Bpver -1
-Smooth 0; Dparm(6)=10; Baddisk=0
-
-go
-
-# Note
 - look for outlier points
 (1) - To FLAG a point
-1. click FLAG PIXEL (I think)
+1. click FLAG PIXEL
 2. 'a'
 3. click on the point, make sure it is by comparing against neighbor values
 4. 'a'
@@ -544,7 +548,23 @@ go
 imh
 # Note:
 - created a new FG table
-- AIPS 2: Maximum version number of extension files of type FG is   2
+- AIPS 2: Maximum version number of extension files of type FG is   3
+
+# Repeat for the other STOKES and IFs
+1. click DISPLAY STOKES BLAH
+2. 'a'
+3. LOAD
+4. 'a'
+
+1. click ENTER IF
+2. 'a'
+3. LOAD
+4. 'a'
+
+1. click DISPLAY STOKES BLAH
+2. 'a'
+3. LOAD
+4. 'a'
 
 
 # check calibration on Calibrators
@@ -553,12 +573,28 @@ calib:
 task 'TVFLG'; Docat -1; Dohist -1; Sources ''; Calcode '*'
 Timerang 0; Stokes ''; Selband -1; Selfreq -1; Freqid 1; Bif 0; Eif 0
 Bchan 1; Echan 0; Antennas 0; Baseline 0; Uvrange 0; Subarray 0
-Docalib 2; Gainuse 2; Blver -1; Flagver 1; Doband -1; Bpver -1
+Docalib 2; Gainuse 2; Blver -1; Flagver 4; Doband -1; Bpver -1
 Smooth 0; Dparm(6)=20; Baddisk=0
 inp
 
+# Note
+- FLAGVER BLAH
+- Docalib 2          <-- apply cal on-the-fly for inspection
+- Gainuse 2          <-- which CL table to apply
+- 
 go
 
+# iterate between IFs and Polarizations
+
+At this point, if see significant outliers.. --> flag them --> recalibrate
+
+imh
+# Note:
+- AIPS 1: Maximum version number of extension files of type FG is   4
+
+
+# Flag more
+# --> recalibrated with FLAGVER 5
 ---------------------------------------
 SPLIT
 
@@ -567,54 +603,31 @@ SPLIT
 task 'SPLIT'; Sources 'RXSJ',''; Qual -1; Calcode ''; Timerang 0;
 Stokes ' '; Selband -1; Selfreq -1; Freqid 1; Bif 0; Eif 0; Bchan 1;
 Echan 0; Subarray 0; Docalib 2; Gainuse 2; Dopol -1; Blver -1;
-Flagver 2; Doband -1; Bpver 1; Smooth 0; Douvcomp 1; Aparm 0; Nchav 1;
-Chinc 1; Ichansel 0; Baddisk 0; outname ''; outdisk 1; outclass 'IF1'
+Flagver 5; Doband -1; Bpver 1; Smooth 0; Douvcomp 1; Aparm 0; Nchav 1;
+Chinc 1; Ichansel 0; Baddisk 0; outdisk 1; outclass 'IF1'
 
-inp
+bif 1; eif 1
+inp split
+
 # Note:
 - Sources 'RXSJ',''    <-- split out science target
-- outname 'BLAH'       <-- usually do <SCIENCETARGET><BAND>
 - outdisk 1            <-- where to output CATALOG
 - GAINUSE 2        <-- use the right version of CL or SN TABLE
 - DOPOL -1         <-- don't care about calibration for polarization 
-- FLAGVER 2        <-- make sure to use the correct version
+- FLAGVER 5        <-- make sure to use the correct version
 - outclass 'IF1'   <-- split out IF1
 
 go
 
 
 ucat
+AIPS 1: Catalog on disk  1
+AIPS 1:  Cat Usid Mapname      Class   Seq  Pt     Last access      Stat
+AIPS 1:    1  101 20030623    .L BAND.    1 UV 19-MAR-2016 11:05:18
+AIPS 1:    2  101 20030623    .C BAND.    1 UV 19-MAR-2016 17:57:44
+AIPS 1:    3  101 20030623    .X BAND.    1 UV 19-MAR-2016 01:09:08
+AIPS 1:    4  101 RXSJ        .IF1   .    2 UV 19-MAR-2016 17:57:44
 
-AIPS 2: Catalog on disk  1
-AIPS 2:  Cat Usid Mapname      Class   Seq  Pt     Last access      Stat
-AIPS 2:    1  101 20030623    .L BAND.    1 UV 18-MAR-2016 18:33:12
-AIPS 2:    2  101 20030623    .C BAND.    1 UV 18-MAR-2016 19:38:37
-AIPS 2:    3  101 20030623    .X BAND.    1 UV 18-MAR-2016 18:28:09
-AIPS 2:    5  101 RXSJ        .IF1   .    2 UV 18-MAR-2016 19:38:37
-
-----------------------------------------------
-At this point, we realized we didn't separate the IFs. So delete the UV file and split again.
-
-getn 5          
-zap     # delete 
-
-------------------------------------------------
-Rerun split again
-
-getn 2
-
-bif 1; eif 1
-inp split
-
-go
-
-ucat
-AIPS 2: Catalog on disk  1
-AIPS 2:  Cat Usid Mapname      Class   Seq  Pt     Last access      Stat
-AIPS 2:    1  101 20030623    .L BAND.    1 UV 18-MAR-2016 18:33:12
-AIPS 2:    2  101 20030623    .C BAND.    1 UV 18-MAR-2016 19:39:59
-AIPS 2:    3  101 20030623    .X BAND.    1 UV 18-MAR-2016 18:28:09
-AIPS 2:    5  101 RXSJ        .IF1   .    2 UV 18-MAR-2016 19:39:59
 -----------------------------------------------------
 # Split out IF2
 outclass 'IF2'
@@ -622,16 +635,15 @@ bif 2; eif 2
 go
 
 ucat
-AIPS 2: Catalog on disk  1
-AIPS 2:  Cat Usid Mapname      Class   Seq  Pt     Last access      Stat
-AIPS 2:    1  101 20030623    .L BAND.    1 UV 18-MAR-2016 18:33:12
-AIPS 2:    2  101 20030623    .C BAND.    1 UV 18-MAR-2016 19:40:15
-AIPS 2:    3  101 20030623    .X BAND.    1 UV 18-MAR-2016 18:28:09
-AIPS 2:    5  101 RXSJ        .IF1   .    2 UV 18-MAR-2016 19:39:59
-AIPS 2:    6  101 RXSJ        .IF2   .    1 UV 18-MAR-2016 19:40:15
+AIPS 1:  Cat Usid Mapname      Class   Seq  Pt     Last access      Stat
+AIPS 1:    1  101 20030623    .L BAND.    1 UV 19-MAR-2016 11:05:18
+AIPS 1:    2  101 20030623    .C BAND.    1 UV 19-MAR-2016 17:58:02
+AIPS 1:    3  101 20030623    .X BAND.    1 UV 19-MAR-2016 01:09:08
+AIPS 1:    4  101 RXSJ        .IF1   .    2 UV 19-MAR-2016 17:57:44
+AIPS 1:    5  101 RXSJ        .IF2   .    1 UV 19-MAR-2016 17:58:02
 
-
-getn 5
+--------------------------------------------------------
+getn 4
 imh
 
 # Note:
@@ -641,11 +653,17 @@ imh
 ---------------------------------------------------------
 # Inspect calibrated source to see if need CLIP
 
-getn 5
+getn 4
 tvin 
 
 task 'uvplt'; docalib -1; doband -1; bpver 0; bparm 0; dotv 1
+
+# Note:
+- docalib -1      <-- already calibrated
+- bparm 0         <-- amp v.s. uvdist
+
 go
+
 
 # if we see any outlier amp, want to clip them
 
@@ -655,19 +673,32 @@ flagver 0; infile ''; docalib -1; gainuse -1; aparm 0.1,0.1,0
 inp
 # Note:
 - throw away points above 95 mJy
+- flagver 0                 <-- input FLAGVER
+- docalib -1                <-- already calibrated before split, no need  
+- gainuse -1                <-- already calibrated before split, no need 
 - APARM 0.095,0.095,0       <-- in Jy
 
+
+# If error: SERENI> CLIP 1: CATIO: CATBLK   4 IN USE, CAN'T WRITE
+CLRSTAT
+
+
+imh 
+# Note:
+- created FG table
+- AIPS 1: Maximum version number of extension files of type FG is   1
 
 # inspect again
 task 'uvplt'; docalib -1; doband -1; bpver 0; bparm 0; dotv 1
 go
 
+--> looks good
 
 # inspect the other IF
-getn 6
+getn 5
 go
 
-etc ...
+--> looks good
 
 --------------------------------------------------------
 # combine the IFs to 1 UV file, easier to process
@@ -675,8 +706,8 @@ etc ...
 paste'em together:
 
 task 'DBCON'; outname 'J1131'; OUTCLASS 'C'; outdi 1
-getn 5        # fill in INNAME, INCLASS, INSEQ
-get2n 6       # fill in IN2NAME, IN2CLASS, IN2SEQ
+getn 4        # fill in INNAME, INCLASS, INSEQ
+get2n 5       # fill in IN2NAME, IN2CLASS, IN2SEQ
 
 # Note:
 - outdi 1       <-- where to write output
@@ -688,20 +719,18 @@ get2n 6       # fill in IN2NAME, IN2CLASS, IN2SEQ
 go
 
 ucat
+AIPS 1:    1  101 20030623    .L BAND.    1 UV 19-MAR-2016 11:05:18
+AIPS 1:    2  101 20030623    .C BAND.    1 UV 19-MAR-2016 17:58:02
+AIPS 1:    3  101 20030623    .X BAND.    1 UV 19-MAR-2016 01:09:08
+AIPS 1:    4  101 RXSJ        .IF1   .    2 UV 19-MAR-2016 18:03:49
+AIPS 1:    5  101 RXSJ        .IF2   .    1 UV 19-MAR-2016 18:03:49
+AIPS 1:    6  101 J1131       .C     .    1 UV 19-MAR-2016 18:03:49
 
-AIPS 2: Catalog on disk  1
-AIPS 2:  Cat Usid Mapname      Class   Seq  Pt     Last access      Stat
-AIPS 2:    1  101 20030623    .L BAND.    1 UV 18-MAR-2016 18:33:12
-AIPS 2:    2  101 20030623    .C BAND.    1 UV 18-MAR-2016 19:40:15
-AIPS 2:    3  101 20030623    .X BAND.    1 UV 18-MAR-2016 18:28:09
-AIPS 2:    5  101 RXSJ        .IF1   .    2 UV 18-MAR-2016 19:46:47
-AIPS 2:    6  101 RXSJ        .IF2   .    1 UV 18-MAR-2016 19:46:47
-AIPS 2:    7  101 J1131       .C     .    1 UV 18-MAR-2016 19:46:47
 --------------------------------------------------------
 IMAGR
 # dirty image
 
-getn 7
+getn 6
 
 task 'IMAGR'; cellsi 0.1; imsize 1024; uvwtfn 'un'; flux 0;
 bchan 0; echan 0; robust 5; niter 0; dotv -1; docalib -1;
@@ -722,19 +751,30 @@ inp
 - ROBUST 5
 - GAIN 0.1               <-- usual
 - FLUX BLAH              <-- threshold
+- FLAGVER 1              <-- the FG table we want to use
 - (optional) BMAJ
 - (optional) BMIN
 - (optional) BPA
 
 go
 
+SERENI> IMAGR1: Create J1131       .IBM001.   1 (MA)  on disk  1  cno    8
+SERENI> IMAGR1: Create J1131       .IIM001.   1 (MA)  on disk  1  cno    9
+SERENI> IMAGR1: GRDFLT: X and Y convolution type = SPHEROIDAL
+SERENI> IMAGR1: GRDFLT: X and Y parms =  3.0000  1.0000
+SERENI> IMAGR1: GRDFLT: convolution function sampled every 1/100 of a cell
+SERENI> IMAGR1: GRDMEM: Frequency 4.885100E+09 Hz
+SERENI> IMAGR1: Field    1 Sum of gridding weights =  1.58129E+10
+SERENI> IMAGR1: Field    1 Beam min =  -48.4 MilliJy, max =    1.0      Jy
+SERENI> IMAGR1: Fit Gaussian FWHM =  666.428 x  428.585 Milliarcsec, PA=    2.6
+
+
 mcat       # image
 
-AIPS 2: Catalog on disk  1
-AIPS 2:  Cat Usid Mapname      Class   Seq  Pt     Last access      Stat
-AIPS 2:    4  101 20030623    .TVFLGR.    1 MA 18-MAR-2016 18:49:20
-AIPS 2:    9  101 J1131       .IBM001.    1 MA 18-MAR-2016 19:49:25
-AIPS 2:   10  101 J1131       .IIM001.    1 MA 18-MAR-2016 19:49:25
+AIPS 1: Catalog on disk  1
+AIPS 1:  Cat Usid Mapname      Class   Seq  Pt     Last access      Stat
+AIPS 1:    8  101 J1131       .IBM001.    1 MA 19-MAR-2016 16:54:35
+AIPS 1:    9  101 J1131       .IIM001.    1 MA 19-MAR-2016 16:54:35
 
 # Note:
 - IBM: beam
@@ -742,7 +782,7 @@ AIPS 2:   10  101 J1131       .IIM001.    1 MA 18-MAR-2016 19:49:25
 
 --------------------------------------------------------------
 # Display dirty image
-getn 10
+getn 9
 
 tvall
 To navigate: 'a','b','c','d'
@@ -751,7 +791,7 @@ imstat
 
 tvstat      <-- draw polygon 
 
-
+# 1.004E-04 Jy
 -------------------------------------------
 Clean image
 
@@ -762,12 +802,14 @@ dotv 1      <--- Interactive CLEAN
 go
 
 in TV:
-'a','b' to make boxes
-'a' 
+1. CLICK TVBOX
+2. 'a'
+3. 'a','b' to make boxes, 'c' to switch shape, 'd' to exit
+4. CONTINUE CLEAN
 --> check messager & shell
 
 to finish interactive clean:
-- not ABORT but the other option 
+- not ABORT but STOP CLEANING
 - 'a'
 
 
