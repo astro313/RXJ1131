@@ -1,0 +1,374 @@
+$ DR used to calibrated the first C band archival data 
+
+
+20081229 are A array observations of RX J1131
+
+C BAND CONTINUUM
+
+Used ID: 200
+
+---------------------------------------
+
+task 'PRTAN'; docrt 124; invers 1
+
+ localhos  PRTAN(31DEC12)    200     13-NOV-2015  18:39:40    Page    5
+File=20081229    .C BAND.   1     An.ver=   1     Vol= 1     User=  200
+Array= VLA          Freq=  4885.100000 MHz     Ref.date= 29-DEC-2008
+ 
+                      Location of VLA antennas
+ 
+                               N72 ( 7)
+                               N64 (13)*
+                               N56 (27)
+                               N48 (26)*
+                               N40 (12)
+                               N32 (20)
+                               N24 (25)*
+                               N16 (18)*
+                               N08 (28)*
+                           ( 6) W08  E08 (10)
+                        *( 1) W16      E16 ( 3)*
+                       ( 8) W24              (  )
+                     (  )                  E32 (21)*
+                  *(19) W40                  E40 (11)*
+                *(17) W48                      E48 ( 5)*
+              *(16) W56                          E56 ( 2)*
+            *( 4) W64                              E64 (14)*
+           (22) W72                                  E72 (23)*
+                          VLA:_OUT ( 9)
+                          VLA:_OUT (15)
+                          VLA:_OUT (24)
+                          VPT:_OUT (29)
+
+refant: 10
+
+---------------------------------------
+
+task 'LISTR'; optype 'SCAN'; sources ''; calcode ''; docrt 124
+
+ localhos  LISTR(31DEC12)    200     13-NOV-2015  18:40:38    Page    1
+File = 20081229    .C BAND.   1 Vol = 1  Userid =  200
+Freq =  4.885100000 GHz   Ncor =  4   No. vis =   1003257
+Scan summary listing
+ 
+Scan      Source      Qual  Calcode Sub         Timerange          FrqID   START VIS  END VIS
+   1 0319+415        : 0000  B        1  0/07:09:55 -   0/07:09:55     1       1          0
+   2 0319+415        : 0000  B        1  0/07:10:05 -   0/07:14:45     1       1       3979
+   3 0319O1          : 0000           1  0/07:15:02 -   0/07:18:48     1    3980      24679
+   4 0319O2          : 0000           1  0/07:18:55 -   0/07:22:48     1   24680      44624
+   5 0319O3          : 0000           1  0/07:22:55 -   0/07:26:48     1   44625      65924
+   6 0319O5          : 0000           1  0/07:26:55 -   0/07:30:48     1   65925      85364
+   7 0319+415        : 0000  B        1  0/07:31:05 -   0/07:34:45     1   85365      92264
+   8 1130-148        : 0000  A        1  0/07:39:05 -   0/07:41:35     1   92265      96225
+   9 J1131-1231      : 0000           1  0/07:41:55 -   0/07:50:35     1   96226     112125
+  10 1130-148        : 0000  A        1  0/07:50:55 -   0/07:52:35     1  112126     115401
+  11 J1131-1231      : 0000           1  0/07:52:55 -   0/08:02:35     1  115402     133101
+  12 1130-148        : 0000  A        1  0/08:02:55 -   0/08:04:35     1  133102     136071
+  13 J1131-1231      : 0000           1  0/08:04:55 -   0/08:14:35     1  136072     153747
+  14 1130-148        : 0000  A        1  0/08:14:55 -   0/08:16:35     1  153748     157047
+  15 J1131-1231      : 0000           1  0/08:16:55 -   0/08:26:35     1  157048     174723
+  16 1130-148        : 0000  A        1  0/08:26:55 -   0/08:28:35     1  174724     177999
+  17 J1131-1231      : 0000           1  0/08:28:55 -   0/08:38:35     1  178000     195675
+  18 1130-148        : 0000  A        1  0/08:38:55 -   0/08:40:35     1  195676     198711
+  19 J1131-1231      : 0000           1  0/08:40:55 -   0/08:50:25     1  198712     214719
+  20 1130-148        : 0000  A        1  0/08:50:45 -   0/08:52:25     1  214720     217755
+  21 J1131-1231      : 0000           1  0/08:52:45 -   0/09:02:25     1  217756     235455
+  22 1130-148        : 0000  A        1  0/09:02:45 -   0/09:04:25     1  235456     238563
+  23 J1131-1231      : 0000           1  0/09:04:45 -   0/09:14:25     1  238564     254847
+  24 1130-148        : 0000  A        1  0/09:14:45 -   0/09:16:25     1  254848     257630
+  25 J1131-1231      : 0000           1  0/09:16:45 -   0/09:26:25     1  257631     273914
+  26 1130-148        : 0000  A        1  0/09:26:45 -   0/09:28:25     1  273915     276950
+  27 J1131-1231      : 0000           1  0/09:28:45 -   0/09:38:25     1  276951     292682
+  28 1130-148        : 0000  A        1  0/09:38:45 -   0/09:40:25     1  292683     295982
+  29 J1131-1231      : 0000           1  0/09:40:45 -   0/09:50:15     1  295983     313382
+  30 1130-148        : 0000  A        1  0/09:50:35 -   0/09:52:15     1  313383     316682
+  31 1331+305        : 0000  A        1  0/09:54:05 -   0/09:58:15     1  316683     324213
+  32 1130-148        : 0000  A        1  0/10:00:05 -   0/10:02:15     1  324214     328087
+  33 J1131-1231      : 0000           1  0/10:02:35 -   0/10:12:15     1  328088     345787
+  34 1130-148        : 0000  A        1  0/10:12:35 -   0/10:14:15     1  345788     349087
+  35 J1131-1231      : 0000           1  0/10:14:35 -   0/10:24:15     1  349088     366787
+  36 1130-148        : 0000  A        1  0/10:24:35 -   0/10:26:15     1  366788     370087
+  37 J1131-1231      : 0000           1  0/10:26:35 -   0/10:36:15     1  370088     387787
+  38 1130-148        : 0000  A        1  0/10:36:35 -   0/10:38:15     1  387788     391087
+  39 J1131-1231      : 0000           1  0/10:38:35 -   0/10:48:05     1  391088     408487
+  40 1130-148        : 0000  A        1  0/10:48:25 -   0/10:50:05     1  408488     411523
+  41 J1131-1231      : 0000           1  0/10:50:25 -   0/11:00:05     1  411524     429223
+  42 1130-148        : 0000  A        1  0/11:00:25 -   0/11:02:05     1  429224     432523
+  43 J1131-1231      : 0000           1  0/11:02:25 -   0/11:12:05     1  432524     450223
+  44 1130-148        : 0000  A        1  0/11:12:25 -   0/11:14:05     1  450224     453499
+  45 J1131-1231      : 0000           1  0/11:14:25 -   0/11:24:05     1  453500     471199
+  46 1130-148        : 0000  A        1  0/11:24:25 -   0/11:26:05     1  471200     474130
+  47 J1131-1231      : 0000           1  0/11:26:25 -   0/11:36:05     1  474131     491650
+  48 1130-148        : 0000  A        1  0/11:36:25 -   0/11:38:05     1  491651     494770
+  49 J1131-1231      : 0000           1  0/11:38:25 -   0/11:47:55     1  494771     511936
+  50 1130-148        : 0000  A        1  0/11:48:15 -   0/11:49:55     1  511937     514787
+  51 J1131-1231      : 0000           1  0/11:50:15 -   0/11:59:55     1  514788     531642
+  52 1130-148        : 0000  A        1  0/12:00:15 -   0/12:01:55     1  531643     534657
+  53 J1131-1231      : 0000           1  0/12:02:15 -   0/12:11:55     1  534658     550464
+  54 1130-148        : 0000  A        1  0/12:12:15 -   0/12:13:55     1  550465     553402
+  55 J1131-1231      : 0000           1  0/12:14:15 -   0/12:23:55     1  553403     570140
+  56 1130-148        : 0000  A        1  0/12:24:15 -   0/12:25:55     1  570141     573146
+  57 J1131-1231      : 0000           1  0/12:26:15 -   0/12:35:55     1  573147     590556
+  58 1130-148        : 0000  A        1  0/12:36:15 -   0/12:37:55     1  590557     593562
+  59 J1131-1231      : 0000           1  0/12:38:15 -   0/12:47:45     1  593563     610665
+  60 1130-148        : 0000  A        1  0/12:48:05 -   0/12:49:45     1  610666     613675
+  61 J1131-1231      : 0000           1  0/12:50:05 -   0/12:59:45     1  613676     631076
+  62 1130-148        : 0000  A        1  0/13:00:05 -   0/13:01:45     1  631077     634077
+  63 J1131-1231      : 0000           1  0/13:02:15 -   0/13:11:45     1  634078     651477
+  64 1130-148        : 0000  A        1  0/13:12:05 -   0/13:13:45     1  651478     654487
+  65 J1131-1231      : 0000           1  0/13:14:05 -   0/13:23:45     1  654488     671902
+  66 1130-148        : 0000  A        1  0/13:24:05 -   0/13:25:45     1  671903     674917
+  67 J1131-1231      : 0000           1  0/13:26:05 -   0/13:35:45     1  674918     692338
+  68 1130-148        : 0000  A        1  0/13:36:05 -   0/13:37:45     1  692339     695348
+  69 J1131-1231      : 0000           1  0/13:38:05 -   0/13:47:35     1  695349     712463
+  70 1130-148        : 0000  A        1  0/13:47:55 -   0/13:49:35     1  712464     715491
+  71 J1131-1231      : 0000           1  0/13:49:55 -   0/13:59:35     1  715492     732919
+  72 1130-148        : 0000  A        1  0/13:59:55 -   0/14:01:35     1  732920     735997
+  73 J1131-1231      : 0000           1  0/14:01:55 -   0/14:11:35     1  735998     753463
+  74 1130-148        : 0000  A        1  0/14:11:55 -   0/14:13:35     1  753464     756541
+  75 J1131-1231      : 0000           1  0/14:13:55 -   0/14:23:35     1  756542     774007
+  76 1130-148        : 0000  A        1  0/14:23:55 -   0/14:25:35     1  774008     777178
+  77 J1131-1231      : 0000           1  0/14:25:55 -   0/14:35:35     1  777179     794714
+  78 1130-148        : 0000  A        1  0/14:35:55 -   0/14:37:35     1  794715     797904
+  79 J1131-1231      : 0000           1  0/14:37:55 -   0/14:47:25     1  797905     814614
+  80 1130-148        : 0000  A        1  0/14:47:45 -   0/14:49:25     1  814615     817845
+  81 J1131-1231      : 0000           1  0/14:49:45 -   0/14:59:25     1  817846     835435
+  82 1130-148        : 0000  A        1  0/14:59:45 -   0/15:01:25     1  835436     838688
+  83 J1131-1231      : 0000           1  0/15:01:45 -   0/15:11:25     1  838689     856341
+  84 1130-148        : 0000  A        1  0/15:11:45 -   0/15:13:25     1  856342     859641
+  85 J1131-1231      : 0000           1  0/15:13:45 -   0/15:23:25     1  859642     877341
+  86 1130-148        : 0000  A        1  0/15:23:45 -   0/15:25:25     1  877342     880641
+  87 J1131-1231      : 0000           1  0/15:25:45 -   0/15:35:25     1  880642     897813
+  88 1130-148        : 0000  A        1  0/15:35:45 -   0/15:37:25     1  897814     901113
+  89 J1131-1231      : 0000           1  0/15:37:45 -   0/15:47:15     1  901114     917985
+  90 1130-148        : 0000  A        1  0/15:47:35 -   0/15:49:15     1  917986     921285
+  91 J1131-1231      : 0000           1  0/15:49:35 -   0/15:59:15     1  921286     938985
+  92 1130-148        : 0000  A        1  0/15:59:35 -   0/16:01:15     1  938986     942285
+  93 J1131-1231      : 0000           1  0/16:01:35 -   0/16:11:15     1  942286     959985
+  94 1130-148        : 0000  A        1  0/16:11:35 -   0/16:13:15     1  959986     963285
+  95 J1131-1231      : 0000           1  0/16:13:35 -   0/16:23:15     1  963286     980985
+  96 1130-148        : 0000  A        1  0/16:23:35 -   0/16:25:15     1  980986     984285
+  97 J1131-1231      : 0000           1  0/16:25:35 -   0/16:34:15     1  984286     999393
+  98 1130-148        : 0000  A        1  0/16:34:35 -   0/16:37:05     1  999394    1003257
+ 
+Source summary
+Velocity type = '        '    Definition = '        '
+ 
+  ID Source           Qual  Calcode RA(2000.0)     Dec(2000.0)   IFlux   QFlux   UFlux   VFlux  No. vis
+   1 0319+415        : 0000   B     03:19:48.1601  41:30:42.103   0.000   0.000   0.000   0.000   10879
+             IF( 2)                                               0.000   0.000   0.000   0.000
+   2 0319O1          : 0000         03:19:48.1601  41:31:42.103   0.000   0.000   0.000   0.000   20700
+             IF( 2)                                               0.000   0.000   0.000   0.000
+   3 0319O2          : 0000         03:19:48.1601  41:28:42.103   0.000   0.000   0.000   0.000   19945
+             IF( 2)                                               0.000   0.000   0.000   0.000
+   4 0319O3          : 0000         03:20:04.1600  41:30:42.103   0.000   0.000   0.000   0.000   21300
+             IF( 2)                                               0.000   0.000   0.000   0.000
+   5 0319O5          : 0000         03:19:21.4600  41:30:42.103   0.000   0.000   0.000   0.000   19440
+             IF( 2)                                               0.000   0.000   0.000   0.000
+   6 1130-148        : 0000   A     11:30:07.0525 -14:49:27.388   0.000   0.000   0.000   0.000  146674
+             IF( 2)                                               0.000   0.000   0.000   0.000
+   7 J1131-1231      : 0000         11:31:51.4400 -12:31:58.300   0.000   0.000   0.000   0.000  756788
+             IF( 2)                                               0.000   0.000   0.000   0.000
+   8 1331+305        : 0000   A     13:31:08.2879  30:30:32.958   0.000   0.000   0.000   0.000    7531
+             IF( 2)                                               0.000   0.000   0.000   0.000
+ 
+  ID Source            Freq(GHz) Velocity(Km/s) Rest freq (GHz)
+   1 All Sources          4.8851         0.0000          0.0000
+     IF(  2)              4.8351         0.0000          0.0000
+ 
+Frequency Table summary
+FQID IF#      Freq(GHz)      BW(kHz)   Ch.Sep(kHz)  Sideband  Bandcode
+   1   1       4.88510000   50000.0039  50000.0039      1  VLA_C
+       2       4.83510000   50000.0039  50000.0039      1  VLA_C
+---------------------------------------
+
+task 'SETJY'; sources '1331+305',''; optype 'CALC'; freqid=1; calcode '';
+aparm 0,0; bif 0; eif 0
+
+LOCALH> SETJY1: BIF =  1 EIF =  2 /Range of IFs
+LOCALH> SETJY1: Using Perley-Butler (2013) coefficients
+LOCALH> SETJY1: FREQ( 1) =   4.885100 GHz
+LOCALH> SETJY1: FREQ( 2) =   4.835100 GHz
+LOCALH> SETJY1: '1331+305        ' IF =  1 flux = 7.4638 (Jy calcd)
+LOCALH> SETJY1: '1331+305        ' IF =  2 flux = 7.5121 (Jy calcd)
+LOCALH> SETJY1: SPECINDX= -0.4605      / spectral index
+LOCALH> SETJY1: SPECURVE= -0.1715  0.0336  0.00 / spectral curvature
+
+---------------------------------------
+
+task 'PRTUV'; sources ''; cparm 0; dparm 0; cparm(9)=204; docrt 124
+
+   calib: 10s
+  source: 10s
+
+-----------------------------
+TVFLAG
+
+calibs:
+
+task 'TVFLG'; Docat -1; Dohist -1; Sources ''; Calcode '*'
+Timerang 0; Stokes ''; Selband -1; Selfreq -1; Freqid 1; Bif 0; Eif 0
+Bchan 1; Echan 0; Antennas 0; Baseline 0; Uvrange 0; Subarray 0
+Docalib -1; Gainuse 0; Blver -1; Flagver 1; Doband -1; Bpver -1
+Smooth 0; Dparm(6)=10; Baddisk=0
+
+---------------------------
+CALIB
+
+change refant 10
+
+Run calib first for primary calibration
+
+Task 'CALIB'; Calsour '1331+305'; Qual -1; Calcode '';
+Selband -1; Selfreq -1; Freqid 1; Timerang 0; Bchan 1; Echan 0;
+Antennas 0; Dofit 0; Antuse 0; Subarray 0; Uvrange 0 0; Wtuv 0; 
+Docalib -1; Gainuse 1; Flagver 1; Doband -1; Bpver -1; Smooth 0;
+In2name ''; In2class ''; In2seq 0; In2disk 0; Invers 0; Ncomp 0; 
+Flux 0; Nmaps 0; Cmethod ''; Cmodel ''; Smodel 0; Outname ''; 
+Outclass ''; Outseq 0; Outdisk 0; Refant 10; Solint 0; 
+Aparm 4,0,0,0,0,2; Soltype ''; Solmode 'A&P '; Solcon 0; Minamper 10;
+Minphser 10; Cparm 0,0,10,10,1; Snver 1; Antwt 0; Gainerr 0; 
+Baddisk 0
+#Antennas 7,9,18,26,27,25,8,6,11,20,23,15,10,17,19,3
+#uvrang 0 300
+
+LOCALH> CALIB1: RPOL, IF= 1 The average gain over these antennas is  3.336E+00
+LOCALH> CALIB1: RPOL, IF= 2 The average gain over these antennas is  3.295E+00
+LOCALH> CALIB1: LPOL, IF= 1 The average gain over these antennas is  3.454E+00
+LOCALH> CALIB1: LPOL, IF= 2 The average gain over these antennas is  3.373E+00
+LOCALH> CALIB1: Found          100 good solutions
+LOCALH> CALIB1: Average closure rms =  0.00232 +-  0.00010
+LOCALH> CALIB1: No data were found > 99.0 rms from solution
+
+Task 'CALIB'; Calsour '1130-148',''; Qual -1; Calcode '';
+Selband -1; Selfreq -1; Freqid 1; Timerang 0; Bchan 1; Echan 0;
+Antennas 0; Dofit 0; Antuse 0; Subarray 0; Uvrange 0 0; Wtuv 0; 
+Docalib -1; Gainuse 1; Flagver 1; Doband -1; Bpver -1; Smooth 0;
+In2name ''; In2class ''; In2seq 0; In2disk 0; Invers 0; Ncomp 0; 
+Flux 0; Nmaps 0; Cmethod ''; Cmodel ''; Smodel 0; Outname ''; 
+Outclass ''; Outseq 0; Outdisk 0; Refant 10; Solint 0; 
+Aparm 4,0,0,0,0,2; Soltype ''; Solmode 'A&P '; Solcon 0; Minamper 10;
+Minphser 10; Cparm 0,0,10,10,1; Snver 1; Antwt 0; Gainerr 0; 
+Baddisk 0; antennas 0; uvrang 0
+
+LOCALH> CALIB1: RPOL, IF= 1 The average gain over these antennas is  1.680E+00
+LOCALH> CALIB1: RPOL, IF= 2 The average gain over these antennas is  1.658E+00
+LOCALH> CALIB1: LPOL, IF= 1 The average gain over these antennas is  1.741E+00
+LOCALH> CALIB1: LPOL, IF= 2 The average gain over these antennas is  1.702E+00
+LOCALH> CALIB1: Found         4555 good solutions
+LOCALH> CALIB1: Failed on        4 solutions
+LOCALH> CALIB1:                  1 solutions had no data
+LOCALH> CALIB1: Average closure rms =  0.00816 +-  0.00070
+LOCALH> CALIB1: No data were found > 99.0 rms from solution
+
+-------------------------------
+
+LISTR
+print SN table
+
+Task 'LISTR'; Optype 'Gain'; Inext 'Sn'; Inver 0; 
+Sources ''; 
+Calcode '*'; Timerang 0; Stokes ''; Selband -1;
+Selfreq -1; Freqid 1; Bif 0; Eif 0; Bchan 1; Echan 0; Antennas 0;
+Baseline 0; Uvrange 0 0; Subarray 0; Docalib -1 ;Gainuse 1;Dopol -1;
+Blver -1;Flagver 1; Doband -1; Bpver -1; Smooth 0; Dparm 5,0; 
+Factor 0; Docrt 132; Outprint ''; Baddisk 0; Tput 'LISTR'
+
+---------------------------------------
+GETJY
+get flux of secondary calib.
+
+task 'GETJY'; Sources '1130-148',''; Soucode '' ; 
+Calsour '1331+305',''; Qual -1; Calcode ''; Bif 0; Eif 0; Timerang 0;
+Antennas 0; Subarray 0 ; Selband -1; Selfreq -1; Freqid 1; Snver 1
+
+LOCALH> GETJY1: Calibrator robust averaging used    100 of    100 gain samples
+LOCALH> GETJY1:    Source:Qual      CALCODE IF  Flux (Jy)
+LOCALH> GETJY1: 1130-148        :  0   A     1    3.93281 +/-   0.00847  0.01055
+LOCALH> GETJY1:                              2    3.94876 +/-   0.01197  0.01323
+LOCALH> GETJY1:    Source:Qual    CALCODE    used   total     bad used  tot  bad
+LOCALH> GETJY1: 1130-148        :  0 A       4413    4555      29   97  100    0
+
+---------------------------------------
+CLCAL   ## NOTE THAT CLCAL HAS CHANGED
+interpolate gain table
+
+use 12 minutes boxcar
+
+Task 'CLCAL'; Sources '1130-148','J1131-1231',''; 
+Soucode ''; 
+Calsour '1130-148',''; Qual -1; Calcode ''; Timerang 0; Subarray 0;
+Antennas 0; Selband -1; Selfreq -1; Freqid 1; Opcode 'CALI'; 
+Interpol '2PT'; Cutoff 0; Samptype 'BOX'; Bparm 0.2 0.2 0.2 0.2 0.2 0;
+Icut 0; Doblank 1; dobtween 0; smotype '';
+Snver 1; Gainver 1; Gainuse 2; Refant 10; Baddisk 0
+
+
+plot phases
+
+task 'snplt'; pixrange -200, 200; stokes 'rr'; bif 1; eif 1;
+optype ''; opcode ''; nplots 9; dotv 1; inext 'cl'
+
+---------------------------------------
+TVFLG
+
+(not so) quick check on source
+
+task 'TVFLG'; Docat -1; Dohist -1; Sources 'J1131-1231'; Calcode ''
+Timerang 0; Stokes ''; Selband -1; Selfreq -1; Freqid 1; Bif 0; Eif 0
+Bchan 1; Echan 0; Antennas 0; Baseline 0; Uvrange 0; Subarray 0
+Docalib 2; Gainuse 2; Blver -1; Flagver 1; Doband -1; Bpver -1
+Smooth 0; Dparm(6)=10; Baddisk=0
+
+
+calib:
+
+task 'TVFLG'; Docat -1; Dohist -1; Sources ''; Calcode '*'
+Timerang 0; Stokes ''; Selband -1; Selfreq -1; Freqid 1; Bif 0; Eif 0
+Bchan 1; Echan 0; Antennas 0; Baseline 0; Uvrange 0; Subarray 0
+Docalib 2; Gainuse 2; Blver -1; Flagver 1; Doband -1; Bpver -1
+Smooth 0; Dparm(6)=20; Baddisk=0
+
+--> looks fine
+
+---------------------------------------
+
+task 'SPLIT'; Sources 'J1131-1231',''; Qual -1; Calcode ''; Timerang 0;
+Stokes ' '; Selband -1; Selfreq -1; Freqid 1; Bif 0; Eif 0; Bchan 1;
+Echan 0; Subarray 0; Docalib 2; Gainuse 2; Dopol -1; Blver -1;
+Flagver 2; Doband -1; Bpver 1; Smooth 0; Douvcomp 1; Aparm 0; Nchav 1;
+Chinc 1; Ichansel 0; Baddisk 0; outclass ''; outname ''
+
+outclass 'IF1'
+outclass 'IF2'
+
+bif 1; eif 1
+
+bif 2; eif 2 
+
+---------------------------------------
+tvin
+
+getn BLAH
+
+task 'uvplt'; docalib -1; doband -1; bpver 0; bparm 0; dotv 1
+
+
+#clip them at 0.1 jy with uvflg
+
+task 'clip'; antennas 0; timerang 0; stokes ''; bif 0; eif 0; 
+flagver 0; infile ''; docalib -1; gainuse -1; aparm 0.1,0.1,0
+
+paste'em together:
+
+task 'DBCON'; outname 'J1131'; OUTCLASS 'C'; outdi 5
+
+
+task 'IMAGR'; cellsi 0.1; imsize 1024; uvwtfn 'un'; flux 0;
+bchan 0; echan 0; robust 5; niter 0; dotv -1; docalib -1;
+doband -1; flagver 1; outname ''; SUBARRAY 0; sources ''
+bmaj 0; bmin 0; eif 0; bif 0; nchav 1; chinc 1;
+nchav 1; chinc 1; outname ''; outdi 5; inclass ''; 
+in2name ''; in2class ''
+
+task 'costar'; coordi 14, 15, 46.233,+11,29,43.5; symbol 0; stfactor 6
