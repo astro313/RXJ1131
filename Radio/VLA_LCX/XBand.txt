@@ -56,16 +56,16 @@ AIPS 1:    2  101 20030623    .C BAND.    1 UV 19-MAR-2016 01:09:07
 AIPS 1:    3  101 20030623    .X BAND.    1 UV 19-MAR-2016 01:09:08
 
 
-getn 1     # get L band 
+getn 3     
 
 
 # PRTAN (to choose a reference antenna)
 task 'PRTAN'; docrt 124; invers 1
 go
 
- serenity  PRTAN(31DEC15)    101     19-MAR-2016  23:02:25    Page    9
-File=20030623    .L BAND.   1     An.ver=   1     Vol= 1     User=  101
-Array= VLA          Freq=  1464.900000 MHz     Ref.date= 23-JUN-2003
+ serenity  PRTAN(31DEC15)    101     20-MAR-2016  18:19:47    Page    9
+File=20030623    .X BAND.   1     An.ver=   1     Vol= 1     User=  101
+Array= VLA          Freq=  8435.100000 MHz     Ref.date= 23-JUN-2003
  
                       Location of VLA antennas
  
@@ -87,58 +87,65 @@ Array= VLA          Freq=  1464.900000 MHz     Ref.date= 23-JUN-2003
                (14) W56                          E56 ( 3)
              (10) W64                              E64 (12)
            (22) W72                                  E72 ( 7)
-
+                          VLA:_OUT (13)
+                          VPT:_OUT (29)
 
 --> refant: 6
 
 
 # LISTR (to find out the observational setup)
 task 'LISTR'; optype 'SCAN'; sources ''; calcode ''; docrt 124
-# outpr 'PATH1:AS765_L.listr';
+# outpr 'PATH1:AS765_X.listr';
 go 
 
- serenity  LISTR(31DEC15)    101     19-MAR-2016  23:04:04    Page    1
-File = 20030623    .L BAND.   1 Vol = 1  Userid =  101
-Freq =  1.464900000 GHz   Ncor =  4   No. vis =    102701
+ serenity  LISTR(31DEC15)    101     20-MAR-2016  18:20:14    Page    1
+File = 20030623    .X BAND.   1 Vol = 1  Userid =  101
+Freq =  8.435100000 GHz   Ncor =  4   No. vis =    104259
 Scan summary listing
  
 Scan      Source      Qual  Calcode Sub         Timerange          FrqID   START VIS  END VIS
-   1 1331+305        : 0000  A        1  0/23:38:05 -   0/23:38:05     1       1          0
-   2 1331+305        : 0000  A        1  0/23:38:15 -   0/23:42:05     1       1       8050
-   3 RXSJ            : 0000           1  0/23:48:55 -   0/23:56:05     1    8051      22628
-   4 1130-148        : 0000  A        1  0/23:56:25 -   0/23:58:05     1   22629      26463
-   5 RXSJ            : 0000           1  0/23:58:25 -   1/00:08:05     1   26464      47146
-   6 1130-148        : 0000  A        1  1/00:08:35 -   1/00:10:05     1   47147      50630
-   7 RXSJ            : 0000           1  1/00:10:25 -   1/00:20:05     1   50631      71288
-   8 1130-148        : 0000  A        1  1/00:20:25 -   1/00:22:05     1   71289      75098
-   9 RXSJ            : 0000           1  1/00:22:25 -   1/00:31:55     1   75099      95404
-  10 1130-148        : 0000  A        1  1/00:32:15 -   1/00:33:55     1   95405      99239
-  11 1331+305        : 0000  A        1  1/00:36:15 -   1/00:37:55     1   99240     102701
+   1 1331+305        : 0000  A        1  1/01:36:05 -   1/01:37:45     1       1       3169
+   2 1130-148        : 0000  A        1  1/01:40:15 -   1/01:41:45     1    3170       6057
+   3 RXSJ            : 0000           1  1/01:42:15 -   1/01:51:45     1    6058      26389
+   4 1130-148        : 0000  A        1  1/01:52:15 -   1/01:53:45     1   26390      29899
+   5 RXSJ            : 0000           1  1/01:54:15 -   1/02:03:45     1   29900      50231
+   6 1130-148        : 0000  A        1  1/02:04:15 -   1/02:05:45     1   50232      53741
+   7 RXSJ            : 0000           1  1/02:06:15 -   1/02:15:45     1   53742      74099
+   8 1130-148        : 0000  A        1  1/02:16:15 -   1/02:17:45     1   74100      77609
+   9 RXSJ            : 0000           1  1/02:18:15 -   1/02:27:35     1   77610      97590
+  10 1130-148        : 0000  A        1  1/02:28:05 -   1/02:29:35     1   97591     101100
+  11 1331+305        : 0000  A        1  1/02:32:25 -   1/02:33:45     1  101101     104259
  
 Source summary
 Velocity type = '        '    Definition = '        '
  
   ID Source           Qual  Calcode RA(2000.0)     Dec(2000.0)   IFlux   QFlux   UFlux   VFlux  No. vis
-   1 1331+305        : 0000   A     13:31:08.2879  30:30:32.958   0.000   0.000   0.000   0.000   11512
+   1 1331+305        : 0000   A     13:31:08.2879  30:30:32.958   5.066   0.000   0.000   0.000    6328
+             IF( 2)                                               5.045   0.000   0.000   0.000
+   2 1130-148        : 0000   A     11:30:07.0525 -14:49:27.388   0.000   0.000   0.000   0.000   16928
              IF( 2)                                               0.000   0.000   0.000   0.000
-   2 RXSJ            : 0000         11:31:55.4000 -12:31:55.000   0.000   0.000   0.000   0.000   76225
-             IF( 2)                                               0.000   0.000   0.000   0.000
-   3 1130-148        : 0000   A     11:30:07.0525 -14:49:27.388   0.000   0.000   0.000   0.000   14964
+Type Q to stop, just hit RETURN to continue                                                                                 
+
+ serenity  LISTR(31DEC15)    101     20-MAR-2016  18:20:18    Page    2
+File = 20030623    .X BAND.   1 Vol = 1  Userid =  101
+  ID Source           Qual  Calcode RA(2000.0)     Dec(2000.0)   IFlux   QFlux   UFlux   VFlux  No. vis
+   3 RXSJ            : 0000         11:31:55.4000 -12:31:55.000   0.000   0.000   0.000   0.000   81003
              IF( 2)                                               0.000   0.000   0.000   0.000
  
   ID Source            Freq(GHz) Velocity(Km/s) Rest freq (GHz)
-   1 All Sources          1.4649         0.0000          0.0000
-     IF(  2)              1.3851         0.0000          0.0000
+   1 All Sources          8.4351         0.0000          0.0000
+     IF(  2)              8.4851         0.0000          0.0000
  
 Frequency Table summary uses reference channel     1.00
 FQID IF#      Freq(GHz)      BW(kHz)   Ch.Sep(kHz)  Sideband  Bandcode
-   1   1       1.46490000   50000.0039  50000.0039      1     VLA_L
-       2       1.38510000   50000.0039  50000.0039      1     VLA_L
+   1   1       8.43510000   50000.0039  50000.0039      1     VLA_X
+       2       8.48510000   50000.0039  50000.0039      1     VLA_X
+
 
 # Note: calibrators, obs. time on each scan, total on-source time for calibrators and science target, # of IFs, BW, Ch. Sep, Freq
-- RXSJ: 4 scans, each of 9min20sec
-- Gain calibrator: each scan ~ 1min40sec
-- 2 IFs, continuum mode --> Just two inidvidual channels on the same SB
+- RXSJ: 4 scans, each of 9min30sec
+- Gain calibrator: each scan ~ 1min30sec
+- 2 IFs, continuum mode --> Just two individual channels on the same SB
 
 ============================================================================
 
@@ -154,11 +161,11 @@ inp
 go
 
 SERENI> SETJY1: BIF =  1 EIF =  2 / Range of IFs
-SERENI> SETJY1: FREQ( 1) =   1.464900 GHz
-SERENI> SETJY1: FREQ( 2) =   1.385100 GHz
+SERENI> SETJY1: FREQ( 1) =   8.435100 GHz
+SERENI> SETJY1: FREQ( 2) =   8.485100 GHz
 SERENI> SETJY1: Using Perley-Butler time depependent coefficients
-SERENI> SETJY1: '1331+305        ' IF =  1 flux =14.8110 (Jy calcd)
-SERENI> SETJY1: '1331+305        ' IF =  2 flux =15.2409 (Jy calcd)
+SERENI> SETJY1: '1331+305        ' IF =  1 flux = 5.0657 (Jy calcd)
+SERENI> SETJY1: '1331+305        ' IF =  2 flux = 5.0450 (Jy calcd)
 SERENI> SETJY1: SPECINDX= -0.4605      / spectral index
 SERENI> SETJY1: SPECURVE=  -0.1715   0.0336   0.0000 / spectral curvature
 
@@ -198,7 +205,7 @@ Antenna based Tsys-time
 
 
 default 'snplt'
-getn 1
+getn 3
 dotv 1
 task 'snplt'
 inext 'TY'
@@ -209,13 +216,13 @@ nplots 8
 go
 
 
-# flag strange Tsys jumps
+# flag strange Tsys
 task 'uvflg'
-getn 1
-antenna 21 0
-bif 1
-eif 1
-timerang 0 23 52 0 0 23 54 0
+getn 3
+antenna 6 0
+bif 2
+eif 2
+timerang 1 01 35 0 1 01 35 0
 stokes ''
 flagv 1
 inp
@@ -225,44 +232,10 @@ go
 SERENI> UVFLG1: Wrote        1 flags to flag table version  1
 
 
-antenna 22 0
-timerange 0 23 40 0 0 23 43 0
-bif 1
-eif 1
-stokes 'rr'
-go
-
-SERENI> UVFLG1: Wrote        1 flags to flag table version  1
-
-
-antenna 27 0
-timerang 0 23 50 0 1 00 00 0
-bif 1
-eif 1
-stokes 'll'
-go
-
-SERENI> UVFLG1: Wrote        1 flags to flag table version  1
-
-antenna 19 0
-timerange 0 23 39 0 0 23 42 0
-bif 1; eif 1
-stokes 'rr'
-go
-
-SERENI> UVFLG1: Wrote        1 flags to flag table version  1
-
-antenna 19 0
-bif 2; eif 2
-stokes 'll'
-timerang 0 23 55 0 1 00 00 0
-go
-
-SERENI> UVFLG1: Wrote        1 flags to flag table version  1
-
 
 # reset keyword for other tasks
 antenna 0
+timer 0
 
 
 -------------------------------------------------------
@@ -273,7 +246,7 @@ tvin
 
 
 default uvplt
-getn 1
+getn 3
 task 'uvplt'
 source '1130-148''
 BPARM=6,7,2,0 
@@ -381,7 +354,7 @@ QUACK If there the the data seem strange for the first BLAH seconds of each scan
 # to quack first 10 second of each scan (this kind of error affects all sources)
 
 default quack
-task 'quack'; sources ''; opcode 'beg'; flagv 1; aparm 0 10/60 0; getn 1; bif 0; eif 0
+task 'quack'; sources ''; opcode 'beg'; flagv 1; aparm 0 10/60 0; getn 3; bif 0; eif 0
 
 inp
 # Note:
@@ -541,7 +514,7 @@ Run calib first for primary calibration
 Task 'CALIB'; Calsour '1331+305'; Qual -1; Calcode '';
 Selband -1; Selfreq -1; Freqid 1; Timerang 0; Bchan 1; Echan 0;
 Antennas 0; Dofit 0; Antuse 0; Subarray 0; Uvrange 0 0; Wtuv 0; 
-Docalib -1; Gainuse 1; Flagver 2; Doband -1; Bpver -1; Smooth 0;
+Docalib -1; Gainuse 1; Flagver 1; Doband -1; Bpver -1; Smooth 0;
 In2name ''; In2class ''; In2seq 0; In2disk 0; Invers 0; Ncomp 0; 
 Flux 0; Nmaps 0; Cmethod ''; Cmodel ''; Smodel 0; Outname ''; 
 Outclass ''; Outseq 0; Outdisk 0; Refant 6; Solint 0; 
@@ -563,18 +536,15 @@ inp
 - GAINUSE 1                <-- should still be 1 at this point
 - Snver 1                  <-- output table, careful
 
-# becuase of more flagging
-flagver 2
 go
 
 SERENI> CALIB1: Writing SN table    1
-SERENI> CALIB1: RPOL, IF= 1 The average gain over these antennas is  3.234E+00
-SERENI> CALIB1: RPOL, IF= 2 The average gain over these antennas is  3.223E+00
-SERENI> CALIB1: LPOL, IF= 1 The average gain over these antennas is  3.300E+00
-SERENI> CALIB1: LPOL, IF= 2 The average gain over these antennas is  3.234E+00
-SERENI> CALIB1: Found          204 good solutions
-SERENI> CALIB1:                  5 solutions had no data
-SERENI> CALIB1: Average closure rms =  0.00193 +-  0.00011
+SERENI> CALIB1: RPOL, IF= 1 The average gain over these antennas is  3.200E+00
+SERENI> CALIB1: RPOL, IF= 2 The average gain over these antennas is  3.209E+00
+SERENI> CALIB1: LPOL, IF= 1 The average gain over these antennas is  3.241E+00
+SERENI> CALIB1: LPOL, IF= 2 The average gain over these antennas is  3.236E+00
+SERENI> CALIB1: Found          216 good solutions
+SERENI> CALIB1: Average closure rms =  0.00181 +-  0.00008
 
 --> looks good
 
@@ -584,7 +554,7 @@ Gain calibrator:
 Task 'CALIB'; Calsour '1130-148',''; Qual -1; Calcode '';
 Selband -1; Selfreq -1; Freqid 1; Timerang 0; Bchan 1; Echan 0;
 Antennas 0; Dofit 0; Antuse 0; Subarray 0; Uvrange 0 0; Wtuv 0; 
-Docalib -1; Gainuse 1; Flagver 2; Doband -1; Bpver -1; Smooth 0;
+Docalib -1; Gainuse 1; Flagver 1; Doband -1; Bpver -1; Smooth 0;
 In2name ''; In2class ''; In2seq 0; In2disk 0; Invers 0; Ncomp 0; 
 Flux 0; Nmaps 0; Cmethod ''; Cmodel ''; Smodel 0; Outname ''; 
 Outclass ''; Outseq 0; Outdisk 0; Refant 6; Solint 0; 
@@ -603,14 +573,12 @@ inp
 
 go
 
-SERENI> CALIB1: RPOL, IF= 1 The average gain over these antennas is  3.259E+00
-SERENI> CALIB1: RPOL, IF= 2 The average gain over these antennas is  3.242E+00
-SERENI> CALIB1: LPOL, IF= 1 The average gain over these antennas is  3.274E+00
-SERENI> CALIB1: LPOL, IF= 2 The average gain over these antennas is  3.213E+00
-SERENI> CALIB1: Found          406 good solutions
-SERENI> CALIB1:                 11 solutions had no data
-SERENI> CALIB1: Average closure rms =  0.00108 +-  0.00008
-
+SERENI> CALIB1: RPOL, IF= 1 The average gain over these antennas is  3.202E+00
+SERENI> CALIB1: RPOL, IF= 2 The average gain over these antennas is  3.211E+00
+SERENI> CALIB1: LPOL, IF= 1 The average gain over these antennas is  3.242E+00
+SERENI> CALIB1: LPOL, IF= 2 The average gain over these antennas is  3.237E+00
+SERENI> CALIB1: Found          540 good solutions
+SERENI> CALIB1: Average closure rms =  0.00057 +-  0.00009
 
 imh
 
@@ -627,7 +595,7 @@ Sources '';
 Calcode '*'; Timerang 0; Stokes ''; Selband -1;
 Selfreq -1; Freqid 1; Bif 0; Eif 0; Bchan 1; Echan 0; Antennas 0;
 Baseline 0; Uvrange 0 0; Subarray 0; Docalib -1 ;Gainuse 1;Dopol -1;
-Blver -1;Flagver 2; Doband -1; Bpver -1; Smooth 0; Dparm 5,0; 
+Blver -1;Flagver 1; Doband -1; Bpver -1; Smooth 0; Dparm 5,0; 
 Factor 0; Docrt 132; Outprint ''; Baddisk 0; Tput 'LISTR'
 
 # Note
@@ -670,10 +638,11 @@ inp
 
 go
 
-SERENI> GETJY1: 1130-148        :  0   A     1    5.57906 +/-   0.02066  0.02741
-SERENI> GETJY1:                              2    5.63270 +/-   0.01921  0.01921
+SERENI> GETJY1:    Source:Qual      CALCODE IF  Flux (Jy)
+SERENI> GETJY1: 1130-148        :  0   A     1    3.02063 +/-   0.01819  0.01819
+SERENI> GETJY1:                              2    3.01288 +/-   0.01766  0.01766
 SERENI> GETJY1:    Source:Qual    CALCODE    used   total     bad used  tot  bad
-SERENI> GETJY1: 1130-148        :  0 A        406     406       0  101  102    1
+SERENI> GETJY1: 1130-148        :  0 A        540     540       0  108  108    0
 
 ------------------------------------------------------------
 CLCAL   ## NOTE THAT CLCAL HAS CHANGED
@@ -742,7 +711,7 @@ bparm 0
 docalib 2
 gainuse 2
 dotv 1
-flagver 2
+flagver 1
 stokes 'i'
 go
 
@@ -751,12 +720,11 @@ go
 
 bif 2; eif 2
 go
---> need flagging: a tiny time range
 
 # phase-uvdist
 bparm 0 2 0 
 dotv 1
-flagver 2
+flagver 1
 docalib 2
 gainu 2
 stokes 'i'
@@ -769,7 +737,7 @@ source '1130-148''
 bparm(1) 11
 docalib 2 
 gainuse 2
-flagver 2
+flagver 1
 bif 1; eif 1
 dotv 1
 XINC 0
@@ -784,58 +752,33 @@ go
 bparm 11 1
 docalib 2 
 gainuse 2
-flagver 2
+flagver 1
 bif 1; eif 1
 dotv 1
 XINC 0
 stokes 'i'
 go
---> need flaggin in time
 
 bif 2; eif 2
 go
---> need flaggin in time
 
 ---------------------------------------------------------
 flag --> extdest --> recalibrated & check again
 
 # flag the timerange
 task 'uvflg'
-getn 1
-bif 2
-eif 2
+getn 3
+bif 0
+eif 0
 sources ''
-timer 0 23 57 54 0 23 57 56
+timer 1 01 40 20 1 01 40 28
 aparm 0
 stokes 'i'
 inp
 
 go
 
-SERENI> UVFLG1: Wrote        1 flags to flag table version  2
-
-
-task 'uvflg'
-bif 1
-eif 1
-sources ''
-timer 0 23 56 45 0 23 56 46
-stokes 'll'
-aparm 0
-inp
-
-go
-
-SERENI> UVFLG1: Wrote        1 flags to flag table version  2
-
-
-timer 0 23 57 40 0 23 57 46
-aparm 0
-inp
-
-go 
-
-SERENI> UVFLG1: Wrote        1 flags to flag table version  2
+SERENI> UVFLG1: Wrote        1 flags to flag table version  1
 
 
 # reset keyword
@@ -845,10 +788,11 @@ timer 0
 # check after flagging
 imh
 
-AIPS 1: Maximum version number of extension files of type FG is   2
+AIPS 1: Maximum version number of extension files of type FG is   1
+
 
 tget uvplt
-flagver 2
+flagver 1
 timer 0
 sources '1130-148'
 stokes 'i'
@@ -860,7 +804,7 @@ go
 imh 
 
 inp extdest
-getn 1
+getn 3
 inext 'CL'
 invers 2
 
@@ -875,7 +819,7 @@ go extdest
 
 imh
 
---> go back and recalibrated  with FLAGVER 2
+--> go back and recalibrated  with FLAGVER 1
 ----> ok... DONE
 ----------------------------------------------------------
 TVFLAG
@@ -885,7 +829,7 @@ TVFLAG
 task 'TVFLG'; Docat -1; Dohist -1; Sources 'RXSJ'; Calcode ''
 Timerang 0; Stokes ''; Selband -1; Selfreq -1; Freqid 1; Bif 0; Eif 0
 Bchan 1; Echan 0; Antennas 0; Baseline 0; Uvrange 0; Subarray 0
-Docalib 2; Gainuse 2; Blver -1; Flagver 2; Doband -1; Bpver -1
+Docalib 2; Gainuse 2; Blver -1; Flagver 1; Doband -1; Bpver -1
 Smooth 0; Dparm(6)=10; Baddisk=0
 
 # NOTE:
@@ -918,7 +862,7 @@ go
 imh
 # Note:
 - created a new FG table
-- AIPS 2: Maximum version number of extension files of type FG is   3
+- AIPS 2: Maximum version number of extension files of type FG is   2
 
 # Repeat for the other STOKES and IFs
 1. click DISPLAY STOKES BLAH
@@ -944,7 +888,7 @@ calib:
 task 'TVFLG'; Docat -1; Dohist -1; Sources ''; Calcode '*'
 Timerang 0; Stokes ''; Selband -1; Selfreq -1; Freqid 1; Bif 0; Eif 0
 Bchan 1; Echan 0; Antennas 0; Baseline 0; Uvrange 0; Subarray 0
-Docalib 2; Gainuse 2; Blver -1; Flagver 3; Doband -1; Bpver -1
+Docalib 2; Gainuse 2; Blver -1; Flagver 2; Doband -1; Bpver -1
 Smooth 0; Dparm(6)=20; Baddisk=0
 inp
 
@@ -965,12 +909,16 @@ SPLIT
 Apply calibration and split out sources
 
 # get calibrated calibrators
-getn 1
+getn 3
 task 'SPLIT'; Sources '1130-148',''; Qual -1; Calcode ''; Timerang 0;
 Stokes 'i'; Selband -1; Selfreq -1; Freqid 1; Bif 0; Eif 0; Bchan 1;
 Echan 0; Subarray 0; Docalib 2; Gainuse 2; Dopol -1; Blver -1;
-Flagver 3; Doband -1; Bpver 1; Smooth 0; Douvcomp -1; Aparm 0; Nchav 1;
-Chinc 1; Ichansel 0; Baddisk 0; outdisk 1; outclass 'L.IF'
+Flagver 2; Doband -1; Bpver 1; Smooth 0; Douvcomp -1; Aparm 0; Nchav 1;
+Chinc 1; Ichansel 0; Baddisk 0; outdisk 1; outclass 'X.IF'
+
+# Note 
+- flagver 2
+- outclass
 
 go
 imh
@@ -991,7 +939,7 @@ getn 4
 
 task 'IMAGR'; cellsi 0.1; imsize 1024; uvwtfn 'un'; flux 0;
 bchan 0; echan 0; robust 5; niter 0; dotv -1; docalib -1;
-doband -1; flagver 0; outname '1130-148.L'; SUBARRAY 0; sources ''
+doband -1; flagver 0; outname '1130-148.X'; SUBARRAY 0; sources ''
 bmaj 0; bmin 0; eif 0; bif 0; nchav 1; chinc 1;
 nchav 1; chinc 1; outdi 1; inclass ''; 
 in2name ''; in2class ''
@@ -1006,24 +954,26 @@ inp
 - ROBUST 5
 - GAIN 0.1               <-- usual
 - FLUX BLAH              <-- threshold
-- FLAGVER 1              <-- the FG table we want to use
+- FLAGVER 0              <-- the FG table we want to use
 
 go
 
 mcat
 
-getn 11
+getn 5
 tvall
 
+getn 6
+tval
 --------> Just blank stuf??????
 
 # Science
-getn 1
+getn 3
 
 task 'SPLIT'; Sources 'RXSJ',''; Qual -1; Calcode ''; Timerang 0;
 Stokes ' '; Selband -1; Selfreq -1; Freqid 1; Bif 0; Eif 0; Bchan 1;
 Echan 0; Subarray 0; Docalib 2; Gainuse 2; Dopol -1; Blver -1;
-Flagver 3; Doband -1; Bpver 1; Smooth 0; Douvcomp 1; Aparm 0; Nchav 1;
+Flagver 2; Doband -1; Bpver 1; Smooth 0; Douvcomp 1; Aparm 0; Nchav 1;
 Chinc 1; Ichansel 0; Baddisk 0; outdisk 1; outclass 'IF1'
 
 bif 1; eif 1
@@ -1034,7 +984,7 @@ inp split
 - outdisk 1            <-- where to output CATALOG
 - GAINUSE 2        <-- use the right version of CL or SN TABLE
 - DOPOL -1         <-- don't care about calibration for polarization 
-- FLAGVER 3        <-- make sure to use the correct version
+- FLAGVER 2        <-- make sure to use the correct version
 - outclass 'IF1'   <-- split out IF1
 
 go
@@ -1050,7 +1000,7 @@ go
 
 ucat
 --------------------------------------------------------
-getn 5
+getn 7
 imh
 
 # Note:
@@ -1060,7 +1010,7 @@ imh
 ---------------------------------------------------------
 # Inspect calibrated source to see if need CLIP
 
-getn 5
+getn 7
 tvin 
 
 task 'uvplt'; docalib -1; doband -1; bpver 0; bparm 0; dotv 1; stokes 'i'
@@ -1080,11 +1030,10 @@ flagver 0; infile ''; docalib -1; gainuse -1; aparm 0.1,0.1,0
 
 inp
 # Note:
-- throw away points above 95 mJy
 - flagver 0                 <-- input FLAGVER
 - docalib -1                <-- already calibrated before split, no need  
 - gainuse -1                <-- already calibrated before split, no need 
-- APARM 0.095,0.095,0       <-- in Jy
+- APARM                     <-- in Jy
 
 
 # If error: SERENI> CLIP 1: CATIO: CATBLK   4 IN USE, CAN'T WRITE
@@ -1093,20 +1042,17 @@ CLRSTAT
 
 imh 
 # Note:
-- created FG table
-- AIPS 1: Maximum version number of extension files of type FG is   1
 
 # inspect again
 task 'uvplt'; docalib -1; doband -1; bpver 0; bparm 0; dotv 1
 go
 
---> looks good
 ---------------------------------------------------------------------
 
 # inspect the other IF
 
 default 'uvplt'
-getn 6
+getn 8
 
 task 'uvplt'; docalib -1; doband -1; bpver 0; bparm 0; dotv 1; stokes 'i'
 flagver 0
@@ -1128,17 +1074,14 @@ inp
 - APARM                     <-- in Jy
 
 imh 
-# Note:
-- created FG table
-- AIPS 1: Maximum version number of extension files of type FG is   1
-
 
 # inspect again
 default uvplt
-getn 6
+
+getn BLAH
 
 task 'uvplt'; docalib -1; doband -1; bpver 0; bparm 0; dotv 1; stokes 'i'
-flagver 1
+flagver BLAH
 
 go
 
@@ -1148,9 +1091,9 @@ go
 
 paste'em together:
 
-task 'DBCON'; outname 'J1131'; OUTCLASS 'L'; outdi 1
-getn 5 
-get2n 6
+task 'DBCON'; outname 'J1131'; OUTCLASS 'X'; outdi 1
+getn 7 
+get2n 8
 
 # Note:
 - outdi 1       <-- where to write output
@@ -1167,11 +1110,11 @@ uc
 IMAGR
 # dirty image
 
-getn 7
+getn 9
 
-task 'IMAGR'; cellsi 0.1; imsize 1024; uvwtfn 'un'; flux 0;
+task 'IMAGR'; cellsi 0.05; imsize 1024; uvwtfn 'un'; flux 0;
 bchan 0; echan 0; robust 5; niter 0; dotv -1; docalib -1;
-doband -1; flagver 1; outname 'J1131.L'; SUBARRAY 0; sources ''
+doband -1; flagver 0; outname 'J1131.L'; SUBARRAY 0; sources ''
 bmaj 0; bmin 0; eif 0; bif 0; nchav 1; chinc 1;
 nchav 1; chinc 1; outdi 1; inclass ''; 
 in2name ''; in2class ''
@@ -1189,18 +1132,17 @@ inp
 - ROBUST 5
 - GAIN 0.1               <-- usual
 - FLUX BLAH              <-- threshold
-- FLAGVER 1              <-- the FG table we want to use
+- FLAGVER BLAH              <-- the FG table we want to use
 - (optional) BMAJ
 - (optional) BMIN
 - (optional) BPA
 
 go
 
-SERENI> IMAGR1: GRDMEM: Frequency 1.464900E+09 Hz
-SERENI> IMAGR1: Fit Gaussian FWHM =    2.254 x    1.541      arcsec, PA=   -0.9
+SERENI> IMAGR1: Field    1 Beam min =  -44.9 MilliJy, max =    1.0      Jy
+SERENI> IMAGR1: Fit Gaussian FWHM =  409.820 x  254.882 Milliarcsec, PA=   19.0
 SERENI> IMAGR1: CLBHIS: minimum component 0.500 of current peak
-SERENI> IMAGR1: Field    1 min =   -1.5 MilliJy,max =    2.4 MilliJy
-
+SERENI> IMAGR1: Field    1 min = -215.7 MicroJy,max =  199.2 MicroJy
 
 mcat       # image
 
@@ -1211,7 +1153,7 @@ mcat       # image
 
 --------------------------------------------------------------
 # Display dirty image
-getn 20
+getn 12
 
 tvall
 To navigate: 'a','b','c','d'
@@ -1254,7 +1196,7 @@ mc
 ----------------------------------------------------------
 Display clean map
 
-getn 12
+getn 32
 tval
 'a','b','c','d'
 
