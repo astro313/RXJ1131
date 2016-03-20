@@ -162,8 +162,267 @@ SERENI> SETJY1: '1331+305        ' IF =  2 flux =15.2409 (Jy calcd)
 SERENI> SETJY1: SPECINDX= -0.4605      / spectral index
 SERENI> SETJY1: SPECURVE=  -0.1715   0.0336   0.0000 / spectral curvature
 
-===========================================================================
 
+Now the flux value is edited into the SU table
+
+===========================================================================
+UVPLT
+look at uv data of point source calibrators 
+
+task 'uvplt'
+stokes ''
+freqid 1
+source '1331+305''
+bparm = 6,7,2,0 
+dotv 1
+docalib -1              # not applying any calibration. 
+
+inp
+go
+
+tvin
+
+---------------------------
+amp-UV dist
+stokes 'i'
+bparm 0 
+go
+
+
+phase-uvdist
+bparm 0 2 0
+go
+
+----------------------------------------------------
+Antenna based Tsys-time
+
+
+default 'snplt'
+getn 1
+dotv 1
+task 'snplt'
+inext 'TY'
+timer 0 0 0 0 1 0
+optype 'tsys'
+source '''
+nplots 8 
+go
+
+
+# flag strange Tsys jumps
+task 'uvflg'
+getn 1
+antenna 21 0
+bif 1
+eif 1
+timerang 0 23 52 0 0 23 54 0
+stokes ''
+flagv 1
+inp
+go
+
+
+SERENI> UVFLG1: Wrote        1 flags to flag table version  1
+
+
+antenna 22 0
+timerange 0 23 40 0 0 23 43 0
+bif 1
+eif 1
+stokes 'rr'
+go
+
+SERENI> UVFLG1: Wrote        1 flags to flag table version  1
+
+
+antenna 27 0
+timerang 0 23 50 0 1 00 00 0
+bif 1
+eif 1
+stokes 'll'
+go
+
+SERENI> UVFLG1: Wrote        1 flags to flag table version  1
+
+antenna 19 0
+timerange 0 23 39 0 0 23 42 0
+bif 1; eif 1
+stokes 'rr'
+go
+
+SERENI> UVFLG1: Wrote        1 flags to flag table version  1
+
+antenna 19 0
+bif 2; eif 2
+stokes 'll'
+timerang 0 23 55 0 1 00 00 0
+go
+
+SERENI> UVFLG1: Wrote        1 flags to flag table version  1
+
+
+# reset keyword for other tasks
+antenna 0
+
+
+-------------------------------------------------------
+Baseline based error - use gain calibrator
+plot the UV coverage 
+
+tvin 
+
+
+default uvplt
+getn 1
+task 'uvplt'
+source '1130-148''
+BPARM=6,7,2,0 
+docalib -1 
+flagver 1
+dotv 1
+inp
+go
+
+tvin
+
+# amp-uvdist
+bparm 0
+stokes 'i'
+go
+--> looks quite crappy?
+
+
+bif 1; eif 1
+go
+--> note unit is Jy here
+
+bif 2; eif 2
+go
+--> note unit is mJy here
+
+# phase-uvdist
+bparm 0 2 0
+stokes 'i'
+bif 0; eif 0
+go
+
+
+# phase-time
+task 'uvplt'
+source '1130-148''
+bparm 11 2
+docalib -1 
+flagver 1
+bif 0; eif 0
+dotv 1
+XINC 0
+stokes 'i'
+go
+
+
+# amp-time
+bparm 11 1
+docalib -1 
+flagver 1
+bif 1; eif 1
+dotv 1
+XINC 0
+stokes 'i'
+go
+
+bif 2; eif 2
+go
+
+
+
+--------------------------------------------
+# flux cal
+plot amp-uvdist
+
+source '1331+305''
+bparm 0
+stokes 'i'
+go
+
+bif 1; eif 1
+go
+
+bif 2; eif 2
+go 
+
+
+plot phase-uvdist
+
+bparm 0 2 0
+bif 0; eif 0
+go
+
+
+
+-----------------------------------------------------------------
+# display amp/phase versus time for individual baseline
+amp-time for both IFs (so may have two lines in each plot)
+
+task 'vplot'
+source '1130-148''
+bparm 0
+nplots 9
+flagver 1
+bif 0; eif 0
+stokes 'i'
+timer 0
+inp 
+go
+
+--> note, many baselines have significantly (by 100%) lower than others
+
+===========================================================================
+QUACK If there the the data seem strange for the first BLAH seconds of each scan
+# to quack first 10 second of each scan (this kind of error affects all sources)
+
+default quack
+task 'quack'; sources ''; opcode 'beg'; flagv 1; aparm 0 10/60 0; getn 1; bif 0; eif 0
+
+inp
+# Note:
+- flagver
+- getn
+- aparam
+- bif 0; eif 0
+
+go
+
+
+imh
+AIPS 1: Maximum version number of extension files of type FG is   1
+
+
+# check again
+tvin 
+
+tget 'vplot'
+flagver 1
+
+inp
+# Note:
+- flagver BLAH
+
+go
+
+
+tget 'uvplt'
+sources '1130-148''
+bparm 0
+stokes 'i'
+flagver 1
+
+inp
+# Note:
+- flagver BLAH
+
+go
+
+=============================================================================
 task 'PRTUV'; sources ''; cparm 0; dparm 0; cparm(9)=204; docrt 124
 go
 
@@ -261,7 +520,7 @@ imhead
 task 'TVFLG'; Docat -1; Dohist -1; Sources ''; Calcode '*'
 Timerang 0; Stokes ''; Selband -1; Selfreq -1; Freqid 1; Bif 0; Eif 0
 Bchan 1; Echan 0; Antennas 0; Baseline 0; Uvrange 0; Subarray 0
-Docalib -1; Gainuse 0; Blver -1; Flagver 1; Doband -1; Bpver -1
+Docalib -1; Gainuse 0; Blver -1; Flagver 2; Doband -1; Bpver -1
 Smooth 0; Dparm(6)=10; Baddisk=0
 
 # Note
@@ -309,17 +568,13 @@ flagver 2
 go
 
 SERENI> CALIB1: Writing SN table    1
-SERENI> CALIB1: RPOL, IF= 1 The average gain over these antennas is  3.242E+00
-SERENI> CALIB1: RPOL, IF= 2 The average gain over these antennas is  3.202E+00
-SERENI> CALIB1: LPOL, IF= 1 The average gain over these antennas is  3.278E+00
-SERENI> CALIB1: LPOL, IF= 2 The average gain over these antennas is  3.205E+00
-SERENI> CALIB1: Found          200 good solutions
-SERENI> CALIB1: Average closure rms =  0.00197 +-  0.00008
-
-
-#Note:
-SERENI> CALIB1: Found          200 good solutions
-SERENI> CALIB1: Average closure rms =  0.00197 +-  0.00008
+SERENI> CALIB1: RPOL, IF= 1 The average gain over these antennas is  3.234E+00
+SERENI> CALIB1: RPOL, IF= 2 The average gain over these antennas is  3.223E+00
+SERENI> CALIB1: LPOL, IF= 1 The average gain over these antennas is  3.300E+00
+SERENI> CALIB1: LPOL, IF= 2 The average gain over these antennas is  3.234E+00
+SERENI> CALIB1: Found          204 good solutions
+SERENI> CALIB1:                  5 solutions had no data
+SERENI> CALIB1: Average closure rms =  0.00193 +-  0.00011
 
 --> looks good
 
@@ -348,13 +603,14 @@ inp
 
 go
 
-SERENI> CALIB1: RPOL, IF= 1 The average gain over these antennas is  1.429E+00
-SERENI> CALIB1: RPOL, IF= 2 The average gain over these antennas is  1.397E+00
-SERENI> CALIB1: LPOL, IF= 1 The average gain over these antennas is  1.421E+00
-SERENI> CALIB1: LPOL, IF= 2 The average gain over these antennas is  1.386E+00
-SERENI> CALIB1: Found          399 good solutions
-SERENI> CALIB1:                  1 solutions had no data
-SERENI> CALIB1: Average closure rms =  0.00777 +-  0.00118
+SERENI> CALIB1: RPOL, IF= 1 The average gain over these antennas is  3.259E+00
+SERENI> CALIB1: RPOL, IF= 2 The average gain over these antennas is  3.242E+00
+SERENI> CALIB1: LPOL, IF= 1 The average gain over these antennas is  3.274E+00
+SERENI> CALIB1: LPOL, IF= 2 The average gain over these antennas is  3.213E+00
+SERENI> CALIB1: Found          406 good solutions
+SERENI> CALIB1:                 11 solutions had no data
+SERENI> CALIB1: Average closure rms =  0.00108 +-  0.00008
+
 
 imh
 
@@ -399,7 +655,7 @@ inp extdest
 
 ---------------------------------------
 GETJY
-determine flux of secondary calib. based on primary calibrator
+Set flux of secondary calib. based on primary calibrator in SU table
 
 task 'GETJY'; Sources '1130-148',''; Soucode '' ; 
 Calsour '1331+305',''; Qual -1; Calcode ''; Bif 0; Eif 0; Timerang 0;
@@ -414,13 +670,10 @@ inp
 
 go
 
-SERENI> GETJY1: Task GETJY  (release of 31DEC15) begins
-SERENI> GETJY1: Calibrator robust averaging used    200 of    200 gain samples
-SERENI> GETJY1:    Source:Qual      CALCODE IF  Flux (Jy)
-SERENI> GETJY1: 1130-148        :  0   A     1    5.18382 +/-   0.01810  0.04869
-SERENI> GETJY1:                              2    5.27726 +/-   0.02196  0.02950
+SERENI> GETJY1: 1130-148        :  0   A     1    5.57906 +/-   0.02066  0.02741
+SERENI> GETJY1:                              2    5.63270 +/-   0.01921  0.01921
 SERENI> GETJY1:    Source:Qual    CALCODE    used   total     bad used  tot  bad
-SERENI> GETJY1: 1130-148        :  0 A        399     399       0   95  100    2
+SERENI> GETJY1: 1130-148        :  0 A        406     406       0  101  102    1
 
 ------------------------------------------------------------
 CLCAL   ## NOTE THAT CLCAL HAS CHANGED
@@ -449,12 +702,6 @@ inp
 - Refant 6
 
 go
-
-SERENI> CLCAL1: Processing SN table    1
-SERENI> CLCAL1: SNMRG: Merging SN table
-SERENI> CLCAL1: SNMRG: Write     150 merged records from     150 input records
-SERENI> CLCAL1: SNSMO: Smoothing SN table
-SERENI> CLCAL1: SN2CL: Applying SN tables to CL table   1, writing CL table  2
 
 imh
 # Note:
@@ -486,6 +733,150 @@ go
 
 stokes 'rr'
 go
+
+
+# amp/phase after applying the SN table (on-the-fly)
+task 'uvplt'
+source '1130-148''
+bparm 0
+docalib 2
+gainuse 2
+dotv 1
+flagver 2
+stokes 'i'
+go
+
+bif 1; eif 1
+go
+
+bif 2; eif 2
+go
+--> need flagging: a tiny time range
+
+# phase-uvdist
+bparm 0 2 0 
+dotv 1
+flagver 2
+docalib 2
+gainu 2
+stokes 'i'
+go
+
+
+# phase-time
+task 'uvplt'
+source '1130-148''
+bparm(1) 11
+docalib 2 
+gainuse 2
+flagver 2
+bif 1; eif 1
+dotv 1
+XINC 0
+stokes 'i'
+go
+
+bif 2; eif 2
+go
+
+
+# amp-time
+bparm 11 1
+docalib 2 
+gainuse 2
+flagver 2
+bif 1; eif 1
+dotv 1
+XINC 0
+stokes 'i'
+go
+--> need flaggin in time
+
+bif 2; eif 2
+go
+--> need flaggin in time
+
+---------------------------------------------------------
+flag --> extdest --> recalibrated & check again
+
+# flag the timerange
+task 'uvflg'
+getn 1
+bif 2
+eif 2
+sources ''
+timer 0 23 57 54 0 23 57 56
+aparm 0
+stokes 'i'
+inp
+
+go
+
+SERENI> UVFLG1: Wrote        1 flags to flag table version  2
+
+
+task 'uvflg'
+bif 1
+eif 1
+sources ''
+timer 0 23 56 45 0 23 56 46
+stokes 'll'
+aparm 0
+inp
+
+go
+
+SERENI> UVFLG1: Wrote        1 flags to flag table version  2
+
+
+timer 0 23 57 40 0 23 57 46
+aparm 0
+inp
+
+go 
+
+SERENI> UVFLG1: Wrote        1 flags to flag table version  2
+
+
+# reset keyword
+stokes ''
+timer 0
+
+# check after flagging
+imh
+
+AIPS 1: Maximum version number of extension files of type FG is   2
+
+tget uvplt
+flagver 2
+timer 0
+sources '1130-148'
+stokes 'i'
+bif 0; eif 0
+go
+
+
+# remove previous SN and CL tables
+imh 
+
+inp extdest
+getn 1
+inext 'CL'
+invers 2
+
+inp extdest
+go extdest
+
+inext 'SN'
+invers 1
+
+inp extdest
+go extdest
+
+imh
+
+--> go back and recalibrated  with FLAGVER 2
+----> ok... DONE
 ----------------------------------------------------------
 TVFLAG
 
@@ -508,7 +899,13 @@ Smooth 0; Dparm(6)=10; Baddisk=0
 go
 
 - look for outlier points
-(1) - To FLAG a point
+-- if there are few white lines (i.e. high amp for some baselines) --> don't flag because may not show up if one includes the phase ..
+(1) - plot VEC DIFF
+1. DISPLAY AMP V DIFF
+2. 'a'
+3. if there are any WHITE lines at this point, ok to flag them
+
+- To FLAG a point
 1. click FLAG PIXEL
 2. 'a'
 3. click on the point, make sure it is by comparing against neighbor values
@@ -517,7 +914,6 @@ go
 6. click exit
 7. 'a'
 8. in shell: y   # to apply FLAG
-
 
 imh
 # Note:
@@ -539,6 +935,7 @@ imh
 2. 'a'
 3. LOAD
 4. 'a'
+
 
 
 # check calibration on Calibrators
@@ -565,8 +962,63 @@ At this point, if see significant outliers.. --> flag them --> recalibrate
 
 ---------------------------------------
 SPLIT
+Apply calibration and split out sources
 
-# apply CAL table as it splits
+# get calibrated calibrators
+getn 1
+task 'SPLIT'; Sources '1130-148',''; Qual -1; Calcode ''; Timerang 0;
+Stokes 'i'; Selband -1; Selfreq -1; Freqid 1; Bif 0; Eif 0; Bchan 1;
+Echan 0; Subarray 0; Docalib 2; Gainuse 2; Dopol -1; Blver -1;
+Flagver 3; Doband -1; Bpver 1; Smooth 0; Douvcomp -1; Aparm 0; Nchav 1;
+Chinc 1; Ichansel 0; Baddisk 0; outdisk 1; outclass 'L.IF'
+
+go
+imh
+
+uc
+
+default uvplt
+getn 4
+task 'uvplt'; docalib -1; doband -1; bpver 0; bparm 0; dotv 1; stokes 'i'
+bif 0; eif 0
+go
+
+
+# image calibrator
+default imagr
+
+getn 4
+
+task 'IMAGR'; cellsi 0.1; imsize 1024; uvwtfn 'un'; flux 0;
+bchan 0; echan 0; robust 5; niter 0; dotv -1; docalib -1;
+doband -1; flagver 0; outname '1130-148.L'; SUBARRAY 0; sources ''
+bmaj 0; bmin 0; eif 0; bif 0; nchav 1; chinc 1;
+nchav 1; chinc 1; outdi 1; inclass ''; 
+in2name ''; in2class ''
+
+inp
+# Note:
+- OUTDISK 1
+- CELLSIZE
+- IMSIZE
+- niter 0
+- outname BLAH
+- ROBUST 5
+- GAIN 0.1               <-- usual
+- FLUX BLAH              <-- threshold
+- FLAGVER 1              <-- the FG table we want to use
+
+go
+
+mcat
+
+getn 11
+tvall
+
+--------> Just blank stuf??????
+
+# Science
+getn 1
 
 task 'SPLIT'; Sources 'RXSJ',''; Qual -1; Calcode ''; Timerang 0;
 Stokes ' '; Selband -1; Selfreq -1; Freqid 1; Bif 0; Eif 0; Bchan 1;
@@ -589,8 +1041,6 @@ go
 
 
 ucat
-AIPS 1: Catalog on disk  1
-AIPS 1:   14  101 RXSJ        .IF1   .    3 UV 19-MAR-2016 23:38:31
 
 -----------------------------------------------------
 # Split out IF2
@@ -599,9 +1049,8 @@ bif 2; eif 2
 go
 
 ucat
-AIPS 1:   15  101 RXSJ        .IF2   .    2 UV 19-MAR-2016 23:38:46
 --------------------------------------------------------
-getn 14
+getn 5
 imh
 
 # Note:
@@ -611,10 +1060,10 @@ imh
 ---------------------------------------------------------
 # Inspect calibrated source to see if need CLIP
 
-getn 14
+getn 5
 tvin 
 
-task 'uvplt'; docalib -1; doband -1; bpver 0; bparm 0; dotv 1; 
+task 'uvplt'; docalib -1; doband -1; bpver 0; bparm 0; dotv 1; stokes 'i'
 bif 0; eif 0
 
 # Note:
@@ -623,7 +1072,7 @@ bif 0; eif 0
 
 go
 
-
+---------------------------------------------------------------------
 # if we see any outlier amp, want to clip them
 
 task 'clip'; antennas 0; timerang 0; stokes ''; bif 0; eif 0; 
@@ -652,54 +1101,47 @@ task 'uvplt'; docalib -1; doband -1; bpver 0; bparm 0; dotv 1
 go
 
 --> looks good
+---------------------------------------------------------------------
 
 # inspect the other IF
-getn 15
 
 default 'uvplt'
-task 'uvplt'; docalib -1; doband -1; bpver 0; bparm 0; dotv 1
-flagver 2
+getn 6
+
+task 'uvplt'; docalib -1; doband -1; bpver 0; bparm 0; dotv 1; stokes 'i'
+flagver 0
 
 go
 
-
+----------------------------------------------------------------------
 # if we see any outlier amp, want to clip them
 
 task 'clip'; antennas 0; timerang 0; stokes ''; bif 0; eif 0; 
-flagver 0; infile ''; docalib -1; gainuse -1; aparm 0.165,0.165,0
+flagver 0; infile ''; docalib -1; gainuse -1; aparm 0.1,0.1,0; uvrange 50 65
 
 inp
 # Note:
-- throw away points above 165 mJy
+- throw away points above 100 mJy at long baseline
 - flagver 0                 <-- input FLAGVER
 - docalib -1                <-- already calibrated before split, no need  
 - gainuse -1                <-- already calibrated before split, no need 
-- APARM 0.165,0.165,0       <-- in Jy
-
-# More TVFLAG
+- APARM                     <-- in Jy
 
 imh 
 # Note:
 - created FG table
-- AIPS 1: Maximum version number of extension files of type FG is   2
+- AIPS 1: Maximum version number of extension files of type FG is   1
+
 
 # inspect again
-task 'uvplt'; docalib -1; doband -1; bpver 0; bparm 0; dotv 1
-go
-
---> still some outlier at long Baseline
-
-task 'clip'; antennas 0; timerang 0; stokes ''; bif 0; eif 0; 
-flagver 2; infile ''; docalib -1; gainuse -1; aparm 0.120,0.120,0; uvrange 50 60
-
 default uvplt
-getn 15
-task 'uvplt'; docalib -1; doband -1; bpver 0; bparm 0; dotv 1; flagver 3
+getn 6
+
+task 'uvplt'; docalib -1; doband -1; bpver 0; bparm 0; dotv 1; stokes 'i'
+flagver 1
+
 go
 
-
-imh 
-- AIPS 1: Maximum version number of extension files of type FG is   3
 
 --------------------------------------------------------
 # combine the IFs to 1 UV file, easier to process
@@ -707,8 +1149,8 @@ imh
 paste'em together:
 
 task 'DBCON'; outname 'J1131'; OUTCLASS 'L'; outdi 1
-getn 14        # fill in INNAME, INCLASS, INSEQ
-get2n 15       # fill in IN2NAME, IN2CLASS, IN2SEQ
+getn 5 
+get2n 6
 
 # Note:
 - outdi 1       <-- where to write output
@@ -719,18 +1161,17 @@ get2n 15       # fill in IN2NAME, IN2CLASS, IN2SEQ
 
 go
 
-ucat
-AIPS 1:   16  101 J1131       .L     .    1 UV 20-MAR-2016 00:00:18
+uc
 
 --------------------------------------------------------
 IMAGR
 # dirty image
 
-getn 16
+getn 7
 
 task 'IMAGR'; cellsi 0.1; imsize 1024; uvwtfn 'un'; flux 0;
 bchan 0; echan 0; robust 5; niter 0; dotv -1; docalib -1;
-doband -1; flagver 3; outname 'J1131.L'; SUBARRAY 0; sources ''
+doband -1; flagver 1; outname 'J1131.L'; SUBARRAY 0; sources ''
 bmaj 0; bmin 0; eif 0; bif 0; nchav 1; chinc 1;
 nchav 1; chinc 1; outdi 1; inclass ''; 
 in2name ''; in2class ''
@@ -755,22 +1196,14 @@ inp
 
 go
 
-SERENI> IMAGR1: Create J1131.L     .IBM001.   1 (MA)  on disk  1  cno   18
-SERENI> IMAGR1: Create J1131.L     .IIM001.   1 (MA)  on disk  1  cno   19
-SERENI> IMAGR1: GRDFLT: X and Y convolution type = SPHEROIDAL
-SERENI> IMAGR1: GRDFLT: X and Y parms =  3.0000  1.0000
-SERENI> IMAGR1: GRDFLT: convolution function sampled every 1/100 of a cell
 SERENI> IMAGR1: GRDMEM: Frequency 1.464900E+09 Hz
-SERENI> IMAGR1: Field    1 Sum of gridding weights =  5.61356E+09
-SERENI> IMAGR1: Field    1 Beam min =  -59.6 MilliJy, max =    1.0      Jy
-SERENI> IMAGR1: Fit Gaussian FWHM =    2.315 x    1.736      arcsec, PA=   -7.5
+SERENI> IMAGR1: Fit Gaussian FWHM =    2.254 x    1.541      arcsec, PA=   -0.9
+SERENI> IMAGR1: CLBHIS: minimum component 0.500 of current peak
+SERENI> IMAGR1: Field    1 min =   -1.5 MilliJy,max =    2.4 MilliJy
+
 
 mcat       # image
 
-AIPS 1: Catalog on disk  1
-AIPS 1:  Cat Usid Mapname      Class   Seq  Pt     Last access      Stat
-AIPS 1:   17  101 J1131.L     .IBM001.    2 MA 20-MAR-2016 00:10:24
-AIPS 1:   20  101 J1131.L     .IIM001.    2 MA 20-MAR-2016 00:10:24
 
 # Note:
 - IBM: beam
@@ -814,13 +1247,6 @@ to finish interactive clean:
 
 mc
 
-AIPS 2: Catalog on disk  1
-AIPS 2:  Cat Usid Mapname      Class   Seq  Pt     Last access      Stat
-AIPS 2:    4  101 20030623    .TVFLGR.    1 MA 18-MAR-2016 18:49:20
-AIPS 2:    9  101 J1131       .IBM001.    1 MA 18-MAR-2016 19:49:25
-AIPS 2:   10  101 J1131       .IIM001.    1 MA 18-MAR-2016 19:53:13
-AIPS 2:   11  101 J1131       .IBM001.    2 MA 18-MAR-2016 19:52:38
-AIPS 2:   12  101 J1131       .ICL001.    1 MA 18-MAR-2016 19:52:38
 
 # Note:
 - ICL: clean map
