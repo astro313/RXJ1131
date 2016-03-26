@@ -90,32 +90,74 @@ Array= VLA          Freq=  4885.100000 MHz     Ref.date= 23-JUN-2003
 
 
 # LISTR (to find out the observational setup)
-task 'listr'; inp
-getn 1;
-optype 'scan';     # listing format
-docrt 124;
-sources '';
-calcode '';
-# outpr 'PATH1:AS765_L.listr';
-go 
+task 'LISTR'; optype 'SCAN'; sources ''; calcode ''; docrt 124
+inp
 
- serenity  LISTR(31DEC15)    101     18-MAR-2016  18:39:48    Page    1
+# outpr 'PATH1:AS765_L.listr';
+
+go
+
+
+
+ serenity  LISTR(31DEC15)    101     19-MAR-2016  11:05:18    Page    1
+File = 20030623    .L BAND.   1 Vol = 1  Userid =  101
+Freq =  1.464900000 GHz   Ncor =  4   No. vis =    102701
+Scan summary listing
+ 
+Scan      Source      Qual  Calcode Sub         Timerange          FrqID   START VI
+   1 1331+305        : 0000  A        1  0/23:38:05 -   0/23:38:05     1       1
+   2 1331+305        : 0000  A        1  0/23:38:15 -   0/23:42:05     1       1
+   3 RXSJ            : 0000           1  0/23:48:55 -   0/23:56:05     1    8051
+   4 1130-148        : 0000  A        1  0/23:56:25 -   0/23:58:05     1   22629
+   5 RXSJ            : 0000           1  0/23:58:25 -   1/00:08:05     1   26464
+   6 1130-148        : 0000  A        1  1/00:08:35 -   1/00:10:05     1   47147
+   7 RXSJ            : 0000           1  1/00:10:25 -   1/00:20:05     1   50631
+   8 1130-148        : 0000  A        1  1/00:20:25 -   1/00:22:05     1   71289
+   9 RXSJ            : 0000           1  1/00:22:25 -   1/00:31:55     1   75099
+  10 1130-148        : 0000  A        1  1/00:32:15 -   1/00:33:55     1   95405
+  11 1331+305        : 0000  A        1  1/00:36:15 -   1/00:37:55     1   99240
+ 
+Source summary
+Velocity type = '        '    Definition = '        '
+ 
+  ID Source           Qual  Calcode RA(2000.0)     Dec(2000.0)  No. vis
+   1 1331+305        : 0000   A     13:31:08.2879  30:30:32.958   11512
+   2 RXSJ            : 0000         11:31:55.4000 -12:31:55.000   76225
+   3 1130-148        : 0000   A     11:30:07.0525 -14:49:27.388   14964
+ 
+  ID Source            Freq(GHz) Velocity(Km/s) Rest freq (GHz)
+   1 All Sources          1.4649         0.0000          0.0000
+     IF(  2)              1.3851         0.0000          0.0000
+Type Q to stop, just hit RETURN to continue                                        
+
+ serenity  LISTR(31DEC15)    101     19-MAR-2016  11:05:20    Page    2
+File = 20030623    .L BAND.   1 Vol = 1  Userid =  101
+ 
+Frequency Table summary uses reference channel     1.00
+FQID IF#      Freq(GHz)      BW(kHz)   Ch.Sep(kHz)  Sideband  Bandcode
+   1   1       1.46490000   50000.0039  50000.0039      1     VLA_L
+       2       1.38510000   50000.0039  50000.0039      1     VLA_L
+AIPS 1: Resumes
+>getn 2
+AIPS 1: Got(1)   disk= 1  user= 101   type=UV   20030623.C BAND.1
+>go
+ serenity  LISTR(31DEC15)    101     19-MAR-2016  11:06:13    Page    1
 File = 20030623    .C BAND.   1 Vol = 1  Userid =  101
 Freq =  4.885100000 GHz   Ncor =  4   No. vis =    104502
 Scan summary listing
  
-Scan      Source      Qual  Calcode Sub         Timerange          FrqID   START VIS  E
+Scan      Source      Qual  Calcode Sub         Timerange          FrqID   START VI
    1 1331+305        : 0000  A        1  1/00:38:15 -   1/00:39:55     1       1
    2 1130-148        : 0000  A        1  1/00:42:25 -   1/00:43:55     1    3083
-   3 RXSJ            : 0000           1  1/00:44:25 -   1/00:53:55     1    6271      2
-   4 1130-148        : 0000  A        1  1/00:54:25 -   1/00:55:55     1   26629      3
-   5 RXSJ            : 0000           1  1/00:56:25 -   1/01:05:55     1   30139      5
-   6 1130-148        : 0000  A        1  1/01:06:25 -   1/01:07:55     1   50497      5
-   7 RXSJ            : 0000           1  1/01:08:25 -   1/01:17:55     1   54007      7
-   8 1130-148        : 0000  A        1  1/01:18:25 -   1/01:19:55     1   74365      7
-   9 RXSJ            : 0000           1  1/01:20:25 -   1/01:29:45     1   77875      9
-  10 1130-148        : 0000  A        1  1/01:30:15 -   1/01:31:45     1   97882     10
-  11 1331+305        : 0000  A        1  1/01:34:15 -   1/01:35:45     1  101392     10
+   3 RXSJ            : 0000           1  1/00:44:25 -   1/00:53:55     1    6271
+   4 1130-148        : 0000  A        1  1/00:54:25 -   1/00:55:55     1   26629
+   5 RXSJ            : 0000           1  1/00:56:25 -   1/01:05:55     1   30139
+   6 1130-148        : 0000  A        1  1/01:06:25 -   1/01:07:55     1   50497
+   7 RXSJ            : 0000           1  1/01:08:25 -   1/01:17:55     1   54007
+   8 1130-148        : 0000  A        1  1/01:18:25 -   1/01:19:55     1   74365
+   9 RXSJ            : 0000           1  1/01:20:25 -   1/01:29:45     1   77875
+  10 1130-148        : 0000  A        1  1/01:30:15 -   1/01:31:45     1   97882
+  11 1331+305        : 0000  A        1  1/01:34:15 -   1/01:35:45     1  101392
  
 Source summary
 Velocity type = '        '    Definition = '        '
@@ -134,10 +176,12 @@ FQID IF#      Freq(GHz)      BW(kHz)   Ch.Sep(kHz)  Sideband  Bandcode
    1   1       4.88510000   50000.0039  50000.0039      1     VLA_C
        2       4.83510000   50000.0039  50000.0039      1     VLA_C
 
+
+
 # Note: calibrators, obs. time on each scan, total on-source time for calibrators and science target, # of IFs, BW, Ch. Sep, Freq
 - RXSJ: 4 scans, each of 9min20sec
 - Gain calibrator: each scan ~ 1min30sec
-- 2 IFs, continuum mode --> Just two inidvidual channels on the same SB
+- 2 IFs, continuum mode --> Just two individual channels on the same SB
 
 ============================================================================
 
@@ -160,6 +204,7 @@ SERENI> SETJY1: '1331+305        ' IF =  1 flux = 7.3093 (Jy calcd)
 SERENI> SETJY1: '1331+305        ' IF =  2 flux = 7.3582 (Jy calcd)
 SERENI> SETJY1: SPECINDX= -0.4605      / spectral index
 SERENI> SETJY1: SPECURVE=  -0.1715   0.0336   0.0000 / spectral curvature
+
 
 compare the flux with the other C band data that DR calibrated since the two uses the same flux calibrator. 
 --> seems like there's a slight offset (not the same, maybe not using the same Perley-Butler models?)
@@ -198,6 +243,7 @@ go
 In the TV display:
 mouse-click TVFILDLE
 keyboard press 'a'
+then 'a' again
 drag left-click on mouse to change contrast
 keyword control: a, b, c, d
 d: to return to TV control page

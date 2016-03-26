@@ -944,7 +944,7 @@ calib:
 task 'TVFLG'; Docat -1; Dohist -1; Sources ''; Calcode '*'
 Timerang 0; Stokes ''; Selband -1; Selfreq -1; Freqid 1; Bif 0; Eif 0
 Bchan 1; Echan 0; Antennas 0; Baseline 0; Uvrange 0; Subarray 0
-Docalib 2; Gainuse 2; Blver -1; Flagver 3; Doband -1; Bpver -1
+Docalib 2; Gainuse 2; Blver -1; Flagver 2; Doband -1; Bpver -1
 Smooth 0; Dparm(6)=20; Baddisk=0
 inp
 
@@ -969,32 +969,31 @@ getn 1
 task 'SPLIT'; Sources '1130-148',''; Qual -1; Calcode ''; Timerang 0;
 Stokes 'i'; Selband -1; Selfreq -1; Freqid 1; Bif 0; Eif 0; Bchan 1;
 Echan 0; Subarray 0; Docalib 2; Gainuse 2; Dopol -1; Blver -1;
-Flagver 3; Doband -1; Bpver 1; Smooth 0; Douvcomp -1; Aparm 0; Nchav 1;
+Flagver 2; Doband -1; Bpver 1; Smooth 0; Douvcomp -1; Aparm 0; Nchav 1;
 Chinc 1; Ichansel 0; Baddisk 0; outdisk 1; outclass 'L.IF'
 
 go
-imh
 
 uc
 
 default uvplt
-getn 4
+getn 15
 task 'uvplt'; docalib -1; doband -1; bpver 0; bparm 0; dotv 1; stokes 'i'
 bif 0; eif 0
 go
 
 
 # image calibrator
-default imagr
 
-getn 4
-
+default IMAGR
 task 'IMAGR'; cellsi 0.1; imsize 1024; uvwtfn 'un'; flux 0;
 bchan 0; echan 0; robust 5; niter 0; dotv -1; docalib -1;
 doband -1; flagver 0; outname '1130-148.L'; SUBARRAY 0; sources ''
 bmaj 0; bmin 0; eif 0; bif 0; nchav 1; chinc 1;
 nchav 1; chinc 1; outdi 1; inclass ''; 
-in2name ''; in2class ''
+in2name ''; in2class ''; dotv 1
+
+getn 15
 
 inp
 # Note:
@@ -1006,16 +1005,17 @@ inp
 - ROBUST 5
 - GAIN 0.1               <-- usual
 - FLUX BLAH              <-- threshold
-- FLAGVER 1              <-- the FG table we want to use
+- FLAGVER BLAH              <-- the FG table we want to use
 
 go
 
 mcat
 
-getn 11
+getn 17
+tvin
+pixrange 0
 tvall
 
---------> Just blank stuf??????
 
 # Science
 getn 1
@@ -1023,7 +1023,7 @@ getn 1
 task 'SPLIT'; Sources 'RXSJ',''; Qual -1; Calcode ''; Timerang 0;
 Stokes ' '; Selband -1; Selfreq -1; Freqid 1; Bif 0; Eif 0; Bchan 1;
 Echan 0; Subarray 0; Docalib 2; Gainuse 2; Dopol -1; Blver -1;
-Flagver 3; Doband -1; Bpver 1; Smooth 0; Douvcomp 1; Aparm 0; Nchav 1;
+Flagver 2; Doband -1; Bpver 1; Smooth 0; Douvcomp 1; Aparm 0; Nchav 1;
 Chinc 1; Ichansel 0; Baddisk 0; outdisk 1; outclass 'IF1'
 
 bif 1; eif 1
@@ -1034,7 +1034,7 @@ inp split
 - outdisk 1            <-- where to output CATALOG
 - GAINUSE 2        <-- use the right version of CL or SN TABLE
 - DOPOL -1         <-- don't care about calibration for polarization 
-- FLAGVER 3        <-- make sure to use the correct version
+- FLAGVER 2        <-- make sure to use the correct version
 - outclass 'IF1'   <-- split out IF1
 
 go
@@ -1050,7 +1050,7 @@ go
 
 ucat
 --------------------------------------------------------
-getn 5
+getn 18
 imh
 
 # Note:
@@ -1060,8 +1060,8 @@ imh
 ---------------------------------------------------------
 # Inspect calibrated source to see if need CLIP
 
-getn 5
-tvin 
+getn 18
+tvin
 
 task 'uvplt'; docalib -1; doband -1; bpver 0; bparm 0; dotv 1; stokes 'i'
 bif 0; eif 0
@@ -1106,7 +1106,7 @@ go
 # inspect the other IF
 
 default 'uvplt'
-getn 6
+getn 19
 
 task 'uvplt'; docalib -1; doband -1; bpver 0; bparm 0; dotv 1; stokes 'i'
 flagver 0
@@ -1135,7 +1135,7 @@ imh
 
 # inspect again
 default uvplt
-getn 6
+getn 19
 
 task 'uvplt'; docalib -1; doband -1; bpver 0; bparm 0; dotv 1; stokes 'i'
 flagver 1
@@ -1149,8 +1149,8 @@ go
 paste'em together:
 
 task 'DBCON'; outname 'J1131'; OUTCLASS 'L'; outdi 1
-getn 5 
-get2n 6
+getn 18
+get2n 19
 
 # Note:
 - outdi 1       <-- where to write output
@@ -1167,14 +1167,19 @@ uc
 IMAGR
 # dirty image
 
-getn 7
+default IMAGR
 
-task 'IMAGR'; cellsi 0.1; imsize 1024; uvwtfn 'un'; flux 0;
+task 'IMAGR'; cellsi 0.1; imsize 2048; uvwtfn 'un'; flux 0;
 bchan 0; echan 0; robust 5; niter 0; dotv -1; docalib -1;
-doband -1; flagver 1; outname 'J1131.L'; SUBARRAY 0; sources ''
+doband -1; flagver 0; outname 'J1131.L'; SUBARRAY 0; sources ''
 bmaj 0; bmin 0; eif 0; bif 0; nchav 1; chinc 1;
 nchav 1; chinc 1; outdi 1; inclass ''; 
-in2name ''; in2class ''
+in2name ''; in2class ''; dotv 1
+
+getn 20
+
+RASHIFT -55
+DECSHIFT -3
 
 inp
 # Note:
@@ -1196,10 +1201,14 @@ inp
 
 go
 
-SERENI> IMAGR1: GRDMEM: Frequency 1.464900E+09 Hz
-SERENI> IMAGR1: Fit Gaussian FWHM =    2.254 x    1.541      arcsec, PA=   -0.9
+SERENI> IMAGR1: GRDMEM: Frequency 1.385100E+09 Hz
+SERENI> IMAGR1: Field    1 Sum of gridding weights =  1.25528E+10
+SERENI> IMAGR1: Field    1 Beam min =  -58.2 MilliJy, max =    1.0      Jy
+SERENI> IMAGR1: Fit Gaussian FWHM =    2.371 x    1.633      arcsec, PA=    3.6
 SERENI> IMAGR1: CLBHIS: minimum component 0.500 of current peak
-SERENI> IMAGR1: Field    1 min =   -1.5 MilliJy,max =    2.4 MilliJy
+SERENI> IMAGR1: Field    1 min =   -2.4 MilliJy,max =    4.3 MilliJy
+SERENI> IMAGR1: No Cleaning requested
+SERENI> IMAGR1: Loading field    1 from -2.43E-03 to  4.27E-03 every  2 pixel
 
 
 mcat       # image
@@ -1211,18 +1220,24 @@ mcat       # image
 
 --------------------------------------------------------------
 # Display dirty image
-getn 20
+getn 24
 
-tvall
+tval
+tvlabel
+tvpseudo
+curval
 To navigate: 'a','b','c','d'
 
 imstat
 
 tvstat      <-- draw polygon 
+1. click TV
+2. 'a'
+3. 'a', mouse-click 'a'...
+4. 'b'
+5. 'd'
 
---> DONT SEE ANYTHING
-
-END HERE........
+rms: 5.797E-04 JY/BEAM
 
 -------------------------------------------
 Clean image
@@ -1254,16 +1269,20 @@ mc
 ----------------------------------------------------------
 Display clean map
 
-getn 12
+getn 26
 tval
 'a','b','c','d'
 
 ---------------------------------------------
 FITTP
 
-getn BLAH
+getn 24 
 task 'fittp'
-dataout 'PATH1:blah.fits
+dataout 'PATH1:J1131.L.dirty.fits
+
+getn 26
+task 'fittp'
+dataout 'PATH1:J1131.L.cln.fits
 
 inp
 # Note:

@@ -604,7 +604,7 @@ task 'SPLIT'; Sources 'RXSJ',''; Qual -1; Calcode ''; Timerang 0;
 Stokes ' '; Selband -1; Selfreq -1; Freqid 1; Bif 0; Eif 0; Bchan 1;
 Echan 0; Subarray 0; Docalib 2; Gainuse 2; Dopol -1; Blver -1;
 Flagver 5; Doband -1; Bpver 1; Smooth 0; Douvcomp 1; Aparm 0; Nchav 1;
-Chinc 1; Ichansel 0; Baddisk 0; outdisk 1; outclass 'IF1'
+Chinc 1; Ichansel 0; Baddisk 0; outdisk 1; outclass 'C.IF1'
 
 bif 1; eif 1
 inp split
@@ -621,29 +621,15 @@ go
 
 
 ucat
-AIPS 1: Catalog on disk  1
-AIPS 1:  Cat Usid Mapname      Class   Seq  Pt     Last access      Stat
-AIPS 1:    1  101 20030623    .L BAND.    1 UV 19-MAR-2016 11:05:18
-AIPS 1:    2  101 20030623    .C BAND.    1 UV 19-MAR-2016 17:57:44
-AIPS 1:    3  101 20030623    .X BAND.    1 UV 19-MAR-2016 01:09:08
-AIPS 1:    4  101 RXSJ        .IF1   .    2 UV 19-MAR-2016 17:57:44
-
 -----------------------------------------------------
 # Split out IF2
-outclass 'IF2'
+outclass 'C.IF2'
 bif 2; eif 2 
 go
 
 ucat
-AIPS 1:  Cat Usid Mapname      Class   Seq  Pt     Last access      Stat
-AIPS 1:    1  101 20030623    .L BAND.    1 UV 19-MAR-2016 11:05:18
-AIPS 1:    2  101 20030623    .C BAND.    1 UV 19-MAR-2016 17:58:02
-AIPS 1:    3  101 20030623    .X BAND.    1 UV 19-MAR-2016 01:09:08
-AIPS 1:    4  101 RXSJ        .IF1   .    2 UV 19-MAR-2016 17:57:44
-AIPS 1:    5  101 RXSJ        .IF2   .    1 UV 19-MAR-2016 17:58:02
-
 --------------------------------------------------------
-getn 4
+getn 27
 imh
 
 # Note:
@@ -653,7 +639,7 @@ imh
 ---------------------------------------------------------
 # Inspect calibrated source to see if need CLIP
 
-getn 4
+getn 27
 tvin 
 
 task 'uvplt'; docalib -1; doband -1; bpver 0; bparm 0; dotv 1
@@ -695,7 +681,7 @@ go
 --> looks good
 
 # inspect the other IF
-getn 5
+getn 28
 go
 
 --> looks good
@@ -706,8 +692,8 @@ go
 paste'em together:
 
 task 'DBCON'; outname 'J1131'; OUTCLASS 'C'; outdi 1
-getn 4        # fill in INNAME, INCLASS, INSEQ
-get2n 5       # fill in IN2NAME, IN2CLASS, IN2SEQ
+getn 27 
+get2n 28
 
 # Note:
 - outdi 1       <-- where to write output
@@ -719,25 +705,22 @@ get2n 5       # fill in IN2NAME, IN2CLASS, IN2SEQ
 go
 
 ucat
-AIPS 1:    1  101 20030623    .L BAND.    1 UV 19-MAR-2016 11:05:18
-AIPS 1:    2  101 20030623    .C BAND.    1 UV 19-MAR-2016 17:58:02
-AIPS 1:    3  101 20030623    .X BAND.    1 UV 19-MAR-2016 01:09:08
-AIPS 1:    4  101 RXSJ        .IF1   .    2 UV 19-MAR-2016 18:03:49
-AIPS 1:    5  101 RXSJ        .IF2   .    1 UV 19-MAR-2016 18:03:49
-AIPS 1:    6  101 J1131       .C     .    1 UV 19-MAR-2016 18:03:49
 
 --------------------------------------------------------
 IMAGR
 # dirty image
 
-getn 6
-
-task 'IMAGR'; cellsi 0.1; imsize 1024; uvwtfn 'un'; flux 0;
+task 'IMAGR'; cellsi 0.1; imsize 2048; uvwtfn 'un'; flux 0;
 bchan 0; echan 0; robust 5; niter 0; dotv -1; docalib -1;
-doband -1; flagver 1; outname ''; SUBARRAY 0; sources ''
+doband -1; flagver 1; outname 'J1131.C'; SUBARRAY 0; sources ''
 bmaj 0; bmin 0; eif 0; bif 0; nchav 1; chinc 1;
 nchav 1; chinc 1; outname ''; outdi 1; inclass ''; 
-in2name ''; in2class ''
+in2name ''; in2class ''; dotv 1
+
+getn 29
+
+RASHIFT -55
+DECSHIFT -3
 
 inp
 # Note:
@@ -758,23 +741,14 @@ inp
 
 go
 
-SERENI> IMAGR1: Create J1131       .IBM001.   1 (MA)  on disk  1  cno    8
-SERENI> IMAGR1: Create J1131       .IIM001.   1 (MA)  on disk  1  cno    9
-SERENI> IMAGR1: GRDFLT: X and Y convolution type = SPHEROIDAL
-SERENI> IMAGR1: GRDFLT: X and Y parms =  3.0000  1.0000
-SERENI> IMAGR1: GRDFLT: convolution function sampled every 1/100 of a cell
 SERENI> IMAGR1: GRDMEM: Frequency 4.885100E+09 Hz
-SERENI> IMAGR1: Field    1 Sum of gridding weights =  1.58129E+10
-SERENI> IMAGR1: Field    1 Beam min =  -48.4 MilliJy, max =    1.0      Jy
-SERENI> IMAGR1: Fit Gaussian FWHM =  666.428 x  428.585 Milliarcsec, PA=    2.6
-
+SERENI> IMAGR1: Field    1 Sum of gridding weights =  1.58073E+10
+SERENI> IMAGR1: Field    1 Beam min =  -48.5 MilliJy, max =    1.0      Jy
+SERENI> IMAGR1: Fit Gaussian FWHM =  666.447 x  428.598 Milliarcsec, PA=    2.6
+SERENI> IMAGR1: CLBHIS: minimum component 0.500 of current peak
+SERENI> IMAGR1: Field    1 min = -353.0 MicroJy,max =  532.6 MicroJy
 
 mcat       # image
-
-AIPS 1: Catalog on disk  1
-AIPS 1:  Cat Usid Mapname      Class   Seq  Pt     Last access      Stat
-AIPS 1:    8  101 J1131       .IBM001.    1 MA 19-MAR-2016 16:54:35
-AIPS 1:    9  101 J1131       .IIM001.    1 MA 19-MAR-2016 16:54:35
 
 # Note:
 - IBM: beam
@@ -782,7 +756,7 @@ AIPS 1:    9  101 J1131       .IIM001.    1 MA 19-MAR-2016 16:54:35
 
 --------------------------------------------------------------
 # Display dirty image
-getn 9
+getn 31
 
 tvall
 To navigate: 'a','b','c','d'
@@ -791,13 +765,13 @@ imstat
 
 tvstat      <-- draw polygon 
 
-# 1.004E-04 Jy
+rms= 4.278E-05 JY/BEAM
 -------------------------------------------
 Clean image
 
 tget IMAGR
 niter 1000
-flux BLAH   <--- threshold, Jy
+flux 1e-4   <--- threshold, Jy
 dotv 1      <--- Interactive CLEAN
 go
 
@@ -815,30 +789,22 @@ to finish interactive clean:
 
 mc
 
-AIPS 2: Catalog on disk  1
-AIPS 2:  Cat Usid Mapname      Class   Seq  Pt     Last access      Stat
-AIPS 2:    4  101 20030623    .TVFLGR.    1 MA 18-MAR-2016 18:49:20
-AIPS 2:    9  101 J1131       .IBM001.    1 MA 18-MAR-2016 19:49:25
-AIPS 2:   10  101 J1131       .IIM001.    1 MA 18-MAR-2016 19:53:13
-AIPS 2:   11  101 J1131       .IBM001.    2 MA 18-MAR-2016 19:52:38
-AIPS 2:   12  101 J1131       .ICL001.    1 MA 18-MAR-2016 19:52:38
-
 # Note:
 - ICL: clean map
 
 ----------------------------------------------------------
 Display clean map
 
-getn 12
+getn 33
 tval
 'a','b','c','d'
 
 ---------------------------------------------
 FITTP
 
-getn BLAH
+getn 33
 task 'fittp'
-dataout 'PATH1:blah.fits
+dataout 'PATH1:J1131.C.cln.fits
 
 inp
 # Note:
