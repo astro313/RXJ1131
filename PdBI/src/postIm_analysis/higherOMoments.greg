@@ -5,6 +5,11 @@
 !
 ! History:
 ! --------
+! March 27 2016:
+!   - Replace velo_spacing from 2*21.528154 km/s to 50 km/s
+!   - only plot one beam
+!   - remove title
+!
 !
 !
 ! Notes:
@@ -27,7 +32,7 @@ pen 0 /col 0 /weight 2
 lut rainbow4.lut
 
 ! Spacing
-let velo_spacing 21.528154*2    ! channel width in 1st moment
+let velo_spacing 50    ! channel width in 1st moment
 let width_spacing 100           ! channel width in 2nd moment
 
 
@@ -37,7 +42,7 @@ image "/Users/admin/Research/RXJ1131/PdBI/data/26Dec15/sup127_155_2ndcln_noCont-
 
 !######### DEFINE THE PLOT AREA #########
 tickspace 0 0 0 0
-limits 7 -13 -10 8 second /rgdata     ! zoom
+limits 4 -9.5 -8 6 second /rgdata     ! zoom
 define real hbox_x[2] hbox_y[2]
 let hbox_x box_xmax page_x-0.13
 let hbox_y box_ymin page_y-0.1
@@ -48,7 +53,7 @@ let box_aspect aspect
 !
 ! OLD way
 ! Set plot size
-! set box_location 5 22 4 20
+! set box_location 5 20 4 20
 
 @ window_tools.greg
 let aspect_ratio yes  ! Do not respect aspect ratio to maximize use of place
@@ -86,8 +91,9 @@ pen 0 /weight 2
 ! set up the frame
 box p o in /ABSOLUTE /LABEL 0 !/unit S
 ! box p o in /unit S          ! parallel RA, orthogonal Dec
+set expand 1.0
 label "R.A. (J2000)" /x
-! label "DEC (J2000)" /y 10
+! label "DEC (J2000)" /y 12
 draw text -4.5 2.5 "DEC (J2000)" 7 90 /box 4
 
 ! #### Set the plot levels ###
@@ -101,8 +107,7 @@ rgmap       ! overlay contours
 ! ### DRAW THE COLORBAR ###
 set expand 1.0
 WEDGE top
-set expand 1.2
-label "Observed Frame Velocity" /X -12.5
+label "Observed Frame Velocity" /X -19.5
 
 
 ! central marker
@@ -118,13 +123,13 @@ pen /wei 2
 set angle sec
 
 ! ######## DRAW the box for putting beam inside ########
-pen 0 /weight 3
-draw relocate 9.25 0.0 /box !seconds
-draw line 9.25 3 /box !seconds
-draw line 7 3 /box !seconds
-draw line 7 0.0 /box !seconds
-draw line 9.25 0.0 /box !seconds
-pen 0 /weight 2
+! pen 0 /weight 3
+! draw relocate 9.95 0.0 /box !seconds
+! draw line 9.95 3.25 /box !seconds
+! draw line 7.25 3.25 /box !seconds
+! draw line 7.25 0.0 /box !seconds
+! draw line 9.95 0.0 /box !seconds
+! pen 0 /weight 2
 ! ######################################################
 
 
@@ -135,10 +140,10 @@ pen 0 /weight 2
 ! G_PA          ! rad
 ! G_MINOR       ! rad
 ! G_MAJOR       ! rad
-
-ellipse G_MAJOR*206265/2 G_MINOR*206265/2 90-G_PA*57.3 /box 8 1.5 /fill 7
-ellipse G_MAJOR*206265/2 G_MINOR*206265/2 90-G_PA*57.3 /box 8 1.5
-ellipse G_MAJOR*206265/2 G_MINOR*206265/2 90-G_PA*57.3 /box 8 1.5 /HATCH 0 45 0.2
+!
+! ellipse G_MAJOR*206265/2 G_MINOR*206265/2 90-G_PA*57.3 /box 8.5 1.65 /fill 7
+! ellipse G_MAJOR*206265/2 G_MINOR*206265/2 90-G_PA*57.3 /box 8.5 1.65
+! ellipse G_MAJOR*206265/2 G_MINOR*206265/2 90-G_PA*57.3 /box 8.5 1.65 /HATCH 0 45 0.2
 ! #######################################################
 
 
@@ -170,8 +175,7 @@ rgmap       ! overlay contours
 ! ### DRAW THE COLORBAR ###
 set expand 1.0
 WEDGE top
-set expand 1.2
-label "Observed Frame Velocity" /X -12.5
+label "Velocity Dispersion" /X -19.5
 
 
 ! central marker
@@ -188,11 +192,11 @@ set angle sec
 
 ! ######## DRAW the box for putting beam inside ########
 pen 0 /weight 3
-draw relocate 9.25 0.0 /box !seconds
-draw line 9.25 3 /box !seconds
-draw line 7 3 /box !seconds
-draw line 7 0.0 /box !seconds
-draw line 9.25 0.0 /box !seconds
+draw relocate 9.95 0.0 /box !seconds
+draw line 9.95 3.25 /box !seconds
+draw line 7.25 3.25 /box !seconds
+draw line 7.25 0.0 /box !seconds
+draw line 9.95 0.0 /box !seconds
 pen 0 /weight 2
 ! ######################################################
 
@@ -205,18 +209,15 @@ pen 0 /weight 2
 ! G_MINOR       ! rad
 ! G_MAJOR       ! rad
 
-ellipse G_MAJOR*206265/2 G_MINOR*206265/2 90-G_PA*57.3 /box 8 1.5 /fill 7
-ellipse G_MAJOR*206265/2 G_MINOR*206265/2 90-G_PA*57.3 /box 8 1.5
-ellipse G_MAJOR*206265/2 G_MINOR*206265/2 90-G_PA*57.3 /box 8 1.5 /HATCH 0 45 0.2
+ellipse G_MAJOR*206265/2 G_MINOR*206265/2 90-G_PA*57.3 /box 8.5 1.65 /fill 7
+ellipse G_MAJOR*206265/2 G_MINOR*206265/2 90-G_PA*57.3 /box 8.5 1.65
+ellipse G_MAJOR*206265/2 G_MINOR*206265/2 90-G_PA*57.3 /box 8.5 1.65 /HATCH 0 45 0.2
 ! #######################################################
 
-
-
-pen 0 /col 0 /weight 5
-set character 0.9     ! font size
 ! ############ PUT THE SOURCE NAME #############
-draw text 25 13.5 "RXJ1131-1231 1st & 2nd Moments" 3 /user
-set character 0.6
+! pen 0 /col 0 /weight 5
+! set character 0.9     ! font size
+! draw text 25 13.5 "RXJ1131-1231 1st & 2nd Moments" 3 /user
 ! ##############################################
 
 ! ############## OUT PUT FILENAME ##############
@@ -225,3 +226,4 @@ hardcopy "/Users/admin/Research/RXJ1131/PdBI/data/26Dec15/CO_highOmom_CLIP5sigma
 ! ##############################################
 
 pen 0 /default
+set character 0.6
