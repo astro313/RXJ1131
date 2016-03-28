@@ -42,13 +42,14 @@
 - 3.6 (PSF FWHM = 1.7"; use 3.8" aperpho: )
   * need aperture correction, --> get flux uncertainties 
 - listed below are from db, applied aperture correction 
-  - 4.5: 6.241 +/- 0.00207 mJy --> 7.803 +/- 2.082e-2 mJy
-  - 5.8: 9.354 +/- 0.005694 mJy --> 1.072e-1 +/- 5.124e-2 mJy
-  - 8.9: 13.56 +/- 0.004518 mJy --> 1.447e-1 +/- 4.122e-2 mJy
+  - 4.5: 6.241 +/- 0.00207 mJy --> 7.803 +/- 2.082e-3 mJy
+  - 5.8: 9.354 +/- 0.005694 mJy --> 10.72 +/- 5.124e-3 mJy
+  - 8.9: 13.56 +/- 0.004518 mJy --> 14.47 +/- 4.122e-3 mJy
 5. Spitzer/MIPS
 - 24: 47.18 +/- 0.02621 mJy (PSF fit with native FWHM = 6"; use this)
   + for aperture fitting (12" diameter): 46.66 +/- 0.0181 mJy
     * aperture correction not applied, need to multiply by 1.488
+    * error: 1.48*MAD, MAD = median of the absolute deviation from the median data
   + since source size < FWHM --> ~ point source --> aperphot ~ PSFfit 
 - 70 (nope)
 - 160 (nope)
