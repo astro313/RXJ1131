@@ -2,16 +2,23 @@
 !
 ! Plot spatial spectra for CO(2-1) data
 !
-! Last Modified: 25 Dec 15
+! Last Modified: 27 Mar 16
 !
 ! Author: Daisy Leung
 !
 !
 ! History
 ! -------
+! 27 Mar 2016:
+! - increase pixel marker size
+! - put flux and velo label on one panel
+! - don't put title
+! - manually put Dec offset tick labels to avoid overlap with flux ticklabels
+!
 ! 25 Dec 2015:
 ! - modify script to run on phs center shifted (corresponds to foreground gal.) image
 ! - spatially bin by 3 pixels in each direction
+!
 ! 10 Dec 2015:
 ! - Created, tested.
 ! - Want to run on an image with a meaningful phs center
@@ -47,7 +54,7 @@ let size 10
 let Title "Spatial Spectra, (0,0) Foreground Galaxy"
 let outfile "spatialSpec_offsetShifted"
 
-let range -1000 1000            ! spectrum velo. range
+let range -1500 1500            ! spectrum velo. range
 let type lmv-clean
 set box_location 4 22 4 20
 
@@ -150,7 +157,7 @@ begin procedure plot_position_Daisy
   if (plot_position[1].eq.0.0) then
      let plot_page_aspect page_x/page_y
      if (plot_page_aspect.ge.1.0) then
-        let position 0.1271 1.2 0.105 0.95
+        let position 0.1071 1.2 0.09105 0.95
      else
         let position 0.085 0.995 0.171 1.081
      endif
@@ -204,13 +211,18 @@ for iwx 1 to nx_box
       ! Draw Baseline
       pen 0 /col 0 /dash 2 /weight 2
       connect xspectrum y
-      ! Bold the inner box, hide the labels (flux density vs velo.)
-      pen 0 /dash 0 /weight 3
-      greg1\box n n
-      !
-      !
-      !
+      ! Bold the inner box
+      pen 0 /dash 0 /weight 2
 
+      ! hide the labels (flux density vs velo.), except for one panel..
+      if (iwx.eq.1).AND.(iwy.eq.1) then
+        set expand min(6.0/(nx_box+ny_box),1.05)*1.2
+        greg1\box
+      else
+        greg1\box n n
+      endif
+
+      !
       ! annotate each panel with pixel
       let mark "pixels"
 
@@ -229,6 +241,7 @@ for iwx 1 to nx_box
          endif
 
          ! mark at the corner
+         set expand min(6.0/(nx_box+ny_box),1.05)*2
          greg1\draw text 0.1 -0.1 'cmark' 3 /box 7
 
       endif
@@ -245,17 +258,20 @@ let true_sampling true_sampling/sec
 greg1\limits sblc[1]-0.5*true_sampling[1] strc[1]+0.5*true_sampling[1] sblc[2]-0.5*true_sampling[2] strc[2]+0.5*true_sampling[2]
 
 pen 0 /weight 2.5
-box p o out
-label 'Title' /x -30.5
+box p n out
+greg1\draw text -1.2 0.8 "-5"
+greg1\draw text -1.2 16.8 "5"
+greg1\draw text -1.1 8.8 "0"
+! label 'Title' /x -30.5
 label "RA Offset (arcsec)" /x 3.5      ! displace 3.5 downward
-label "DEC offset (arcsec)" /y
+label "DEC offset (arcsec)" /y         ! displace 0 to the right
 !
 greg1\set expand 1
 gtvl\change directory <greg
 !
 ! ----------- OUTPUT FILENAME ----------------
-! sic delete 'outfile'.eps
-! hardcopy 'outfile' /device eps color
+sic delete 'outfile'.eps
+hardcopy 'outfile' /device eps color
 ! --------------------------------------------
 !
 pen 0 /default

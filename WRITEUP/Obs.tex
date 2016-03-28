@@ -1,4 +1,5 @@
 
+
 \documentclass[]{emulateapj}
 \usepackage{amsmath}
 \begin{document}
@@ -19,7 +20,7 @@ weather conditions in the C and D array configurations, respectively. The 2 mm
 receivers were used to cover the redshifted CO($J$ = 2 $\rightarrow$ 1) line
 and the 
 underlying continuum emission (rest frame BLAH = (2.152 * (1+z)) mm), employing
-a correlator setup providing an effective bandwidth of 3.16 GHz and spectral 
+a correlator setup providing an effective bandwidth of 3.6 GHz and spectral 
 resolution of 10.0 MHz ($\sim$21.5281 km s$^{-1}$).
 This resulted in 3.74 hours of cumulative six antenna-equivalent on-source time
 
@@ -47,7 +48,7 @@ $15\% calibration accuracy.
 The GILDAS package was used to reduce and analyze the visibility data which are
 then imaged and deconvolved using
 the CLEAN algorithm with ``natural" weighting. This yields a synthesized clean
-beam size of 4$\farcs$44 $\times$ 1\farcs95. The final rms noise is $\sigma$ =
+beam size of 4$\farcs$44 $\times$ 1\farcs95 (PA: 13\degr). The final rms noise is $\sigma$ =
 0.177 
 Jy km s$^{-1}$ beam$^{-1}$ over a channel width of 320 MHz (corresponding to
 690 km s$^{-1}$), and $\sigma$ = 1.451 Jy km s$^{-1}$ beam$^{-1}$ over 10 MHz 
@@ -58,48 +59,58 @@ yields an rms noise of 0.082 mJy beam$^{-1}$. % see README.md in 04Sep15
 
 \subsection{CARMA} \label{sec:carmadata}
 % LO = 215.6694 Ghz
-% 3C273 FG
-% 3C279 Bandpass
-% mars flux
-% after flagging: Total observing time is  1.48 hours, checked with uvindex
+% 1127-189 Gain for set 2
+% 3C273 gain for set 3
+% 3C279 Bandpass for both
+% mars flux for both
+% after flagging: Total observing time is  1.48 hours, checked with uvindex for
+set 3
+% after flagging: Total obs. time is 2.94 hours, checked with uvindex for the
+combined set
+% 12.500 GHz <=> 17.935 km/s
 %
 Observations of the CO($J$ = 3 $\rightarrow$ 2) rotational line ($\nu_{\rm
 rest}$ = 345.7959899 GHz) toward the background galaxy RXJ1131-1231 at $z$ = 
 0.655BLAH 
  were carried out using the Combined Array for Research in Millimeter-wave
 Astronomy (CARMA) at the redshifted frequency of $\nu_{\rm obs}$ = BLAH GHz
-(BLAH 
-mm) (Program ID: cf0098; PI: D. Riechers).
+(BLAH mm) (Program ID: cf0098; PI: D. Riechers).
 observations were carried out on 2014 February 17 under good 3 mm weather
-conditions in the D array configurations. The 3 mm receivers were used to cover
+conditions and on 2014 February 02 under terrible 3mm weather in the D array
+configurations. 
+
+The 3 mm receivers were used to cover
 the 
 redshifted CO($J$ = 3 $\rightarrow$ 2) line, employing a correlator setup
 providing a bandwidth of 3.75 GHz in each sideband and spectral resolution of
 12.5 MHz ($
-\sim$17BLAH km s$^{-1}$). The line was placed in the
+\sim$17.9 km s$^{-1}$). The line was placed in the
 lower sidebands with the local oscillator tuned to $\nu_{\rm LO}\sim$ 216 GHz;
-this resulted in 1.5 hours of 15 antenna-equivalent on-source time after
+this resulted in 2.94 hours of 15 antenna-equivalent on-source time after
 discarding 
 unusable visibility data. 
 
-The nearby radio quasar 3C273 was observed every 15 minutes for
-pointing, amplitude, and phase calibration, and Mars was observed as the
+The radio quasars 3C273 and J1127-189 was observed every 15 minutes for
+pointing, amplitude, and phase calibration. Mars was observed as the
 primary
-absolute flux calibrator. 3C279 was observed as bandpass calibrators, yielding
+absolute flux calibrator and 3C279 was observed as bandpass calibrators for
+both tracks. 
+The phase calibrator J1127-189 from the first track is faint and observed under
+poor weather and the phase calibrator 3C273 is far from source for the second
+track. Hence, the phase calibration was 
+subpar, with rms scatter $\sim$ 60\degr, 
+yielding
 $\sim
-$15\%BLAH calibration accuracy.
+$20\% calibration accuracy.
 The MIRIAD package was used to calibrate and analyze the visibility data which
 are imaged and deconvolved using
 the CLEAN algorithm with ``natural" weighting. This yields a synthesized clean
-beam size of 3\farcs1 $\times$ 1\farcs9 for the lower sideband image cube. The
+beam size of 3\farcs2 $\times$ 1\farcs9 (PA: 8\degr) for the lower sideband
+image cube. The
 final 
-rms noise is $\sigma$ = BLAH Jy km s$^{-1}$ beam$^{-1}$ over a channel width of
-BKAH MHz (corresponding to BLAH km s$^{-1}$). 
-The continuum image is created by
-averaging over all the line-free channels ($\nu_{\rm cont}\sim$216 GHz). This
-yields a synthesized clean beam size of Blah\farcs5 $\times$ blah\farcs0 and an
-rms 
-noise of 0.24Blah mJy beam$^{-1}$.
+rms noise is $\sigma$ = 13.3 mJy km s$^{-1}$ beam$^{-1}$ over a channel width
+of
+25 MHz (corresponding to 35.87 km s$^{-1}$). 
 
 \subsection{VLA} 
 Observations of the BLAH continuum ($\nu_{\rm rest}$ = BLAH GHz) toward the
