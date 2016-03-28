@@ -1,3 +1,5 @@
+#!/usr/bin/env python
+
 '''
 
 Organize RXJ1131 IR photometry data using astropy table:
@@ -5,7 +7,7 @@ wavelength [um], freq [GHz], flux density [mJy], flux_err [mJy], instrument
 Save table as latex file
 
 
-Last Modified: Jan 09 2016
+Last Modified: March 28 2016
 
 
 TODO
@@ -13,6 +15,8 @@ TODO
 
 History
 -------
+Mar 28 2016:
+    updated SPITZER/IRAC data to using 5.8" diameter aperture flux
 Jan 09 2016:
     combine flux col with flux err col in latex table
     separate out column name with unit in latex table
@@ -52,11 +56,11 @@ data_rows = [(1.25, (1.25*u.micron).to(u.GHz, equivalencies=u.spectral()).value
              (22, (22*u.micron).to(u.GHz, equivalencies=u.spectral()).value,
               55.11, 1.878, 'WISE/W4'),
              (4.5, (4.5*u.micron).to(u.GHz, equivalencies=u.spectral()).value,
-              6.241, 0.00207, 'Spitzer/IRAC'),
+              7.803, 0.002082 , 'Spitzer/IRAC'),
              (5.8, (5.8*u.micron).to(u.GHz, equivalencies=u.spectral()).value,
-              9.354, 0.005694, 'Spitzer/IRAC'),
+              10.72, 0.00512, 'Spitzer/IRAC'),
              (8.9, (8.9*u.micron).to(u.GHz, equivalencies=u.spectral()).value,
-              13.56, 0.004518, 'Spitzer/IRAC'),
+              14.47, 0.004122, 'Spitzer/IRAC'),
              (24, (24*u.micron).to(u.GHz, equivalencies=u.spectral()).value,
               47.18, 0.02621, 'Spitzer/MIPS'),
              (250, (250*u.micron).to(u.GHz, equivalencies=u.spectral()).value,

@@ -117,7 +117,7 @@ ax.set_xscale("log")
 
 ax.set_ylabel(r'$\rm S_{\nu}$ [mJy]', fontsize=16)
 ax.set_xlabel(r'$\rm \lambda [\mu$m]', fontsize=16)
-ax.set_title("SED ", x=0.5, y=1.125)
+# ax.set_title("SED ", x=0.5, y=1.125)
 
 led = plt.legend(loc='best', fontsize=15, numpoints=1,
                  fancybox=True, borderpad=0.5,
