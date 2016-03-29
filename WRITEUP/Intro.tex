@@ -37,6 +37,8 @@ from the AGN host galaxy) around G, the foreground galaxy.
 C06 report the redshift of the background AGN of 0.658 with magnification ~ 9,
 claimed Seyfert 1 spiral galaxy.
 
+In this paper, we BLAH, refining the redshift to $z$=0.654
+We use a cosmology WMAP9. 
 
 
 
@@ -167,7 +169,169 @@ beam size of 2$\farcs$6 $\times$ 2\farcs2 for the continuum image. The final
 rms 
 noise is $\sigma$ = 0.68 Jy km s$^{-1}$ beam$^{-1}$.
 
+\section{HST astrometry}
+We adopt the VLA 5\,GHz map of BLAH resolution as the reference coordinate frame and align the optical image. We shifted the 
+latter to the east by 0\farcs5963 in R.A and +0\farcs8372 in declination., which is consistent with the typical astrometric precision of the HST image. 
+The radio image is calibrated employing well-monitored phase calibrator, with positions known to $\sim$1 mas. 
+We estimate the absolute alignment of the 5 GHz and CO(J=2-1) coordinate frames should
+be better than 0.1", leaving aside uncertainties relating to the SNR and beam size.
 
+
+%The astrometry of the HST images was firstly calibrated against a wider-field
+%optical image of the cluster which had in turn been aligned onto the FK5
+%coordinate system to an rms precision of ~0.2".
+
+
+\section{CO($J$ = 3 $\rightarrow$ 2) line emission}
+
+% Integrated line flux: 37.509 Jy km/s over chan=[49,70] (FWZI) of sigma = 13.3mJy /B/channel of 35.87 km/s per channel
+%  57.753459930419922        10.658399798838524
+% 38.906448364257812        54.223567641493943
+% 258.26144409179688        57.450322398332851
+% 2.2153112888336182        2.9563491085933622
+
+% If we fit gaussian without the continuum to minimize error:
+% 58.848747253417969        10.030933764224825
+% 36.368530273437500        54.749284630860281
+% 276.93515014648438        54.753666156237443
+
+We detect unresolved CO($J$ = 3 $\rightarrow$ 2) line emission toward the
+background galaxies in RXJ1131-1231.
+We extract the spectrum and fit a single-component Gaussian as shown in Figure
+\ref{fig:co32spec}
+yielding peak flux density of 57.8 $\pm$ 10.7 mJy, the FWHM of the Gaussian fit
+is 608 $\pm$ 57 km s$^{-1}$. The integrated line flux is 37.509$\pm$ 2.24 Jy km/s, this does not include the uncertainties in the calibration.
+
+\begin{figure}[tbph]
+\centering
+\includegraphics[width=0.5\textwidth]{../Figures/co32_spec_bin2.eps}	  
+\caption{
+CO32 line spectrum
+ \label{fig:co32spec}}
+\end{figure}
+
+% line free channels:1,118,160,600
+% nchan =(117+600-160+1) = 558
+% sigma =  0.83 mJy/B
+
+At spatial position of CO emission, No significant continuum emission was
+detected from the line-free channels down to a 3$\sigma$ limit of 2.49mJy Beam\pmOne.
+(also as suggested in the fitted Gaussian to the spectrum continuum level: 2.2 $\pm$ 3.0 mJy).
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section{CO($J$ = 2 $\rightarrow$ 1) line emission}
+
+% intensity over chan 124, 156 of rms ~ 1.451 mJy/ Beam/ch
+% velocity resolution per bin: 21.528154 km/s
+
+%sigma_mom0 = 0.43  over chan: 127, 155
+
+We detect dynamically resolved CO($J$ = 2 $\rightarrow$ 1) line emission toward
+the background galaxies in RXJ1131-1231. 
+
+We construct the velocity-integrated (0th moment) map of the CO($J$ = 2
+$\rightarrow$ 1) emission using the uv-continuum subtracted data, the
+velocity-integrated 
+CO($J$ = 2 $\rightarrow$ 1) line flux is 20.3 $\pm$ 0.2 Jy km s$^{-1}$.
+
+We place an upper limit on \rot[HNC]{2}{1} line emission at the red-shifted frequency 140 GHz in the foreground galaxy at $z\sim$0.295) of $\sigma$ = 1.451mJy per channel per beam. Assuming a typical line width of 300 \kms, this corresponds to a 3$\sigma$ limit of 4.353 mJy \kms beam\pmOne.
+
+
+
+\begin{figure*}[tbph]
+\centering
+\includegraphics[width=0.35\textwidth]{../Figures/{F555WCO21_mom0_single.invertedgray}.eps}	   
+\includegraphics[width=0.35\textwidth]{../Figures/F555W_REDCentBLUE.png}
+\includegraphics[width=0.55\textwidth]{../Figures/SpecCO21_twinx.eps}
+\caption{
+0th Moment map of CO(2-1) emission on HST F555W. moment-0: no clipping, of $\sigma$ 0.43 mJy beam\pmOne. 
+Spectrum. Velocity scale w.r.t z=0.655
+ \label{fig:CO21mom0}}
+\end{figure*}
+
+
+\begin{figure}[tbph]
+\centering
+\includegraphics[width=0.5\textwidth]{../Figures/CO_highOmom_CLIP5sigma}       
+\caption{
+1st and 2nd order moments, clipped at 5 $\sigma$. 1st moment contour steps of 50 \kms, 2nd moment steps of 100 \kms.
+velocity range in z=0 frame = [-530.33, 72.73] \kms
+chan = [127, 155] 
+sigma = 0.16821825 Jy \kms per Beam
+theshold: 5*sigma = 7.2550e-3 Jy per beam (per channel)
+ \label{fig:highOmoments}}
+\end{figure}
+
+
+
+
+\begin{figure*}[tbph]
+\centering
+\includegraphics[width=\textwidth]{../Figures/co_channel_maps.eps}	 %
+\caption{
+Black crosses indicate the position of the lensed AGN (components ABCD) and the central white-filled star indicates the
+position of the foreground lensing galaxy (component G) as detected in the HST image.
+ \label{fig:chanmap}}
+\end{figure*}
+
+\begin{figure*}[tbph]
+\centering
+\includegraphics[width=\textwidth]{../Figures/spatialSpec_offsetShifted.eps}   
+\caption{ 
+Spatial spectra, binned by 3 pixels in each direction (1\farcs5)
+ \label{fig:spatialSpec}}
+\end{figure*}
+
+
+
+\section{Continuum}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% PdBI
+% 2mm continuum averaged over chan 1 120 165 360
+% number of channels = 316
+% sigma = 1.451 mJy/B / sqrt(316) = 0.081625 mJy/B 
+% go noise on map (whole map) after cleaning: 89.274 µJy/B
+% F = 1.2 mJy (integrated spatially, from ~ 1 sigma contour; 150 pixels)
+%
+% 2mm peak is centered on foreground galaxy ~ 799 µJy/B --> with C band --> spectral index
+%	- 2mm marginally resolved along one axis (arc)
+%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% VLA C Band
+%
+
+VLA C Band continuum image shows resolved jets and core emission from the foreground lensing galaxy as well as the background lensed quasar (as arcs). We extracted the 5GHz fluxes for the arcs and the core as listed in Table \ref{tab:photometry}.
+
+As shown in Figure \ref{fig:cont}, we detect 2mm continuum emission toward both the foreground galaxy and the background as lensed emission.  
+The integrated continuum flux density is 1.2 mJy, while the peak emission is centered on the foreground galaxy at $S_\nu$ of 8 \micron Jy beam\pmOne.  The detection is hence marginally resolved along one axis as shown in Figure \ref{fig:contco21}. 
+We attempted to extract the background emission by subtracting the foreground emission as modeled by a point source (unresolved). But the residual after removing a point source model is just noise. So we I guess if we take the difference between the integrated and the  peak in the image plane is an upper limit to the background source at 2mm, which is $\sim$ 0.4 mJy.
+
+We fit power law to the VLA radio data and the 2mm continuum, we derive a spectral index of $\alpha$=0.025.
+\begin{figure*}[tbph]
+\centering
+\includegraphics[width=0.8\textwidth]{../Figures/ContCO21.eps}	  
+\caption{CO 21 moment0 overlay on 2mm continuum.  % chan [127,155]	
+TODO: add the beam
+ \label{fig:contco21}}
+\end{figure*}
+
+\begin{figure*}[tbph]
+\centering
+\includegraphics[width=0.8\textwidth]{../Figures/Cont2mm_5GHz_double.eps}    
+\caption{VLA 5GHz continuum and PdBI 2mm continuum
+ \label{fig:cont}}
+\end{figure*}
+
+
+\begin{figure*}[tbph]
+\centering
+\includegraphics[width=0.35\textwidth]{../Figures/F555W_ContPdBI.eps}
+\includegraphics[width=0.55\textwidth]{../Figures/F555W_ContVLA.eps}
+\caption{
+can kill left figure eventually by combining this to ContCO21.eps
+Right: alignment of HST and VLA 5 GHz continuum
+ \label{fig:}}
+\end{figure*}
 
 
 \section{\rot{2}{1} Lens model}
@@ -233,12 +397,23 @@ velocity gradient of the lens model in the lens plane (left), source plane
 \label{fig:}}
 \end{figure}
 
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section{SED}
 
-%\begin{figure*}[tbph]
-%\centering
-%\includegraphics[width=0.8\textwidth]{}
-%\includegraphics[width=0.65\textwidth]{}
-%\caption{
-%\label{fig:}}
-%\end{figure*}
+We fit SED models to the photometry of dust emission in RXJ1131-1231 with a power-law attached to the blue side and including the 24.0\micron data from Spitzer/MIPS to constrain the dust peak. 
+Also do SED fit with IRAS upper limits.
+
+
+\begin{figure*}[tbph]
+\centering
+\includegraphics[width=0.8\textwidth]{../Figures/FullSED.eps}	 
+\caption{TODO: change sym indicating the VLA data, (now two points at the same frequency), change sym for the 2 points on 2mm PdBI (now integrated and peak), extract flux after removing a point source model.
+Note THAT the WISE flux is higher than the IRAC data, probably just due to the smaller aperture used in Spitzer flux extraction.
+Spitzer IRAC: Aperture flux in 5\farcs diameter with aperture correction applied. Spitzer/MIPS: PSF fit flux, as source size < native PSF FWHM of 6".
+Might want to add NVSS constraints.
+ \label{fig:}}
+\end{figure*}
+
+\input{table_photometry_AAScustomized}
+
 \end{document}
