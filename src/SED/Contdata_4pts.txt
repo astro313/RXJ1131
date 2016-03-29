@@ -1,5 +1,3 @@
-# Contains SPIRE and PdBI data
-# Note using integrated PdBI data for NOW
 # Use this file with mbb_emcee, filter <=> instrument dependent
 # Instrument  flux density[mJy]  Flux err [mJy]
 MIPS_24 47.18 0.03
