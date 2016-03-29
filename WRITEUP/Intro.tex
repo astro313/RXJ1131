@@ -1,4 +1,5 @@
 
+
 \documentclass[]{emulateapj}
 \usepackage{amsmath}
 \input{preamble}
@@ -13,7 +14,8 @@
 
 \title{Gas Dynamics of the Einstein ring RXSJ1131-1123 at $z$=0.654}
 \author{T. K. Daisy Leung and Dominik A. Riechers}
-\affil{Department of Astronomy, Space Sciences Building, Cornell University, Ithaca, NY 14853, USA; \myemail}
+\affil{Department of Astronomy, Space Sciences Building, Cornell University,
+Ithaca, NY 14853, USA; \myemail}
 
 
 \begin{abstract}
@@ -28,9 +30,12 @@ $z_\textrm{AGN,HST}$ =
 % FG gal is an elliptical gal: Slues+03 absorption lines  
 
 
-As detected in the HST images, RXJ1131-1231 is a quadruply imaged AGN with Einstein ring of size 1\farcs83 in radius. The 
-background AGN is lensed into 4 point-like image A,B,C,D on a ring (emission from the AGN host galaxy) around G, the foreground galaxy. 
-C06 report the redshift of the background AGN of 0.658 with magnification ~ 9, claimed Seyfert 1 spiral galaxy.
+As detected in the HST images, RXJ1131-1231 is a quadruply imaged AGN with
+Einstein ring of size 1\farcs83 in radius. The 
+background AGN is lensed into 4 point-like image A,B,C,D on a ring (emission
+from the AGN host galaxy) around G, the foreground galaxy. 
+C06 report the redshift of the background AGN of 0.658 with magnification ~ 9,
+claimed Seyfert 1 spiral galaxy.
 
 
 
@@ -38,7 +43,8 @@ C06 report the redshift of the background AGN of 0.658 with magnification ~ 9, c
 \section{Observations}
 \subsection{PdBI} \label{sec:PdBIdata}
 Observations of the CO($J$ = 2 $\rightarrow$ 1) rotational line ($\nu_{\rm
-rest}$ = 230.5379938 GHz) toward the background galaxy RXJ1131-1231 at $z$ = 0.654
+rest}$ = 230.5379938 GHz) toward the background galaxy RXJ1131-1231 at $z$ =
+0.654
  were carried out using IRAM Plateau de Bure Interferometer (PdBI) at the
 (Program ID: S14BX001; PI: D. Riechers). 
  Two observing runs were carried out on 2014 Dec 06 and 2015 Feb 05 under good
@@ -58,17 +64,20 @@ after discarding unusable visibility data.
 %For both tracks, 
 The nearby quasars 1127$-$145 and 1124$-$186 were observed every 22 minutes
 for
-pointing, secondary amplitude, and phase calibration and 1055$+$018 was observed as bandpass calibrators 
+pointing, secondary amplitude, and phase calibration and 1055$+$018 was
+observed as bandpass calibrators 
 for both tracks.
 MWC349 and 3C279 were observed
 as the primary
-absolute flux calibrator for C and D array observations, respectively, yielding $\lesssim
+absolute flux calibrator for C and D array observations, respectively, yielding
+$\lesssim
 $15\% calibration accuracy.
 
 The GILDAS package was used to reduce and analyze the visibility data which are
 then imaged and deconvolved using
 the CLEAN algorithm with ``natural" weighting. This yields a synthesized clean
-beam size of 4$\farcs$44 $\times$ 1\farcs95 (PA: 13\degr). The final rms noise is $\sigma$ =
+beam size of 4$\farcs$44 $\times$ 1\farcs95 (PA: 13\degr). The final rms noise
+is $\sigma$ =
 0.177 
 Jy km s$^{-1}$ beam$^{-1}$ over a channel width of 320 MHz (corresponding to
 690 km s$^{-1}$), and $\sigma$ = 1.451 Jy km s$^{-1}$ beam$^{-1}$ over 10 MHz 
@@ -90,11 +99,11 @@ yields an rms noise of 0.082 mJy beam$^{-1}$. % see README.md in 04Sep15
 % 12.500 GHz <=> 17.935 km/s
 %
 Observations of the CO($J$ = 3 $\rightarrow$ 2) rotational line ($\nu_{\rm
-rest}$ = 345.7959899 GHz) toward the background galaxy RXJ1131-1231 at $z$ = 
-0.654
+rest}$ = 345.7959899 GHz) 
+%toward the background galaxy RXJ1131-1231 at $z$ = 0.654
  were carried out using the Combined Array for Research in Millimeter-wave
-Astronomy (CARMA; Program ID: cf0098; PI: D. Riechers).
-observations were carried out on 2014 February 17 under good 3 mm weather
+Astronomy (CARMA; Program ID: cf0098; PI: D. Riechers) on 2014 February 17 
+under good 3 mm weather
 conditions and on 2014 February 02 under terrible 3mm weather in the D array
 configurations.  The 3 mm receivers were used to cover
 the 
@@ -104,24 +113,21 @@ providing a bandwidth of 3.75 GHz in each sideband and spectral resolution of
 \sim$17.9 km s$^{-1}$). The line was placed in the
 lower sidebands with the local oscillator tuned to $\nu_{\rm LO}\sim$ 216 GHz;
 this resulted in 2.94 hours of 15 antenna-equivalent on-source time after
-discarding 
-unusable visibility data. 
+flagging poor visibility data. 
 The radio quasars 3C273 and J1127-189 was observed every 15 minutes for
 pointing, amplitude, and phase calibration. Mars was observed as the
 primary
 absolute flux calibrator and 3C279 was observed as bandpass calibrators for
 both tracks. 
-The phase calibrator J1127-189 from the first track is faint and observed under
-poor weather and the phase calibrator 3C273 is far from source for the second
-track. Hence, the phase calibration was 
-subpar, with rms scatter $\sim$ 60\degr, 
-yielding
-$\sim
-$BLAH\% calibration accuracy.
-% flux scale uncertainty
-% gain variation over time
-% phase scatter 
-%
+% poor phase note
+Since the phase calibrator from the first track is faint and was observed under
+poor weather and the phase calibrator used for the second track was
+far from our target source.
+Hence, the phase calibration was 
+subpar, with rms scatter $\sim$ 60\degr. 
+We estimate $\sim
+$BLAH\% calibration accuracy based on the flux scale uncertainties, gain variation over time, and 
+the calibrated phase scatter.
 The MIRIAD package was used to calibrate and analyze the visibility data which
 are imaged and deconvolved using
 the CLEAN algorithm with ``natural" weighting. This yields a synthesized clean
@@ -162,4 +168,77 @@ rms
 noise is $\sigma$ = 0.68 Jy km s$^{-1}$ beam$^{-1}$.
 
 
+
+
+\section{\rot{2}{1} Lens model}
+
+\subsection{interpretation}
+- C06 suggest the presence of an interacting dusty galaxy in their HST
+observations, which BJB+08 calls it the F component. The lensed images of the
+ABCDE 
+components coincide with our CO data (see mom0 on HST and channel map),
+evidently CO emission coming from the AGN host galaxy. 
+- one of the red channels in our lens model suggests a second source component,
+which is consistent with the spatially offset dusty source (see mom0 on HST,
+which 
+the red velocity component coincides with this F component)
+
+%%%%%%%%%%%%%%%%%%%%%%%%
+We compare our lens model parameters on the mass distribution of the lensing
+galaxy with literature, particularly against the SIE model presented by C06. 
+In C06, their SIE model shows position of lensing mass is offset by (-0.015",
+-0.041" from obsservations (i.e. light centroid)); PA = -73.6, ellipticity = 0.45,
+theta\_R = 1.84" $\pm$ 0.01. 
+Our best-fit model parameters finds a BLAH
+	- Our model lens parameters (median):
+		- file: WRITEUP/MedianLensModelParams.txt
+		- lensing gal. position is consistent with C06, 
+		- Einstein radius: consistent with C06
+		- PA: consistent within errors
+		- Axial ratio: consistent within errors
+%%%%%%%%%%%%%%%%%%%%%%%%%
+
+Differential lensing is at play as suggested by the spectral shape of the \rot{2}{1} line profile, where 
+flux density in the red wing is much high than in the blue wing.  
+We modelled the emission using different kinematic components, the magnification factors are reported in Table BLAH.
+\input{table_magFactor}
+
+\begin{figure}[tbph]
+\centering
+\includegraphics[width=0.50\textwidth]{../Figures/Pseudointegrated_datamodel.eps}
+\includegraphics[width=0.50\textwidth]{../Figures/SourcesPlane.png}
+\caption{
+Pseudo observed 0th moment map in the lens plane. (left)
+Pseudo 0th moment map in the source plane. (right)
+\label{fig:}}
+\end{figure}
+
+
+\begin{figure*}[tbph]
+\centering
+\includegraphics[width=0.65\textwidth]{../Figures/PostageStampModel.eps}
+\includegraphics[width=0.65\textwidth]{../Figures/PostageStampResiduals.eps}
+\caption{
+of channel widths $\sim$ 100\kms. 
+\label{fig:}}
+\end{figure*}
+
+
+\begin{figure}[tbph]
+\centering
+\includegraphics[width=0.80\textwidth]{../Figures/PseudoRGB_Lensed_SB_double.eps}
+\caption{
+velocity gradient of the lens model in the lens plane (left), source plane
+(right).
+\label{fig:}}
+\end{figure}
+
+
+%\begin{figure*}[tbph]
+%\centering
+%\includegraphics[width=0.8\textwidth]{}
+%\includegraphics[width=0.65\textwidth]{}
+%\caption{
+%\label{fig:}}
+%\end{figure*}
 \end{document}
