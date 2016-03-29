@@ -1,6 +1,7 @@
 
 \documentclass[]{emulateapj}
 \usepackage{amsmath}
+\input{preamble}
 \begin{document}
 \author{Draft}
 
@@ -23,7 +24,7 @@ the red velocity component coincides with this F component)
 galaxy with literature (specifically SIE model in C06)
 	- C06: SIE model shows position of lensing mass is offset by (-0.015",
 -0.041" from obs. (i.e. light centroid)); PA = -73.6, ellipticity = 0.45,
-theta_R = 1.84" +/- 0.01 
+theta\_R = 1.84" $\pm$ 0.01 
 	- Our model lens parameters (median):
 		- file: WRITEUP/MedianLensModelParams.txt
 		- lensing gal. position is consistent with C06, 
@@ -32,11 +33,11 @@ theta_R = 1.84" +/- 0.01
 		- Axial ratio: consistent within errors
 %%%%%%%%%%%%%%%%%%%%%%%%%
 
+\input{table_magFactor}
 
 \begin{figure}[tbph]
 \centering
-\includegraphics[width=0.50\textwidth]{../Figures/Pseudointegrated_datamodel.ep
-s}
+\includegraphics[width=0.50\textwidth]{../Figures/Pseudointegrated_datamodel.eps}
 \includegraphics[width=0.50\textwidth]{../Figures/SourcesPlane.png}
 \caption{
 Pseudo observed 0th moment map in the lens plane. (left)
@@ -54,8 +55,7 @@ Pseudo 0th moment map in the source plane. (right)
 
 \begin{figure*}[tbph]
 \centering
-\includegraphics[width=0.80\textwidth]{../Figures/PseudoRGB_Lensed_SB_double.ep
-s}
+\includegraphics[width=0.80\textwidth]{../Figures/PseudoRGB_Lensed_SB_double.eps}
 \caption{
 velocity gradient of the lens model in the lens plane (left), source plane
 (right).
