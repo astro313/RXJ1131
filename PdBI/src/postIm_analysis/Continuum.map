@@ -1,15 +1,18 @@
 !
 ! Determine continuum flux and source size by uv_fit
 !
-! Last modified: Dec 30 2015
+! Last modified: March 28 2016
 !
 ! History:
+!   Mar 28 2016:
+!       fit a point source model as foreground to subtract
+!       After subtracting the point source, the residual looks like noise (see co21_trial1_cont.uv_shift-res.lmv)
 !   Dec 30 2015:
 !       Implement code to run tasks non-interactively in script;
 !       Implemented uv_fit after uv_center and uv_shift.
 !       Also fitting C_GAUSS and Double Gauss after shifting phase center.
 !   Nov 18 2015:
-!       First find centroid in UV then shift before uv_fit (not implemented)
+!       First find centroid in UV then shift before uv_fit (To be implemented)
 !   Nov 10 2015:
 !       created script
 !
@@ -109,13 +112,6 @@ run uv_fit tmp_uv-fit.init /nowindow
 ! E_GAUSS  Pos.Ang.    =   -72.76842 ( 15.39338)
 
 
-! try other functions
-! C_Gauss
-
-
-
-! Double Gauss
-
 ! ----------------------------------
 ! with UV_center and shift
 ! ----------------------------------
@@ -171,7 +167,49 @@ let uvshift%angle 0         ! rotate the UVT to new North
 run uv_shift tmp_uv-shift.init /nowin
 
 !
-say "Fit again in UV plane after shifting"
+say "Fit Point-source model in UV plane after shifting"
+!
+let name 'UVTname'".uv_shift"
+let first 0
+let last 0
+let uvfit%range 0 800
+let uvfit%nf 1
+let uvfit%funct01 POINT
+let uvfit%param01 0.01 0.01 8E-6 0 0 0 0     ! parameters
+let uvfit%range01 0 0 7E-6 0 0 0 0           ! starting range
+let uvfit%start01 1 1 1 1 1 1 1              ! number of starts
+let uvfit%subsf01 yes
+run uv_fit tmp_uv-fit.init /nowindow
+! check 'name'.uvfit (model) & 'name'-res.uvt (residual) after fit
+! I-UV_FIT,  Creating fit table co21_trial1_cont.uv_shift.uvfit
+! r.m.s.=     0.0124 Jy.
+! POINT    R.A.        =    -0.20230 (   .10517)  11:31:51.4415
+! POINT    DEC.        =     0.04198 (   .22342) -12:31:58.2571
+! POINT    FLUX        =   824.72087 ( 88.54642)  microJy
+
+! ------------------------------------------------------------
+
+! image continuum again to get residual flux in map (lensing arc)
+
+let name 'UVTname'".uv_shift-res"
+go UVSTAT WEIGHT
+input uv_map
+let map_size 256
+let map_cell 0.5
+go uv_map
+
+! I-CLEAN,  Beam is     4.43" by     1.93" at PA    12.02 deg.
+! I-CLEAN,  Errors (    0.02)   (    0.01)      (    0.16)
+! I-UVMAP,  Set type variable to lmv
+
+! I-UVMAP,  Natural rms noise is    81.555 microJy/beam
+! I-UVMAP,  Expected rms noise is    81.555 microJy/beam
+
+! After subtracting the point source, the residual looks like noise..
+
+! ------------------------------------------------------------
+!
+say "Fit again E)_GAUSS in UV plane after shifting"
 !
 let name 'UVTname'".uv_shift"
 let first 0
