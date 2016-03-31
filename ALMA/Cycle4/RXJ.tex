@@ -1,0 +1,173 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% LaTeX template for the science justification to be       %%
+%%     submitted as part of a regular ALMA proposal.        %%
+%% This template should also be used for a ToO, Solar, or   %%
+%%     mm-VLBI ALMA proposal, but NOT for Large Programs    %%
+%%     (these have a separate template with more sections)  %%
+%%                                                          %%
+%%                      ALMA Cycle 4                        %%
+%%                                                          %%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%% How to convert this document to PDF %%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+% If your figures are stored as PostScript files, you can use the 
+% following commands to generate a PDF file of your proposal:
+
+%% latex file.tex
+%% dvips file.dvi
+%% ps2pdf file.ps file.pdf 
+
+
+% If your figures are PDF images or bitmap pictures in PNG, JPG, or GIF format,
+% you can use the pdflatex command to generate a PDF file from this template
+% (note, however, that the pdflatex command does not handle PostScript files):
+
+% pdflatex file.tex
+
+
+% WARNINGS: 
+%           1. You must make sure that PDF output generated from this
+%              template is complete both when displayed with a viewer 
+%              (acroread, for example) and when printed on paper.
+%              LaTeX installations vary greatly and therefore it might 
+%              not be possible to get all proposals to come out 
+%              correctly with a single text page layout. 
+%              In some cases you will have to adjust the 
+%              \topmargin=-7mm command in the template to center the 
+%              text vertically in the page.  
+%           2. The scientific justification, figures, tables, references,
+%              and public outreach statement must all fit within the
+%              4-page limit.
+%           3. You are free to include colour images in your proposal 
+%              justification. Proposals are distributed to ALMA Review Panels 
+%              in electronic form. However, the scientific content of the 
+%              images should still remain clear when displayed or printed
+%              in black and white.
+%           4. this template is for regular, ToO, Solar, or mm-VLBI ALMA proposals,
+%              but NOT for Large Programs: these have a separate template with
+%              more sections, and is available from the ALMA Science Portal
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%% Default format: 12pt single column %%%%%
+%% 12pt is the minimum font size allowed !! %%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\documentclass[12pt,a4paper]{article}  %% DO NOT CHANGE to 11pt or less !
+
+\usepackage{graphics,graphicx}
+\usepackage[update,prepend]{epstopdf}
+\usepackage[innercaption]{sidecap}
+\usepackage{amssymb, amsmath}          % for \lesssim
+\usepackage{xspace}                              % latex will auto decide whether a trailing whitespace should follow
+\usepackage{natbibspacing, natbib}
+\usepackage{aas_macros}                         % for understanding Journal in bib
+\usepackage{subcaption}
+
+\newcommand{\Lsun}{\mbox{L$_{\odot}$}}
+\newcommand{\rarr}{$\rightarrow$}
+\newcommand{\rot}[3][HCN]{\mbox{#1($J$\,=\,#2\,\rarr\,#3) }} % default HCN; usage \rot[HCN]{3}{2} or \rot[\hcop]{4}{3}
+\newcommand{\hcop}{HCO$^+$\xspace}
+\newcommand{\Lp}[1][CO]{\mbox{$L^{\prime}_\textrm{\fontsize{8pt}{12pt}\selectfont {#1}}$}}
+\newcommand{\LpU}{\mbox{K\,\,km\,\,s$^{-1}$\,\,pc$^2$}}
+\newcommand{\spm}[2]{\ensuremath{^{+#1}{-#2}}}                    %  Asymmetric errors 
+\newcommand{\mean}[1]{\langle #1 \rangle}                               % stat mean
+\newcommand{\pmOne}{\mbox{$^{-1}$}\xspace}
+
+%Compact BIB%%%%%%%%%%%%%%%%%%%%
+\citestyle{aa}  
+\bibliographystyle{apj_w_etal_3auth}
+
+\usepackage{paralist}
+
+\renewenvironment{thebibliography}[1]{%
+%\section*{\refname}%
+%  {\normalsize {\textbf{References:}}}
+  \let\par\relax\let\newblock\relax%
+  \inparaitem[{[}1{]}]}{\endinparaitem}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%% Page dimensions %%%%%
+%%%%%%  DO NOT CHANGE  %%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\textheight=247mm
+\textwidth=180mm
+\topmargin=-7mm
+\oddsidemargin=-10mm
+\evensidemargin=-10mm
+\parindent 10pt
+
+
+\renewcommand\floatpagefraction{.9}
+\renewcommand\topfraction{.9}
+\renewcommand\bottomfraction{.9}
+\renewcommand\textfraction{.1}
+% between fig
+\setlength{\textfloatsep}{10pt plus 1.0pt minus 2.0pt}
+\setlength{\floatsep}{10pt plus 1.0pt minus 2.0pt}
+\setlength{\intextsep}{10pt plus 1.0pt minus 2.0pt}
+
+\setlength{\parskip}{0.01em}
+\usepackage[small,tiny,compact]{titlesec}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%% Start of document %%%%% 
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\begin{document}
+\pagestyle{plain}
+\pagenumbering{arabic}
+ 
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%% Title of proposal %%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\begin{center}
+{\LARGE{\bf
+{ 
+Dynamical study of the dense gas and star-formation in a strongly-lensed
+AGN host galaxy and its starburst companion at z$\sim$0.66}
+}}
+\end{center}
+\centerline{\bf PI: 
+{T. K. Daisy Leung}} 
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%% Body of science justification %%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%% ENTER TEXT, FIGURES AND TABLES BELOW
+
+\section{Gas Dynamics}
+\vspace{-0.25em}
+
+\indent BLAH
+ 
+\section{Science Target RXJ 1131-1231: AGN-Starburst Pair}
+\vspace{-0.25em}
+
+
+\section{Proposed Observations and Immediate Objectives}
+\vspace{-0.25em}
+
+%%%%%%%%%%%%%%%%%%%%%%%%
+%% References section: %
+%%%%%%%%%%%%%%%%%%%%%%%%
+
+\section*{References}
+{\fontsize{10pt}{12pt}\selectfont
+	\bibliography{RXJ_ALMAC4}
+}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%% End of document %%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\end{document}
+
