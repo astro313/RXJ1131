@@ -1,12 +1,16 @@
 !
 ! Determine continuum flux and source size by uv_fit
 !
-! Last modified: March 28 2016
+! Last modified: March 31 2016
 !
 ! History:
+!  Mar 31 2016:
+!       Clean the residual (co21_trial1_cont.uv_shift-res.lmv) --> co21_trial1_cont.uv_shift-res.lmv-clean
+!       Look for flux in cleaned image: low SNR, ~0.5 mJy from go flux (see code below)
+!       Consistency checked: peak of the residual in this map conincide arc in the cont image before subtracting model & peak in this residual emission ~ difference between integrated and peak before in image model subtraction.
 !   Mar 28 2016:
 !       fit a point source model as foreground to subtract
-!       After subtracting the point source, the residual looks like noise (see co21_trial1_cont.uv_shift-res.lmv)
+!       After subtracting the point source, the residual (see co21_trial1_cont.uv_shift-res.lmv)
 !   Dec 30 2015:
 !       Implement code to run tasks non-interactively in script;
 !       Implemented uv_fit after uv_center and uv_shift.
@@ -205,7 +209,60 @@ go uv_map
 ! I-UVMAP,  Natural rms noise is    81.555 microJy/beam
 ! I-UVMAP,  Expected rms noise is    81.555 microJy/beam
 
-! After subtracting the point source, the residual looks like noise..
+go bit
+
+let size 20
+go bit
+let noise 9.1499314E-5
+level -2.0*noise 2.0*noise 3.0*noise 4.0*noise 6.0*noise 8.0*noise 12.0*noise 14.0*noise 16.0*noise 18.0*noise
+let spacing noise
+go bit
+let size 100
+
+! -- clean --
+let first 0
+let last 0
+let niter 0
+let FRES 0           ! max abs amp of residual / max of dirty %
+let ARES '2*noise'   ! max abs amp of residual [Jy / beam]
+
+let myclean%support yes
+inp clean
+sup /cursor
+hogbom
+
+! I-CLEAN,  Cleaning down to   1.830E-04
+! I-CLEAN,  May need         1126 iterations
+! I-SUB_MAJOR,  Using Open-MP parallel version
+! I-CLEAN,  Image & Beam planes      1     1
+! I-CLEAN,  Beam is     4.43" by     1.93" at PA    12.02 deg.
+! I-CLEAN,  Errors (    0.02)   (    0.01)      (    0.16)
+! I-HOGBOM,  Map max.  3.318E-04 at    125   128, Min.  8.758E-05 at    128   123
+
+
+let size 55
+show residual
+@ click-pause
+show clean
+
+say "*** Saving continuum image in .fits ..."
+fits 'UVTname'".uv_shift-res".cln.fits from 'UVTname'".uv_shift-res".lmv-clean
+fits 'UVTname'".uv_shift-res".residual.fits from 'UVTname'".uv_shift-res".lmv-res
+
+let type lmv-clean
+! flux estimation
+let size 30
+go bit
+poly
+mean
+go noise
+
+let spacing 8.206E-05   ! rms consistent with before subtracting point src model
+go nice
+go flux
+
+extrema /compute
+exa rgmax                ! 0.389 mJy
 
 ! ------------------------------------------------------------
 !
