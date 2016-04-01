@@ -191,7 +191,7 @@ tvin
 
 ---------------------------
 amp-UV dist
-stokes 'i'
+stokes 'half'
 bparm 0 
 go
 
@@ -260,22 +260,19 @@ tvin
 
 # amp-uvdist
 bparm 0
-stokes 'i'
+stokes 'half'
 go
---> looks quite crappy?
 
 
 bif 1; eif 1
 go
---> note unit is Jy here
 
 bif 2; eif 2
 go
---> note unit is mJy here
 
 # phase-uvdist
 bparm 0 2 0
-stokes 'i'
+stokes 'half'
 bif 0; eif 0
 go
 
@@ -289,7 +286,7 @@ flagver 1
 bif 0; eif 0
 dotv 1
 XINC 0
-stokes 'i'
+stokes 'half'
 go
 
 
@@ -300,7 +297,7 @@ flagver 1
 bif 1; eif 1
 dotv 1
 XINC 0
-stokes 'i'
+stokes 'half'
 go
 
 bif 2; eif 2
@@ -314,7 +311,7 @@ plot amp-uvdist
 
 source '1331+305''
 bparm 0
-stokes 'i'
+stokes 'half'
 go
 
 bif 1; eif 1
@@ -342,12 +339,10 @@ bparm 0
 nplots 9
 flagver 1
 bif 0; eif 0
-stokes 'i'
+stokes 'half'
 timer 0
 inp 
 go
-
---> note, many baselines have significantly (by 100%) lower than others
 
 ===========================================================================
 QUACK If there the the data seem strange for the first BLAH seconds of each scan
@@ -386,7 +381,7 @@ go
 tget 'uvplt'
 sources '1130-148''
 bparm 0
-stokes 'i'
+stokes 'half'
 flagver 1
 
 inp
@@ -712,7 +707,7 @@ docalib 2
 gainuse 2
 dotv 1
 flagver 1
-stokes 'i'
+stokes 'half'
 go
 
 bif 1; eif 1
@@ -727,7 +722,7 @@ dotv 1
 flagver 1
 docalib 2
 gainu 2
-stokes 'i'
+stokes 'half'
 go
 
 
@@ -741,7 +736,7 @@ flagver 1
 bif 1; eif 1
 dotv 1
 XINC 0
-stokes 'i'
+stokes 'half'
 go
 
 bif 2; eif 2
@@ -756,7 +751,7 @@ flagver 1
 bif 1; eif 1
 dotv 1
 XINC 0
-stokes 'i'
+stokes 'half'
 go
 
 bif 2; eif 2
@@ -773,7 +768,7 @@ eif 0
 sources ''
 timer 1 01 40 20 1 01 40 28
 aparm 0
-stokes 'i'
+stokes 'half'
 inp
 
 go
@@ -795,7 +790,7 @@ tget uvplt
 flagver 1
 timer 0
 sources '1130-148'
-stokes 'i'
+stokes 'half'
 bif 0; eif 0
 go
 
@@ -911,7 +906,7 @@ Apply calibration and split out sources
 # get calibrated calibrators
 getn 3
 task 'SPLIT'; Sources '1130-148',''; Qual -1; Calcode ''; Timerang 0;
-Stokes 'i'; Selband -1; Selfreq -1; Freqid 1; Bif 0; Eif 0; Bchan 1;
+Stokes 'half'; Selband -1; Selfreq -1; Freqid 1; Bif 0; Eif 0; Bchan 1;
 Echan 0; Subarray 0; Docalib 2; Gainuse 2; Dopol -1; Blver -1;
 Flagver 3; Doband -1; Bpver 1; Smooth 0; Douvcomp -1; Aparm 0; Nchav 1;
 Chinc 1; Ichansel 0; Baddisk 0; outdisk 1; outclass 'X.IF'
@@ -927,7 +922,7 @@ uc
 
 default uvplt
 getn 4
-task 'uvplt'; docalib -1; doband -1; bpver 0; bparm 0; dotv 1; stokes 'i'
+task 'uvplt'; docalib -1; doband -1; bpver 0; bparm 0; dotv 1; stokes 'half'
 bif 0; eif 0
 go
 
@@ -1013,7 +1008,7 @@ imh
 getn 7
 tvin 
 
-task 'uvplt'; docalib -1; doband -1; bpver 0; bparm 0; dotv 1; stokes 'i'
+task 'uvplt'; docalib -1; doband -1; bpver 0; bparm 0; dotv 1; stokes 'half'
 bif 0; eif 0
 
 # Note:
@@ -1062,7 +1057,7 @@ go
 default 'uvplt'
 getn 8
 
-task 'uvplt'; docalib -1; doband -1; bpver 0; bparm 0; dotv 1; stokes 'i'
+task 'uvplt'; docalib -1; doband -1; bpver 0; bparm 0; dotv 1; stokes 'half'
 flagver 0
 
 go
@@ -1088,7 +1083,7 @@ default uvplt
 
 getn BLAH
 
-task 'uvplt'; docalib -1; doband -1; bpver 0; bparm 0; dotv 1; stokes 'i'
+task 'uvplt'; docalib -1; doband -1; bpver 0; bparm 0; dotv 1; stokes 'half'
 flagver BLAH
 
 go
