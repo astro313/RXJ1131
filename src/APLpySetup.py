@@ -69,17 +69,17 @@ def standard_plot_setup(sp, ra_center, dec_center, size, tickc='black'):
     sp.set_system_latex(True)
     sp.recenter(x=ra_center, y=dec_center, radius=size)   # width = blah, height = blah     # Scaling and panning
 
-    sp.tick_labels.set_font(size='medium', weight='bold')      # size='10'
-    sp.tick_labels.set_style('colons')
-    sp.tick_labels.set_xformat('hh:mm:ss')
-    sp.tick_labels.set_yformat('dd:mm:ss')
+    sp.tick_labels.set_font(size='x-large', weight='bold')      # size='10'
+#    sp.tick_labels.set_style('colons')
+#     sp.tick_labels.set_xformat('hh:mm:ss')
+#     sp.tick_labels.set_yformat('dd:mm:ss')
     sp.ticks.set_color(tickc)
     sp.ticks.set_linewidth(2)
     sp.ticks.set_length(10)
-    sp.ticks.set_minor_frequency(4)
+#     sp.ticks.set_minor_frequency(4)
     # sp.ticks.set_xspacing(45*15/3600.)        # deg
 
-    sp.axis_labels.set_font(size='medium', weight='bold')      # (size='12')
+    sp.axis_labels.set_font(size='xx-large', weight='bold')      # (size='12')
     sp.axis_labels.set_xtext('Right Ascension (J2000)')
     sp.axis_labels.set_ytext('Declination (J2000)')
     sp.axis_labels.set_xpad(5)
