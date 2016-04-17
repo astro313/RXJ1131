@@ -11,8 +11,7 @@
 %	       text vertically in the page.  
 
 
-\documentclass[12pt,a4paper]{article}  %% DO NOT CHANGE to 11pt or less !
-% \usepackage{apjfonts}
+\documentclass[12pt,a4paper]{article} 
 \usepackage{times}
 \usepackage{graphics,graphicx}
 \usepackage[update,prepend]{epstopdf}
@@ -28,8 +27,8 @@
 \newcommand{\ncrit}{\mbox{$n_{\rm crit}$}\xspace}
 \newcommand{\comol}{$^{12}$CO\xspace}
 \newcommand{\Lsun}{\mbox{L$_{\odot}$}\xspace}
-\newcommand{\LIR}{\mbox{L$_{\rm IR}$}\xspace}
-\newcommand{\LFIR}{\mbox{L$_{\rm FIR}$}\xspace}
+\newcommand{\LIR}{\mbox{$L_{\rm IR}$}\xspace}
+\newcommand{\LFIR}{\mbox{$L_{\rm FIR}$}\xspace}
 \newcommand{\rarr}{$\rightarrow$}
 \newcommand{\aco}{\mbox{CO($J$=1\rarr0)}\xspace}
 \newcommand{\bco}{\mbox{CO($J$=2\rarr1)}\xspace}
@@ -80,11 +79,9 @@
 \renewcommand\bottomfraction{.9}
 \renewcommand\textfraction{.1}
 % between fig
-\setlength{\textfloatsep}{10pt plus 1.0pt minus 2.0pt}
+\setlength{\textfloatsep}{10pt plus 1.0pt minus2.0pt}
 \setlength{\floatsep}{10pt plus 1.0pt minus 2.0pt}
 \setlength{\intextsep}{10pt plus 1.0pt minus 2.0pt}
-% between figure and caption
-\setlength{\abovecaptionskip}{10pt plus 0pt minus 0pt}
 \setlength{\parskip}{0.01em}
 \usepackage[small,tiny,compact]{titlesec}
 
@@ -123,7 +120,7 @@ and their relation to the interstellar medium (ISM) properties of galaxies acros
 While the ISM in local ULIRGs has been studied in great detail with ALMA,
 forming a rich inventory of molecular transitions that serves as the template for 
 understanding high-z galaxies and galaxy evolution \citep[e.g.][]{Rangwala15a}, a wide knowledge gap persists
-between $z$=0 and the epoch when most stars are formed in the universe ($z\sim$2). 
+between $z$=0 and the epoch when most stars are formed in the universe ($z$$\sim$2). 
 Understanding galaxy populations at the epoch when the build-up of stellar mass across cosmic
 time is steeply rising is thus critical and we here aim to bridge this gap by testifying
 correlations and properties found locally out to high/moderate redshifts by observing the 
@@ -155,7 +152,7 @@ clouds (GMC; \citealt[hereafter GS04]{Gao04a}; \citealt{Wu05}),
 suggesting HCN is a faithful tracer of the star-forming dense gas.
 % and that the origin can be attributed to the fundamental units of star formation. 
 This has been supported by the linear correlations in 
-\LIR-\Lp[\dhcn] and \LIR-\Lp[\dhcop] found recently \citep[see \Fig{SF}]{Zhang14a}, which also highlight 
+\LIR-\Lp[\dhcn] and \LIR-\Lp[\dhcop] found recently \citep[hereafter Z14; see \Fig{SF}]{Zhang14a}, which also highlight 
 the great utility of these mid-$J$ lines observable for galaxies at $z$$>$0.06.
 
 Due to the difference in abundances and excitation conditions of HCN and \hcop
@@ -182,7 +179,7 @@ of dense molecular gas in distant galaxies are now possible, as proposed here.
 % \section*{Science Target RXJ 1131-1231: a demonstrative case at high-z}
 % \vspace{-0.25em}
 \noindent {\bf Science Target RXJ 1131-1231: a demonstrative case at high-z}
-
+\vspace{-0.7em}
 %\begin{figure}[!tbhp]
 %\centering
 %\includegraphics[trim= 10 20 15 0, clip, scale=0.3]{Fig/F555W} % &
@@ -195,7 +192,7 @@ of dense molecular gas in distant galaxies are now possible, as proposed here.
 %morphology}
 %{\em Left:} The rest-frame UV emission (tracing recent star formation) 
 %is lensed into an almost complete Einstein ring with diameter $\sim$ 3.8". 
-%{\em Right:} Lens modelling of the optical emission identifies complex structure in the host galaxy and
+%{\em Right:} Lens modeling of the optical emission identifies complex structure in the host galaxy and
 %an optically faint companion (white; \citealt{Claeskens06a}), 
 %which we have recently confirmed by modeling \bco emission detected with NOEMA
 %(\Fig{combine}; Leung \& Riechers, in prep.). 
@@ -209,17 +206,18 @@ of dense molecular gas in distant galaxies are now possible, as proposed here.
 
 \begin{figure}[!tbhp]
 \centering
-\floatbox[{\capbeside\thisfloatsetup{capbesideposition={right,center},capbesidewidth=0.4\textwidth}}]{figure}[\FBwidth]
+\floatbox[{\capbeside\thisfloatsetup{capbesideposition={right,center},capbesidewidth=0.425\textwidth}}]{figure}[\FBwidth]
 {
 \hspace{-0.35em}
 \vspace*{-0.55em}
+\raggedleft
 \caption{ \fontsize{10pt}{12pt}\selectfont 
 {
 \textbf{Stellar light distribution in the AGN host galaxy of RXJ 1131-1231 and its reconstructed source plane
 morphology}
 {\em Left:} The rest-frame UV emission (tracing recent star formation) 
 is lensed into an almost complete Einstein ring with diameter $\sim$ 3.8". 
-{\em Right:} Lens modelling of the optical emission identifies complex structure in the host galaxy and
+{\em Right:} Lens modeling of the optical emission identifies complex structures in the host galaxy and
 an optically faint companion (white; \citealt{Claeskens06a}), 
 which we have recently confirmed by modeling \bco emission detected with NOEMA
 (\Fig{combine}; Leung \& Riechers, in prep.). 
@@ -232,11 +230,11 @@ detail than otherwise possible with current facilities.
 {\hspace{-1em}
 \includegraphics[trim= 10 20 15 0, clip, scale=0.28]{Fig/F555W}
 \hspace{-1.5em}
-\includegraphics[trim= 10 0 0 0, clip, scale=0.32]{Fig/Manipulate_figsCROP}
+\includegraphics[trim= 10 0 0 0, clip, scale=0.3]{Fig/Manipulate_figsCROP}
 \vspace{-1em}
 }
 \end{figure}
-
+\vspace{-0.8em}
 RXJ 1131-1231 is a quadruply imaged AGN with its host galaxy lensed 
 into a partial Einstein ring (\Fig{HST}). 
 HST observations (rest-frame UV) have revealed distinct emission 
@@ -300,7 +298,7 @@ this will allow us to compare against the relatively unperturbed large-scale
 molecular environment and the dynamical mass with our existing lower-$J$ CO data.
 % to study the
 % gas distribution and kinematics.
-Such comparison are key to understanding the processes and timescales regulating star-formation 
+Such comparison are key to understand the processes and timescales regulating star-formation 
 in ULIRG/merger, and examine how they differ from other galaxy populations.
 
 \underline{\bf Line ratios as AGN/starburst diagnostic:}
@@ -330,7 +328,7 @@ More interestingly, we might be witnessing the
 pre/post merging/encounter of two AGN host galaxies if we find evidence of a buried AGN in the companion, 
 of which the proposed observations are needed to provide such clues.
 
-\underline{\bf Spectral line energy distributions (SLED) and SF Law:}
+\underline{\bf Spectral line energy distributions (SLED) and the SF Law:}
 On top of using \dhcn and \hcop as AGN/SB diagnostic, another 
  aspect 
  %for obtaining the proposed line observations 
@@ -340,7 +338,7 @@ On top of using \dhcn and \hcop as AGN/SB diagnostic, another
 % have different excitation criteria. %Therefore, 
 %In combination 
 combine them with \eco %, \dhcn, and \dhcop line emission
-and our existing low-$J$ CO data to perform radiative transfer/large velocity gradient (LVG) modeling 
+and our existing low-$J$ CO data to perform radiative transfer modeling 
 % [with assumptions on their relative abundances] 
 to constrain the physical conditions 
 (e.g. density and gas kinetic temperature) of the multi-phase molecular gas.
@@ -356,27 +354,28 @@ for these high-z studies.
 The ``star-formation law" (%$\Sigma_{\rm SFR}$=$A\Sigma^N_{gas}$ or 
 log\LIR=$\alpha$ log\Lp[X]+$\beta$)
 is one of the key ingredients % /observational constraints 
-for theoretical models as it entails the physical processes 
+for theoretical models as it encodes the physical processes 
 of star-formation and its dependence on the ISM 
 %(in the slopes and normalizations; 
 (e.g. \citealt{Narayanan14a}).
 % Observational constraints for the \LIR-\Lp[X] (\Lp of different lines) relations are vital.
 However, the \LIR-\Lp[X] at high critical density are currently poorly constrained due to the lack of observations 
 and are largely limited to the nearby universe
-\citep[\Fig{SF}; ][]{Greve14a}. Our proposed observations will help delineate 
+\citep[\Fig{SF};][]{Greve14a}. Our proposed observations will help delineate 
 the slopes at high critical densities and 
 explore the linear correlations found 
-locally in \Lp[\dhcn]-\LIR and \Lp[\dhcop]-\LIR \citep[\Fig{SF}; ][]{Zhang14a} at higher redshifts.
+locally in \Lp[\dhcn]-\LIR and \Lp[\dhcop]-\LIR (\Fig{SF}; Z14) at higher redshifts.
 %
 \begin{figure*}[!tbph]
 \centering
-\includegraphics[trim=15 0 5 10, clip, width=0.23\textwidth]{Fig/Zhang}
-\includegraphics[trim=5 5 5 10, clip, width=0.23\textwidth]{Fig/Zhang2}
-\includegraphics[trim=10 0 0 5, clip, width=0.4\textwidth]{Fig/Greve14Fig2}
-\caption{ \fontsize{10pt}{12pt}\selectfont {\textbf{Integrated form of the SF law: log \LFIR = $\alpha$ log \Lp[X]+$\beta$.}}
+\includegraphics[trim=15 0 5 10, clip, width=0.2\textwidth]{Fig/Zhang}
+\includegraphics[trim=5 5 5 10, clip, width=0.2\textwidth]{Fig/Zhang2}
+\includegraphics[trim=10 0 0 5, clip, width=0.38\textwidth]{Fig/Greve14Fig2}
+\caption{ \fontsize{10pt}{12pt}\selectfont {\textbf{The SF law: log \LIR = $\alpha$ log \Lp[X]+$\beta$.}}
 {\em Left \& middle:}
 A linear correlation between \LIR-\dhcn and \LIR-\dhcop have been established toward nearby galaxies 
-with \LIR$\sim$10$^9$-10$^{12}$\Lsun \citep{Zhang14a}, demonstrating the utility of mid-$J$ lines in tracing 
+% with \LIR$\sim$10$^9$-10$^{12}$\Lsun 
+(Z14), demonstrating the utility of mid-$J$ lines in tracing 
 the star-forming dense gas, which will be routinely mapped in high-z galaxies with ALMA.
 Our proposed observations will testify the linearity by adding measurements of a ULIRG at z$\sim$0.7, 
 % extending the statistics/data to higher redshifts, 
@@ -393,14 +392,14 @@ and improve our current understanding of galaxy evolution.
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \noindent {\bf Technical overview}
-We propose to observe the \eco line at $\sim$0.15" resolution
-and the \dhcn and \dhcop lines at $\sim$0.7", assuming a line width 
-(FWHM) of 700\kms based on our \bco data
-(\Fig{combine}a) and a source size from our lens model (see details in TJ).
+We propose to observe the \eco line at 0.15" resolution
+and the \dhcn and \dhcop lines at 0.7", assuming a line 
+of 700\kms based on our \bco data
+and a source size from our lens model (see details in TJ).
 %, which takes into account the asymmetric line emission and spatial extent due to differential lensing. 
 We thus expect the source to be resolved over 153 beams 
 and 7 beams at 0.15" and 0.7", respectively. 
-We compute the target sensitivities for both science goals using \bco line flux. 
+We compute the target sensitivities for both science goals based on the \bco line flux. 
 For \eco, we adopt conservative 
 line ratios measured for SMGs \citep[][see TJ for details]{CW13},
 and those based on (U)LIRGs for \dhcn (GS04; \citealt{Papadopoulos07a}).
@@ -437,39 +436,34 @@ at high redshifts.
 
 \begin{figure*}[tbph]
 \centering
-\includegraphics[trim=25 6 5 5, clip, width=0.75\textwidth]{Fig/combine}
+\includegraphics[trim=7 6 5 5, clip, width=0.75\textwidth]{Fig/combine}
 \caption{ \fontsize{10pt}{12pt}\selectfont {}
-% CO2-1 line profile
-{\em (a):} \textbf{PdBI \rot[CO]{2}{1} dynamically resolved line profile}
-The \bco spectrum showing a double-horned, highly asymmetric line profile, which arises due to 
-differential lensing across the kinematic components of the source (see (f)).
-% HST
-{\em (b):}  \textbf{Detection of a gas-rich merger with spatial variations traced by \bco}
-The (red, green, blue) contours correspond to the velocity-integrated 
-line flux of different velocity channels (red wing, line center, blue wing) in our \rot[CO]{2}{1} data. 
-{\em (c):} \textbf{RXJ1131-1231 kinematics in \bco}
-% 1st order
+{\em (a):}
+The \bco spectrum of RXJ1131-1231 shows a double-horned, highly 
+asymmetric line profile, which arises due to differential lensing.
+{\em (b):}
+Spatial variations traced by \bco as shown by the (red, green, blue) contours corresponding
+to the line flux of different velocity channels (red wing, line center, blue wing). 
+{\em (c):} 
 The observed velocity gradient is suggestive of a kinematically ordered disk at 
 the current resolution limit.
-{\em (d):} \textbf{RXJ1131-1231 dynamics in \bco}
-% 2nd order
+{\em (d):} 
 Velocity dispersion map of the \bco emitting gas. 
 However, limited by the spatial resolution, beam smearing strongly decreases
 large-scale velocity gradients and increases observed dispersion.
 % RGB spectra
-{\em (e): } \textbf{Differential lensing with spatial variations}
-Overlay of spectra taken at regions along the strongest velocity gradient, demonstrating 
+{\em (e): }
+Overlay of spectra taken at three locations along the strongest velocity gradient, demonstrating 
 differential lensing of the different kinematic components of the galaxy. 
 % Lens model
-{\em (f): } \textbf{Dynamical lens model}
+{\em (f): }
 Velocity channels of the CO emission toward the gas-rich merger (red contours) overlaid on our best-fit 
 lens model for each velocity bin (grayscale). 
 The foreground lensing galaxy is represented by a black dot, and 
 the beam size is shown in the bottom right corner.
 Clearly, there are spatial variations across different kinematic components.
 The reconstructed source morphology (magenta ellipses) is suggestive of a kinematically ordered galaxy. 
-However, at the spatial resolution of our data, we cannot definitively infer its true morphology due to beam smearing. 
-Given the presence of a companion galaxy within 2.4 kpc, high-resolution 
+Given the presence of a companion galaxy within 2.4 kpc and beam smearing effects, high-resolution 
 imaging is thus necessary to unambiguously determine the nature that gives rise to the observed velocity gradient
 and dynamics, as proposed here.
 This will confirm if the system is rotationally supported or highly turbulent 
@@ -477,9 +471,8 @@ This will confirm if the system is rotationally supported or highly turbulent
 for the starburst in the AGN host galaxy
 and investigate whether dominant mode of star formation is GMC-like in a rotating disk or due to fragmentation of
 dynamically unstable gas-rich disk. 
-We here aim to spatially and dynamically resolve the dense, excited gas emission, 
-which will allow us to unambiguously examine the dynamic structure of the ISM in 
-the distant merger and provide observational constraints on the star-formation and 
+{\bf We here aim BLAH}
+and provide observational constraints on the star-formation and 
 stellar-assembly history at the epoch where the SFR density is steeply 
 rising across cosmic times.
 \label{fig:combine}}
