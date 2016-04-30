@@ -1,12 +1,16 @@
 """
 Author: Daisy Leung
 
-Last edited: 01 Jan 2016
+Last edited: 30 April 2016
 
 Purpose:
     Plot Red wing and Blue wing different color overlay on HST
+    channels: blue: [150, 142]; velocity [-423.79, -251.39]
+              red: [142, 134]; velocity [-251.39, -90.22]
+
 
 History:
+30 April 2016: Change contour colors, inverted color for HST, change HST contrast based on ds9
 01 Jan 2016: update marker
 31 Dec 2015: Use linear shifted F555W image
 
@@ -59,26 +63,28 @@ red_line_max = 2.19431
 blue_line_min = -0.343676
 blue_line_max = 1.72505
 
+inverted_HSTleft = True
+tickcolor = 'k' if inverted_HSTleft else 'white'
 ########################################
 # intialize base figure
 ########################################
 fig1 = aplpy.FITSFigure(label['F555W_drzcroplinearShift'][0],
                         figure=figC, subplot=[x0, row_a, full_width, dy])
-fig1.show_grayscale(stretch='log', vmin=-0.01869, vmax=151, vmid=-0.025) #, invert=True)
-# fig1.set_theme('pulication')
+fig1.show_grayscale(stretch='log', vmin=-0.00256, vmax=1.922, vmid=-0.02)
+if inverted_HSTleft: fig1.set_theme('publication')
 ########################################
 # Contours
 ########################################
-fig1.show_contour(label_pdbi['blue'][0], colors="lime", levels=sigma_contour_array(
+fig1.show_contour(label_pdbi['blue'][0], colors="blue", levels=sigma_contour_array(
     sigma_blue), linewidths=2)  # , layer='fg')
 
-fig1.show_contour(label_pdbi['red'][0], colors="blue",
+fig1.show_contour(label_pdbi['red'][0], colors="red",
                   levels=sigma_contour_array(sigma_red), linewidths=2)
 
 ########################################
 # beam
 ########################################
-fig1.show_beam(major=4.44/3600, minor=1.95/3600, angle=13., edgecolor='grey', facecolor='orange', linestyle='solid', linewidth=3, frame=True, alpha=0.8)
+fig1.show_beam(major=4.44/3600, minor=1.95/3600, angle=13., edgecolor='grey', facecolor='orange', linestyle='solid', linewidth=3, frame=False, alpha=0.8)
 
 
 ########################################
