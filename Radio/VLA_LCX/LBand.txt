@@ -737,7 +737,7 @@ docalib 2
 gainuse 2
 dotv 1
 flagver 2
-stokes 'half'
+stokes 'i'
 go
 
 bif 1; eif 1
@@ -753,7 +753,7 @@ dotv 1
 flagver 2
 docalib 2
 gainu 2
-stokes 'half'
+stokes 'i'
 go
 
 
@@ -767,7 +767,7 @@ flagver 2
 bif 1; eif 1
 dotv 1
 XINC 0
-stokes 'half'
+stokes 'i'
 go
 
 bif 2; eif 2
@@ -782,7 +782,7 @@ flagver 2
 bif 1; eif 1
 dotv 1
 XINC 0
-stokes 'half'
+stokes 'i'
 go
 --> need flaggin in time
 
@@ -801,7 +801,7 @@ eif 2
 sources ''
 timer 0 23 57 54 0 23 57 56
 aparm 0
-stokes 'half'
+stokes 'i'
 inp
 
 go
@@ -845,7 +845,7 @@ tget uvplt
 flagver 2
 timer 0
 sources '1130-148'
-stokes 'half'
+stokes 'i'
 bif 0; eif 0
 go
 
@@ -961,7 +961,7 @@ Apply calibration and split out sources
 # get calibrated calibrators
 getn 1
 task 'SPLIT'; Sources '1130-148',''; Qual -1; Calcode ''; Timerang 0;
-Stokes 'half'; Selband -1; Selfreq -1; Freqid 1; Bif 0; Eif 0; Bchan 1;
+Stokes 'i'; Selband -1; Selfreq -1; Freqid 1; Bif 0; Eif 0; Bchan 1;
 Echan 0; Subarray 0; Docalib 2; Gainuse 2; Dopol -1; Blver -1;
 Flagver 2; Doband -1; Bpver 1; Smooth 0; Douvcomp -1; Aparm 0; Nchav 1;
 Chinc 1; Ichansel 0; Baddisk 0; outdisk 1; outclass 'L.IF'
@@ -972,7 +972,7 @@ uc
 
 default uvplt
 getn 15
-task 'uvplt'; docalib -1; doband -1; bpver 0; bparm 0; dotv 1; stokes 'half'
+task 'uvplt'; docalib -1; doband -1; bpver 0; bparm 0; dotv 1; stokes 'i'
 bif 0; eif 0
 go
 
@@ -1057,7 +1057,7 @@ imh
 getn 18
 tvin
 
-task 'uvplt'; docalib -1; doband -1; bpver 0; bparm 0; dotv 1; stokes 'half'
+task 'uvplt'; docalib -1; doband -1; bpver 0; bparm 0; dotv 1; stokes 'i'
 bif 0; eif 0
 
 # Note:
@@ -1102,7 +1102,7 @@ go
 default 'uvplt'
 getn 19
 
-task 'uvplt'; docalib -1; doband -1; bpver 0; bparm 0; dotv 1; stokes 'half'
+task 'uvplt'; docalib -1; doband -1; bpver 0; bparm 0; dotv 1; stokes 'i'
 flagver 0
 
 go
@@ -1131,7 +1131,7 @@ imh
 default uvplt
 getn 19
 
-task 'uvplt'; docalib -1; doband -1; bpver 0; bparm 0; dotv 1; stokes 'half'
+task 'uvplt'; docalib -1; doband -1; bpver 0; bparm 0; dotv 1; stokes 'i'
 flagver 1
 
 go
