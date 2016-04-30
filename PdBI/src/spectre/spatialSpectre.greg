@@ -2,13 +2,16 @@
 !
 ! Plot spatial spectra for CO(2-1) data
 !
-! Last Modified: 27 Mar 16
+! Last Modified: 30 Apr 16
 !
 ! Author: Daisy Leung
 !
 !
 ! History
 ! -------
+! 30 Apr 2016:
+! - put axes of inner panel (velo v.s. flux) at top right corner
+!
 ! 27 Mar 2016:
 ! - increase pixel marker size
 ! - put flux and velo label on one panel
@@ -215,9 +218,17 @@ for iwx 1 to nx_box
       pen 0 /dash 0 /weight 2
 
       ! hide the labels (flux density vs velo.), except for one panel..
-      if (iwx.eq.1).AND.(iwy.eq.1) then
+      if (iwx.eq.nx_box).AND.(iwy.eq.ny_box) then
         set expand min(6.0/(nx_box+ny_box),1.05)*1.2
-        greg1\box
+        greg1\box n n
+!        greg1\axis xu /label p /loc 27 20
+         greg1\axis xu /label p only /loc 21.9 20.13
+!        greg1\axis yr /label o /loc 26
+        greg1\axis yr /label o only /loc 25.35
+        greg1\axis xl /label N
+        greg1\axis yl /label N
+        label "Velocity offset [km/s]" /x -11
+        label "Flux density [Jy/Beam]" /y -19
       else
         greg1\box n n
       endif
