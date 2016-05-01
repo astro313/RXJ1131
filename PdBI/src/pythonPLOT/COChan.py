@@ -1,11 +1,15 @@
 '''
-Last Modified: 27 Mar 16
+Last Modified: 30 Apr 16
 
 
 Author: Daisy Leung
 
 
 History:
+30 Apr 2016
+- change velocity labels, reference systemic velocity
+- use data cube with velo. axis 0 km/s == line center (see shiftRefVelo.py)
+
 27 Mar 2016
 - change symbol for foreground galaxy
 - increment contour by 3sigma instead of 4 sigma
@@ -36,7 +40,6 @@ History:
 
 Note:
 - depends on package - astrolib.coords for putting up markers based on Coords
--
 
 '''
 import matplotlib
@@ -111,8 +114,9 @@ def setup_axes(fig, header, nx, ny):
     return g, cax
 
 Plotpath = '/Users/admin/Research/RXJ1131/Figures/'
-fits_cube = pyfits.open(
-    "/Users/admin/Research/RXJ1131/PdBI/data/04Sep15/sup127_155_2ndcln_noCont.fits")
+# fits_cube = pyfits.open("/Users/admin/Research/RXJ1131/PdBI/data/04Sep15/sup127_155_2ndcln_noCont.fits")
+fits_cube = pyfits.open("/Users/admin/Research/RXJ1131/PdBI/data/30Apr16/centralizedCube.fits")
+
 dxy = 124                   # starting channel
 nx = 7
 ny = 5
