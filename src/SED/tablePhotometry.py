@@ -7,14 +7,13 @@ wavelength [um], freq [GHz], flux density [mJy], flux_err [mJy], instrument
 Save table as latex file
 
 
-Last Modified: March 28 2016
+Last Modified: May 1 2016
 
-
-TODO
-- add VLA radio data LCX
 
 History
 -------
+May 1 2016:
+  update output error to 3 decimal places
 Mar 28 2016:
     updated SPITZER/IRAC data to using 5.8" diameter aperture flux
 Jan 09 2016:
@@ -159,7 +158,7 @@ for i, idx in enumerate(split1):
         tbl.rename_column(tbl.colnames[i], tbl.colnames[i][:idx])
 
 
-def combine_col(table, colname, errcolname, outcolname, unit=None, formatstr="{0:0.2f} $\pm$ {1:s}"):
+def combine_col(table, colname, errcolname, outcolname, unit=None, formatstr="{0:0.3f} $\pm$ {1:s}"):
 
     """
     combine flux and flux_err column -> with $\pm$
@@ -197,7 +196,7 @@ def combine_col(table, colname, errcolname, outcolname, unit=None, formatstr="{0
 
         # map the formatting function that changes np.nan to \nodata, else 2 decimal place
         # map(f, list)
-        tmpCol = map(lambda x: r'\nodata' if np.isnan(x) else '{:.2f}'.format(x), tmpCol)
+        tmpCol = map(lambda x: r'\nodata' if np.isnan(x) else '{:.2}'.format(x), tmpCol)
 
     data = [formatstr.format(aa, err) for aa, err in zip(table[colname], tmpCol)]
     return Column(data=data, name=outcolname, unit=unit)
