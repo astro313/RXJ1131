@@ -8,6 +8,7 @@
 ! History
 ! -------
 ! 04 May 2016:
+!     - added code to fit Gauss with fixed FWHM
 !     - copied script from Gaussfit_bin2_noCont.greg
 !
 !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
@@ -50,6 +51,12 @@ let x (((345.7959899-x)/345.7959899)*299792.458)
 g\pen 0 /col 0 /dash 1 /weight 1
 @ plot_model 100
 @ plot_fit 0 0
+
+! if we fit Gauss with fixed width based on CO21 --> prob. just add the flux within FWHM~690 km/s, as in CO21
+! say ""
+! message i demo "Single Gaussian Fit:"
+! mfit y=&a*Exp(-((x-&b)^2|(2*200^2))) /metho powell /start 60,0
+! g\connect x mfit%fit
 
 set expand 1.25   ! font size
 draw text -1000 115 "\\2 Solid: CO(\iJ=3-2) in RXJ1131" /user
