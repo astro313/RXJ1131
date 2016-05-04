@@ -127,7 +127,7 @@ if __name__ == '__main__':
         raise IndexError(errmsg.format(len(sys.argv)))
     saveFig = True if sys.argv[1].lower() == 'true' else False
     if saveFig == True:
-        figC.savefig(Plotpath + 'F555W_REDBLUE.png', dpi=600)
+        figC.savefig(Plotpath + 'F555W_REDBLUE.png', dpi=600, bbox_inches='tight')
     else:
         #        figC.canvas.draw()
         plt.show()
