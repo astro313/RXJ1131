@@ -1,0 +1,34 @@
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+!
+! Make high-O moment maps from the velocity axis shifted (to systemic velocity) cube.
+!
+! Last modified: 04 May 2016
+!
+! History:
+! 04 May 2016:
+!    created
+!
+! Note:
+!    plot script: src/postIm_analysis/higherOMoments.greg
+!
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+
+fits centralizedCube4GILDAS.fits to centralizedCube4GILDAS.lmv-clean
+
+say " *** Get moment maps: integrated, mean velocity, and line width)... "
+say " *** Without binning "
+go moments
+! input name: centralizedCube4GILDAS.lmv-clean
+! output name centralizedCube4GILDAS-momCLIP5sigma
+! -258.3 430.6              ! see README.md for why
+! threshold 5e-3
+
+! I-MOMENT,  Channel range                   125                  157
+! I-MOMENTS,  Velocity range   -269.101929       441.327179
+!
+
+let name centralizedCube4GILDAS-momCLIP5sigma
+let size 20
+go velocity
+go wedge
+

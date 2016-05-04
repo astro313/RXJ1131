@@ -1,16 +1,17 @@
 !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-! Plot 1st and 2nd moment maps, clipped @ 5sigma (26Dec15/)
+! Plot 1st and 2nd moment maps, clipped @ 5sigma (30Apr16/)
 !
-! Last modified: 25 Dec 2015
+! Last modified: 04 May 2016
 !
 ! History:
 ! --------
+! May 04 2016:
+!   - use moment maps from 30Apr16/, which shifted 0km/s to be systemic velocity
 ! March 27 2016:
+!   - use moment maps from 26Dec15/
 !   - Replace velo_spacing from 2*21.528154 km/s to 50 km/s
 !   - only plot one beam
 !   - remove title
-!
-!
 !
 ! Notes:
 ! -------
@@ -37,7 +38,7 @@ let width_spacing 100           ! channel width in 2nd moment
 
 
 !###########    LOAD IMAGE   ############
-image "/Users/admin/Research/RXJ1131/PdBI/data/26Dec15/sup127_155_2ndcln_noCont-momCLIP5sigma.velo"
+image "/Users/admin/Research/RXJ1131/PdBI/data/30Apr16/centralizedCube4GILDAS-momCLIP5sigma.velo"
 !########################################
 
 !######### DEFINE THE PLOT AREA #########
@@ -221,8 +222,8 @@ ellipse G_MAJOR*206265/2 G_MINOR*206265/2 90-G_PA*57.3 /box 8.5 1.65 /HATCH 0 45
 ! ##############################################
 
 ! ############## OUT PUT FILENAME ##############
-sic delete "/Users/admin/Research/RXJ1131/PdBI/data/26Dec15/CO_highOmom_CLIP5sigma.eps"
-hardcopy "/Users/admin/Research/RXJ1131/PdBI/data/26Dec15/CO_highOmom_CLIP5sigma" /device eps color
+sic delete "/Users/admin/Research/RXJ1131/PdBI/data/30Apr16/CO_highOmom_CLIP5sigma.eps"
+hardcopy "/Users/admin/Research/RXJ1131/PdBI/data/30Apr16/CO_highOmom_CLIP5sigma" /device eps color
 ! ##############################################
 
 pen 0 /default
