@@ -1026,12 +1026,6 @@ go wedge
 go 3VIEW
 
 
-!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-say " *** Get moment maps: integrated, mean velocity, and line width)... "
-say " *** With binning "
-! Since we need to clip, we should figure out what's the optimal bin size for highest SNR for all channels across the line
-
-
 
 
 

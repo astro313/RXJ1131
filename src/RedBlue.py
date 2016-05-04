@@ -1,7 +1,7 @@
 """
 Author: Daisy Leung
 
-Last edited: 30 April 2016
+Last edited: 03 May 2016
 
 Purpose:
     Plot Red wing and Blue wing different color overlay on HST
@@ -10,6 +10,7 @@ Purpose:
 
 
 History:
+03 May 2016: change label color from yellow to black, since we inverted HST image, else can't read them
 30 April 2016: Change contour colors, inverted color for HST, change HST contrast based on ds9
 01 Jan 2016: update marker
 31 Dec 2015: Use linear shifted F555W image
@@ -109,8 +110,8 @@ markers_cross(fig1, ra_cross, dec_cross, layer='marker_set_1')
 # Labels
 ########################################
 # if '_' in sym[:-1]: symf = sym.replace('_', ' ')
-put_label(fig1, 0.82, 0.90, 'HST F555W', 'titleBand1')
-put_label(fig1, 0.82, 0.95, 'CO (2-1)', 'titleBand2')
+put_label(fig1, 0.82, 0.90, 'HST F555W', 'titleBand1', c='black')
+put_label(fig1, 0.82, 0.95, 'CO (2-1)', 'titleBand2', c='black')
 
 ########################################
 ########################################
