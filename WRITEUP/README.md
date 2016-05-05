@@ -1,6 +1,7 @@
 
 # HST photometry:
 - on NED
+- or Claeskens+06
 
 # IR photometry
 1. Herschel:
@@ -60,27 +61,13 @@
 - 60: 0.6 Jy
 - 100: 1.0 Jy
 - ref: http://heasarc.gsfc.nasa.gov/W3Browse/iras/iraspsc.html
+- I believe is the 1-sigma level
 
 
 # intensity, flux density
 ### VLA C Band data @ 4.88 GHz
 1. Core: 8.662040e-04 +/- 1.3e-5*sqrt(86/19.2738)
 2. Arc: 1.273277e-03 +/- 4.2085778291312834e-05
-
-
-### CARMA data, combined D2, D3
-- natural weighting beam size: **3.19 x 1.86 PA: 8 deg**
-- **channel width = 2x17.935 = 35.87 km/s**
-- Theoretical rms noise: 8.834E-03 Jy/B per channel
-- map off region rms: 1.31957E-02 Jy/B per channel (before clean);  1.32997E-02 Jy/B per channel (after clean)
-- image cubes: /Users/admin/Research/RXJ1131/CARMA/imagingD23/
-- Line intensity FWZI = sqrt(2*pi)*a*c = **37.509 Jy km/s**, see /Users/admin/Research/RXJ1131/CARMA/imagingD23/GILDAS/Gaussfit_bin2.greg
-  - ~ chan [49,70]
-  - ~ vel [-429.58, 546.19] km/s
-
-#### ~1.4mm Continuum
-- @ spatial position of CO emission is burried in noise - 2.2 +/- 3.0 mJy
-- **upper limit: line-free channels mfs image rms = 8.30807E-04 Jy/B**
 
 
 ### PdBI data
@@ -106,17 +93,22 @@
 
 #### CO(2-1)
 ##### Continuum-subtracted
+CO (2-1) velocity ranges used for different purpose:
+- line flux Intensity: 124-156
+- moment 0 map: 127-155
+- RGB: 126-160
+- RedBlue: 134-150
+
 # See 14Oct15/README.md
 - cell size =0.5"
 - I = 20.3 Jy Km/s 
 - sigma_ch ~ 1.451 mJy/ Beam
 - velocity resolution per bin: 21.528154 km/s
-- source exent ~ 2.5 beams (need confirmation)
+- source extent ~ 2.5 beams (need confirmation)
 - channel range 
     + [134, 142] (red) and [142, 150] (blue)
 - sigma_I = 1.451 / sqrt(32) * 32 * 21.528154 = 176.6 mJy km/s / Beam
 - sigma_I (spatially integrated) = 176.6 * 2.5 = 441.5 mJy km/s 
-
 
 - 0th moment map (all channels):
 - 14Oct15/mom0.fits
@@ -140,17 +132,29 @@ Map Noise:
 - red: channel [126, 140]; velocity [75.81, -220.335]
 
 -1st, 2nd moments (clipped @ 5sigma):
-- see 26Dec15/README.md
-- chan 127 - 155, same as 14Oct15 Moment0 map
+- see 26Dec15/README.md & 30Apr16/README.md
 
 
-#### Image structure
-# added 25 Dec 2015
-HST: 
-- quadruply imaged AGN with Einstein ring
-- ring size: 1.83" radius
-- lensed AGN ~ 4 point-like image A,B,C,D on a ring around G
-- ring <=> host gal.
-- quasar
-- lens gal @ z=.295, elliptical gal. (C06)
-- C06: AGN @ 0.658 with magnification ~ 9, claimed Seyfert 1 spiral gal.
+### CARMA data, combined D2, D3
+#### ~1.4mm Continuum
+- @ spatial position of CO emission is burried in noise - 2.2 +/- 3.0 mJy
+- **upper limit: line-free channels mfs image rms = 8.30807E-04 Jy/B**
+
+#### CO (3-2):
+- natural weighting beam size: **3.19 x 1.86 PA: 8 deg**
+- **channel width = 2x17.935 = 35.87 km/s**
+- Theoretical rms noise: 8.834E-03 Jy/B per channel
+- map off region rms: 1.31957E-02 Jy/B per channel (before clean);  1.32997E-02 Jy/B per channel (after clean)
+- image cubes: /Users/admin/Research/RXJ1131/CARMA/imagingD23/
+- Line intensity FWZI from Gauss Fit = sqrt(2*pi)*a*c = **37.509 Jy km/s**, see /Users/admin/Research/RXJ1131/CARMA/imagingD23/GILDAS/Gaussfit_bin2.greg
+- ~ chan [49,70]
+
+##### Intensity from summing up fluxes within velo range guided by CO21
+see CARMA/specOPlot/README.md
+- I = 37.1 Jy km/s 
+- in 21 channels [49, 69]
+- velocity [-430.94, 305.26] km/s
+- --> # of beams ~ 10
+- Isigma ~ 13.3 mJy/B/channel * 21 channels * 10 beams ~ 2.793 Jy km/s
+
+
