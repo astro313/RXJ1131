@@ -1,0 +1,3 @@
+#CRTFv0
+
+poly[[133pix, 150pix], [118pix, 138pix], [122pix, 104pix], [153pix, 114pix], [150pix, 141pix]]
