@@ -2,11 +2,13 @@
 
 plot source locations from lens model of various channel as markers on observed 1st moment map
 
-Last Modified: 04 May 16
+Last Modified: 05 May 16
 
 History:
+05 May 16:
+  - added error bars to positions
 04 May 16:
-    - created code
+  - created code
 
 
 '''
@@ -23,12 +25,15 @@ matplotlib.rc('font', **font)
 
 Plotpath = '/Users/admin/Research/RXJ1131/Figures/'
 firstMom_obs = '/Users/admin/Research/RXJ1131/PdBI/data/30Apr16/centralizedCube4GILDAS-momCLIP5sigma.velo.fits'
-interval = 50.    # km/s between velocity contour
+interval = 50.        # km/s between velocity contour
 DecCentroid = -12.5328629
 RACentroid = 172.96434563
+CellSize = 0.5        # arcsec per pixel in 1D
+
 # source positions from models of different channel, offset in arcsec
 p_list = [(-0.20, 0.12), (-0.02, 0.11), (0.20, -0.13), (0.29, -0.01), (0.57, -0.76), (0.87, -0.57), (1.04, -0.56), (1.32, -0.77)]
-
+# corresponding error in arcsec
+p_list_err = [(0.39, 0.3), (0.25, 0.2), (0.06, 0.21), (0.14, 0.22), (0.12, 0.29), (0.09, 0.15), (0.06, 0.12), (0.34, 0.45)]
 
 # -----------------------------------------------
 #  Read fits file and Set up WCS
@@ -75,20 +80,23 @@ ax.plot([LensRA_PX], [LensDEC_PX], marker='x', zorder=1, mec='k', ms=8)
 
 from matplotlib.pyplot import cm
 color = iter(cm.rainbow_r(np.linspace(0, 1, len(p_list))))
-for p1 in p_list:
+for i, p1 in enumerate(p_list):
     c = next(color)
     ra_offset_arcsec, dec_offset_arcsec = p1
 
     # convert into coord then pixel on image
     ra_px, dec_px = wcs.wcs_sky2pix(ra_offset_arcsec/3600.+RACentroid, dec_offset_arcsec/3600.+DecCentroid, 1)
 
-    l1, = ax.plot([ra_px], [dec_px],
-                  marker='+',
-                  mec=c, mew=1.25, ms=8,
-                  zorder=3.1)    # lower zorder are drawn first
-#    plt.pause(0.05)
+    # convert arcsec to pixel offset on image
+    ra_err = p_list_err[i][0]/CellSize
+    dec_err = p_list_err[i][1]/CellSize
+    ax.errorbar(x=[ra_px], y=[dec_px], xerr=[ra_err], yerr=[dec_err],
+                    marker='+', ms=8, mec=c, mew=1.25, zorder=3.1, ecolor=c,
+                    capsize=5, capthick=2, lw=2, label=str(i))
 
-# plt.legend(['c{}'.format(i) for i in range(len(p_list))], loc=2, bbox_to_anchor=(1.05, 1), borderaxespad=0., fontsize=15)
+# matplotlib.rcParams['legend.handlelength'] = 0
+# matplotlib.rcParams['legend.markerscale'] = 0
+# ax.legend(loc=2, bbox_to_anchor=(0.9, 0.9), borderaxespad=0., fontsize=15, numpoints=1)
 
 plt.show()
 a.close()
