@@ -390,6 +390,11 @@ def calc_dist(xloc, yloc, delta_x, delta_y):
     offset_sq = (diff_x * np.cos(np.mean(yloc/3600. * np.pi/180.)))**2 + diff_y**2
     R = np.sqrt(offset_sq)
     offset_err = np.sqrt((diff_x*delta_x)**2 + (diff_y*delta_y)**2) / R
+
+    # put error bar on center point as well, in arcsec
+    xcenter_err, ycenter_err = p_list_err[4]
+    offset_err[np.where(np.isnan(offset_err))[0][0]] = np.sqrt(xcenter_err**2 +ycenter_err**2)
+
     return R, offset_err
 
 
