@@ -6,8 +6,8 @@ plot source locations from lens model of various channel as markers on observed 
 Last Modified: 10 May 16
 
 TODO:
-get source size in old papers
-get i from optical
+get source size in old papers: C06: F160W sersic profile R_e = 9.8 kpc h_50^-1; F814W = 14.4kpc h_50^-1
+get i from C06
 add xerr bar on v_0, incl in fit
 
 History:
@@ -15,6 +15,8 @@ History:
   - remove ODR fit to rot. curve, since xerr drives poor fit
   - fix R function, major axis is not affected by inclination angle in circular
   - update error bars on velocity to using velocity range of models
+  - add error on central position to allow fit for position error on central chan
+  - remove code to fit model where R dep. on i
 09 May 16:
   - fix a bug in run_odr_for_model()
   - added func to calc offset taking into acct inclination effect on y
@@ -482,6 +484,7 @@ def arctang2(p, R_kpc):
     else:  # bascially reject this fit
         return 1e-5
 
+
 ydata = abs(np.array(z))
 yerr = z_err
 xdata = offset_to_physicalR(np.array(off), redshift)     # np.array(off)
@@ -516,7 +519,6 @@ plt.tight_layout()
 plt.show()
 print("Bestfit Circ velocity * sin i: {} km/s").format(_pfit4[0][0])
 
-
 # ---
 def M_encl(R_kpc, v_sini):
     """ calc mass enclosed """     # v in km/s
@@ -532,13 +534,11 @@ def M_encl(R_kpc, v_sini):
     return M10
 
 # calc. mass within some physical dist from line center
-R_in_kpc2 = R.max()              # using best-fit incl
-M_model_iter_inc = M_encl(R_in_kpc2, inner_rot_incl_iter(pfit, xidata, np.array(_dec)).max())               # could be dangerous to just use .max() on velocity, but don't want to mess with functions now.
-print("Mass enclosed within {:.2f} kpc: {:.2f} x 1e+10 Msun".format(R_in_kpc2, M_model_iter_inc))
+# print("Mass enclosed within {:.2f} kpc: {:.2f} x 1e+10 Msun".format(R_in_kpc2, M_model_iter_inc))
 
 # plot M rise with R
 if plotMdyn:
-    plt.plot(R, M_encl(R, inner_rot_incl_iter(pfit, xidata, np.array(_dec))), label='R dep. on i')
-    plt.legend()
-    plt.tight_layout()
-    plt.show()
+    # plt.plot(R, M_encl(R, inner_rot_incl_iter(pfit, xidata, np.array(_dec))), label='R dep. on i')
+    # plt.legend()
+    # plt.tight_layout()
+    # plt.show()
