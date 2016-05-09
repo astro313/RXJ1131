@@ -8,7 +8,7 @@ Last Modified: 10 May 16
 TODO:
 get source size in old papers: C06: F160W sersic profile R_e = 9.8 kpc h_50^-1; F814W = 14.4kpc h_50^-1
 get i from C06
-add xerr bar on v_0, incl in fit
+- use ODR to fit with xerr
 
 History:
 10 May 16:
@@ -17,6 +17,9 @@ History:
   - update error bars on velocity to using velocity range of models
   - add error on central position to allow fit for position error on central chan
   - remove code to fit model where R dep. on i
+  - remove deriving Mdyn using old models
+  - fix bug RA_major_err, Dec_major_err
+  - add xerr bar on v_0
 09 May 16:
   - fix a bug in run_odr_for_model()
   - added func to calc offset taking into acct inclination effect on y
@@ -389,15 +392,18 @@ def calc_dist(xloc, yloc, delta_x, delta_y):
         in arcsec along the major axis, w.r.t the central emission position
 
     """
+    delta_x0 = xcenter_err
+    delta_y0 = ycenter_err
+
     diff_x = np.array([xloc[i] - xloc[4] for i in range(len(xloc))])
     diff_y = np.array([yloc[i] - yloc[4] for i in range(len(yloc))])
     offset_sq = (diff_x * np.cos(np.mean(yloc/3600. * np.pi/180.)))**2 + diff_y**2
     R = np.sqrt(offset_sq)
-    offset_err = np.sqrt((diff_x*delta_x)**2 + (diff_y*delta_y)**2) / R
+    offset_err = np.sqrt((diff_x*delta_x)**2 + (diff_y*delta_y)**2 + (diff_x*delta_x0)**2 + (diff_y*delta_y0)**2) / R
 
     # put error bar on center point as well, in arcsec
     xcenter_err, ycenter_err = p_list_err[4]
-    offset_err[np.where(np.isnan(offset_err))[0][0]] = np.sqrt(xcenter_err**2 +ycenter_err**2)
+    offset_err[np.where(np.isnan(offset_err))[0][0]] = np.sqrt(delta_x0**2 +delta_y0**2)
 
     return R, offset_err
 
