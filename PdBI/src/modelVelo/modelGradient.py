@@ -3,9 +3,18 @@
 
 plot source locations from lens model of various channel as markers on observed 1st moment map
 
-Last Modified: 09 May 16
+Last Modified: 10 May 16
+
+
+get source size in old papers
+fix R function
+get i from optical
+add xerr bar on v_0, incl in fit
+yerr on velocity --> velo range
 
 History:
+10 May 16:
+  - remove ODR fit to rot. curve, since xerr drives poor fit
 09 May 16:
   - fix a bug in run_odr_for_model()
   - added func to calc offset taking into acct inclination effect on y
@@ -63,10 +72,11 @@ p_list_err = [(0.39, 0.3), (0.25, 0.2), (0.06, 0.21), (0.14, 0.22),
 # corresponding velocity in km/s for each points in p_list
 z = [344.46, 344.46, 236.82, 129.16, 21.54, -86.08, -193.76, -301.38]
 
-plotMajorFit = False
-plotMajor_FirstMom = False
-plotPV = False
-plotRot = False
+plotMajorFit = True
+plotMajor_FirstMom = True
+plotPV = True
+plotRot = True
+plotMdyn = False
 # -----------------------------------------------
 #  Read fits file and Set up WCS
 # -----------------------------------------------
@@ -276,8 +286,6 @@ if plotMajorFit:
     fit.plot(xdata, ydata, 'ro', xdata, fun2(param, xdata))
     fit.errorbar(xdata, ydata, xerr=xerr, yerr=yerr, fmt='r+')
     fit.set_yscale('linear')
-    #   draw starting guess as dashed green line ('r-')
-    # fit.plot(xdata, fun2(x0, xdata), 'g-', label="Start", linestyle="--")
     a = np.array([out.xplus, xdata])   # out.xplus = x + delta
     b = np.array([out.y, ydata])
     # to show where the fit is relative to the points
@@ -305,14 +313,6 @@ if plotMajorFit:
     plt.show()
 
 youtfit = fun2(out.beta, xdata)
-# replaced by the above
-# plt.figure()
-# plt.errorbar(ra_px_ls, dec_px_ls, xerr=ra_err_ls, yerr=dec_err_ls,
-#              marker='+', ms=8, mew=1.25, capsize=5, capthick=2, linestyle='None')
-# plt.plot(xdata, youtfit, 'k--', lw=1.2)
-# plt.tight_layout()
-# plt.show()
-
 
 # -------------------------------------------
 # Plot velocity field again, with major axis
@@ -359,7 +359,7 @@ if plotMajor_FirstMom:
 # PV and rot. curve exclude 2nd component in redmost channel
 # -------------------------------------------------------
 # convert the px positions along the fitted major axis to RA, Dec to calc. separation
-deg_to_arcsec = 3600
+deg_to_arcsec = 3600.
 RA_major, Dec_major = wcs.wcs_pix2sky(ra_px_ls, youtfit, 1)       # degree
 RA_major_err = np.array([p_list_err[i][0] / CellSize for i in range(len(p_list_err))])
 Dec_major_err = np.array([p_list_err[i][1] / CellSize for i in range(len(p_list_err))])
@@ -424,7 +424,6 @@ def calc_dist2(xloc, yloc, delta_x, delta_y, i):
 # reasonble because people slice along their map, they don't fit for the major axis
 
 offset, offset_err = calc_dist2(RA_major*deg_to_arcsec, Dec_major*deg_to_arcsec, RA_major_err, Dec_major_err, i=50.)
-# offset = calc_dist2(RA_major*deg_to_arcsec, Dec_major*deg_to_arcsec, RA_major_err, Dec_major_err, i=50.)        # in arcsec
 
 # to show blue, red on left and right of central
 offset[5:] = -offset[5:]
@@ -537,54 +536,6 @@ plt.ylim(-50, 450)
 plt.tight_layout()
 plt.show()
 
-# fit to rotation curve
-data = RealData(xdata, ydata, sy=yerr, sx=xerr)
-x0 = [32, 0.5]
-
-_model_1 = Model(inner_rot)
-_model_2 = Model(inner_rot_incl)
-
-def run_odr_for_model(model, func, guess, x, y, xerr, yerr):
-    # getting v sin i
-    odr = ODR(data, model, beta0=guess)
-    out = odr.run()
-    param = out.beta
-    cov = out.cov_beta
-    uncertainty = out.sd_beta
-
-    ## Plot
-    fig = plt.figure(facecolor="0.98")   # with light gray background
-    fig.subplots_adjust(hspace=0)
-    fit = fig.add_subplot(111)      # , adjustable='box', aspect=1.2)
-    plt.ylabel(" |V_r sin i or V_r assuming i | ")
-
-    fit.plot(xdata, ydata, 'ro', xdata, func(param, xdata))
-    fit.errorbar(xdata, ydata, yerr=yerr, fmt='r+', xerr=xerr)
-    fit.set_yscale('linear')
-
-    a = np.array([out.xplus, xdata])   # out.xplus = x + delta
-    b = np.array([out.y, ydata])
-    # to show where the fit is relative to the points
-    fit.plot(np.array([a[0][0], a[1][0]]), np.array([b[0][0], b[1][0]]),
-             'k-', label='Residuals')
-    for i in range(1, len(ydata)):
-        fit.plot(np.array([a[0][i], a[1][i]]), np.array([b[0][i], b[1][i]]),
-             'k-')
-    fit.legend(loc='upper left')
-    fit.set_xlim(-1, 8.5)
-    fit.set_ylim(-50, 450)
-    fit.grid()
-    plt.xlabel("Radial offset from line center position kpc")
-    plt.tight_layout()
-    plt.show()
-    return param, uncertainty
-
-
-# run, the fit is somehow skewed? when added xerr to fit, isn't because it wans non-linear model?
-param1, p1_err = run_odr_for_model(_model_1, inner_rot, x0, xdata, ydata, xerr, yerr)
-param2, p2_err = run_odr_for_model(_model_2, inner_rot_incl, x0, xdata, ydata, xerr, yerr)
-
-
 # Use Least sq appraoch instead
 x0 = [32, 0.5]
 errfunc = lambda p, x, y, err: (y - inner_rot(p, x)) / err
@@ -611,14 +562,14 @@ plt.ylim(-50, 425)
 plt.tight_layout()
 plt.show()
 
-# tangent model
+# tangent model to PV along major axis
 x4 = [30, 1, 1]
 xdataPV = list(xdata[:4])
 _blue = -xdata[4:]
 for i in range(len(_blue)): xdataPV.append(_blue[i])
 xdataPV = np.array(xdataPV)
 errfunc = lambda p, x, y, err: (y - arctang2(p, x)) / err
-_pfit4 = optimize.leastsq(errfunc, x4, args=(xdataPV, np.array(z), yerr), full_output=1)
+_pfit4 = optimize.leastsq(errfunc, x4, args=(xdataPV, np.array(z), yerr), full_output=1, maxfev=10000)
 plt.errorbar(xdataPV, np.array(z), xerr=xerr, yerr=yerr, fmt='ko', linestyle='None', label='data')
 # extrapolate for prettier looking
 plt.plot(np.linspace(xdataPV.min(), xdataPV.max(), 100), arctang2(_pfit4[0], np.linspace(xdataPV.min(), xdataPV.max(), 100)), 'r--', label='no fit to sin i, tangent 2')
@@ -643,9 +594,6 @@ def inner_rot_incl_iter(p, x, y):
         """
         diff_x = np.array([xloc[j] - xloc[3] for j in range(len(xloc))])
         diff_y = np.array([yloc[j] - yloc[3] for j in range(len(yloc))])
-        # print len(diff_x)
-        # print len(diff_y)
-        # import pdb; pdb.set_trace()
         offset_sq = (diff_x * np.cos(np.mean(yloc * np.pi/180.)))**2 + (diff_y/np.cos(i*np.pi/180.))**2
         R = np.sqrt(offset_sq)
         return R
@@ -714,9 +662,10 @@ M_model_iter_inc = M_encl(R_in_kpc2, inner_rot_incl_iter(pfit, xidata, np.array(
 print("Mass enclosed within {:.2f} kpc: {:.2f} x 1e+10 Msun".format(R_in_kpc2, M_model_iter_inc))
 
 # plot M rise with R
-plt.plot(xdata, M_encl(xdata, inner_rot(_pfit1[0], xdata)), label='i in R, but not velocity')
-plt.plot(xdata, M_encl(xdata, inner_rot_incl(_pfit2[0], xdata)), label='i in R and velocity')
-plt.plot(R, M_encl(R, inner_rot_incl_iter(pfit, xidata, np.array(_dec))), label='R dep. on i')
-plt.legend()
-plt.tight_layout()
-plt.show()
+if plotMdyn:
+    plt.plot(xdata, M_encl(xdata, inner_rot(_pfit1[0], xdata)), label='i in R, but not velocity')
+    plt.plot(xdata, M_encl(xdata, inner_rot_incl(_pfit2[0], xdata)), label='i in R and velocity')
+    plt.plot(R, M_encl(R, inner_rot_incl_iter(pfit, xidata, np.array(_dec))), label='R dep. on i')
+    plt.legend()
+    plt.tight_layout()
+    plt.show()
