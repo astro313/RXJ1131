@@ -360,8 +360,10 @@ if plotMajor_FirstMom:
 # convert the px positions along the fitted major axis to RA, Dec to calc. separation
 deg_to_arcsec = 3600.
 RA_major, Dec_major = wcs.wcs_pix2sky(ra_px_ls, youtfit, 1)       # degree
-RA_major_err = np.array([p_list_err[i][0] / CellSize for i in range(len(p_list_err))])
-Dec_major_err = np.array([p_list_err[i][1] / CellSize for i in range(len(p_list_err))])
+
+# arcsec
+RA_major_err = np.array([p_list_err[i][0] for i in range(len(p_list_err))])
+Dec_major_err = np.array([p_list_err[i][1] for i in range(len(p_list_err))])
 
 def fitted_err_on_y(deltaP, x):
     """ calc y_error of point on fit
