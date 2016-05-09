@@ -5,16 +5,16 @@ plot source locations from lens model of various channel as markers on observed 
 
 Last Modified: 10 May 16
 
-
+TODO:
 get source size in old papers
-fix R function
 get i from optical
 add xerr bar on v_0, incl in fit
-yerr on velocity --> velo range
 
 History:
 10 May 16:
   - remove ODR fit to rot. curve, since xerr drives poor fit
+  - fix R function, major axis is not affected by inclination angle in circular
+  - update error bars on velocity to using velocity range of models
 09 May 16:
   - fix a bug in run_odr_for_model()
   - added func to calc offset taking into acct inclination effect on y
@@ -35,9 +35,6 @@ History:
   - added error bars to positions
 04 May 16:
   - created code
-
-Note:
-1. rotation curve looks like solid body, even up to 10 kpc, seems very unexpected, recent stellar light is 8 kpc across, if the redmost and bluemost channel are truely ~10 kpc from center, should see more than just solid body part of the rotation curve? am I calculating the separation incorrectly (larger than true?)
 
 '''
 import matplotlib
@@ -396,34 +393,11 @@ def calc_dist(xloc, yloc, delta_x, delta_y):
     return R, offset_err
 
 
-def calc_dist2(xloc, yloc, delta_x, delta_y, i):
-    """ calc distance in arcsec offset along major axis, taking into acct inclination
-
-    Parameters
-    ----------
-    xloc: array
-        RA in deg of source position
-    yloc: array
-        dec in deg of source position along the fitted major axis
-
-    Return
-    ------
-    offset: array
-        in arcsec along the major axis, w.r.t the central emission position
-
-    """
-    diff_x = np.array([xloc[j] - xloc[4] for j in range(len(xloc))])
-    diff_y = np.array([yloc[j] - yloc[4] for j in range(len(yloc))])
-    offset_sq = (diff_x * np.cos(np.mean(yloc/3600. * np.pi/180.)))**2 + (diff_y/np.cos(i*np.pi/180.))**2
-    R = np.sqrt(offset_sq)
-    offset_err = np.sqrt((diff_x*delta_x)**2 + (diff_y*delta_y)**2) / R
-    return R, offset_err
-
 # youfitErr = fitted_err_on_y(uncertainty, xdata)     # very big..., because of x
 # use uncertainty on ydata instead
 # reasonble because people slice along their map, they don't fit for the major axis
 
-offset, offset_err = calc_dist2(RA_major*deg_to_arcsec, Dec_major*deg_to_arcsec, RA_major_err, Dec_major_err, i=50.)
+offset, offset_err = calc_dist(RA_major*deg_to_arcsec, Dec_major*deg_to_arcsec, RA_major_err, Dec_major_err)
 
 # to show blue, red on left and right of central
 offset[5:] = -offset[5:]
@@ -432,7 +406,7 @@ offset_err = list(offset_err)
 off.pop(1)
 z.pop(1)
 offset_err.pop(1)
-z_err = 21.5     # bandwidth
+z_err = 21.5*5/2.     # range of channels combined to make models/2. --> error bar
 if plotPV:
     plt.errorbar(off, z, yerr=z_err, fmt='r+', xerr=offset_err)
     plt.ylabel('v_r = v sin i')
@@ -441,7 +415,7 @@ if plotPV:
     plt.tight_layout()
     plt.show()
 
-offset, offset_err = calc_dist2(RA_major*deg_to_arcsec, Dec_major*deg_to_arcsec, RA_major_err, Dec_major_err, i=50.)
+offset, offset_err = calc_dist(RA_major*deg_to_arcsec, Dec_major*deg_to_arcsec, RA_major_err, Dec_major_err)
 off = list(offset)
 offset_err = list(offset_err)
 off.pop(1)
@@ -503,25 +477,6 @@ def arctang2(p, R_kpc):
     else:  # bascially reject this fit
         return 1e-5
 
-
-def inner_rot(p, R_kpc):
-    """ solid body """
-
-    a, b = p
-    R = R_kpc   # * kpc_to_m
-    V_sini = a * R + b
-    return V_sini
-
-
-def inner_rot_incl(p, R_kpc, i=50.):
-    """ solid body with inclination """
-
-    a, b = p
-    R = R_kpc   # * kpc_to_m
-    V_sini = a * R * np.sin(i * np.pi/180.) + b
-    return V_sini
-
-
 ydata = abs(np.array(z))
 yerr = z_err
 xdata = offset_to_physicalR(np.array(off), redshift)     # np.array(off)
@@ -536,33 +491,7 @@ plt.ylim(-50, 450)
 plt.tight_layout()
 plt.show()
 
-# Use Least sq appraoch instead
-x0 = [32, 0.5]
-errfunc = lambda p, x, y, err: (y - inner_rot(p, x)) / err
-_pfit1 = optimize.leastsq(errfunc, x0, args=(xdata, ydata, yerr), full_output=1)
-plt.errorbar(xdata, ydata, xerr=xerr, yerr=yerr, fmt='ko', linestyle='None', label='data')
-plt.plot(xdata, inner_rot(_pfit1[0], xdata), 'r--', label='least-sq basic model')
-plt.xlabel("Radial offset from line center position kpc")
-plt.ylabel("V [km/s]")
-plt.legend(loc='best')
-plt.xlim(-1, 8)
-plt.ylim(-50, 425)
-plt.tight_layout()
-plt.show()
-
-errfunc = lambda p, x, y, err: (y - inner_rot_incl(p, x)) / err
-_pfit2 = optimize.leastsq(errfunc, x0, args=(xdata, ydata, yerr), full_output=1)
-plt.errorbar(xdata, ydata, xerr=xerr, yerr=yerr, fmt='ko', linestyle='None', label='data')
-plt.plot(xdata, inner_rot_incl(_pfit2[0], xdata), 'r--', label='least-sq fit to sin i, but not R dep., should be same as above')
-plt.xlabel("Radial offset from line center position kpc")
-plt.ylabel("V [km/s]")
-plt.legend(loc='best')
-plt.xlim(-1, 8)
-plt.ylim(-50, 425)
-plt.tight_layout()
-plt.show()
-
-# tangent model to PV along major axis
+# Least sq fit tangent model to PV along major axis
 x4 = [30, 1, 1]
 xdataPV = list(xdata[:4])
 _blue = -xdata[4:]
@@ -594,7 +523,7 @@ def inner_rot_incl_iter(p, x, y):
         """
         diff_x = np.array([xloc[j] - xloc[3] for j in range(len(xloc))])
         diff_y = np.array([yloc[j] - yloc[3] for j in range(len(yloc))])
-        offset_sq = (diff_x * np.cos(np.mean(yloc * np.pi/180.)))**2 + (diff_y/np.cos(i*np.pi/180.))**2
+        offset_sq = (diff_x * np.cos(np.mean(yloc/3600. * np.pi/180.)))**2 + diff_y**2
         R = np.sqrt(offset_sq)
         return R
 
@@ -608,7 +537,7 @@ def calc_dist_only(xloc, yloc, i):
     """
     diff_x = np.array([xloc[j] - xloc[3] for j in range(len(xloc))])
     diff_y = np.array([yloc[j] - yloc[3] for j in range(len(yloc))])
-    offset_sq = (diff_x * np.cos(np.mean(yloc/3600. * np.pi/180.)))**2 + (diff_y/np.cos(i*np.pi/180.))**2
+    offset_sq = (diff_x * np.cos(np.mean(yloc/3600. * np.pi/180.)))**2 + diff_y**2
     R = np.sqrt(offset_sq)
     return R
 
@@ -651,20 +580,12 @@ def M_encl(R_kpc, v_sini):
     return M10
 
 # calc. mass within some physical dist from line center
-R_in_kpc = xdata.max()          # R assuming incl = 30 deg
-M_model1 = M_encl(R_in_kpc, inner_rot(_pfit1[0], R_in_kpc))   # use velo from fit
-print("Mass enclosed within {:.2f} kpc: {:.2f} x 1e+10 Msun".format(R_in_kpc, M_model1))
-M_model2 = M_encl(R_in_kpc, inner_rot_incl(_pfit2[0], R_in_kpc))
-print("Mass enclosed within {:.2f} kpc: {:.2f} x 1e+10 Msun".format(R_in_kpc, M_model2))
-
 R_in_kpc2 = R.max()              # using best-fit incl
 M_model_iter_inc = M_encl(R_in_kpc2, inner_rot_incl_iter(pfit, xidata, np.array(_dec)).max())               # could be dangerous to just use .max() on velocity, but don't want to mess with functions now.
 print("Mass enclosed within {:.2f} kpc: {:.2f} x 1e+10 Msun".format(R_in_kpc2, M_model_iter_inc))
 
 # plot M rise with R
 if plotMdyn:
-    plt.plot(xdata, M_encl(xdata, inner_rot(_pfit1[0], xdata)), label='i in R, but not velocity')
-    plt.plot(xdata, M_encl(xdata, inner_rot_incl(_pfit2[0], xdata)), label='i in R and velocity')
     plt.plot(R, M_encl(R, inner_rot_incl_iter(pfit, xidata, np.array(_dec))), label='R dep. on i')
     plt.legend()
     plt.tight_layout()
