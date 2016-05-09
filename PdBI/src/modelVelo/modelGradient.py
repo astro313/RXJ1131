@@ -516,59 +516,6 @@ plt.tight_layout()
 plt.show()
 print("Bestfit Circ velocity * sin i: {} km/s").format(_pfit4[0][0])
 
-# ----
-# fit i altogether with least-sq
-def inner_rot_incl_iter(p, x, y):
-    """ solve for i on-the-fly """
-
-    a, b, i = p
-
-    def _calc_dist_only(xloc, yloc, i):
-        """ calc distance in arcsec offset along major axis, taking into acct inclination
-        """
-        diff_x = np.array([xloc[j] - xloc[3] for j in range(len(xloc))])
-        diff_y = np.array([yloc[j] - yloc[3] for j in range(len(yloc))])
-        offset_sq = (diff_x * np.cos(np.mean(yloc/3600. * np.pi/180.)))**2 + diff_y**2
-        R = np.sqrt(offset_sq)
-        return R
-
-    R = offset_to_physicalR(_calc_dist_only(x, y, i=i), redshift)
-    V_obs = a * R * np.sin(i * np.pi/180.) + b
-    return V_obs
-
-
-def calc_dist_only(xloc, yloc, i):
-    """ calc distance in arcsec offset along major axis, taking into acct inclination
-    """
-    diff_x = np.array([xloc[j] - xloc[3] for j in range(len(xloc))])
-    diff_y = np.array([yloc[j] - yloc[3] for j in range(len(yloc))])
-    offset_sq = (diff_x * np.cos(np.mean(yloc/3600. * np.pi/180.)))**2 + diff_y**2
-    R = np.sqrt(offset_sq)
-    return R
-
-
-# copy list
-_ra = list(RA_major*deg_to_arcsec)
-_dec = list(Dec_major*deg_to_arcsec)
-_ra.pop(1)                # remove source two in red
-_dec.pop(1)
-xidata = np.array(_ra)
-
-p0 = [32, 0.5, 30.]
-errfunc = lambda p, x, dec, y, err: (y - inner_rot_incl_iter(p, x, dec)) / err
-pfit, pcov, infodict, errmsg, success = optimize.leastsq(errfunc, p0, args=(xidata, np.array(_dec), ydata, yerr), full_output=1)
-
-R = offset_to_physicalR(calc_dist_only(xidata, np.array(_dec), pfit[-1]), redshift)
-print("\n  best-fit inclination: {} deg \n").format(pfit[-1])
-plt.errorbar(R, ydata, yerr, fmt='ko', linestyle='None', label='data')
-plt.plot(R, inner_rot_incl_iter(pfit, xidata, np.array(_dec)), 'r--', label='fit i on the fly')
-plt.xlabel("Radial offset from line center position kpc")
-plt.ylabel("V [km/s]")
-plt.legend(loc='best')
-plt.xlim(-1, 8)
-plt.ylim(-50, 425)
-plt.tight_layout()
-plt.show()
 
 # ---
 def M_encl(R_kpc, v_sini):
