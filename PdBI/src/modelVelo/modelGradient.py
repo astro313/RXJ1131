@@ -14,6 +14,8 @@ History:
   - plot Mdyn as a func of R, of all models, all bug fixed, basically showing identical trend
   - fix bug in calc dist for model where R dep. on i, [3] instead of [4]
   - fix bug in calc error on physical dist.
+  - removed ODR for fitting to velocity models, becuase isn't working as expected.
+  - added fit to tangent model, which is highly sensitive to the characteristic radius...
 08 May 16:
   - plot PV, and rotation curve along major axis
   - fit to rotation curve, just solid body
@@ -64,7 +66,7 @@ z = [344.46, 344.46, 236.82, 129.16, 21.54, -86.08, -193.76, -301.38]
 plotMajorFit = False
 plotMajor_FirstMom = False
 plotPV = False
-plotRot = True
+plotRot = False
 # -----------------------------------------------
 #  Read fits file and Set up WCS
 # -----------------------------------------------
@@ -494,6 +496,15 @@ def offset_to_physicalR(R_arcsec, z):
     return arcsec_to_kpc * R_arcsec
 
 
+def arctang2(p, R_kpc):
+    vcsini, r_s, c = p
+    # hacky step to force r_s to be physical
+    if r_s > 0.1:
+        return vcsini*(2./np.pi)*np.arctan(r_s*R_kpc) + c
+    else:  # bascially reject this fit
+        return 1e-5
+
+
 def inner_rot(p, R_kpc):
     """ solid body """
 
@@ -569,7 +580,7 @@ def run_odr_for_model(model, func, guess, x, y, xerr, yerr):
     return param, uncertainty
 
 
-# run, the fit is somehow skewed? when added xerr to fit
+# run, the fit is somehow skewed? when added xerr to fit, isn't because it wans non-linear model?
 param1, p1_err = run_odr_for_model(_model_1, inner_rot, x0, xdata, ydata, xerr, yerr)
 param2, p2_err = run_odr_for_model(_model_2, inner_rot_incl, x0, xdata, ydata, xerr, yerr)
 
@@ -599,6 +610,26 @@ plt.xlim(-1, 8)
 plt.ylim(-50, 425)
 plt.tight_layout()
 plt.show()
+
+# tangent model
+x4 = [30, 1, 1]
+xdataPV = list(xdata[:4])
+_blue = -xdata[4:]
+for i in range(len(_blue)): xdataPV.append(_blue[i])
+xdataPV = np.array(xdataPV)
+errfunc = lambda p, x, y, err: (y - arctang2(p, x)) / err
+_pfit4 = optimize.leastsq(errfunc, x4, args=(xdataPV, np.array(z), yerr), full_output=1)
+plt.errorbar(xdataPV, np.array(z), xerr=xerr, yerr=yerr, fmt='ko', linestyle='None', label='data')
+# extrapolate for prettier looking
+plt.plot(np.linspace(xdataPV.min(), xdataPV.max(), 100), arctang2(_pfit4[0], np.linspace(xdataPV.min(), xdataPV.max(), 100)), 'r--', label='no fit to sin i, tangent 2')
+plt.xlabel("Radial offset from line center position kpc")
+plt.ylabel("V [km/s]")
+plt.legend(loc='best')
+plt.xlim(-8, 8)
+plt.ylim(-425, 425)
+plt.tight_layout()
+plt.show()
+print("Bestfit Circ velocity * sin i: {} km/s").format(_pfit4[0][0])
 
 # ----
 # fit i altogether with least-sq
