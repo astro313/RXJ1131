@@ -305,12 +305,10 @@ if plotMajorFit:
     residuals.set_xlim(fit.get_xlim())
     plt.axhline(y=0, color='b')
     plt.xlabel("RA ")
-    # These data look better if 'plain', not scientific, notation is used, and if
-    #   the tick labels are not offset by a constant (as is done by default).
-    plt.ticklabel_format(style='plain', useOffset=False, axis='x')
     plt.ylabel("Residuals")
     residuals.grid()
     plt.tight_layout()
+    plt.minorticks_on()
     plt.show()
 
 youtfit = fun2(out.beta, xdata)
@@ -449,6 +447,7 @@ if plotRot:
     plt.xlim(-0.2, 1.2)
     plt.legend()
     plt.tight_layout()
+    plt.minorticks_on()
     plt.show()
 # --------------------------------------------------------------
 #  disk model
@@ -507,7 +506,9 @@ if plotRot:
     plt.xlim(-1, 8.5)
     plt.ylim(-50, 450)
     plt.tight_layout()
+    plt.minorticks_on()
     plt.show()
+
 
 # fit tangent model to PV along major axis
 xdataPV = list(xdata[:4])
@@ -523,10 +524,27 @@ data = RealData(xdataPV, np.array(z),
 odr = ODR(data, _model, beta0=x4)
 out = odr.run()
 param = out.beta
-cov = out.cov_beta
-# print("\nStandard Covariance Matrix : \n", cov, "\n")
-uncertainty = out.sd_beta
 quasi_chisq = out.res_var
+
+# Print ODR Status and Results
+print 'Return Reason:\n', out.stopreason, '\n'
+print 'Estimated Parameters:\n', param, '\n'
+print 'Parameter Standard Errors:\n', out.sd_beta, '\n'
+print 'Covariance Matrix:\n', out.cov_beta, '\n'
+
+# Chi^2
+chi2 = 0.
+for i in range(len(np.array(z))):
+    residual = np.array(z)[i] - arctang2(param, xdataPV[i])
+    sigma = (xerr[i]**2. + yerr**2.)**0.5
+    chi2 += (residual / sigma)**2.
+# Reduced Chi^2
+ndof = len(ydata) - len(param)
+redchi2 = chi2 / ndof
+print 'Degrees of Freedom:\t', ndof
+print 'Chi-Square:\t\t', chi2
+print 'Reduced Chi-Square:\t', redchi2
+
 # Calculate initial residuals and the 'adjusted error' for each data point
 delta = out.delta  # estimated x-component of the residuals
 eps   = out.eps    # estimated y-component of the residuals
@@ -536,7 +554,6 @@ xstar = (xerr*np.sqrt(((yerr*delta)**2) / ((yerr*delta)**2 + (xerr*eps)**2)))
 ystar = (yerr*np.sqrt(((xerr*eps)**2) / ((yerr*delta)**2 + (xerr*eps)**2)))
 adjusted_err = np.sqrt(xstar**2 + ystar**2)
 residual = np.sign(np.array(z)-arctang2(param, xdataPV))*np.sqrt(delta**2 + eps**2)
-
 ## Plot
 fig = plt.figure(facecolor="0.98")   # with light gray background
 fig.subplots_adjust(hspace=0)
@@ -544,8 +561,15 @@ fit = fig.add_subplot(211)       #, adjustable='box', aspect=1.2)
 fit.set_xticklabels(())
 plt.ylabel("V obs")
 
-fit.plot(xdataPV, np.array(z), 'ro', xdataPV, arctang2(param, xdataPV))
+space = 0.2
+xspan = xdataPV.max() - xdataPV.min()
+yspan = np.array(z).max() - np.array(z).min()
+xspace = space * xspan
+yspace = space * yspan
+xarray = np.linspace(xdataPV.min()-xspace, xdataPV.max()+xspace, 500)
+fit.plot(xdataPV, np.array(z), 'ro', xarray, arctang2(param, xarray))
 fit.errorbar(xdataPV, np.array(z), xerr=xerr, yerr=yerr, fmt='r+')
+plt.errorbar(xdataPV, np.array(z), fmt='ro', xerr=xerr, yerr=yerr)
 fit.set_yscale('linear')
 a = np.array([out.xplus, xdataPV])
 b = np.array([out.y, np.array(z)])
@@ -566,23 +590,41 @@ plt.xlabel("R")
 plt.ticklabel_format(style='plain', useOffset=False, axis='x')
 plt.ylabel("Residuals")
 residuals.grid()
+plt.minorticks_on()
 plt.tight_layout()
 plt.show()
 
 # Least sq
 errfunc = lambda p, x, y, err: (y - arctang2(p, x)) / err
-_pfit4 = optimize.leastsq(errfunc, x4, args=(xdataPV, np.array(z), yerr), full_output=1, maxfev=10000)
+_pfit4, pcov, infodict, errmsg, success = optimize.leastsq(errfunc, x4, args=(xdataPV, np.array(z), yerr), full_output=1, maxfev=10000)
+if (len(np.array(z)) > len(x4)) and pcov is not None:
+    s_sq = (errfunc(_pfit4, xdataPV, np.array(z), yerr)**2).sum() / (len(np.array(z)) - len(x4))
+    pcov = pcov * s_sq
+else:
+    pcov = inf
+error = []
+for i in range(len(_pfit4)):
+    try:
+        error.append(np.absolute(pcov[i][i])**0.5)
+    except:
+        error.append(0.00)
+perr_leastsq = np.array(error)
+print 'LS Fit Parameter:\n', _pfit4, '\n'
+print 'LS Fit Parameter Errors:\n', perr_leastsq, '\n'
+print("\n Best-fit V*sin i: {} km/s \n").format(_pfit4[0])
+
+# plot least sq result
 plt.errorbar(xdataPV, np.array(z), xerr=xerr, yerr=yerr, fmt='ko', linestyle='None', label='data')
 # extrapolate for prettier looking
-plt.plot(np.linspace(xdataPV.min(), xdataPV.max(), 100), arctang2(_pfit4[0], np.linspace(xdataPV.min(), xdataPV.max(), 100)), 'r--', label='no fit to sin i, arctan model')
+plt.plot(xarray, arctang2(_pfit4, xarray), 'r--', label='no fit to sin i, arctan model')
 plt.xlabel("Radial offset from line center position kpc")
 plt.ylabel("V [km/s]")
 plt.legend(loc='best')
 plt.xlim(-10, 10)
 plt.ylim(-425, 425)
 plt.tight_layout()
+plt.minorticks_on()
 plt.show()
-print("Bestfit Circ velocity * sin i: {} km/s").format(_pfit4[0][0])
 
 # ---
 def M_encl(R_kpc, v_sini):
