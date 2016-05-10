@@ -1,15 +1,13 @@
 '''
 
-Plot points on SED, put MIR and radio data on plot for background source but don't include in fit, maybe use IRAS 60, 100 micron to constrain SED peak
-- mark continuum for foreground and background differently
+Plot points on SED, put MIR and radio data on plot for background source but not used in fit.
 
 Last Modified: Jan 09 2016
 
 
 TODO
 - put mbb_emcee fit
--
-
+- mark continuum for foreground and background differently
 
 History
 -------
@@ -58,9 +56,9 @@ tbl = read_file(photoFile)
 
 # separate out photometry and those as upper limits
 print tbl.colnames
-idx, = np.where(np.isnan(tbl['Flux Err [mJy]']) == True)
+idx, = np.where(np.isnan(tbl['Flux Err [mJy]']) is True)
 tblUpLimit = tbl[idx]
-idx, = np.where(np.isnan(tbl['Flux Err [mJy]']) == False)
+idx, = np.where(np.isnan(tbl['Flux Err [mJy]']) is False)
 tblWithErr = tbl[idx]
 
 waveUpLimit = np.asarray(tblUpLimit['Wavelength [micron]'])
@@ -110,7 +108,7 @@ ax.errorbar(wave, flux, fluxErr, fmt=".r", ms=8, ecolor='gray',
             label='photo', capsize=8, elinewidth=4, capthick=1.5)
 ax.errorbar(waveUpLimit, fluxUpLimit, uplims=True, fmt="vk", ms=8, ecolor='gray', label='upperlimit', capsize=8, elinewidth=4, capthick=1.5)
 
-ax.set_ylim(min(flux)-0.5, 3*max(flux))
+# ax.set_ylim(min(flux)-0.5, 3*max(flux))
 ax.set_yscale("log")
 ax.set_xscale("log")
 

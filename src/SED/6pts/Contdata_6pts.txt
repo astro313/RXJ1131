@@ -1,9 +1,0 @@
-# Use this file with mbb_emcee, filter <=> instrument dependent
-# Instrument  flux density[mJy]  Flux err [mJy]
-MIPS_24um 47.18 0.03
-SPIRE_250um 289.4271426 9.554673
-SPIRE_350um 168.229 8.6147
-SPIRE_500um 56.781866 8.81188
-CARMA_dsb_216.0_1.875_9.9 0 2.4924
-# PdBI_box_139.256_3.16 0.4 0.0816+calibrationErr
-PdBI_box_139.256_3.16 0.4 0.1976
