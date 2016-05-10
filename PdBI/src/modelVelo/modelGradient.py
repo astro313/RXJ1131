@@ -8,7 +8,6 @@ Last Modified: 10 May 16
 TODO:
 get source size in old papers: C06: F160W sersic profile R_e = 9.8 kpc h_50^-1; F814W = 14.4kpc h_50^-1
 get i from C06
-- use ODR to fit with xerr
 
 History:
 10 May 16:
@@ -20,6 +19,7 @@ History:
   - remove deriving Mdyn using old models
   - fix bug RA_major_err, Dec_major_err
   - add xerr bar on v_0
+  - add ODR to fit arctangent model with xerr
 09 May 16:
   - fix a bug in run_odr_for_model()
   - added func to calc offset taking into acct inclination effect on y
@@ -74,10 +74,10 @@ p_list_err = [(0.39, 0.3), (0.25, 0.2), (0.06, 0.21), (0.14, 0.22),
 # corresponding velocity in km/s for each points in p_list
 z = [344.46, 344.46, 236.82, 129.16, 21.54, -86.08, -193.76, -301.38]
 
-plotMajorFit = True
-plotMajor_FirstMom = True
-plotPV = True
-plotRot = True
+plotMajorFit = False
+plotMajor_FirstMom = False
+plotPV = False
+plotRot = False
 plotMdyn = False
 # -----------------------------------------------
 #  Read fits file and Set up WCS
@@ -169,8 +169,7 @@ a.close()
 #                 bbox_inches="tight", pad_inches=0.1)
 #     print "-- Saved figure as : %s --" % (Plotpath + filename)
 
-theta_rad = abs(np.arctan(dec_coord_ls[0] - dec_coord_ls[-1]) / (
-    (ra_coord_ls[0] - ra_coord_ls[-1]) * np.cos(np.mean(dec_coord_ls))))
+theta_rad = abs(np.arctan(dec_coord_ls[0] - dec_coord_ls[-1]) / ((ra_coord_ls[0] - ra_coord_ls[-1]) * np.cos(np.mean(dec_coord_ls))))
 theta_deg = theta_rad * 180. / np.pi
 PA_deg = theta_deg + 90.
 print(" \n PA along the `major axis`: {} deg. \n ").format(PA_deg)
@@ -376,7 +375,7 @@ def fitted_err_on_y(deltaP, x):
     dy = np.sqrt((x * deltam)**2 + (deltab)**2)
     return dy
 
-def calc_dist(xloc, yloc, delta_x, delta_y):
+def calc_dist(xloc, yloc, delta_x, delta_y): # , xcenter_err, ycenter_err):
     """ calc distance in arcsec offset along major axis
 
     Parameters
@@ -385,15 +384,18 @@ def calc_dist(xloc, yloc, delta_x, delta_y):
         RA in deg of source position
     yloc: array
         dec in deg of source position along the fitted major axis
-
+    delta_x: array
+        RA in arcsec
+    delta_y: array
+        Dec in arcsec
     Return
     ------
     offset: array
         in arcsec along the major axis, w.r.t the central emission position
 
     """
-    delta_x0 = xcenter_err
-    delta_y0 = ycenter_err
+    delta_x0 = delta_x[4]
+    delta_y0 = delta_y[4]
 
     diff_x = np.array([xloc[i] - xloc[4] for i in range(len(xloc))])
     diff_y = np.array([yloc[i] - yloc[4] for i in range(len(yloc))])
@@ -407,13 +409,13 @@ def calc_dist(xloc, yloc, delta_x, delta_y):
 
     return R, offset_err
 
-
 # youfitErr = fitted_err_on_y(uncertainty, xdata)     # very big..., because of x
 # use uncertainty on ydata instead
 # reasonble because people slice along their map, they don't fit for the major axis
 
-offset, offset_err = calc_dist(RA_major*deg_to_arcsec, Dec_major*deg_to_arcsec, RA_major_err, Dec_major_err)
-
+offset, offset_err = calc_dist(RA_major*deg_to_arcsec,
+                               Dec_major*deg_to_arcsec,
+                               RA_major_err, Dec_major_err)
 # to show blue, red on left and right of central
 offset[5:] = -offset[5:]
 off = list(offset)
@@ -423,7 +425,7 @@ z.pop(1)
 offset_err.pop(1)
 z_err = 21.5*5/2.     # range of channels combined to make models/2. --> error bar
 if plotPV:
-    plt.errorbar(off, z, yerr=z_err, fmt='r+', xerr=offset_err)
+    plt.errorbar(off, z, yerr=z_err, fmt='ro', xerr=offset_err)
     plt.ylabel('v_r = v sin i')
     plt.xlabel(' offset from line center position ["] ')
     plt.title('PV along major axis at PA {:.2f} deg'.format(PA_deg))
@@ -436,7 +438,7 @@ offset_err = list(offset_err)
 off.pop(1)
 offset_err.pop(1)
 if plotRot:
-    plt.errorbar(off[3], z[3], yerr=z_err, fmt='go', label='line center')
+    plt.errorbar(off[3], z[3], xerr=offset_err[3], yerr=z_err, fmt='go', label='line center')
     plt.errorbar(off[:3], z[:3], yerr=z_err, fmt='ro', label='red', xerr=offset_err[:3])
 
     plt.ylabel('|v_r = v sin i|')
@@ -448,7 +450,6 @@ if plotRot:
     plt.legend()
     plt.tight_layout()
     plt.show()
-
 # --------------------------------------------------------------
 #  disk model
 # ---------------------------------------------------------------
@@ -485,10 +486,10 @@ def offset_to_physicalR(R_arcsec, z):
 
 
 def arctang2(p, R_kpc):
-    vcsini, r_s, c = p
+    vcsini, r_s, v_0 = p
     # hacky step to force r_s to be physical
     if r_s > 0.1:
-        return vcsini*(2./np.pi)*np.arctan(r_s*R_kpc) + c
+        return vcsini*(2./np.pi)*np.arctan(r_s*R_kpc) + v_0
     else:  # bascially reject this fit
         return 1e-5
 
@@ -499,29 +500,85 @@ xdata = offset_to_physicalR(np.array(off), redshift)     # np.array(off)
 xerr = offset_to_physicalR(np.array(offset_err), redshift)      # np.array(offset_err)
 
 # plot velocity v.s. physical radius
-plt.errorbar(xdata, ydata, yerr=yerr, fmt='ko', xerr=xerr)
-plt.ylabel('V sin i')
-plt.xlabel('Physical distance from line center [kpc]')
-plt.xlim(-1, 8.5)
-plt.ylim(-50, 450)
-plt.tight_layout()
-plt.show()
+if plotRot:
+    plt.errorbar(xdata, ydata, yerr=yerr, fmt='ko', xerr=xerr)
+    plt.ylabel('V sin i')
+    plt.xlabel('Physical distance from line center [kpc]')
+    plt.xlim(-1, 8.5)
+    plt.ylim(-50, 450)
+    plt.tight_layout()
+    plt.show()
 
-# Least sq fit tangent model to PV along major axis
-x4 = [30, 1, 1]
+# fit tangent model to PV along major axis
 xdataPV = list(xdata[:4])
 _blue = -xdata[4:]
 for i in range(len(_blue)): xdataPV.append(_blue[i])
 xdataPV = np.array(xdataPV)
+
+# ODR
+x4 = [30, 1, 1]
+_model = Model(arctang2)
+data = RealData(xdataPV, np.array(z),
+                sx=xerr, sy=yerr)
+odr = ODR(data, _model, beta0=x4)
+out = odr.run()
+param = out.beta
+cov = out.cov_beta
+# print("\nStandard Covariance Matrix : \n", cov, "\n")
+uncertainty = out.sd_beta
+quasi_chisq = out.res_var
+# Calculate initial residuals and the 'adjusted error' for each data point
+delta = out.delta  # estimated x-component of the residuals
+eps   = out.eps    # estimated y-component of the residuals
+# (xstar,ystar) is the point where the 'residual line' (in black)
+#   intersects the 'ellipse' created by xerr & yerr.
+xstar = (xerr*np.sqrt(((yerr*delta)**2) / ((yerr*delta)**2 + (xerr*eps)**2)))
+ystar = (yerr*np.sqrt(((xerr*eps)**2) / ((yerr*delta)**2 + (xerr*eps)**2)))
+adjusted_err = np.sqrt(xstar**2 + ystar**2)
+residual = np.sign(np.array(z)-arctang2(param, xdataPV))*np.sqrt(delta**2 + eps**2)
+
+## Plot
+fig = plt.figure(facecolor="0.98")   # with light gray background
+fig.subplots_adjust(hspace=0)
+fit = fig.add_subplot(211)       #, adjustable='box', aspect=1.2)
+fit.set_xticklabels(())
+plt.ylabel("V obs")
+
+fit.plot(xdataPV, np.array(z), 'ro', xdataPV, arctang2(param, xdataPV))
+fit.errorbar(xdataPV, np.array(z), xerr=xerr, yerr=yerr, fmt='r+')
+fit.set_yscale('linear')
+a = np.array([out.xplus, xdataPV])
+b = np.array([out.y, np.array(z)])
+# to show where the fit is relative to the points
+fit.plot(np.array([a[0][0], a[1][0]]), np.array([b[0][0], b[1][0]]),
+         'k-', label='Residuals')
+for i in range(1, len(np.array(z))):
+    fit.plot(np.array([a[0][i], a[1][i]]), np.array([b[0][i], b[1][i]]),
+         'k-')
+fit.legend(loc='upper left')
+fit.grid()
+residuals = fig.add_subplot(212)
+residuals.errorbar(x=xdataPV, y=residual, yerr=adjusted_err,
+                            fmt="r+", label="Residuals")
+residuals.set_xlim(fit.get_xlim())
+plt.axhline(y=0, color='b')
+plt.xlabel("R")
+plt.ticklabel_format(style='plain', useOffset=False, axis='x')
+plt.ylabel("Residuals")
+residuals.grid()
+plt.tight_layout()
+plt.show()
+
+# Least sq
 errfunc = lambda p, x, y, err: (y - arctang2(p, x)) / err
 _pfit4 = optimize.leastsq(errfunc, x4, args=(xdataPV, np.array(z), yerr), full_output=1, maxfev=10000)
 plt.errorbar(xdataPV, np.array(z), xerr=xerr, yerr=yerr, fmt='ko', linestyle='None', label='data')
 # extrapolate for prettier looking
-plt.plot(np.linspace(xdataPV.min(), xdataPV.max(), 100), arctang2(_pfit4[0], np.linspace(xdataPV.min(), xdataPV.max(), 100)), 'r--', label='no fit to sin i, tangent 2')
+plt.plot(np.linspace(xdataPV.min(), xdataPV.max(), 100), arctang2(_pfit4[0], np.linspace(xdataPV.min(), xdataPV.max(), 100)), 'r--', label='no fit to sin i, arctan model')
 plt.xlabel("Radial offset from line center position kpc")
 plt.ylabel("V [km/s]")
 plt.legend(loc='best')
-plt.xlim(-8, 8)
+plt.xlim(-10, 10)
 plt.ylim(-425, 425)
 plt.tight_layout()
 plt.show()
@@ -546,6 +603,7 @@ def M_encl(R_kpc, v_sini):
 
 # plot M rise with R
 if plotMdyn:
+    pass
     # plt.plot(R, M_encl(R, inner_rot_incl_iter(pfit, xidata, np.array(_dec))), label='R dep. on i')
     # plt.legend()
     # plt.tight_layout()
