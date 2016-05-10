@@ -7,7 +7,7 @@ Last Modified: 10 May 16
 
 TODO:
 get source size in old papers: C06: F160W sersic profile R_e = 9.8 kpc h_50^-1; F814W = 14.4kpc h_50^-1
-get i from C06
+get i from C06 ~ 3.25" across, 1.8" updown
 
 History:
 10 May 16:
@@ -20,6 +20,7 @@ History:
   - fix bug RA_major_err, Dec_major_err
   - add xerr bar on v_0
   - add ODR to fit arctangent model with xerr
+  - fix bug in PA calc.
 09 May 16:
   - fix a bug in run_odr_for_model()
   - added func to calc offset taking into acct inclination effect on y
@@ -40,6 +41,11 @@ History:
   - added error bars to positions
 04 May 16:
   - created code
+
+
+Note
+----
+Fitting data w/ unc. on both x, y using ordinary least squares can lead to bias in the solution. Use Orthogonal Distance Regression (ODR), rather than minimizing the sum of squared errors in the dependent variable, ODR minimizes the orthogonal distance from the data to the fitted curve by adjusting both the model coefficients and an adjustment to the values of the independent variable.
 
 '''
 import matplotlib
@@ -64,6 +70,10 @@ DecCentroid = -12.5328629
 RACentroid = 172.96434563
 CellSize = 0.5        # arcsec per pixel in 1D
 redshift = 0.6357
+b_arcsec = 1.8       # from C06
+a_arcsec = 3.25
+i_rad = np.arccos(b_arcsec/a_arcsec)
+i_deg = i_rad * 180./np.pi
 
 # source positions from models of different channel, offset in arcsec
 p_list = [(-0.20, 0.12), (-0.02, 0.11), (0.20, -0.13), (0.29, -0.01),
@@ -169,7 +179,7 @@ a.close()
 #                 bbox_inches="tight", pad_inches=0.1)
 #     print "-- Saved figure as : %s --" % (Plotpath + filename)
 
-theta_rad = abs(np.arctan(dec_coord_ls[0] - dec_coord_ls[-1]) / ((ra_coord_ls[0] - ra_coord_ls[-1]) * np.cos(np.mean(dec_coord_ls))))
+theta_rad = abs(np.arctan((dec_coord_ls[0] - dec_coord_ls[-1]) / ((ra_coord_ls[0] - ra_coord_ls[-1]) * np.cos(np.mean(dec_coord_ls) * np.pi/180.))))
 theta_deg = theta_rad * 180. / np.pi
 PA_deg = theta_deg + 90.
 print(" \n PA along the `major axis`: {} deg. \n ").format(PA_deg)
@@ -207,7 +217,6 @@ def residuals(theta, x, y, err):
 x0 = [10., 90.]
 best = optimize.fmin(residuals, x0, args=(
     xdata, ydata, yerr))
-print best
 
 if plotMajorFit:
     plt.errorbar(ra_px_ls, dec_px_ls, xerr=ra_err_ls, yerr=dec_err_ls,
@@ -612,6 +621,9 @@ perr_leastsq = np.array(error)
 print 'LS Fit Parameter:\n', _pfit4, '\n'
 print 'LS Fit Parameter Errors:\n', perr_leastsq, '\n'
 print("\n Best-fit V*sin i: {} km/s \n").format(_pfit4[0])
+v_rot = _pfit4[0]/np.sin(i_rad)
+print("V_rot = V_obs/sin i: {} km/s \n").format(v_rot)
+print("Range of V_rot: {} - {} km/s ").format(v_rot-perr_leastsq[0], v_rot+perr_leastsq[1])
 
 # plot least sq result
 plt.errorbar(xdataPV, np.array(z), xerr=xerr, yerr=yerr, fmt='ko', linestyle='None', label='data')
@@ -627,13 +639,13 @@ plt.minorticks_on()
 plt.show()
 
 # ---
-def M_encl(R_kpc, v_sini):
+def M_encl(R_kpc, v):
     """ calc mass enclosed """     # v in km/s
     from astropy.constants import G
 
     R = kpc_to_m * R_kpc
     Msun = 1.989e30      # kg
-    v2 = (v_sini * 1e3)**2
+    v2 = (v * 1e3)**2
     v2oG = v2 / G.value
     v2oGoMsun = v2oG / Msun
     M = R * v2oGoMsun           # per Msun
@@ -641,7 +653,8 @@ def M_encl(R_kpc, v_sini):
     return M10
 
 # calc. mass within some physical dist from line center
-# print("Mass enclosed within {:.2f} kpc: {:.2f} x 1e+10 Msun".format(R_in_kpc2, M_model_iter_inc))
+R_in_kpc = xdata.max()
+print("Mass enclosed within {:.2f} kpc: {:.2f} x 1e+10 Msun".format(R_in_kpc, M_encl(R_in_kpc, _pfit4[0]/np.sin(i_rad))))
 
 # plot M rise with R
 if plotMdyn:
