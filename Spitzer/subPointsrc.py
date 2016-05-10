@@ -4,6 +4,10 @@
 
 Subtract foreground profile to extract fluxes
 
+Last Modified: 10 May 2016
+
+CAUTION:
+    edit variables FWHM, IRACim, aper_cor before running code
 
 '''
 
@@ -38,7 +42,7 @@ starFWHM_ch3 = [3.37, 3.87, 3.87, 3.27, 3.67]
 starFWHM_ch4 = [4.40, 4.01, 3.57, 3.79, 3.7]
 
 # ---------------------------------------
-# change this as necessary
+# CAUTION: change this as necessary
 FWHM = np.mean(starFWHM_ch1)
 IRACim = IRACim1
 aper_cor = aperture_correction[0]       # [channel # -1]
@@ -69,8 +73,10 @@ fitter = fitting.LevMarLSQFitter()
 g = fitter(g_init, xx, yy, b)
 # g = fitter(sersic_init, xx, yy, b)
 
-res_zoom = b[ycen-50:ycen+50, xcen-50:xcen+50] # (b - g(xx, yy))[ycen-50:ycen+50, xcen-50:xcen+50]
+# res_zoom = b[ycen-50:ycen+50, xcen-50:xcen+50]     # to calc. in original image
+res_zoom = (b - g(xx, yy))[ycen-50:ycen+50, xcen-50:xcen+50]
 pos_res_zoom = np.ma.masked_where(res_zoom < 0., res_zoom)
+
 # show over subtracting
 # plt.figure(1)
 # plt.imshow(b[ycen-50:ycen+50, xcen-50:xcen+50])
