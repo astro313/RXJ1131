@@ -2,7 +2,7 @@
 # CARMA_dsb_cent_widthoneSB_TotGap
 # Use this file with mbb_emcee, filter <=> instrument dependent
 # Instrument  flux density[mJy]  Flux err [mJy]
-MIPS_24um 47.18 0.03
+MIPS_24um 27.737 0.512
 IRAS_60um 0 600
 IRAS_100um 0 1000
 SPIRE_250um 289.4271426 9.554673
