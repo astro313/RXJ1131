@@ -7,13 +7,14 @@ wavelength [um], freq [GHz], flux density [mJy], flux_err [mJy], instrument
 Save table as latex file
 
 
-Last Modified: May 1 2016
-
+Last Modified: May 10 2016
 
 History
 -------
+May 10 2016:
+    add decomposed IRAC points, and the missing 3.6 um point
 May 1 2016:
-  update output error to 3 decimal places
+    update output error to 4 decimal places, one can truncate the extra sig. fig. in the LaTeX table as needed
 Mar 28 2016:
     updated SPITZER/IRAC data to using 5.8" diameter aperture flux
 Jan 09 2016:
@@ -54,12 +55,30 @@ data_rows = [(1.25, (1.25*u.micron).to(u.GHz, equivalencies=u.spectral()).value
               21.96, 0.4247, 'WISE/W3'),
              (22, (22*u.micron).to(u.GHz, equivalencies=u.spectral()).value,
               55.11, 1.878, 'WISE/W4'),
+             (3.6, (3.6*u.micron).to(u.GHz, equivalencies=u.spectral()).value,
+              5.6183, 0.0021, 'Spitzer/IRAC(Extracted)'),
              (4.5, (4.5*u.micron).to(u.GHz, equivalencies=u.spectral()).value,
-              7.803, 0.002082 , 'Spitzer/IRAC'),
+              7.803, 0.002082 , 'Spitzer/IRAC(Archive)'),
              (5.8, (5.8*u.micron).to(u.GHz, equivalencies=u.spectral()).value,
-              10.72, 0.00512, 'Spitzer/IRAC'),
-             (8.9, (8.9*u.micron).to(u.GHz, equivalencies=u.spectral()).value,
-              14.47, 0.004122, 'Spitzer/IRAC'),
+              10.72, 0.00512, 'Spitzer/IRAC(Archive)'),
+             (8.0, (8.0*u.micron).to(u.GHz, equivalencies=u.spectral()).value,
+              14.47, 0.004122, 'Spitzer/IRAC(Archive)'),
+             (3.6, (3.6*u.micron).to(u.GHz, equivalencies=u.spectral()).value,
+              5.0336, 0.0021, 'Spitzer/IRAC(Host)'),
+             (4.5, (4.5*u.micron).to(u.GHz, equivalencies=u.spectral()).value,
+              6.0092, 0.0017, 'Spitzer/IRAC(Host)'),
+             (5.8, (5.8*u.micron).to(u.GHz, equivalencies=u.spectral()).value,
+              7.5567, 0.0030, 'Spitzer/IRAC(Host)'),
+             (8.0, (8.0*u.micron).to(u.GHz, equivalencies=u.spectral()).value,
+              9.8811, 0.0039, 'Spitzer/IRAC(Host)'),
+             (3.6, (3.6*u.micron).to(u.GHz, equivalencies=u.spectral()).value,
+              0.5847, 0.00297, 'Spitzer/IRAC(Archive-Host)'),
+             (4.5, (4.5*u.micron).to(u.GHz, equivalencies=u.spectral()).value,
+              1.7938, 0.0027 , 'Spitzer/IRAC(Archive-Host)'),
+             (5.8, (5.8*u.micron).to(u.GHz, equivalencies=u.spectral()).value,
+              3.1633, 0.0059, 'Spitzer/IRAC(Archive-Host)'),
+             (8.0, (8.0*u.micron).to(u.GHz, equivalencies=u.spectral()).value,
+              4.5889, 0.00566, 'Spitzer/IRAC(Archive-Host)'),
              (24, (24*u.micron).to(u.GHz, equivalencies=u.spectral()).value,
               47.18, 0.02621, 'Spitzer/MIPS'),
              (250, (250*u.micron).to(u.GHz, equivalencies=u.spectral()).value,
@@ -96,7 +115,7 @@ data_CARMA = [((216*u.GHz).to(u.micron, equivalencies=u.spectral()).value, 216, 
 
 # fill table
 tbl = Table(rows=data_rows, names=tableColHead,
-            dtype=['f4', 'f4', 'f4', 'f4', (str, 20)])
+            dtype=['f4', 'f4', 'f4', 'f4', (str, 30)])
             # dtype=('f8, 'f8', 'f8', 'f8', 'S20')
             # dtype=[(str, 20), (str, 10), int, int, float, float, float, float, float, float, int]
 # len(tbl)
