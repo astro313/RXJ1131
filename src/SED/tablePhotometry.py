@@ -13,6 +13,7 @@ History
 -------
 May 10 2016:
     add decomposed IRAC points, and the missing 3.6 um point
+    add PdBI residual point, error corresponds to without adding that from flux cal.
 May 1 2016:
     update output error to 4 decimal places, one can truncate the extra sig. fig. in the LaTeX table as needed
 Mar 28 2016:
@@ -106,7 +107,9 @@ data_VLA = [((4.8815*u.GHz).to(u.micron, equivalencies=u.spectral()).value,
 data_PdBI = [((139.256*u.GHz).to(u.micron, equivalencies=u.spectral()).value,
               139.256, 1.23, 0.22, 'PdBI-integrated'),
              ((139.256*u.GHz).to(u.micron, equivalencies=u.spectral()).value,
-              139.256, 0.799, 1.3e-2, 'PdBI-peak')
+              139.256, 0.799, 1.3e-2, 'PdBI-peak'),
+             ((139.256*u.GHz).to(u.micron, equivalencies=u.spectral()).value,
+              139.256,  0.4, 0.0816, 'PdBI-removedFG')  #  err incl. flux cal., used in SED fitting = 0.1976
             ]
 
 rmsCARMA_cont = 8.30807E-01   # mJy
