@@ -1,15 +1,14 @@
 #!/usr/bin/env python
 '''
 
-plot source locations from lens model of various channel as markers on observed 1st moment map
+plot source locations from lens model of various channel as markers on observed 1st moment map. Kinematics.
 
-Last Modified: 10 May 16
-
-TODO:
-get source size in old papers: C06: F160W sersic profile R_e = 9.8 kpc h_50^-1; F814W = 14.4kpc h_50^-1
-get i from C06 ~ 3.25" across, 1.8" updown
+Last Modified: 11 May 16
 
 History:
+11 May 16:
+  - use curve fit, problem is non-linear in parameters
+  - note, we are also interested in reporting the correlation between the degenerate parameters --> need pearson R coefficients
 10 May 16:
   - remove ODR fit to rot. curve, since xerr drives poor fit
   - fix R function, major axis is not affected by inclination angle in circular
@@ -42,10 +41,19 @@ History:
 04 May 16:
   - created code
 
-
 Note
 ----
 Fitting data w/ unc. on both x, y using ordinary least squares can lead to bias in the solution. Use Orthogonal Distance Regression (ODR), rather than minimizing the sum of squared errors in the dependent variable, ODR minimizes the orthogonal distance from the data to the fitted curve by adjusting both the model coefficients and an adjustment to the values of the independent variable.
+
+ The results of the covariance matrix, as implemented by optimize.curvefit and optimize.leastsq rely on assumptions regarding the probability distribution of the errors and the interactions between parameters; interactions which may exist, depending on the fit function f(x).
+
+The best way to deal with a complicated f(x) may be to use bootstrap.
+
+Source size in C06: F160W sersic profile R_e = 9.8 kpc h_50^-1; F814W = 14.4kpc h_50^-1
+7.00 kpc/" for 70 km/s
+9.811 kpc/" for 50 km/s
+~ 10.3 kpc in 70 km/s
+
 
 '''
 import matplotlib
@@ -238,7 +246,9 @@ errfunc = lambda p, x, y, err: (y - fun2(p, x)) / err
 pfit, pcov, infodict, errmsg, success = optimize.leastsq(errfunc, x0, args=(xdata, ydata, yerr), full_output=1)
 
 if (len(ydata) > len(x0)) and pcov is not None:
+    # reduced-chi
     s_sq = (errfunc(pfit, xdata, ydata, yerr)**2).sum() / (len(ydata) - len(x0))
+    # covar = fractional covar * reduced-chi
     pcov = pcov * s_sq
 else:
     pcov = inf
@@ -263,9 +273,9 @@ param = out.beta
 cov = out.cov_beta
 # print("\nStandard Covariance Matrix : \n", cov, "\n")
 uncertainty = out.sd_beta
-quasi_chisq = out.res_var
-# if quasi_chisq < 1.0 :
-#     uncertainty = uncertainty/np.sqrt(quasi_chisq)
+reduced_chi2 = out.res_var
+# if reduced_chi2 < 1.0 :
+#     uncertainty = uncertainty/np.sqrt(reduced_chi2)
 # if False: # debugging print statements
 #     print("sd_beta",out.sd_beta)
 #     print("cov_beta",out.cov_beta)
@@ -493,10 +503,18 @@ def offset_to_physicalR(R_arcsec, z):
     return arcsec_to_kpc * R_arcsec
 
 
+def arctang(R_kpc, vcsini, r_s, v_0):
+    # hacky step to force r_s to be physical
+    if r_s > 0.1 and r_s < 1e4:
+        return vcsini*(2./np.pi)*np.arctan(r_s*R_kpc) + v_0
+    else:  # bascially reject this fit
+        return 1e-5
+
+
 def arctang2(p, R_kpc):
     vcsini, r_s, v_0 = p
     # hacky step to force r_s to be physical
-    if r_s > 0.1:
+    if r_s > 0.1 and r_s < 1e4:
         return vcsini*(2./np.pi)*np.arctan(r_s*R_kpc) + v_0
     else:  # bascially reject this fit
         return 1e-5
@@ -504,8 +522,8 @@ def arctang2(p, R_kpc):
 
 ydata = abs(np.array(z))
 yerr = z_err
-xdata = offset_to_physicalR(np.array(off), redshift)     # np.array(off)
-xerr = offset_to_physicalR(np.array(offset_err), redshift)      # np.array(offset_err)
+xdata = offset_to_physicalR(np.array(off), redshift)
+xerr = offset_to_physicalR(np.array(offset_err), redshift)
 
 # plot velocity v.s. physical radius
 if plotRot:
@@ -526,20 +544,26 @@ for i in range(len(_blue)): xdataPV.append(_blue[i])
 xdataPV = np.array(xdataPV)
 
 # ODR
-x4 = [30, 1, 1]
+x4 = [100, 2, 20]
 _model = Model(arctang2)
 data = RealData(xdataPV, np.array(z),
                 sx=xerr, sy=yerr)
 odr = ODR(data, _model, beta0=x4)
 out = odr.run()
 param = out.beta
-quasi_chisq = out.res_var
-
+covar = out.cov_beta
+reduced_chi2 = out.res_var
+if reduced_chi2 < 1.0 :
+    uncertainty = out.sd_beta/np.sqrt(reduced_chi2)
+else:
+    uncertainty = out.sd_beta
+pearsonR = covar/np.outer(uncertainty, uncertainty)
+DoF = len(xdataPV)-len(out.beta)
 # Print ODR Status and Results
 print 'Return Reason:\n', out.stopreason, '\n'
 print 'Estimated Parameters:\n', param, '\n'
 print 'Parameter Standard Errors:\n', out.sd_beta, '\n'
-print 'Covariance Matrix:\n', out.cov_beta, '\n'
+print 'Covariance Matrix:\n', out.covar, '\n'
 
 # Chi^2
 chi2 = 0.
@@ -620,6 +644,8 @@ for i in range(len(_pfit4)):
 perr_leastsq = np.array(error)
 print 'LS Fit Parameter:\n', _pfit4, '\n'
 print 'LS Fit Parameter Errors:\n', perr_leastsq, '\n'
+t = errfunc(_pfit4, xdataPV, np.array(z), yerr)**2
+print 'Chi2: ', t.sum()
 print("\n Best-fit V*sin i: {} km/s \n").format(_pfit4[0])
 v_rot = _pfit4[0]/np.sin(i_rad)
 print("V_rot = V_obs/sin i: {} km/s \n").format(v_rot)
@@ -637,6 +663,81 @@ plt.ylim(-425, 425)
 plt.tight_layout()
 plt.minorticks_on()
 plt.show()
+
+# curve fit
+pfit, perr = optimize.curve_fit(arctang, xdataPV, np.array(z), p0=x4, sigma=yerr, absolute_sigma=True)
+perr = np.sqrt(np.diag(pcov))
+print("\nFit parameters and parameter errors from curve_fit method:")
+print("pfit = ", p_curve)
+print("perr = ", perr)
+
+
+# monte-carlo: generates random data points starting from the given data plus a random variation based on the systematic error
+nsam = 100
+ps = []
+debug = False
+
+for i in range(nsam):
+    randomDelta = np.random.normal(0., yerr, size=len(z))
+    randomdataY = np.array(z) + randomDelta
+
+    if debug:
+        # verify it's drawing from distribution we expect
+        randomDelta = np.random.normal(0., yerr, size=1000)
+        count, bins, ignored = plt.hist(randomDelta, 30, normed=True)
+        plt.plot(bins, 1/(yerr * np.sqrt(2 * np.pi)) *
+                 np.exp(-(bins)**2 / (2 * yerr**2)), linewidth=2, color='r')
+        plt.show()
+
+    # based on the systematic errors on each physical separation
+    randomDeltaX = np.array([np.random.normal(0., derr, 1)[0]
+                             for derr in xerr])
+    randomdataX = xdataPV + randomDeltaX
+    randomfit, randomcov = optimize.curve_fit(arctang,
+                                              randomdataX, randomdataY, p0=x4)
+    ps.append(randomfit)
+
+ps = np.array(ps)
+mean_pfit = np.mean(ps, 0)
+Nsigma = 1.       # 68.3% CI
+err_pfit_MC = Nsigma * np.std(ps, 0)
+print "\n MC method :"
+print "pfit = ", mean_pfit
+print "perr = ", err_pfit_MC
+
+
+# just randomly sample R_t from range, and get distribution of v*sin i
+def arctang_fixR(R_kpc, r_s, vcsini, v_0):
+    # hacky step to force r_s to be physical
+    if r_s > 0.1:
+        return vcsini*(2./np.pi)*np.arctan(r_s*R_kpc) + v_0
+    else:  # bascially reject this fit
+        return 1e-5
+
+ps2 = []
+for i in range(nsam):
+    rt = np.random.normal()
+
+    for j in range(nsam):
+        randomDelta = np.random.normal(0., yerr, size=len(z))
+        randomdataY = np.array(z) + randomDelta
+
+        # based on the systematic errors on each physical separation
+        randomDeltaX = np.array([np.random.normal(0., derr, 1)[0]
+                                 for derr in xerr])
+        randomdataX = xdataPV + randomDeltaX
+        randomfit, randomcov = optimize.curve_fit(arctang_fixR,
+                                                  randomdataX, rt, randomdataY, p0=x4)
+        ps2.append(randomfit)
+
+ps = np.array(ps)
+mean_pfit = np.mean(ps, 0)
+Nsigma = 1.       # 68.3% CI
+err_pfit_MC = Nsigma * np.std(ps, 0)
+print "\n MC method fixing R_t:"
+print "pfit = ", mean_pfit
+print "perr = ", err_pfit_MC
+
 
 # ---
 def M_encl(R_kpc, v):
