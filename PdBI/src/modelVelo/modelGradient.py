@@ -1,7 +1,8 @@
 #!/usr/bin/env python
 '''
 
-plot source locations from lens model of various channel as markers on observed 1st moment map. Kinematics.
+plot source locations from lens model of various channel as markers on observed 1st moment map.
+Kinematics.
 
 Last Modified: 11 May 16
 
@@ -9,6 +10,8 @@ History:
 11 May 16:
   - use curve fit, problem is non-linear in parameters
   - note, we are also interested in reporting the correlation between the degenerate parameters --> need pearson R coefficients
+  - removed least sq fitting to arctan, becuase non-linear in param.
+  - arctangent form v is asymptotic v, careful when interpreting results
 10 May 16:
   - remove ODR fit to rot. curve, since xerr drives poor fit
   - fix R function, major axis is not affected by inclination angle in circular
@@ -96,6 +99,7 @@ plotMajorFit = False
 plotMajor_FirstMom = False
 plotPV = False
 plotRot = False
+plotODR_arctan = False
 plotMdyn = False
 # -----------------------------------------------
 #  Read fits file and Set up WCS
@@ -273,9 +277,9 @@ param = out.beta
 cov = out.cov_beta
 # print("\nStandard Covariance Matrix : \n", cov, "\n")
 uncertainty = out.sd_beta
-reduced_chi2 = out.res_var
-# if reduced_chi2 < 1.0 :
-#     uncertainty = uncertainty/np.sqrt(reduced_chi2)
+res_variance = out.res_var
+# if res_variance < 1.0 :
+#     uncertainty = uncertainty/np.sqrt(res_variance)
 # if False: # debugging print statements
 #     print("sd_beta",out.sd_beta)
 #     print("cov_beta",out.cov_beta)
@@ -504,9 +508,9 @@ def offset_to_physicalR(R_arcsec, z):
 
 
 def arctang(R_kpc, vcsini, r_s, v_0):
-    # hacky step to force r_s to be physical
-    if r_s > 0.1 and r_s < 1e4:
-        return vcsini*(2./np.pi)*np.arctan(r_s*R_kpc) + v_0
+    # hacky step to force r_s to be physical;
+    if r_s > 0.1 and r_s < 1e2:
+        return vcsini*(2./np.pi)*np.arctan(R_kpc/r_s) + v_0
     else:  # bascially reject this fit
         return 1e-5
 
@@ -515,7 +519,7 @@ def arctang2(p, R_kpc):
     vcsini, r_s, v_0 = p
     # hacky step to force r_s to be physical
     if r_s > 0.1 and r_s < 1e4:
-        return vcsini*(2./np.pi)*np.arctan(r_s*R_kpc) + v_0
+        return vcsini*(2./np.pi)*np.arctan(R_kpc/r_s) + v_0
     else:  # bascially reject this fit
         return 1e-5
 
@@ -552,9 +556,9 @@ odr = ODR(data, _model, beta0=x4)
 out = odr.run()
 param = out.beta
 covar = out.cov_beta
-reduced_chi2 = out.res_var
-if reduced_chi2 < 1.0 :
-    uncertainty = out.sd_beta/np.sqrt(reduced_chi2)
+res_variance = out.res_var
+if res_variance < 1.0 :
+    uncertainty = out.sd_beta/np.sqrt(res_variance)
 else:
     uncertainty = out.sd_beta
 pearsonR = covar/np.outer(uncertainty, uncertainty)
@@ -563,7 +567,9 @@ DoF = len(xdataPV)-len(out.beta)
 print 'Return Reason:\n', out.stopreason, '\n'
 print 'Estimated Parameters:\n', param, '\n'
 print 'Parameter Standard Errors:\n', out.sd_beta, '\n'
-print 'Covariance Matrix:\n', out.covar, '\n'
+print 'Covariance Matrix:\n', covar, '\n'
+print 'Degree of Freedom:\n', DoF, '\n'
+print 'Pearson R coefficients:\n', pearsonR, '\n'
 
 # Chi^2
 chi2 = 0.
@@ -572,108 +578,101 @@ for i in range(len(np.array(z))):
     sigma = (xerr[i]**2. + yerr**2.)**0.5
     chi2 += (residual / sigma)**2.
 # Reduced Chi^2
-ndof = len(ydata) - len(param)
+ndof = len(z) - len(param)
 redchi2 = chi2 / ndof
 print 'Degrees of Freedom:\t', ndof
 print 'Chi-Square:\t\t', chi2
 print 'Reduced Chi-Square:\t', redchi2
 
-# Calculate initial residuals and the 'adjusted error' for each data point
-delta = out.delta  # estimated x-component of the residuals
-eps   = out.eps    # estimated y-component of the residuals
-# (xstar,ystar) is the point where the 'residual line' (in black)
-#   intersects the 'ellipse' created by xerr & yerr.
-xstar = (xerr*np.sqrt(((yerr*delta)**2) / ((yerr*delta)**2 + (xerr*eps)**2)))
-ystar = (yerr*np.sqrt(((xerr*eps)**2) / ((yerr*delta)**2 + (xerr*eps)**2)))
-adjusted_err = np.sqrt(xstar**2 + ystar**2)
-residual = np.sign(np.array(z)-arctang2(param, xdataPV))*np.sqrt(delta**2 + eps**2)
+if plotODR_arctan:
+    # Calculate initial residuals and the 'adjusted error' for each data point
+    delta = out.delta  # estimated x-component of the residuals
+    eps   = out.eps    # estimated y-component of the residuals
+    # (xstar,ystar) is the point where the 'residual line' (in black)
+    #   intersects the 'ellipse' created by xerr & yerr.
+    xstar = (xerr*np.sqrt(((yerr*delta)**2) / ((yerr*delta)**2 + (xerr*eps)**2)))
+    ystar = (yerr*np.sqrt(((xerr*eps)**2) / ((yerr*delta)**2 + (xerr*eps)**2)))
+    adjusted_err = np.sqrt(xstar**2 + ystar**2)
+    residual = np.sign(np.array(z)-arctang2(param, xdataPV))*np.sqrt(delta**2 + eps**2)
+    ## Plot
+    fig = plt.figure(facecolor="0.98")   # with light gray background
+    fig.subplots_adjust(hspace=0)
+    fit = fig.add_subplot(211)       #, adjustable='box', aspect=1.2)
+    fit.set_xticklabels(())
+    plt.ylabel("V obs")
+
+    space = 0.2
+    xspan = xdataPV.max() - xdataPV.min()
+    yspan = np.array(z).max() - np.array(z).min()
+    xspace = space * xspan
+    yspace = space * yspan
+    xarray = np.linspace(xdataPV.min()-xspace, xdataPV.max()+xspace, 500)
+    fit.plot(xdataPV, np.array(z), 'ro', xarray, arctang2(param, xarray))
+    fit.errorbar(xdataPV, np.array(z), xerr=xerr, yerr=yerr, fmt='r+')
+    plt.errorbar(xdataPV, np.array(z), fmt='ro', xerr=xerr, yerr=yerr)
+    fit.set_yscale('linear')
+    a = np.array([out.xplus, xdataPV])
+    b = np.array([out.y, np.array(z)])
+    # to show where the fit is relative to the points
+    fit.plot(np.array([a[0][0], a[1][0]]), np.array([b[0][0], b[1][0]]),
+             'k-', label='Residuals')
+    for i in range(1, len(np.array(z))):
+        fit.plot(np.array([a[0][i], a[1][i]]), np.array([b[0][i], b[1][i]]),
+             'k-')
+    fit.legend(loc='upper left')
+    fit.grid()
+    residuals = fig.add_subplot(212)
+    residuals.errorbar(x=xdataPV, y=residual, yerr=adjusted_err,
+                            fmt="r+", label="Residuals")
+    residuals.set_xlim(fit.get_xlim())
+    plt.axhline(y=0, color='b')
+    plt.xlabel("R")
+    plt.ticklabel_format(style='plain', useOffset=False, axis='x')
+    plt.ylabel("Residuals")
+    residuals.grid()
+    plt.minorticks_on()
+    plt.tight_layout()
+    plt.show()
+
+
+# curve fit
+pfit, perr = optimize.curve_fit(arctang, xdataPV, np.array(z), p0=x4, sigma=yerr, absolute_sigma=True)
+perr = np.sqrt(np.diag(pcov))
+print("\nFit parameters and parameter errors from curve_fit method:")
+print("pfit = ", pfit)
+print("perr = ", perr)
+chi2 = 0.
+for i in range(len(np.array(z))):
+    residual = np.array(z)[i] - arctang(xdataPV[i], *pfit)
+    sigma = (xerr[i]**2. + yerr**2.)**0.5
+    chi2 += (residual / sigma)**2.
+# Reduced Chi^2
+ndof = len(z) - len(param)
+redchi2 = chi2 / ndof
+print 'Degrees of Freedom:\t', ndof
+print 'Chi-Square:\t\t', chi2
+print 'Reduced Chi-Square:\t', redchi2
+print("\n Best-fit asymptotic V: {} km/s \n").format(pfit[0])
+v_rot = pfit[0]/np.sin(i_rad)
+print("V_rot = V_obs/sin i: {} km/s \n").format(v_rot)
+
 ## Plot
 fig = plt.figure(facecolor="0.98")   # with light gray background
 fig.subplots_adjust(hspace=0)
-fit = fig.add_subplot(211)       #, adjustable='box', aspect=1.2)
-fit.set_xticklabels(())
-plt.ylabel("V obs")
-
+fit = fig.add_subplot(111)
+plt.ylabel("V")
 space = 0.2
 xspan = xdataPV.max() - xdataPV.min()
 yspan = np.array(z).max() - np.array(z).min()
 xspace = space * xspan
 yspace = space * yspan
 xarray = np.linspace(xdataPV.min()-xspace, xdataPV.max()+xspace, 500)
-fit.plot(xdataPV, np.array(z), 'ro', xarray, arctang2(param, xarray))
+fit.plot(xdataPV, np.array(z), 'ro', xarray, arctang(xarray, *pfit))
 fit.errorbar(xdataPV, np.array(z), xerr=xerr, yerr=yerr, fmt='r+')
-plt.errorbar(xdataPV, np.array(z), fmt='ro', xerr=xerr, yerr=yerr)
-fit.set_yscale('linear')
-a = np.array([out.xplus, xdataPV])
-b = np.array([out.y, np.array(z)])
-# to show where the fit is relative to the points
-fit.plot(np.array([a[0][0], a[1][0]]), np.array([b[0][0], b[1][0]]),
-         'k-', label='Residuals')
-for i in range(1, len(np.array(z))):
-    fit.plot(np.array([a[0][i], a[1][i]]), np.array([b[0][i], b[1][i]]),
-         'k-')
-fit.legend(loc='upper left')
-fit.grid()
-residuals = fig.add_subplot(212)
-residuals.errorbar(x=xdataPV, y=residual, yerr=adjusted_err,
-                            fmt="r+", label="Residuals")
-residuals.set_xlim(fit.get_xlim())
-plt.axhline(y=0, color='b')
-plt.xlabel("R")
-plt.ticklabel_format(style='plain', useOffset=False, axis='x')
-plt.ylabel("Residuals")
-residuals.grid()
-plt.minorticks_on()
-plt.tight_layout()
 plt.show()
 
-# Least sq
-errfunc = lambda p, x, y, err: (y - arctang2(p, x)) / err
-_pfit4, pcov, infodict, errmsg, success = optimize.leastsq(errfunc, x4, args=(xdataPV, np.array(z), yerr), full_output=1, maxfev=10000)
-if (len(np.array(z)) > len(x4)) and pcov is not None:
-    s_sq = (errfunc(_pfit4, xdataPV, np.array(z), yerr)**2).sum() / (len(np.array(z)) - len(x4))
-    pcov = pcov * s_sq
-else:
-    pcov = inf
-error = []
-for i in range(len(_pfit4)):
-    try:
-        error.append(np.absolute(pcov[i][i])**0.5)
-    except:
-        error.append(0.00)
-perr_leastsq = np.array(error)
-print 'LS Fit Parameter:\n', _pfit4, '\n'
-print 'LS Fit Parameter Errors:\n', perr_leastsq, '\n'
-t = errfunc(_pfit4, xdataPV, np.array(z), yerr)**2
-print 'Chi2: ', t.sum()
-print("\n Best-fit V*sin i: {} km/s \n").format(_pfit4[0])
-v_rot = _pfit4[0]/np.sin(i_rad)
-print("V_rot = V_obs/sin i: {} km/s \n").format(v_rot)
-print("Range of V_rot: {} - {} km/s ").format(v_rot-perr_leastsq[0], v_rot+perr_leastsq[1])
-
-# plot least sq result
-plt.errorbar(xdataPV, np.array(z), xerr=xerr, yerr=yerr, fmt='ko', linestyle='None', label='data')
-# extrapolate for prettier looking
-plt.plot(xarray, arctang2(_pfit4, xarray), 'r--', label='no fit to sin i, arctan model')
-plt.xlabel("Radial offset from line center position kpc")
-plt.ylabel("V [km/s]")
-plt.legend(loc='best')
-plt.xlim(-10, 10)
-plt.ylim(-425, 425)
-plt.tight_layout()
-plt.minorticks_on()
-plt.show()
-
-# curve fit
-pfit, perr = optimize.curve_fit(arctang, xdataPV, np.array(z), p0=x4, sigma=yerr, absolute_sigma=True)
-perr = np.sqrt(np.diag(pcov))
-print("\nFit parameters and parameter errors from curve_fit method:")
-print("pfit = ", p_curve)
-print("perr = ", perr)
-
-
-# monte-carlo: generates random data points starting from the given data plus a random variation based on the systematic error
-nsam = 100
+# monte-carlo: generates random data points starting from the given data plus a random variation based on the systematic error, take into acct systematic uncertainties
+nsam = 500
 ps = []
 debug = False
 
@@ -698,43 +697,10 @@ for i in range(nsam):
     ps.append(randomfit)
 
 ps = np.array(ps)
-mean_pfit = np.mean(ps, 0)
+mean_pfit = np.median(ps, 0)
 Nsigma = 1.       # 68.3% CI
 err_pfit_MC = Nsigma * np.std(ps, 0)
 print "\n MC method :"
-print "pfit = ", mean_pfit
-print "perr = ", err_pfit_MC
-
-
-# just randomly sample R_t from range, and get distribution of v*sin i
-def arctang_fixR(R_kpc, r_s, vcsini, v_0):
-    # hacky step to force r_s to be physical
-    if r_s > 0.1:
-        return vcsini*(2./np.pi)*np.arctan(r_s*R_kpc) + v_0
-    else:  # bascially reject this fit
-        return 1e-5
-
-ps2 = []
-for i in range(nsam):
-    rt = np.random.normal()
-
-    for j in range(nsam):
-        randomDelta = np.random.normal(0., yerr, size=len(z))
-        randomdataY = np.array(z) + randomDelta
-
-        # based on the systematic errors on each physical separation
-        randomDeltaX = np.array([np.random.normal(0., derr, 1)[0]
-                                 for derr in xerr])
-        randomdataX = xdataPV + randomDeltaX
-        randomfit, randomcov = optimize.curve_fit(arctang_fixR,
-                                                  randomdataX, rt, randomdataY, p0=x4)
-        ps2.append(randomfit)
-
-ps = np.array(ps)
-mean_pfit = np.mean(ps, 0)
-Nsigma = 1.       # 68.3% CI
-err_pfit_MC = Nsigma * np.std(ps, 0)
-print "\n MC method fixing R_t:"
 print "pfit = ", mean_pfit
 print "perr = ", err_pfit_MC
 
