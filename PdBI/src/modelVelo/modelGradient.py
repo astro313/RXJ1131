@@ -451,7 +451,14 @@ if plotPV:
     plt.xlabel(' offset from line center position ["] ')
     plt.title('PV along major axis at PA {:.2f} deg'.format(PA_deg))
     plt.tight_layout()
-    plt.show()
+    plt.minorticks_on()
+    plt.show(block=False)
+    User_input = raw_input('Save figure? (Y/N): ')
+    if User_input == 'Y':
+        filename = "PV_major.eps"
+        fig.savefig(Plotpath + filename, dpi=100,
+                    bbox_inches="tight", pad_inches=0.1)
+        print "-- Saved figure as : %s --" % (Plotpath + filename)
 
 offset, offset_err = calc_dist(RA_major*deg_to_arcsec, Dec_major*deg_to_arcsec, RA_major_err, Dec_major_err)
 off = list(offset)
@@ -471,7 +478,15 @@ if plotRot:
     plt.legend()
     plt.tight_layout()
     plt.minorticks_on()
-    plt.show()
+    plt.show(block=False)
+    User_input = raw_input('Save figure? (Y/N): ')
+    if User_input == 'Y':
+        filename = "RotCurve_major.eps"
+        fig.savefig(Plotpath + filename, dpi=100,
+                    bbox_inches="tight", pad_inches=0.1)
+        print "-- Saved figure as : %s --" % (Plotpath + filename)
+
+import pdb; pdb.set_trace()
 # --------------------------------------------------------------
 #  disk model
 # ---------------------------------------------------------------
