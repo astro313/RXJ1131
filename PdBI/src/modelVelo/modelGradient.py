@@ -446,7 +446,8 @@ z.pop(1)
 offset_err.pop(1)
 z_err = 21.5*5/2.     # range of channels combined to make models/2. --> error bar
 if plotPV:
-    plt.errorbar(off, z, yerr=z_err, fmt='ro', xerr=offset_err)
+    f, ax = plt.subplots()
+    ax.errorbar(off, z, yerr=z_err, fmt='ro', xerr=offset_err)
     plt.ylabel('v_r = v sin i')
     plt.xlabel(' offset from line center position ["] ')
     plt.title('PV along major axis at PA {:.2f} deg'.format(PA_deg))
@@ -456,7 +457,7 @@ if plotPV:
     User_input = raw_input('Save figure? (Y/N): ')
     if User_input == 'Y':
         filename = "PV_major.eps"
-        fig.savefig(Plotpath + filename, dpi=100,
+        f.savefig(Plotpath + filename, dpi=100,
                     bbox_inches="tight", pad_inches=0.1)
         print "-- Saved figure as : %s --" % (Plotpath + filename)
 
@@ -466,15 +467,16 @@ offset_err = list(offset_err)
 off.pop(1)
 offset_err.pop(1)
 if plotRot:
-    plt.errorbar(off[3], z[3], xerr=offset_err[3], yerr=z_err, fmt='go', label='line center')
-    plt.errorbar(off[:3], z[:3], yerr=z_err, fmt='ro', label='red', xerr=offset_err[:3])
+    f, ax = plt.subplots()
+    ax.errorbar(off[3], z[3], xerr=offset_err[3], yerr=z_err, fmt='go', label='line center')
+    ax.errorbar(off[:3], z[:3], yerr=z_err, fmt='ro', label='red', xerr=offset_err[:3])
 
     plt.ylabel('|v_r = v sin i|')
-    plt.errorbar(off[4:], abs(np.array(z[4:])), yerr=z_err, fmt='bo', label='blue', xerr=offset_err[4:])
+    ax.errorbar(off[4:], abs(np.array(z[4:])), yerr=z_err, fmt='bo', label='blue', xerr=offset_err[4:])
     plt.xlabel(' radial offset from line center position ["] ')
     plt.title('"Rotation Curve" taken along major axis at PA {:.2f} deg'.format(PA_deg))
-    plt.ylim(-50, 450)
-    plt.xlim(-0.2, 1.2)
+    ax.set_ylim(-50, 450)
+    ax.set_xlim(-0.2, 1.2)
     plt.legend()
     plt.tight_layout()
     plt.minorticks_on()
@@ -482,7 +484,7 @@ if plotRot:
     User_input = raw_input('Save figure? (Y/N): ')
     if User_input == 'Y':
         filename = "RotCurve_major.eps"
-        fig.savefig(Plotpath + filename, dpi=100,
+        f.savefig(Plotpath + filename, dpi=100,
                     bbox_inches="tight", pad_inches=0.1)
         print "-- Saved figure as : %s --" % (Plotpath + filename)
 
