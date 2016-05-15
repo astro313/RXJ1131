@@ -2,19 +2,24 @@
 
 Plot SED
 
-Last Modified: May 10 2016
-
-
-TODO
-- put mbb_emcee fit
+Last Modified: May 13 2016
 
 History
 -------
+May 15 2016:
+    - curve_fit to power_law working
+    - but extrapolated flux > MIPS point
+May 13 2016:
+    - update hardcode part because added HST
+    - replace least sq with curve_fit, but curve_fit to powerlaw is not working properly
 May 10 2016:
-    plot foreground vs. background with different style, markers
+    - plot foreground vs. background with different style, markers
     fit decomposed IRAC points and extracted to "decompose" MIPS
+    - put mbb_emcee fit
+    - added power law fit
+
 Jan 09 2016:
-    created
+    - created
 
 Note
 ----
@@ -57,24 +62,28 @@ def read_file(filename):
 tbl = read_file(photoFile)
 
 # separate foreground and background
-# total = [:11], [19:27], [29], [32]
-# host = [11:15],[27], [31]
-# fg = [15:19],[28], [30]
+# total = [6:17], [25:33], [35], [38]
+# host = [3:6], [17:21],[33], [37]
+# fg = [0:3], [21:25],[34], [36]
 #
 
-idx_total = range(0, 11)
-for i in range(19, 27):
+idx_total = range(6, 17)
+for i in range(25, 33):
     idx_total.append(i)
-idx_total.append(29)
-idx_total.append(32)
+idx_total.append(35)
+idx_total.append(38)
 
-idx_host = range(11, 15)
-idx_host.append(27)
-idx_host.append(31)
+idx_host = range(3, 6)
+for i in range(17, 21):
+    idx_host.append(i)
+idx_host.append(33)
+idx_host.append(37)
 
-idx_fg = range(15, 19)
-idx_fg.append(28)
-idx_fg.append(30)
+idx_fg = range(0, 3)
+for i in range(21, 26):
+    idx_fg.append(i)
+idx_fg.append(34)
+idx_fg.append(36)
 
 # separate out photometry and those as upper limits
 # print tbl.colnames
@@ -136,51 +145,59 @@ fluxErr_fg = np.asarray(tblWithErr_fg['Flux Err [mJy]'])
 
 
 # --------------- Fit slope -------------------------
-def linef(x, p):
-    p0, p1 = p
-    return p0 * x + p1
+def powerf(x, prefact, index):
+    return prefact * x**index
+ppower = [1.0, 1.]
+import scipy.optimize as optimize
+p_fg, pcov_fg = optimize.curve_fit(powerf, wave_fg[3:7],
+                                   flux_fg[3:7], p0=[0.9, 1],
+                                   sigma=fluxErr_fg[3:7], absolute_sigma=True, maxfev=10000)
+perr_fg = np.sqrt(np.diag(pcov_fg))
 
-
-def fit_function(p0, datax, datay, yerr, function, **kwargs):
-
-    import scipy.optimize as optimize
-    errfunc = lambda p, x, y, err: (function(x, p) - y) / err
-    pfit, pcov, infodict, errmsg, success = optimize.leastsq(errfunc, p0, args=(datax, datay, yerr), full_output=1)
-
-    if (len(datay) > len(p0)) and pcov is not None:
-        reducechi2_sq = (errfunc(pfit, datax, datay, yerr)**2).sum() / (len(datay) - len(p0))
-        pcov = pcov * reducechi2_sq
-    else:
-        pcov = inf
-
-    error = []
-    for i in range(len(pfit)):
-        try:
-            error.append(np.absolute(pcov[i][i])**0.5)
-        except:
-            error.append(0.00)
-    pfit_leastsq = pfit
-    perr_leastsq = np.array(error)
-    return pfit_leastsq, perr_leastsq
-
-# IRAC points
-p0 = [0.5, 5.]
-p_fg, perr_fg = fit_function(p0, wave_fg[:4],
-                             flux_fg[:4], fluxErr_fg[:4], linef)
-p_host, perr_host = fit_function(p0, wave_host[:4], flux_host[:4],
-                                 fluxErr_host[:4], linef)
+p_host, pcov_host = optimize.curve_fit(powerf, wave_host[3:7], flux_host[3:7],
+                                       sigma=fluxErr_host[3:7], p0=ppower, absolute_sigma=True)
+perr_host = np.sqrt(np.diag(pcov_host))
 
 # decompose 24 um point:
-flux_fg_24 = linef(24, p_fg)
-flux_host_24 = linef(24, p_host)
+flux_fg_24 = powerf(24, *p_fg)
+flux_host_24 = powerf(24, *p_host)
 # propagate uncertainty
-fluxerr_host_24 = np.sqrt((24. * perr_host[0])**2 + (perr_host[1])**2)
-fluxerr_fg_24 = np.sqrt((24. * perr_fg[0])**2 + (perr_fg[1])**2)
+# sqrt((24^index * delta_amp)**2 + (24^(index-1) * delta_index * index * amp)**2)
+fluxerr_host_24 = np.sqrt((24.**p_host[1] * perr_host[0])**2 + (p_host[1] * p_host[0] * 24.**(p_host[1]-1) * perr_host[1])**2)
+fluxerr_fg_24 = np.sqrt((24.**p_fg[1] * perr_fg[0])**2 + (p_fg[1] * p_fg[0] * 24.**(p_fg[1]-1) * perr_fg[1])**2)
 
 print(" Total flux at MIPS {:.1f} um: {:.3f} mJy").format(wave_total[11], flux_total[11])
 print(" Host flux \t\t: {:.3f} +/- {:.3f} mJy").format(flux_host_24, fluxerr_host_24)
 print(" Fg flux \t\t: {:.3f} +/- {:.3f} mJy").format(flux_fg_24, fluxerr_fg_24)
 print(" Sum from extrapolated {:.3f} mJy").format((flux_fg_24 + flux_host_24))
+
+
+# extrapolate
+space = 0.2
+xspan = wave_fg[3:7].max() - wave_fg[3:7].min()
+xspace = space * xspan
+xarray = np.linspace(wave_fg[3:7].min()-space, 24+xspace, 500)
+
+plt.figure()
+plt.errorbar(wave_fg[3:7], flux_fg[3:7], fluxErr_fg[3:7], fmt='.g', ms=8, ecolor='gray', capsize=8, elinewidth=4, capthick=1.5)
+plt.errorbar(wave_host[3:7], flux_host[3:7], fluxErr_host[3:7], fmt='.b', ms=8,
+             ecolor='gray',
+             capsize=8,
+             elinewidth=4, capthick=1.5)
+
+plt.plot(xarray, powerf(xarray, *p_fg), 'r--', label='fit slope to FG IRAC')
+plt.plot(xarray, powerf(xarray, *p_host), 'b--', label='fit slope to host IRAC')
+
+# Plot the extrapolate flux at 24 um with error bars
+plt.errorbar(24., flux_host_24, fluxerr_host_24, fmt=".b", ms=8, ecolor='gray',
+             label='Extrapolated from fit to decomposed IRAC; Host', capsize=8,
+             elinewidth=4, capthick=1.5)
+plt.errorbar(24., flux_fg_24, fluxerr_fg_24, fmt='.g', ms=8, ecolor='gray',
+             label='Extrapolated from fit to decomposed IRAC; Foreground',
+             capsize=8, elinewidth=4, capthick=1.5)
+plt.xscale('log')
+plt.yscale('log')
+plt.show(block=False)
 
 # --------------- Plot Data points ----------------------
 def savefigure(figure, f, verbose=True, dirStr='../../Figures/'):
@@ -232,12 +249,12 @@ ax.errorbar(waveUpLimit_total, fluxUpLimit_total, uplims=True, fmt="vk", ms=8,
 # plot least sq result, fit to decomposed IRAC points
 # extrapolate
 space = 0.2
-xspan = wave_fg[:4].max() - wave_fg[:4].min()
+xspan = wave_fg[3:7].max() - wave_fg[3:7].min()
 xspace = space * xspan
 xarray = np.linspace(wave_fg.min()-xspace, 24+xspace, 500)
 
-plt.plot(xarray, linef(xarray, p_fg), 'r--', label='fit slope to FG IRAC')
-plt.plot(xarray, linef(xarray, p_host), 'b--', label='fit slope to host IRAC')
+plt.plot(xarray, powerf(xarray, p_fg), 'r--', label='fit slope to FG IRAC')
+plt.plot(xarray, powerf(xarray, p_host), 'b--', label='fit slope to host IRAC')
 
 # Plot the extrapolate flux at 24 um with error bars
 plt.errorbar(24., flux_host_24, fluxerr_host_24, fmt=".b", ms=8, ecolor='gray',
@@ -247,18 +264,35 @@ plt.errorbar(24., flux_fg_24, fluxerr_fg_24, fmt='.g', ms=8, ecolor='gray',
              label='Extrapolated from fit to decomposed IRAC; Foreground',
              capsize=8, elinewidth=4, capthick=1.5)
 
+# plot MBB results
+import mbb_emcee
+filename_withMIPS = '8pts/thickPower_priorBeta_limT.h5'
+filename_noMIPS = '7pts/thickPower_priorBeta_limT.h5'
+
+res = mbb_emcee.mbb_results(h5file=filename_withMIPS)
+res_noMIPS = mbb_emcee.mbb_results(h5file=filename_noMIPS)
+
+wave_SED, flux_SED, flux_unc_SED = res.data
+p_wave = np.linspace(wave_SED.min() * 0.5, wave_SED.max() * 1.5, 200)
+
+ax.plot(p_wave, res.best_fit_sed(p_wave), 'b--', lw=2.5,
+        label='MBB fit with 24 um', alpha=0.45)
+ax.plot(p_wave, res_noMIPS.best_fit_sed(p_wave), '-',
+        color='c', lw=2.5, label='MBB fit w/o 24 um', alpha=0.45)
+
+
+# ------- pretty plot configuration below -------
 ax.set_ylim(0.1, 1700.)
 ax.set_yscale("log")
 ax.set_xscale("log")
 
 ax.set_ylabel(r'$\rm S_{\nu}$ [mJy]', fontsize=16)
-ax.set_xlabel(r'$\rm \lambda [\mu$m]', fontsize=16)
+ax.set_xlabel(r'$\lambda_{\rm obs}\ [\mu$m]', fontsize=16, fontweight='bold')
 
 led = plt.legend(loc='best', fontsize=15, numpoints=1,
                  fancybox=True, borderpad=0.5,
                  handlelength=2, labelspacing=0.1)
 ax.tick_params(length=14, pad=5)
-
 
 # get the existing axes limits and convert to an array
 _axes1_range = np.array(ax.axis())
