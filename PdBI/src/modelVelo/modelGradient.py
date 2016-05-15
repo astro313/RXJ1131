@@ -4,9 +4,11 @@
 plot source locations from lens model of various channel as markers on observed 1st moment map.
 Kinematics.
 
-Last Modified: 13 May 16
+Last Modified: 15 May 16
 
 History:
+15 May 16:
+  - adjust residual fig outlook
 13 May 16:
   - moved Mdyn calc to another script
   - limit r_t to 15kpc
@@ -94,7 +96,7 @@ p_list_err = [(0.39, 0.3), (0.25, 0.2), (0.06, 0.21), (0.14, 0.22),
 # corresponding velocity in km/s for each points in p_list
 z = [344.46, 344.46, 236.82, 129.16, 21.54, -86.08, -193.76, -301.38]
 
-plotMajorFit = False
+plotMajorFit = True
 plotMajor_FirstMom = False
 plotPV = False
 plotRot = False
@@ -302,7 +304,7 @@ residual = np.sign(ydata-fun2(param, xdata))*np.sqrt(delta**2 + eps**2)
 if plotMajorFit:
     fig = plt.figure(facecolor="0.98")   # with light gray background
     fig.subplots_adjust(hspace=0)
-    fit = fig.add_subplot(211)       #, adjustable='box', aspect=1.2)
+    fit = fig.add_axes((.1, .3, .8, .6))
     fit.set_xticklabels(())
     plt.ylabel("Dec")
 
@@ -319,8 +321,9 @@ if plotMajorFit:
              'k-')
     fit.legend(loc='upper left')
     fit.grid()
+    plt.minorticks_on()
     # separate plot to show residuals
-    residuals = fig.add_subplot(212, adjustable='box', aspect=0.4)
+    residuals = fig.add_axes((.1, .1, .8, .2))
     residuals.errorbar(x=xdata, y=residual, yerr=adjusted_err,
                                 fmt="k+", label="Residuals")
     # make sure residual plot has same x axis as fit plot
@@ -329,7 +332,6 @@ if plotMajorFit:
     plt.xlabel("RA ")
     plt.ylabel("Residuals")
     residuals.grid()
-    plt.tight_layout()
     plt.minorticks_on()
     plt.show()
 
