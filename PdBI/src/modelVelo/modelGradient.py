@@ -4,9 +4,14 @@
 plot source locations from lens model of various channel as markers on observed 1st moment map.
 Kinematics.
 
-Last Modified: 11 May 16
+Last Modified: 13 May 16
 
 History:
+13 May 16:
+  - moved Mdyn calc to another script
+  - limit r_t to 15kpc
+12 May 16:
+  - replace r_s with r_t since it is the transition radius and not necessarily the scale length
 11 May 16:
   - use curve fit, problem is non-linear in parameters
   - note, we are also interested in reporting the correlation between the degenerate parameters --> need pearson R coefficients
@@ -51,12 +56,6 @@ Fitting data w/ unc. on both x, y using ordinary least squares can lead to bias 
  The results of the covariance matrix, as implemented by optimize.curvefit and optimize.leastsq rely on assumptions regarding the probability distribution of the errors and the interactions between parameters; interactions which may exist, depending on the fit function f(x).
 
 The best way to deal with a complicated f(x) may be to use bootstrap.
-
-Source size in C06: F160W sersic profile R_e = 9.8 kpc h_50^-1; F814W = 14.4kpc h_50^-1
-7.00 kpc/" for 70 km/s
-9.811 kpc/" for 50 km/s
-~ 10.3 kpc in 70 km/s
-
 
 '''
 import matplotlib
@@ -307,8 +306,8 @@ if plotMajorFit:
     fit.set_xticklabels(())
     plt.ylabel("Dec")
 
-    fit.plot(xdata, ydata, 'ro', xdata, fun2(param, xdata))
-    fit.errorbar(xdata, ydata, xerr=xerr, yerr=yerr, fmt='r+')
+    fit.plot(xdata, ydata, 'ko', xdata, fun2(param, xdata))
+    fit.errorbar(xdata, ydata, xerr=xerr, yerr=yerr, fmt='k+')
     fit.set_yscale('linear')
     a = np.array([out.xplus, xdata])   # out.xplus = x + delta
     b = np.array([out.y, ydata])
@@ -323,7 +322,7 @@ if plotMajorFit:
     # separate plot to show residuals
     residuals = fig.add_subplot(212, adjustable='box', aspect=0.4)
     residuals.errorbar(x=xdata, y=residual, yerr=adjusted_err,
-                                fmt="r+", label="Residuals")
+                                fmt="k+", label="Residuals")
     # make sure residual plot has same x axis as fit plot
     residuals.set_xlim(fit.get_xlim())
     plt.axhline(y=0, color='b')
@@ -447,7 +446,7 @@ offset_err.pop(1)
 z_err = 21.5*5/2.     # range of channels combined to make models/2. --> error bar
 if plotPV:
     f, ax = plt.subplots()
-    ax.errorbar(off, z, yerr=z_err, fmt='ro', xerr=offset_err)
+    ax.errorbar(off, z, yerr=z_err, fmt='ko', xerr=offset_err)
     plt.ylabel('v_r = v sin i')
     plt.xlabel(' offset from line center position ["] ')
     plt.title('PV along major axis at PA {:.2f} deg'.format(PA_deg))
@@ -488,7 +487,6 @@ if plotRot:
                     bbox_inches="tight", pad_inches=0.1)
         print "-- Saved figure as : %s --" % (Plotpath + filename)
 
-import pdb; pdb.set_trace()
 # --------------------------------------------------------------
 #  disk model
 # ---------------------------------------------------------------
@@ -524,19 +522,19 @@ def offset_to_physicalR(R_arcsec, z):
     return arcsec_to_kpc * R_arcsec
 
 
-def arctang(R_kpc, vcsini, r_s, v_0):
-    # hacky step to force r_s to be physical;
-    if r_s > 0.1 and r_s < 1e2:
-        return vcsini*(2./np.pi)*np.arctan(R_kpc/r_s) + v_0
+def arctang(R_kpc, vcsini, r_t, v_0):
+    # hacky step to force r_t to be physical;
+    if r_t > 0.1 and r_t < 15:
+        return vcsini*(2./np.pi)*np.arctan(R_kpc/r_t) + v_0
     else:  # bascially reject this fit
         return 1e-5
 
 
 def arctang2(p, R_kpc):
-    vcsini, r_s, v_0 = p
-    # hacky step to force r_s to be physical
-    if r_s > 0.1 and r_s < 1e4:
-        return vcsini*(2./np.pi)*np.arctan(R_kpc/r_s) + v_0
+    vcsini, r_t, v_0 = p
+    # hacky step to force r_t to be physical
+    if r_t > 0.1 and r_t < 15:
+        return vcsini*(2./np.pi)*np.arctan(R_kpc/r_t) + v_0
     else:  # bascially reject this fit
         return 1e-5
 
@@ -565,7 +563,7 @@ for i in range(len(_blue)): xdataPV.append(_blue[i])
 xdataPV = np.array(xdataPV)
 
 # ODR
-x4 = [100, 2, 20]
+x4 = [max(z), max(xdataPV), 20]
 _model = Model(arctang2)
 data = RealData(xdataPV, np.array(z),
                 sx=xerr, sy=yerr)
@@ -584,7 +582,7 @@ DoF = len(xdataPV)-len(out.beta)
 print 'Return Reason:\n', out.stopreason, '\n'
 print 'Estimated Parameters:\n', param, '\n'
 print 'Parameter Standard Errors:\n', out.sd_beta, '\n'
-print 'Covariance Matrix:\n', covar, '\n'
+# print 'Covariance Matrix:\n', covar, '\n'
 print 'Degree of Freedom:\n', DoF, '\n'
 print 'Pearson R coefficients:\n', pearsonR, '\n'
 
@@ -624,9 +622,9 @@ if plotODR_arctan:
     xspace = space * xspan
     yspace = space * yspan
     xarray = np.linspace(xdataPV.min()-xspace, xdataPV.max()+xspace, 500)
-    fit.plot(xdataPV, np.array(z), 'ro', xarray, arctang2(param, xarray))
-    fit.errorbar(xdataPV, np.array(z), xerr=xerr, yerr=yerr, fmt='r+')
-    plt.errorbar(xdataPV, np.array(z), fmt='ro', xerr=xerr, yerr=yerr)
+    fit.plot(xdataPV, np.array(z), 'ko', xarray, arctang2(param, xarray))
+    fit.errorbar(xdataPV, np.array(z), xerr=xerr, yerr=yerr, fmt='k+')
+    plt.errorbar(xdataPV, np.array(z), fmt='ko', xerr=xerr, yerr=yerr)
     fit.set_yscale('linear')
     a = np.array([out.xplus, xdataPV])
     b = np.array([out.y, np.array(z)])
@@ -640,7 +638,7 @@ if plotODR_arctan:
     fit.grid()
     residuals = fig.add_subplot(212)
     residuals.errorbar(x=xdataPV, y=residual, yerr=adjusted_err,
-                            fmt="r+", label="Residuals")
+                            fmt="k+", label="Residuals")
     residuals.set_xlim(fit.get_xlim())
     plt.axhline(y=0, color='b')
     plt.xlabel("R")
@@ -651,9 +649,8 @@ if plotODR_arctan:
     plt.tight_layout()
     plt.show()
 
-
 # curve fit
-pfit, perr = optimize.curve_fit(arctang, xdataPV, np.array(z), p0=x4, sigma=yerr, absolute_sigma=True)
+pfit, pcov = optimize.curve_fit(arctang, xdataPV, np.array(z), p0=x4, sigma=yerr, absolute_sigma=True)
 perr = np.sqrt(np.diag(pcov))
 print("\nFit parameters and parameter errors from curve_fit method:")
 print("pfit = ", pfit)
@@ -684,9 +681,16 @@ yspan = np.array(z).max() - np.array(z).min()
 xspace = space * xspan
 yspace = space * yspan
 xarray = np.linspace(xdataPV.min()-xspace, xdataPV.max()+xspace, 500)
-fit.plot(xdataPV, np.array(z), 'ro', xarray, arctang(xarray, *pfit))
-fit.errorbar(xdataPV, np.array(z), xerr=xerr, yerr=yerr, fmt='r+')
-plt.show()
+fit.plot(xdataPV, np.array(z), 'ko', xarray, arctang(xarray, *pfit))
+fit.errorbar(xdataPV, np.array(z), xerr=xerr, yerr=yerr, fmt='k+')
+plt.minorticks_on()
+plt.show(block=False)
+User_input = raw_input('Save figure? (Y/N): ')
+if User_input == 'Y':
+    filename = "bestfit_PV.eps"
+    f.savefig(Plotpath + filename, dpi=100,
+                bbox_inches="tight", pad_inches=0.1)
+    print "-- Saved figure as : %s --" % (Plotpath + filename)
 
 # monte-carlo: generates random data points starting from the given data plus a random variation based on the systematic error, take into acct systematic uncertainties
 nsam = 500
@@ -720,30 +724,5 @@ err_pfit_MC = Nsigma * np.std(ps, 0)
 print "\n MC method :"
 print "pfit = ", mean_pfit
 print "perr = ", err_pfit_MC
+raw_input("")
 
-
-# ---
-def M_encl(R_kpc, v):
-    """ calc mass enclosed """     # v in km/s
-    from astropy.constants import G
-
-    R = kpc_to_m * R_kpc
-    Msun = 1.989e30      # kg
-    v2 = (v * 1e3)**2
-    v2oG = v2 / G.value
-    v2oGoMsun = v2oG / Msun
-    M = R * v2oGoMsun           # per Msun
-    M10 = M / 1e10              # in units of x 1e10 Msun
-    return M10
-
-# calc. mass within some physical dist from line center
-R_in_kpc = xdata.max()
-print("Mass enclosed within {:.2f} kpc: {:.2f} x 1e+10 Msun".format(R_in_kpc, M_encl(R_in_kpc, _pfit4[0]/np.sin(i_rad))))
-
-# plot M rise with R
-if plotMdyn:
-    pass
-    # plt.plot(R, M_encl(R, inner_rot_incl_iter(pfit, xidata, np.array(_dec))), label='R dep. on i')
-    # plt.legend()
-    # plt.tight_layout()
-    # plt.show()
