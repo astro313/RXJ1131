@@ -1,4 +1,4 @@
-% Done: PdBI observations, VLA observations
+% Done: PdBI observations, VLA observations, CARMA obs
 %
 %
 %
@@ -67,14 +67,7 @@ beam\pmOne over 10 MHz (21.5 \kms). The continuum image at $\nu_{\rm cont}\sim$
 139 GHz is created by averaging over all the line-free channels. This
 yields an rms noise of 0.082 mJy beam$^{-1}$. % see README.md in 04Sep15
 
-\subsection{CARMA \cco}
-% 1127-189 Gain for set 2
-% 3C273 gain for set 3
-% after flagging: Total observing time is  1.48 hours, checked with uvindex for
-% set 3
-% after flagging: Total obs. time is 2.94 hours, checked with uvindex for the
-% combined set
-% 12.500 MHz <=> 17.935 km/s
+\subsection{CARMA \cco} %DONE
 Observations of the \cco rotational line ($\nu_{\rm rest}$ = 345.7959899 GHz)
 were carried out under the D array configurations of the \carma (CARMA;
 Program ID: cf0098; PI: D. Riechers) on 2014 February 02 under terrible 3\,mm
@@ -89,11 +82,15 @@ bandpass calibrators for both tracks. This results in a total on-source time of 
 visibility data.
 
 % poor phase note
+% calflux source=1127-189 in=$MIRCAT/FluxSource.cat device=/xs
+% Flux of: 1127-189  14FEB04.50 at 227.0 GHz:  0.65 Jy; rms: 0.10 Jy
+% Extrapolate to 215.673 GHz with spectral index = -0.986 --> 0.684 Jy
+% MIRIAD from bootstrap: Median Flux @ 215.673 GHz:     0.710
 Given that the phase calibrator used for the first track was faint and was
 observed under poor weather conditions and that the phase calibrator used for
 the second track was far from our target source, the phase calibration is
 subpar, with an rms scatter $\sim$60\degr. We thus conservatively estimate
-a calibration accuracy of $\sim$BLAH\% based on the flux scale uncertainties,
+a calibration accuracy of $\sim$45\% based on the flux scale uncertainties,
 gain variation over time, and the phase scatter on the calibrated data. We
 therefore treat its line intensity and refrain using it to derive other physical quantities.
 
@@ -112,7 +109,7 @@ conditions in the A array configurations for a total of $\sim$7 hours on-source 
 MHz in each sideband.
 The nearby radio quasar 1130$-$149 was observed every 10 minutes for
 pointing, amplitude, and phase calibration, 1331$-$305 was observed as the
-primary flux calibrator, and 0319$+$415 was observed as the bandpass calibrator, yielding $\sim$15\% calibration accuracy.
+primary flux calibrator, and 0319$+$415 was observed as the bandpass calibrator, yielding $\sim$10\% calibration accuracy.
 We use \aips to calibrate the visibility data which
 are then imaged and deconvolved using
 the CLEAN algorithm using robust\,=\,0. This yields a synthesized clean
