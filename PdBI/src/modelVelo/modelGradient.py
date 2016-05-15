@@ -674,21 +674,23 @@ print("V_rot = V_obs/sin i: {} km/s \n").format(v_rot)
 fig = plt.figure(facecolor="0.98")   # with light gray background
 fig.subplots_adjust(hspace=0)
 fit = fig.add_subplot(111)
-plt.ylabel("V")
+plt.ylabel("Velocity [km/s]")
+plt.xlabel("Physical Radius from dynamical center [kpc]")
 space = 0.2
 xspan = xdataPV.max() - xdataPV.min()
 yspan = np.array(z).max() - np.array(z).min()
 xspace = space * xspan
 yspace = space * yspan
 xarray = np.linspace(xdataPV.min()-xspace, xdataPV.max()+xspace, 500)
-fit.plot(xdataPV, np.array(z), 'ko', xarray, arctang(xarray, *pfit))
+fit.plot(xdataPV, np.array(z), 'ko', xarray, arctang(xarray, *pfit), 'b--')
 fit.errorbar(xdataPV, np.array(z), xerr=xerr, yerr=yerr, fmt='k+')
 plt.minorticks_on()
+plt.tight_layout()
 plt.show(block=False)
 User_input = raw_input('Save figure? (Y/N): ')
 if User_input == 'Y':
     filename = "bestfit_PV.eps"
-    f.savefig(Plotpath + filename, dpi=100,
+    fig.savefig(Plotpath + filename, dpi=100,
                 bbox_inches="tight", pad_inches=0.1)
     print "-- Saved figure as : %s --" % (Plotpath + filename)
 
@@ -724,5 +726,5 @@ err_pfit_MC = Nsigma * np.std(ps, 0)
 print "\n MC method :"
 print "pfit = ", mean_pfit
 print "perr = ", err_pfit_MC
-raw_input("")
+
 
