@@ -1,49 +1,23 @@
 
+%%% this becomes dummy 
 
-\documentclass[]{emulateapj}
-\usepackage{amsmath}
-\input{preamble}
-\slugcomment{To be submitted to the ApJ}
-
-\citestyle{aa}
-\shorttitle{Something goes here}
-\shortauthors{Leung \& Riechers}
-
-\begin{document}
-%{\tiny  \RevisionInfo}
-
-\title{Gas Dynamics of the Einstein ring RXSJ1131-1123 at $z$=0.654}
-\author{T. K. Daisy Leung and Dominik A. Riechers}
-\affil{Department of Astronomy, Space Sciences Building, Cornell University,
-Ithaca, NY 14853, USA; \myemail}
-
-
-\begin{abstract}
-\end{abstract}
-
-\keywords{ISM: molecular -- 
-          infrared: galaxies -- 
-          galaxies: starburst --
-          galaxies: evolution}
-
-  %--------------------------------------------------------------------------
-  %                                Introduction
-  %--------------------------------------------------------------------------
   
 \section{Introduction}
-% Role of ULIRG/Merger and AGN
-Ultra-luminous IR galaxies \LIR\,$>$\,10$^{12}$\Lsun.. hot dust re-radiating energy from a central SB or an active galactic 
-nucleus (AGN), i.e. expect them to have large gas to begin with to drives the \LIR.
+Ultra-luminous IR galaxies (ULIRGS; \LIR\,$>$\,10$^{12}$\Lsun) are extremely luminous
+in the IR due to the re-radiation of energy absorbed from dust from starburst or an active galactic 
+nucleus (AGN), which also implies a large gas content to begin with. % to drives these activities.
 
-% local --> merger
 Current studies of local ULIRGs revealed a causal connection between ULIRG activity and galaxy interaction based on morphological evidence of ULIRGs e.g. have double nuclei, severely distorted isophotes, or strong tidal features.
 
-Regardless of whether the energy source is dominated by starburst or an AGN, both of which depend on a large supply of fuel of gas 
-in the form nuclear region. If galaxy collisions can drive gas inwards from the galaxies' disks into their nuclei, this nuclear inflow can feed the 
-central engine. Once the gas reachers the inner kpc, it can either fragment and form stars (at a rate of $\sim$ 100 \Msun yr\pmOne) to 
-provide the observed luminosity, or continue to flow inwards and fuel an AGN.
+Regardless of whether the energy source is dominated by starburst or an AGN, 
+both of which depend on a large supply of fuel of gas 
+in the form nuclear region. If galaxy collisions can drive gas inwards from the galaxies' disks into their nuclei, 
+this nuclear inflow can feed the 
+central engine. Once the gas reachers the inner kpc, it can either fragment and form stars 
+(at a rate of $\sim$ 100 \Msun yr\pmOne) to provide the observed luminosity, or continue 
+to flow inwards and fuel an AGN.
 
-% but at least, we now understand/expect
+% and high-z
 In the current paradigm, SMBHs grew in every massive galaxy during a luminous quasar phase, where distant QSOs are the 
 progenitors of the dormant SMBHs in nearby galaxies. Quasars are powered by gas falling into central BHs, when galaxies 
 collide or merge, which is a natural consequence of hierarchical structure formation because During the early epoch, the 
@@ -86,8 +60,8 @@ whether gas funneled by bars or driven by merger.
    
 important to study gas dynamics from mergers because that's how we think gas accumulates and flow inward for SMBH grow
 and merger drives turbulent gas motions, which fuel the central BH, and SB. 
-Ideally, we would want to measure kinematics of e.g. CO, CII to trace the dynamical mass of QSO host galaxies
-    - free from dust extinction as with optical
+Ideally, we would want to measure kinematics of e.g. CO, CII to trace the dynamical mass of QSO 
+host galaxies, free from dust extinction as with optical.
 
 So we went after to detect the gas content in a merger of a quasar host galaxy with recent star-formation at $z$\,$\sim$ blah. 
 clearly, there's quasar activity, and also recent star-formation, so it's an exceptional candidate to study the BLAH.
@@ -97,7 +71,7 @@ clearly, there's quasar activity, and also recent star-formation, so it's an exc
 The gravitational lens RXJ 1131-1231 was discovered with spectroscopic
 redshifts of the lens and the QSO are $z_{\rm L}$ = 0.295 and
 $z_\textrm{AGN,HST}$ =
-0.658, respectively \citep{}
+0.658, respectively \citep{Sluse03a}
 
 % FG gal is an elliptical gal: Slues+03 absorption lines
 As detected in the HST images, RXJ1131-1231 is a quadruply imaged AGN with
@@ -109,7 +83,6 @@ claimed Seyfert 1 spiral galaxy.
 
 In this paper, we BLAH, refining the redshift to $z$=0.65370$\pm$0.0005
 We use a cosmology WMAP9.
-
 
 
 \section{Observations}
@@ -153,7 +126,7 @@ The continuum image is created by % 2.152 mm;
 averaging over all the line-free channels ($\nu_{\rm cont}\sim$139 GHz). This
 yields an rms noise of 0.082 mJy beam$^{-1}$. % see README.md in 04Sep15
 
-\subsection{CARMA} \label{sec:carmadata}
+\subsection{CARMA}
 % LO = 215.6694 Ghz
 % 1127-189 Gain for set 2
 % 3C273 gain for set 3
@@ -245,28 +218,20 @@ be better than 0.1", leaving aside uncertainties relating to the SNR and beam si
 \section{CO($J$ = 3 $\rightarrow$ 2) line emission}
 
 % Integrated line flux: 37.509 Jy km/s over chan=[49,70] (FWZI) of sigma = 13.3mJy /B/channel of 35.87 km/s per channel
-%  57.753459930419922        10.658399798838524
-% 38.906448364257812        54.223567641493943
-% 258.26144409179688        57.450322398332851
-% 2.2153112888336182        2.9563491085933622
+% 
+% If we use FWHM of CO21 line to extract CO32 Intensity: I = Jy km/s over chan=[]
 
-% If we fit gaussian without the continuum to minimize error:
-% 58.848747253417969        10.030933764224825
-% 36.368530273437500        54.749284630860281
-% 276.93515014648438        54.753666156237443
-
-We detect unresolved CO($J$ = 3 $\rightarrow$ 2) line emission toward the
+We detect resolved CO($J$ = 3 $\rightarrow$ 2) line emission toward the
 background galaxies in RXJ1131-1231.
-We extract the spectrum and fit a single-component Gaussian as shown in Figure
-\ref{fig:co32spec}
-yielding peak flux density of 57.8 $\pm$ 10.7 mJy, the FWHM of the Gaussian fit
-is 608 $\pm$ 57 km s$^{-1}$. The integrated line flux is 37.509$\pm$ 2.24 Jy km/s, this does not include the uncertainties in 
+We extract the spectrum as shown in Figure
+\ref{fig:co32spec}.
+The integrated line flux is 37.1$\pm$ 2.8 Jy km/s, this does not include the uncertainties in 
 the
 calibration.
 
 \begin{figure}[tbph]
 \centering
-\includegraphics[width=0.5\textwidth]{../Figures/co32_spec_bin2.eps}
+\includegraphics[width=0.5\textwidth]{../Figures/coOverlay.eps}
 \caption{
 CO32 line spectrum, looks like we are fitting to a bunch of noise. TODO
  \label{fig:co32spec}}
@@ -322,10 +287,6 @@ Spectrum. Velocity scale w.r.t z=0.6537
 \includegraphics[width=0.5\textwidth]{../Figures/CO_highOmom_CLIP5sigma}
 \caption{
 1st and 2nd order moments, clipped at 5 $\sigma$. 1st moment contour steps of 50 \kms, 2nd moment steps of 100 \kms.
-velocity range in z=0 frame = [-530.33, 72.73] \kms
-chan = [127, 155]
-sigma = 0.16821825 Jy \kms per Beam
-theshold: 5*sigma = 7.2550e-3 Jy per beam (per channel)
  \label{fig:highOmoments}}
 \end{figure}
 
@@ -412,6 +373,10 @@ Right: alignment of HST and VLA 5 GHz continuum
 
 
 \section{gas kinematics and dynamics}
+% Gas excitation
+
+Based on the apparent intensity of  \cco and \bco, we find an excitation of BLAH, assuming differential lensing is negligible.
+
 % data 1st moment map:
 the observed velocity fields represents the rotation velocities.  
 We note that the velocity field is likely affected by
@@ -439,7 +404,7 @@ We construct a two-dimensional map of the velocity field in the source plane usi
 The source-plane velocity field is shown in Figure \ref{fig:blah} and resembles a rotating 
 
 % Interpretation of the lens model
-- C06 suggest the presence of an interacting dusty galaxy in their HST
+\citet{Claeskens06a} suggest the presence of an interacting dusty galaxy in their HST
 observations, which BJB+08 calls it the F component. The lensed images of the
 ABCDE
 components coincide with our CO data (see mom0 on HST and channel map),
@@ -476,6 +441,7 @@ We modelled the emission using different kinematic components, the magnification
 \includegraphics[width=0.85\textwidth]{../Figures/PostageStampResiduals.eps}
 \caption{
 of channel widths $\sim$ 100\kms.
+Make this bigger in the future
 \label{fig:}}
 \end{figure*}
 
@@ -539,20 +505,3 @@ We observed the cold molecular gas properties using CO line emission toward the 
 $z_{\rm CO}$\,$\sim$BLAH. 
 Fitting SED models, we find that the AGN host galaxy is a ULIRG. 
 A faint companion as seen in HST observations (BJB) is also detected in our CO, confirming it's redshift and gas rich nature.
-
-%==============================================================================
-%                                Back matters
-%==============================================================================
-
-
-% ACKNOWLEDGEMENTS
-%-----------------
-\acknowledgments
-We thank...
-
-  %--------------------------------------------------------------------------
-  %                               Bibliography
-  %--------------------------------------------------------------------------
-\bibliographystyle{yahapj}
-\bibliography{RXJ.bib}
-\end{document}
