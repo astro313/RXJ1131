@@ -42,7 +42,19 @@ import numpy as np
 #
 tableColHead = ('Wavelength [micron]', 'Frequency [GHz]', 'Flux Density [mJy]', 'Flux Err [mJy]', 'Instrument')
 
-data_rows = [(1.25, (1.25*u.micron).to(u.GHz, equivalencies=u.spectral()).value
+data_rows = [(0.555, (0.555*u.micron).to(u.GHz, equivalencies=
+              u.spectral()).value, 0.0557, 0.006, 'HST-ACS/V-Band(L)'),
+             (0.814, (0.814*u.micron).to(u.GHz, equivalencies=
+              u.spectral()).value, 0.238, 0.0130, 'HST-ACS/I-Band(L)'),
+             (1.60, (1.60*u.micron).to(u.GHz, equivalencies=
+              u.spectral()).value, 0.539, 0.041, 'HST-NICMOS(NIC2)/H-Band(L)'),
+             (0.555, (0.555*u.micron).to(u.GHz, equivalencies=
+              u.spectral()).value, 0.00924, 0.00407, 'HST-ACS/V-Band(H)'),
+             (0.814, (0.814*u.micron).to(u.GHz, equivalencies=
+              u.spectral()).value, 0.041, 0.0054, 'HST-ACS/I-Band(H)'),
+             (1.60, (1.60*u.micron).to(u.GHz, equivalencies=
+              u.spectral()).value, 0.133, 0.004, 'HST-NICMOS(NIC2)/H-Band(H)'),
+             (1.25, (1.25*u.micron).to(u.GHz, equivalencies=u.spectral()).value
               , 1.009, 0.090, '2MASS/J-Band'),
              (1.65, (1.65*u.micron).to(u.GHz, equivalencies=u.spectral()).value
               , 1.448, 0.1214, '2MASS/H-Band'),
