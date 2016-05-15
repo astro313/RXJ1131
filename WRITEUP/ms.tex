@@ -1,4 +1,4 @@
-% Done: PdBI observations, VLA observations, CARMA obs
+% Done: PdBI observations, VLA observations, CARMA obs, HST astrometry
 %
 %
 %
@@ -105,33 +105,36 @@ Our analysis also use the archival data of the radio continuum obtained with the
 published, we here describe the details of the observations as well as our calibration steps.
 
 Observations were carried out on 2008 December 29 under excellent weather
-conditions in the A array configurations for a total of $\sim$7 hours on-source time. The C-Band receivers were used with a continuum mode setup, providing a bandwidth of 50
-MHz in each sideband.
+conditions in the A array configurations for a total of $\sim$7 hours on-source time. The C-Band receivers were used with a continuum mode setup,
+providing a bandwidth of 50 MHz in each sideband.
 The nearby radio quasar 1130$-$149 was observed every 10 minutes for
 pointing, amplitude, and phase calibration, 1331$-$305 was observed as the
-primary flux calibrator, and 0319$+$415 was observed as the bandpass calibrator, yielding $\sim$10\% calibration accuracy.
+primary flux calibrator, and 0319$+$415 was observed as the bandpass
+calibrator, yielding $\sim$10\% calibration accuracy.
 We use \aips to calibrate the visibility data which
 are then imaged and deconvolved using
 the CLEAN algorithm using robust\,=\,0. This yields a synthesized clean
-beam size of 0$\farcs$49 $\times$ 0\farcs35 (PA\,=\, 0\farcs18) and a final
+beam size of 0$\farcs$49 $\times$ 0\farcs35 (PA\,=\,0\farcs18) and a final
 rms noise of $\sigma$ = 13 $\mu$Jy beam\pmOne.
 
-
 \section{HST astrometry}
-We gathered optical (rest-frame UV) images for RXJ1131 from the Hubble Legacy Archive to illustrate the
-spatial extent of different emission detected in this paper. Here, we only use the F555W image for
-this purpose.
-We adopt the VLA 5\,GHz map of $\sim$2" resolution as the reference coordinate frame to align the optical image.
-We shifted the latter to the east by 0\farcs5963 in R.A. and +0\farcs8372 in Dec., which is consistent with the typical astrometric precision of the HST image from the Hubble
-Legacy Archive. % for Hubble Legacy Archive: abs. astronmetry 1-2" http://hla.stsci.edu/hla_faq.html
-The radio image is calibrated employing well-monitored phase calibrator, with positions known to $\sim$1 mas.
-We estimate the absolute alignment of the 5 GHz and CO(J=2-1) coordinate frames should
-be better than 0.1", leaving aside uncertainties relating to the SNR and beam size.
-
-
-%The astrometry of the HST images was firstly calibrated against a wider-field
-%optical image of the cluster which had in turn been aligned onto the FK5
-%coordinate system to an rms precision of ~0.2".
+We obtain HST images from the Hubble Legacy Archive with
+a goal to understand the origins of the emission detected
+in our mm observations. We adopt the VLA 5\,GHz map of $\sim$0\farcs5
+resolution as the reference coordinate frame to align the optical (V-band)image
+. We shift the latter to the east by 0\farcs5963 in R.A. and +0\farcs8372 in
+Dec., which is consistent with the typical astrometric precision (1$-$2") of
+images from the Hubble Legacy Archive\footnote{http://hla.stsci.edu/hla_faq.
+html}. Such astrometric correction is critical to avoid artificial spatial
+offsets between emission and to carry out our lens modeling, as the absolute
+position of the foreground lensing galaxy is guided by its coordinates in the
+optical image, where its emission is clearly detected.
+The VLA image is calibrated using a well-monitored phase
+calibrator, with absolute positional accuracy of $\sim$2 mas.
+For this reason, the absolute alignment between the VLA image and other
+interferometric images reported in this paper are expected to have astrometric
+precision better than 0\farcs1, modulo uncertainties related to the SNR, phase
+errors, and beam size.
 
 %--------------------------------------------------------------------------
 %                                Results
@@ -262,12 +265,12 @@ Compared to HST:
 %                                Discussion
 %--------------------------------------------------------------------------
 \section{Discussion}
-\subsection{At what stage is the merging in RXJ1131-1231?}
+\subsection{Merger stage of RXJ1131-1231}
 
 
 
 \subsection{Implications} gas fraction at this redshift. how does that relate to
-the SFH. --> imply the change in cosmic SFD is due to change in gas content. SFE
+the SFH, this implies the change in cosmic SFD is due to change in gas content. SFE
 at this redshift, how does that relate to the SFH. probably a secondary effect
 to the drop in SFH
 
@@ -277,6 +280,7 @@ to the drop in SFH
 %--------------------------------------------------------------------------
 \section{Summary and Conclusions}
 We studied a wet-wet merger between a AGN/starburst ULIRG and a optically faint companion at $z$ $\sim$ 0.65.
+In this paper, we BLAH, refining the redshift to $z_{\rm CO}$=0.65370$\pm$0.0005
 
 
 
