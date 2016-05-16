@@ -139,8 +139,8 @@ new_mom0 = 'centralizedCube4GILDAS-python_ch' + str(start_chan+1) + '-' + str(en
 pyfits.writeto(join(path, new_mom0), mom0_holder, hdr)
 
 # CASA:
-importfits(fitsimage=new_mom0,imagename=new_mom0.replace('fits', '.image'))
-imstat(imagename=new_mom0.replace('fits', '.image'), region='offsource_region.crtf')
+importfits(fitsimage=new_mom0,imagename=new_mom0.replace('.fits', '.image'))
+imstat(imagename=new_mom0.replace('.fits', '.image'), region='offsource_region.crtf')
 # ---> consistent with what I got above
 
 
