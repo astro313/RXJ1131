@@ -12,6 +12,7 @@ Last modified: May 16 2016
 History:
 --------
 16 May 2016:
+    - fix bug, write out new FITS using the highest SNR array
     - look for ranges of channel that gives highest SNR
     - created script, working fine
 '''
@@ -114,6 +115,7 @@ for i in range((end_chan-start_chan+1)):
     channel_number = start_chan + i
     mom0_SNR += fits_cube[0].data[0][channel_number][110:145, 110:145]
 print ("max SNR: {:.2f}").format(mom0_SNR.max()/fits_cube[0].data[0][start_chan:end_chan, 15:220, 15:100].sum(axis=0).flatten().std())
+print (" map STD {} ").format(fits_cube[0].data[0][start_chan:end_chan, 15:220, 15:100].sum(axis=0).flatten().std())
 
 fig, ax = plt.subplots()
 fig.subplots_adjust(top=0.9)
@@ -122,6 +124,8 @@ cont_list = [fits_cube[0].data[0][start_chan:end_chan, 15:220, 15:100].sum(axis=
 ax.contour(mom0_SNR, cont_list, colors='black')
 plt.show()
 
+# the full image of the highest SNR range
+final = fits_cube[0].data[0][start_chan:end_chan, :, :].sum(axis=0)
 # ------------------------------------------------------------------
 # --> save this to a new fits file for APLpy plot
 # get header from GILDAS moment0 file
@@ -136,11 +140,11 @@ hdr.set('VELREF', header['VELREF'], 'patched from original cube')
 hdr.set('SPECSYS', header['SPECSYS'], 'patched from original cube')
 hdr.add_comment("This Moment-0 map is created with python, but I stole the header from GILDAS the moment0 map.")
 new_mom0 = 'centralizedCube4GILDAS-python_ch' + str(start_chan+1) + '-' + str(end_chan) + '_mom0.fits'
-pyfits.writeto(join(path, new_mom0), mom0_holder, hdr)
+pyfits.writeto(join(path, new_mom0), final, hdr, clobber=True)
 
 # CASA:
-importfits(fitsimage=new_mom0,imagename=new_mom0.replace('.fits', '.image'))
-imstat(imagename=new_mom0.replace('.fits', '.image'), region='offsource_region.crtf')
+# importfits(fitsimage=new_mom0,imagename=new_mom0.replace('.fits', '.image'))
+# imstat(imagename=new_mom0.replace('.fits', '.image'), region='offsource_region.crtf')
 # ---> consistent with what I got above
 
 
