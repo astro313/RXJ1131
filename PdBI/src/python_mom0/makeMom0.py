@@ -16,16 +16,15 @@ History:
     - created script, working fine
 '''
 
-import matplotlib
 import matplotlib.pyplot as plt
 import matplotlib.mlab as mlab
-import pywcs
+from os.path import join
 import pyfits
 import numpy as np
 from scipy.stats import norm
 
-
-fits_cube = pyfits.open("/Users/admin/Research/RXJ1131/PdBI/data/15May16/centralizedCube4GILDAS.fits")
+path = '/Users/admin/Research/RXJ1131/PdBI/data/15May16/'
+fits_cube = pyfits.open(join(path, 'centralizedCube4GILDAS.fits'))
 
 header = fits_cube[0].header
 cdelt1 = np.abs(header['CDELT1'] * 3600)       # arcsec/pix
@@ -83,5 +82,20 @@ im = ax.imshow(mom0_holder, origin="lower", norm=norm, cmap=cmap)
 cont_list = [sigma * i for i in range(-6, 24, 3) if i != 0]
 ax.contour(mom0_holder, cont_list, colors='black')
 plt.show()
+
+
 # --> save this to a new fits file for APLpy plot
+# get header from GILDAS moment0 file
+
+fits_gildas_mom0 = pyfits.open(join(path, "centralizedCube4GILDAS-mom0.fits"))
+hdr = fits_gildas_mom0[0].header
+# patch up header, somehow info is missing in the GILDAS creater header
+hdr['CTYPE3'] = header['CTYPE3']
+hdr.set('RESTFREQ', header['RESTFREQ'], 'patched from original cube')
+hdr.set('VELO-LSR', header['VELO-LSR'], 'patched from original cube')
+hdr.set('VELREF', header['VELREF'], 'patched from original cube')
+hdr.set('SPECSYS', header['SPECSYS'], 'patched from original cube')
+hdr.add_comment("This Moment-0 map is created with python, but I stole the header from GILDAS the moment0 map.")
+new_mom0 = 'centralizedCube4GILDAS-python_mom0.fits'
+pyfits.writeto(join(path, new_mom0), mom0_holder, hdr)
 
