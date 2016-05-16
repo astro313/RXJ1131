@@ -6,7 +6,6 @@
 # IR photometry
 1. Herschel:
 - only SPIRE, no PACS
-- see Contdata_4pts.txt in src/SED/
 2. WISE 
 - w1 3.4 µm:
   - F_nu = 7.027 mJy +/- 0.1424 mJy
@@ -99,18 +98,30 @@ CO (2-1) velocity ranges used for different purpose:
 - RGB: 126-160
 - RedBlue: 134-150
 
-# See 14Oct15/README.md
+# See 14Oct15/README.md (Deprecated)
 - cell size =0.5"
 - I = 20.3 Jy Km/s 
 - sigma_ch ~ 1.451 mJy/ Beam
 - velocity resolution per bin: 21.528154 km/s
-- source extent ~ 2.5 beams (need confirmation)
 - channel range 
     + [134, 142] (red) and [142, 150] (blue)
 - sigma_I = 1.451 / sqrt(32) * 32 * 21.528154 = 176.6 mJy km/s / Beam
-- sigma_I (spatially integrated) = 176.6 * 2.5 = 441.5 mJy km/s 
+- sigma_I (spatially integrated) = 176.6 * 2.5 = 441.5 mJy km/s << wrong, because *region* is >2.5 beams, altho source is resovled over ~2.2 beams
 
-- 0th moment map (all channels):
+# updated, see 15May16/README.md
+- based on moment 0 map based with channel range [124, 156]
+- updated CO21 I = 24.14 +/- 0.62 Jy kms
+- sigma_ch: same as above
+- velocity resolution per bin: same as above
+- region ~ 13 beams
+- sigma_I = 1.451 * sqrt(156-124+1) * 21.5 * 13 beam = 2.33 Jy km/s/beam
+- peak flux from moment 0 map = 7.23 +/- 0.46 Jy km/s /Beam
+- source size, deconvolved from beam: 5.1"+/-0.72" x 3.72"+/-0.66", PA: 158+/-23
+- this corresponds to 85.5 px
+--> resolved over ~2.2 beams
+- note that our source is not quite like a 2D gaussian, but since it recovers the intensity from region, it's probably a good enough estimate for source size
+
+# 0th moment map (all channels):
 - 14Oct15/mom0.fits
 - Range By eye in go view:
   - chan: 155, 127
@@ -156,5 +167,4 @@ see CARMA/specOPlot/README.md
 - velocity [-430.94, 305.26] km/s
 - --> # of beams ~ 10
 - Isigma ~ 13.3 mJy/B/channel * 21 channels * 10 beams ~ 2.793 Jy km/s
-
 
