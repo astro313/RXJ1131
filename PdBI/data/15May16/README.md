@@ -1,6 +1,6 @@
 copied centralizedCube4GILDAS.fits and centralizedCube4GILDAS.lmv-clean from 30Apr16.
 
-Want to generate a moment 0 map without clipping, using chan = 124, 156. 
+Want to generate a moment 0 map without clipping, using chan = 124-156. 
 Previously use 127-155, where in 30Apr16, I found that using just 127-155 have excluded significant flux.
 
 *Need to get source size, # of beams, and uncertainties on the integrated flux.*
@@ -23,11 +23,11 @@ go nice
 
 poly
 mean
---> rms = 0.1818 Jy/B, too low?
+--> rms = 0.1818 Jy/B, too high?
 go noise
 --> histogram skewed..
 
-# why histogram skewed? 
+# why histogram skewed? (see below)
 let name centralizedCube4GILDAS
 let type lmv-clean
 let first 10
@@ -39,6 +39,19 @@ let first 120
 let last 160 
 go noise
 --> histogram also looks fine, rms = 1.55 mJy/B, which is not surprising since there are emssions in these channels
+
+let name centralizedCube4GILDAS
+let type lmv-clean
+for i 120 to 158
+    let first i
+    let last i
+    go nice
+    poly
+    mean
+    go noise
+    sic wait 1
+next
+--> histogram of each plane still center around zero, and rms ~ 1.5 mJy/B, which is still ok
 
 let first 130
 let last 130
@@ -76,7 +89,6 @@ imstat(imagename='centralizedCube4GILDAS-mom0.image', region='Flux_CO32_20.3Jy_r
 - pts area within region = 504 px
 - number of pix in a beam = numpy.pi * 4.43 * 1.93 / 4 / numpy.log(2) / 0.5**2 = 38.8 px
 - --> # of beams ~ 13 within the region
-- theoretical sigma over the moment 0 map chan[124,156] = 0.179 Jy km/s /B
 - theoretical Isigma ~ 1.451 mJy/B/channel * sqrt(156-124+1) channels * 21.5 * 13 beams ~ 2.330 Jy km/s
 
 Altho region is 13 beams, if we do imfit():
@@ -91,5 +103,30 @@ imfit(imagename='centralizedCube4GILDAS-mom0.image', region='Flux_CO32_20.3Jy_re
 
 imstat(imagename='centralizedCube4GILDAS-mom0.image', region='offsource_region.crtf', logfile='offsource_region.log')
 --> rms offsource = 0.484 Jy km/s/B; but STD = 0.173 Jy km/s/B
---> becuase the histogram shows the mean is off.
+--> the histogram also shows the mean is off from zero.
 --> note rms higher than calculated from 1.451 mJy/B/channel
+
+
+mapping
+(try no smoothing)
+go moments
+! Moment.init
+TASK\FILE "Input file name" IN$ "/Users/admin/Research/RXJ1131/PdBI/data/15May16/centralizedCube4GILDAS.lmv-clean"
+TASK\FILE "Output files name (no extension)" OUT$ "/Users/admin/Research/RXJ1131/PdBI/data/15May16/centralizedCube4GILDAS-mom_nosmooth"
+TASK\REAL "Velocity range" VELOCITY$[2]  -258.3 430.6
+TASK\REAL "Detection threshold" THRESHOLD$ 0
+TASK\LOGICAL "Smooth before detection ?" SMOOTH$ NO
+TASK\GO
+
+let name centralizedCube4GILDAS-mom_nosmooth
+let type mean
+go nice
+--> same problem
+
+
+# To solve this unexpected noise properties in the moment0 map made using GILDAS
+1. see script RXJ1131/PdBI/src/python_mom0/makeMom0.py, where I made the moment0 manually, with its noise properties consistent with what we expect.
+--> use this for moment0 in APLpy, this also uses channel 126-160 --> highest SNR
+
+
+
