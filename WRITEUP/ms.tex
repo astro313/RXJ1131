@@ -1,4 +1,4 @@
-% Done: PdBI observations, VLA observations, CARMA obs, HST astrometry, CO21 results, origin of \bco
+% Done: PdBI observations, VLA observations, CARMA obs, HST astrometry, CO21 results, origin of co21, co32 emission
 %
 %
 %
@@ -142,7 +142,7 @@ errors, and beam size.
 %                                Results
 %--------------------------------------------------------------------------
 \section{Results}
-\subsection{\bco emission} %DONE
+\subsection{\bco Emission} %DONE
 We dynamically resolved the \bco line emission toward the background galaxies
 at $\gtrsim$27$\sigma$ significance, confirming the redshift at $z_{\rm CO}$ =
 0.65370 $\pm$ 0.0005. A highly asymmetric double-horned line profile is
@@ -249,7 +249,7 @@ However, we cannot quantify this with a mass ratio given the
 spatial resolution. This will be verified in future higher-resolution observations. In the subsequent sections, we will interpret RXJ1131
 using this scenario (i.e. a ``wet-wet'' merger).
 
-\subsection{\bco kinematics} % DONE
+\subsection{\bco Kinematics} % DONE
 A clear velocity gradient and an unusually high
 velocity dispersion ($\gtrsim$400\kms) near the central region
 is seen in \Fig{CO21highO}. While beam smearing is inevitably the
@@ -277,8 +277,39 @@ Contours for the first (left) and second (right) moment maps are shown in steps 
 \end{figure}
 
 
-\subsection{\cco emission}
+\subsection{\cco Emission} % done
+We detect resolved \cco line emission toward RXJ1131. The spectrum is shown in
+\Fig{co32spec}, which seems to have a double-peak profile.
+This is expected if RXJ1131 is truly a disk galaxy (see previous
+sections). The high phase noise in the calibration leads to a low SNR
+detection. We thus estimate the line intensity to be
+35.7$\pm$ 21.9 Jy\,\kms by summing up fluxes over the
+linewidth used to infer \bco line intensity ($\sim$700 \kms).
+
+\begin{figure}[!Htbp]
+\centering
+\includegraphics[width=0.5\textwidth]{../Figures/coOverlay.eps}
+\caption{
+\carma \cco line profile (solid) without continuum subtraction is
+over-plotted on the continuum-subtracted \bco line profile (dashed).
+The velocity scale is with respect to $z$=0.6537, which corresponds to the dynamical center of the \bco line. The spectral resolution for \cco and \bco is 35.8 \kms and 21.5 \kms, respectively.
+ \label{fig:co32spec}}
+\end{figure}
+
+
 \subsection{Interferometric Continuum}
+
+At the position of \cco, continuum emission is not detected in
+the line-free channels down to a 3$\sigma$ limit of 2.49mJy beam\pmOne.
+This is consistent with the spectrum shown in \Fig{co32spec}.
+The continuum is buried within the sensitivity limit of this data.
+% (consistent with the Gaussian + poly fit to the spectrum continuum level: 2.2 $\pm$ 3.0 mJy).
+% line free channels:1, 118, 160, 600
+% nchan =(117+600-160+1) = 558
+% sigma =  0.83 mJy/B
+
+
+
 2mm: resolved along the major axis, but unresolved along the minor axis. We decomposed the continuum from the foreground and background sources by subtracting a point
 source model in the $uv-$plane (see Riechers+13 SMMJ04135 description)
 
