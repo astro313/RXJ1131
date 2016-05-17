@@ -292,26 +292,52 @@ linewidth used to infer \bco line intensity ($\sim$700 \kms).
 \caption{
 \carma \cco line profile (solid) without continuum subtraction is
 over-plotted on the continuum-subtracted \bco line profile (dashed).
-The velocity scale is with respect to $z$=0.6537, which corresponds to the dynamical center of the \bco line. The spectral resolution for \cco and \bco is 35.8 \kms and 21.5 \kms, respectively.
+The velocity scale is with respect to $z$=0.6537, which corresponds to the
+dynamical center of the \bco line. The spectral resolution for \cco and \bco
+is 35.8 \kms and 21.5 \kms, respectively.
  \label{fig:co32spec}}
 \end{figure}
 
+Assuming the spatial extents between \bco and \cco are similar and therefore
+a negligible differential lensing effect, the line intensities
+correspond to a brightness temperature ratio of
+$r_{\rm 32}$\,=\,T$_{\tiny \cco}$/T$_{\tiny \bco}$\,=\,0.66$\pm$0.41.
+The high uncertainty is dominated by the uncertainties in the \cco line
+intensity.
 
 \subsection{Interferometric Continuum}
 
-At the position of \cco, continuum emission is not detected in
-the line-free channels down to a 3$\sigma$ limit of 2.49mJy beam\pmOne.
+No continuum emission is detected at the position of \cco
+down to a 3$\sigma$ limit of 2.49mJy beam\pmOne.
 This is consistent with the spectrum shown in \Fig{co32spec}.
-The continuum is buried within the sensitivity limit of this data.
 % (consistent with the Gaussian + poly fit to the spectrum continuum level: 2.2 $\pm$ 3.0 mJy).
 % line free channels:1, 118, 160, 600
 % nchan =(117+600-160+1) = 558
 % sigma =  0.83 mJy/B
 
+We detect \pdbi 2\,mm continuum in \Fig{2mm}. The integrated flux density is
+1.2$\pm$0.2 mJy, with a peak flux $S_\nu$ = 800$\pm$88 \micron Jy\,beam\pmOne
+centered on the lensing galaxy. A slightly extended emission is seen
+also along the lensed arc. This suggests that the detected emission is
+toward both the foreground galaxy and the background galaxy and that the
+emission is marginally resolved along its major axis.
+
+We subtract a point source model in $uv$-plane to remove the unresolved
+emission toward the foreground galaxy. The peak flux (0.389$\pm$0.082 mJy)
+in the residual coincides with the lensed arc, and is also consistent with
+the difference between the integrated and the peak flux
+in the original continuum map ($\sim$0.4 mJy). We therefore adopt this as
+emission toward the background galaxy.
 
 
-2mm: resolved along the major axis, but unresolved along the minor axis. We decomposed the continuum from the foreground and background sources by subtracting a point
-source model in the $uv-$plane (see Riechers+13 SMMJ04135 description)
+\begin{figure}[!htbp]
+\centering
+\includegraphics[width=0.35\textwidth]{../Figures/F555W_ContPdBI.eps}
+\caption{
+An overlay of the 2\,mm continuum emission on the optical image. Contours start at ...
+\label{fig:2mm}}
+\end{figure}
+
 
 
 \subsection{Photometry}
