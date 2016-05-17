@@ -7,10 +7,12 @@ wavelength [um], freq [GHz], flux density [mJy], flux_err [mJy], instrument
 Save table as latex file
 
 
-Last Modified: May 10 2016
+Last Modified: May 17 2016
 
 History
 -------
+May 17 2016:
+    updated error on PdBI peak
 May 10 2016:
     add decomposed IRAC points, and the missing 3.6 um point
     add PdBI residual point, error corresponds to without adding that from flux cal.
@@ -119,7 +121,7 @@ data_VLA = [((4.8815*u.GHz).to(u.micron, equivalencies=u.spectral()).value,
 data_PdBI = [((139.256*u.GHz).to(u.micron, equivalencies=u.spectral()).value,
               139.256, 1.23, 0.22, 'PdBI-integrated'),
              ((139.256*u.GHz).to(u.micron, equivalencies=u.spectral()).value,
-              139.256, 0.799, 1.3e-2, 'PdBI-peak'),
+              139.256, 0.799, 0.0816, 'PdBI-peak'),
              ((139.256*u.GHz).to(u.micron, equivalencies=u.spectral()).value,
               139.256,  0.4, 0.0816, 'PdBI-removedFG')  #  err incl. flux cal., used in SED fitting = 0.1976
             ]
