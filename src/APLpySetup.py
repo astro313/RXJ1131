@@ -41,9 +41,9 @@ def sigma_contour_VLA(sigma):
 
 def sigma_contour_array(sigma):
     """
-    return list of sigma multiples, +/- 3*n*sigma from 1 ....10
+    return list of sigma multiples, +/- 3*n*sigma from 1 ....14
     """
-    arr = np.arange(11) * 3
+    arr = np.arange(15) * 3
     arr = arr[1:] * sigma
     Narr = -1 * arr
     arrE = np.hstack((Narr, arr))
@@ -131,7 +131,7 @@ def setup_beam2(sp, major, minor, angle, idx, loc='top right', c='black', hatch=
     sp.beam[idx].set_frame(True)
 
 
-def markers_cross(sp, ra, dec, layer=None, ec='yellow', fc='none', mk='+', s=500, a=1.0, lw=2, zorder=50):
+def markers_cross(sp, ra, dec, layer=None, ec='yellow', fc='none', mk='+', s=500, a=1.0, lw=1.2, zorder=50):
     """
     Inputs:
     -------

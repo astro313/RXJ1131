@@ -6,13 +6,19 @@ Plot mom0 of all channels overlay on HST (single panel)
 Author: Daisy Leung
 
 
-Last edited: 01 Jan 2016
+Last edited: 16 May 2016
 
 
 History:
 --------
-01 Jan 2016: update marker
-31 Dec 2015: use the linear shifted HST F555W image
+16 May 2016:
+    - update font
+    - replace mom0 wiith centralizedCube4GILDAS-CASA_ch126-160_mom0.fits from 15May16/
+    - update sigma
+01 Jan 2016:
+    - update marker
+31 Dec 2015:
+    - use the linear shifted HST F555W image
 
 Note:
 -----
@@ -31,36 +37,48 @@ from APLpySetup import *
 path = '../HST/'
 Plotpath = '../Figures/'
 
+font = {'family': 'Arial Narrow',
+        'weight': 'normal',
+        'size': 12.5}
+xtick = {'major.size': 10,
+         'minor.size': 6}
+ytick = {'major.size': 10,
+         'minor.size': 6}
+mpl.rc('font', **font)
+mpl.rc('xtick', **xtick)
+
 label = dict.fromkeys(['F555W_drzcroplinearShift'])
 for k in label.iterkeys():
     files = glob.glob(path + '*' + k + '*.fits')
     label[k] = files
 # print label
 
-label_pdbi = dict.fromkeys(['mom0'])
-path_pdbi = '../PdBI/data/14Oct15/'
+label_pdbi = dict.fromkeys(['CASA_ch126-160'])
+#
+path_pdbi = '../PdBI/data/15May16/'
 
 for k in label_pdbi.iterkeys():
-    file_pdBI = glob.glob(path_pdbi + '*' + k + '.fits')
+    file_pdBI = glob.glob(path_pdbi + '*' + k + '*.fits')
     label_pdbi[k] = file_pdBI
 
-figC = plt.figure(1, figsize=(7, 7))
+figC = plt.figure(1, figsize=(8, 8))
+figC.subplots_adjust(top=0.9, left=0.05, right=0.95)
 figC.clf()
 ########################################
 # user define area
 ########################################
 ra_center = 172.96434563888
 dec_center = -12.5328629
-sizep = 0.0025
+sizep = 0.00225
 
 ra_cross, dec_cross = ra_center, dec_center
-row_a = 0.10
+row_a = 0.1
 width = 0.35
-full_width = 0.8
+full_width = 0.78
 x_gap = 0.05
-x0 = 0.15
-dy = 0.90
-sigma = 0.43    # 0.32e-3 Jy/B
+x0 = 0.2
+dy = 0.80
+sigma = 0.305       # 0.43    # 0.32e-3 Jy/B
 
 line_min = 0.035668
 line_max = 7.56445
@@ -72,18 +90,17 @@ tickcolor = 'k' if inverted_HSTleft else 'white'
 ########################################
 fig1 = aplpy.FITSFigure(label['F555W_drzcroplinearShift'][0],
                         figure=figC, subplot=[x0, row_a, full_width, dy])
-fig1.show_grayscale(stretch='log', vmin=-0.01869, vmax=151, vmid=-0.025)
+fig1.show_grayscale(stretch='log', vmin=-0.02, vmax=20, vmid=-0.025)
 if inverted_HSTleft: fig1.set_theme('publication')
 ########################################
 # Contours
 ########################################
-fig1.show_contour(label_pdbi['mom0'][0], colors=tickcolor, levels=sigma_contour_array(sigma), linewidths=2)  # , layer='fg')
+fig1.show_contour(label_pdbi['CASA_ch126-160'][0], colors=tickcolor, levels=sigma_contour_array(sigma), linewidths=1.42)  # , layer='fg')
 
 ########################################
 # beam
 ########################################
-fig1.show_beam(major=4.44/3600, minor=1.95/3600, angle=13., edgecolor='grey', facecolor='orange', linestyle='solid', linewidth=3, frame=True, alpha=0.65)
-
+fig1.show_beam(major=4.44/3600, minor=1.95/3600, angle=13., edgecolor='grey', facecolor='grey', linestyle='solid', linewidth=3, frame=False, alpha=0.65)
 
 ########################################
 # scale bar
@@ -101,7 +118,7 @@ standard_plot_setup(fig1, ra_center, dec_center, sizep, tickc=tickcolor)
 ########################################
 # markers
 ########################################
-markers_cross(fig1, ra_cross, dec_cross, layer='marker_set_1', ec=tickcolor)
+markers_cross(fig1, ra_cross, dec_cross, layer='marker_set_1', ec='red', lw=1.2)
 
 ########################################
 # Labels
@@ -126,7 +143,7 @@ if __name__ == '__main__':
     if saveFig == True:
         outname = 'F555WCO21_mom0_single.eps'
         if inverted_HSTleft: outname = outname.replace('.eps', '.invertedgray.eps')
-        figC.savefig(Plotpath + outname, dpi=600)
+        figC.savefig(Plotpath + outname, dpi=600, box_inches='tight')
     else:
         #        figC.canvas.draw()
         plt.show()
