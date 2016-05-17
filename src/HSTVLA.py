@@ -1,12 +1,15 @@
 """
 Author: Daisy Leung
 
-Last edited: 01 Jan 2016
+Last edited: 17 May 2016
 
 Purpose:
 - Plot single panel 5GHz VLA continuum on HST F555W, investigate continuum offset
 
 History:
+May 17 2016:
+    - update cosmetics
+    - add beam
 Jan 01 2016:
     - update marker
 Dec 31 2015:
@@ -27,6 +30,16 @@ from APLpySetup import *
 path = '../HST/'
 Plotpath = '../Figures/'
 
+font = {'family': 'Arial Narrow',
+        'weight': 'normal',
+        'size': 11.5}
+xtick = {'major.size': 10,
+         'minor.size': 6}
+ytick = {'major.size': 10,
+         'minor.size': 6}
+mpl.rc('font', **font)
+mpl.rc('xtick', **xtick)
+
 label = dict.fromkeys(['F555W_drzcroplinearShift'])
 for k in label.iterkeys():
     files = glob.glob(path + '*' + k + '*fits')
@@ -41,6 +54,7 @@ for k in label_vla.iterkeys():
 # print label_vla
 
 figC = plt.figure(1, figsize=(7, 7))
+figC.subplots_adjust(top=0.9, left=0.1, right=0.95)
 # figRed = plt.figure(2, figsize=(12, 7))
 ########################################
 # user define area
@@ -52,10 +66,10 @@ sizep = 0.002
 ra_cross, dec_cross = ra_center, dec_center
 row_a = 0.10
 width = 0.35
-full_width = 0.8
+full_width = 0.7
 x_gap = 0.05
-x0 = 0.15
-dy = 0.90
+x0 = 0.2
+dy = 0.85
 sigma = 1.3e-5
 
 ########################################
@@ -69,7 +83,7 @@ sigma = 1.3e-5
 
 fig1 = aplpy.FITSFigure(label['F555W_drzcroplinearShift'][0], \
         figure=figC, subplot=[x0,row_a,full_width,dy])
-fig1.show_grayscale(stretch='log', vmin=-0.01869, vmax=151, vmid=-0.025)
+fig1.show_grayscale(stretch='log', vmin=-0.01869, vmax=121, vmid=-0.025)
 #figO = aplpy.FITSFigure(label['F555W_drzcroplinearShift'][0], \
 #        figure=figC, subplot=[x0+width+2*x_gap, row_a, width, dy])
 #figO.show_grayscale(stretch='log', vmin=-0.01869, vmax=151, vmid=-0.025)
@@ -88,6 +102,11 @@ fig1.show_grayscale(stretch='log', vmin=-0.01869, vmax=151, vmid=-0.025)
 fig1.show_contour(label_vla['C_R0'][0], colors="blue", levels=sigma_contour_VLA(sigma), linewidths=2)#, layer='fg')
 
 # figred.show_contour(label_vla['red'][0], colors="lime", levels=sigma_contour_array(sigma_red), linewidths=2)
+
+########################################
+# beam
+########################################
+fig1.show_beam(major=0.49/3600, minor=0.35/3600, angle=0.18, edgecolor='white', facecolor='white', linestyle='solid', linewidth=3, frame=False, alpha=0.8)
 
 ########################################
 # scale bar
@@ -123,8 +142,8 @@ markers_cross(fig1, ra_cross, dec_cross, layer='marker_set_1')
 # if '_' in sym[:-1]: symf = sym.replace('_', ' ')
 
 # put_label(fig1, 0.20, 0.95, 'HST F555W', 'titleBand')
-put_label(fig1, 0.31, 0.95, 'HST F555W, 5GHz Continuum', 'titleBand')
-put_label(fig1, 0.15725, 0.9, 'RXJ1131', 'titleObj')
+put_label(fig1, 0.4, 0.9, 'HST F555W, 5GHz Continuum', 'titleBand')
+put_label(fig1, 0.15725, 0.95, 'RXJ1131', 'titleObj')
 # put_label(figHST, 0.20, 0.95, 'HST F555W', 'titleBand')
 # put_label(figHST, 0.1825, 0.9, 'RXJ1131', 'titleObj')
 # put_label(figred, 0.40, 0.95, 'HST F555W, CO Red wing', 'titleBand')
@@ -159,8 +178,8 @@ if __name__ == '__main__':
         errmsg = "Invalid number of arguments: {0:d}\n  run script.py Save_True"
         raise IndexError(errmsg.format(len(sys.argv)))
     saveFig = True if sys.argv[1].lower() == 'true' else False
-    if saveFig == True:
-        figC.savefig(Plotpath + 'F555W_ContVLA.eps', dpi=600)
+    if saveFig:
+        figC.savefig(Plotpath + 'F555W_ContVLA.eps', dpi=600, bbox_inches='tight')
     else:
 #        figC.canvas.draw()
         plt.show()

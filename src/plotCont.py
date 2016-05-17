@@ -32,7 +32,7 @@ Plotpath = '../Figures/'
 
 font = {'family': 'Arial Narrow',
         'weight': 'normal',
-        'size': 12.5}
+        'size': 11.5}
 xtick = {'major.size': 10,
          'minor.size': 6}
 ytick = {'major.size': 10,
