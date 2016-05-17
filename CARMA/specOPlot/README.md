@@ -6,7 +6,16 @@ Use CO21 & coOverlay.eps to guide the range of velocity to include.
 -----------
 
 CO (3-2):
-- I = 37.1 Jy km/s from `go view`
+May 17 2016:
+- Update channel range to be consistent with the velocity range used to get the new CO21 Intensity (124-156)
+- I = 35.7 Jy km/s from `go view`
+- --> integrated over velocity width ~ 710 km/s
+- Channel:     48-68
+- velocity:   -441.57, 278.79
+- I_sigma: see below
+
+May 04 2016 (Deprecated):
+- I = 37.1 Jy km/s from `go view` 
 - from channel [49, 69]
 - velocity [-430.94, 305.26] km/s
 - vertices of polygon (Xi, Yi) = (133,150), (118,138), (122,104), (153, 114), (150,141)

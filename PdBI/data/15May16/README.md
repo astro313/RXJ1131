@@ -1,7 +1,8 @@
 copied centralizedCube4GILDAS.fits and centralizedCube4GILDAS.lmv-clean from 30Apr16.
 
-Want to generate a moment 0 map without clipping, using chan = 124-156. 
+Want to generate a moment 0 map without clipping.
 Previously use 127-155, where in 30Apr16, I found that using just 127-155 have excluded significant flux.
+Should use 126-160 for highest SNR, intensity use 124-156.
 
 *Need to get source size, # of beams, and uncertainties on the integrated flux.*
 
