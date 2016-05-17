@@ -1,4 +1,4 @@
-% Done: PdBI observations, VLA observations, CARMA obs, HST astrometry, CO21 results
+% Done: PdBI observations, VLA observations, CARMA obs, HST astrometry, CO21 results, origin of \bco
 %
 %
 %
@@ -118,6 +118,7 @@ the CLEAN algorithm using robust\,=\,0. This yields a synthesized clean
 beam size of 0$\farcs$49 $\times$ 0\farcs35 (PA\,=\,0\farcs18) and a final
 rms noise of $\sigma$ = 13 $\mu$Jy beam\pmOne.
 
+
 \section{HST astrometry}
 We obtain HST images from the Hubble Legacy Archive with
 a goal to understand the origins of the emission detected
@@ -231,20 +232,24 @@ center. \label{fig:spatialSpec}}
 \end{figure*}
 
 We place an upper limit on \rot[HNC]{2}{1} line emission at the red-shifted
-frequency 140 GHz in the foreground galaxy at $z\sim$0.295) of $\sigma$ = 1.
-451mJy per channel beam\pmOne.
+frequency 140 GHz in the foreground galaxy at $z\sim$0.295) of
+$\sigma$ = 1.451mJy per channel beam\pmOne.
 Assuming a typical line width of 300 \kms, this corresponds to a 3$\sigma$
 limit of 4.353 mJy \kms beam\pmOne.
 
-\susbsection{Origin of the \bco emission} \label{sec:origin}
-
-gas:
-CO is from the optical QSO, because co-spatial with the lensed optical emission, but also emisson from the companion.
-We adopt the ULIRG value, as used in the largest samples of non-local ULIRGs (solomon+97, Combes+11).
-We classify this as wet-wet merger given a contribution of CO from the companion. However, we cannot quantify this with a mass ratio given the spatial resolution. This will be verified in further higher-resolution observations.
+\susbsection{Origin of the \bco emission} \label{sec:origin} %DONE
+Evidently, the CO emission is co-spatial with the lensed optical emission in
+the background AGN host galaxy. The question is then whether the optically
+faint companion also contributes to the CO flux and thus contains a
+non-negligible amount of molecular gas.
+Indeed, based on our lens model presented in \Sec{lensmodel}, we find it
+highly likely that part of the CO emission originates from
+the companion. We thus classify RXJ1131 as a ``wet-wet'' merger.
+However, we cannot quantify this with a mass ratio given the
+spatial resolution. This will be verified in future higher-resolution observations. In the subsequent sections, we will interpret RXJ1131
+using this scenario (i.e. a ``wet-wet'' merger).
 
 \subsection{\bco kinematics}
-
 \begin{figure}[!htbp]
 \centering
 \includegraphics[trim=0 5 0 15, clip, width=0.25\textwidth]{../Figures/{F555WCO21_mom0_single.invertedgray}.eps}
@@ -273,8 +278,6 @@ and velocity dispersion are suggestive of a kinematically ordered disk at the cu
 
 We will defer the discussion of such features and the implications to
 \Sec{dynamics}, where we analyze the dynamics of the system.
-
-
 
 
 
@@ -318,7 +321,7 @@ We list the photometry from optical to radio in \Tab{photometry}.
 %                                Analysis
 %--------------------------------------------------------------------------
 \section{Analysis}
-\subsection{Lens modeling}
+\subsection{Lens modeling} \label{lensmodel}
 With the high SNR and spectral resolution, we model different kinematic components using our lensing code \uvmcmcfit.
 
 % describe model setup.
