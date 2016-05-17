@@ -249,7 +249,23 @@ However, we cannot quantify this with a mass ratio given the
 spatial resolution. This will be verified in future higher-resolution observations. In the subsequent sections, we will interpret RXJ1131
 using this scenario (i.e. a ``wet-wet'' merger).
 
-\subsection{\bco kinematics}
+\subsection{\bco kinematics} % DONE
+A clear velocity gradient and an unusually high
+velocity dispersion ($\gtrsim$400\kms) near the central region
+is seen in \Fig{CO21highO}. While beam smearing is inevitably the
+dominant factor in the observed velocity dispersion
+at the spatial resolution of this data, the exceedingly
+high velocity dispersion hints
+at potential perturbations from the AGN, or internal turbulence due to
+interactions with the companion, and/or instability due to the large gas
+content. A velocity gradient across the source plane in \Fig{model} is also
+found in our lens model. This further supports the idea of a kinematically-
+ordered galaxy, but its emission has been lensed differentially.
+In this scenario, RXJ1131 is a disrupted disk galaxy hosting an optically
+bright quasar and is in the process of merging.
+We will defer the discussion of the implications to \Sec{dynamics},
+where we analyze the dynamics of the system in the source plane.
+
 \begin{figure}[!htbp]
 \centering
 \includegraphics[trim=0 5 0 15, clip, width=0.25\textwidth]{../Figures/{F555WCO21_mom0_single.invertedgray}.eps}
@@ -259,28 +275,6 @@ using this scenario (i.e. a ``wet-wet'' merger).
 Contours for the first (left) and second (right) moment maps are shown in steps of 50 \kms, and 100 \kms, respectively. The beam (native resolution) is shown in the right panel.
 \label{fig:CO21highO}}
 \end{figure}
-
-A clear velocity gradient
-
-An unusually high velocity dispersion ($\gtrsim$400\kms) is seen in the
-central region in \Fig{CO21highO}. While beam smearing is inevitably the
-dominant factor giving rise to the observed velocity dispersion
-at current spatial resolution, the exceedingly high velocity dispersion hints
-at potential perturbations from the AGN, or internal turbulence due to
-interactions with the companion, and/or instability due to the huge gas
-reservoir.
-
-
-Given the 1st moment map and the observed velocity gradient across the source plane in our model \Fig{model}, this is indicative of a kinematically ordered galaxy, but its emission has been lensed differentially.
-
-
-and velocity dispersion are suggestive of a kinematically ordered disk at the current resolution limit. The spectrally resolved lensed emission allows us to probe dynamical structures on smaller spatial scales than otherwise possible.
-
-We will defer the discussion of such features and the implications to
-\Sec{dynamics}, where we analyze the dynamics of the system.
-
-
-
 
 
 \subsection{\cco emission}
@@ -322,6 +316,9 @@ We list the photometry from optical to radio in \Tab{photometry}.
 %--------------------------------------------------------------------------
 \section{Analysis}
 \subsection{Lens modeling} \label{lensmodel}
+The spectrally resolved lensed emission allows us to probe dynamical structures on smaller spatial scales than otherwise possible.
+
+
 With the high SNR and spectral resolution, we model different kinematic components using our lensing code \uvmcmcfit.
 
 % describe model setup.
