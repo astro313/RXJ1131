@@ -6,11 +6,13 @@ Plot mom0 of all channels overlay on HST (single panel)
 Author: Daisy Leung
 
 
-Last edited: 16 May 2016
+Last edited: 17 May 2016
 
 
 History:
 --------
+17 May 2016:
+    - pythonic
 16 May 2016:
     - update font
     - replace mom0 wiith centralizedCube4GILDAS-CASA_ch126-160_mom0.fits from 15May16/
@@ -140,7 +142,7 @@ if __name__ == '__main__':
         errmsg = "Invalid number of arguments: {0:d}\n  run script.py Save_True"
         raise IndexError(errmsg.format(len(sys.argv)))
     saveFig = True if sys.argv[1].lower() == 'true' else False
-    if saveFig == True:
+    if saveFig:
         outname = 'F555WCO21_mom0_single.eps'
         if inverted_HSTleft: outname = outname.replace('.eps', '.invertedgray.eps')
         figC.savefig(Plotpath + outname, dpi=600, box_inches='tight')

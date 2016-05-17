@@ -1,19 +1,26 @@
 """
 Author: Daisy Leung
 
-Last edited: 03 May 2016
+Last edited: 17 May 2016
 
 Purpose:
     Plot Red wing and Blue wing different color overlay on HST
-    channels: blue: [150, 142]; velocity [-423.79, -251.39]
-              red: [142, 134]; velocity [-251.39, -90.22]
+    channels: 126-144 (Red), 144-160 (Blue)
 
 
 History:
-03 May 2016: change label color from yellow to black, since we inverted HST image, else can't read them
-30 April 2016: Change contour colors, inverted color for HST, change HST contrast based on ds9
-01 Jan 2016: update marker
-31 Dec 2015: Use linear shifted F555W image
+17 May 2016:
+    - update to use integrated maps from 17May16/, channel range consistent with mom0 map
+    - update sigma
+    - cosmetics
+03 May 2016:
+    - change label color from yellow to black, since we inverted HST image, else can't read them
+30 April 2016:
+    - Change contour colors, inverted color for HST, change HST contrast based on ds9
+01 Jan 2016:
+    - update marker
+31 Dec 2015:
+    - Use linear shifted F555W image
 
 """
 
@@ -27,6 +34,16 @@ from APLpySetup import *
 path = '../HST/'
 Plotpath = '../Figures/'
 
+font = {'family': 'Arial Narrow',
+        'weight': 'normal',
+        'size': 12.5}
+xtick = {'major.size': 10,
+         'minor.size': 6}
+ytick = {'major.size': 10,
+         'minor.size': 6}
+mpl.rc('font', **font)
+mpl.rc('xtick', **xtick)
+
 label = dict.fromkeys(['F555W_drzcroplinearShift'])
 for k in label.iterkeys():
     files = glob.glob(path + '*' + k + '*.fits')
@@ -34,14 +51,16 @@ for k in label.iterkeys():
 # print label
 
 label_pdbi = dict.fromkeys(['red', 'blue'])
-path_pdbi = '../PdBI/data/5Nov15/'    # copied from 14Oct15
+path_pdbi = '../PdBI/data/17May16/'
 
 for k in label_pdbi.iterkeys():
-    file_pdBI = glob.glob(path_pdbi + '*' + k + '.fits')
+    file_pdBI = glob.glob(path_pdbi + '*' + k + '*.fits')
     label_pdbi[k] = file_pdBI
 # print label_pdbi
 
 figC = plt.figure(1, figsize=(7, 7))
+figC.subplots_adjust(top=0.9, left=0.1, right=0.95)
+
 ########################################
 # user define area
 ########################################
@@ -52,12 +71,12 @@ sizep = 0.002                # 0.00158066
 ra_cross, dec_cross = ra_center, dec_center
 row_a = 0.10
 width = 0.35
-full_width = 0.8
+full_width = 0.7
 x_gap = 0.05
-x0 = 0.15
-dy = 0.90
-sigma_blue = 0.1
-sigma_red = 0.15
+x0 = 0.2
+dy = 0.85
+sigma_blue = 0.53733    # noise free region
+sigma_red = 0.4323
 
 red_line_min = -0.488125
 red_line_max = 2.19431
@@ -76,16 +95,15 @@ if inverted_HSTleft: fig1.set_theme('publication')
 ########################################
 # Contours
 ########################################
-fig1.show_contour(label_pdbi['blue'][0], colors="blue", levels=sigma_contour_array(
-    sigma_blue), linewidths=2)  # , layer='fg')
+fig1.show_contour(label_pdbi['blue'][0], colors="blue", levels=sigma_contour_array(sigma_blue), linewidths=1.42)  # , layer='fg')
 
 fig1.show_contour(label_pdbi['red'][0], colors="red",
-                  levels=sigma_contour_array(sigma_red), linewidths=2)
+                  levels=sigma_contour_array(sigma_red), linewidths=1.42)
 
 ########################################
 # beam
 ########################################
-fig1.show_beam(major=4.44/3600, minor=1.95/3600, angle=13., edgecolor='grey', facecolor='orange', linestyle='solid', linewidth=3, frame=False, alpha=0.8)
+fig1.show_beam(major=4.44/3600, minor=1.95/3600, angle=13., edgecolor='grey', facecolor='gray', linestyle='solid', linewidth=3, frame=False, alpha=0.8)
 
 
 ########################################
@@ -99,7 +117,7 @@ lg_1arcsec = 1. / 3600
 ########################################
 # axes
 ########################################
-standard_plot_setup(fig1, ra_center, dec_center, sizep, tickc='white')
+standard_plot_setup(fig1, ra_center, dec_center, sizep, tickc=tickcolor)
 
 ########################################
 # markers
@@ -126,8 +144,8 @@ if __name__ == '__main__':
         errmsg = "Invalid number of arguments: {0:d}\n  run script.py Save_True"
         raise IndexError(errmsg.format(len(sys.argv)))
     saveFig = True if sys.argv[1].lower() == 'true' else False
-    if saveFig == True:
-        figC.savefig(Plotpath + 'F555W_REDBLUE.png', dpi=600, bbox_inches='tight')
+    if saveFig:
+        figC.savefig(Plotpath + 'F555W_REDBLUE.eps', dpi=600, bbox_inches='tight')
     else:
         #        figC.canvas.draw()
         plt.show()
