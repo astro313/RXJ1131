@@ -404,7 +404,7 @@ source position given by the output of SUSSEXtractor.
 %                                Analysis
 %--------------------------------------------------------------------------
 \section{Analysis}
-\subsection{Lens modeling} \label{sec:lensmodel}
+\subsection{Lens modeling} \label{sec:lensmodel} %DONE
 At the angular resolution of the \bco data, the images are resolved
 but not within the multiply lensed emission (i.e., sub-optimal for
 performing lens modeling). Nevertheless, the high spectral
@@ -413,7 +413,7 @@ spatial scales smaller than the beam (see \Fig{CO21highO}).
 Hence, with the high SNR, we reconstruct the intrinsic gas
 dynamics by carrying out parametric lens modeling over different
 channel slices of the interferometric data using our lensing code
-\uvmcmcfit (\citealt{uvmcmcfit15a};see \citealt{Bussmann15a} for details of
+\uvmcmcfit (\citealt{uvmcmcfit15a}; see \citealt{Bussmann15a} for details of
 the code). Model of each slice in \Fig{model} thus provides
 properties on the intrinsic kinematics. The slices
 are obtained by binning the data (over the full linewidth
@@ -427,10 +427,10 @@ fixed coordinate in the image, the Einstein Radius, the axial ratio, and the
 position angle. We use the VLA radio continuum emission toward
 the foreground galaxy to initialize the positional offset. We impose a
 uniform prior $\pm$0\farcs05 in both $\Delta$R.A. and $\Delta$Dec., which is
-larger than the astrometry uncertainties in the VLA image and is
-constrained by the uncertainties provided from previous SIE lens model (C06).
-We initialize the Einstein Radius based on the optical SIE lens
-model by C06 and impose a uniform prior using their reported $\pm$3$\sigma$.
+motivated by the astrometry uncertainties in the VLA image as well as
+the uncertainties provided by previous SIE lens model (C06).
+We initialize the Einstein Radius based on the model parameters reported by C06 
+and impose a uniform prior using $\pm$3$\sigma$ from their uncertainties.
 The sources are modeled using elliptical Gaussian profiles, which are
 parameterized by six free parameters: the positional offset in R.A.
 and Dec. relative to the lens, the intrinsic flux density, the effective
@@ -451,63 +451,60 @@ We first obtain a preliminary lens model for each channel slice independently,
 where their lens parameters are allowed to vary and are initialized according
 to the aforementioned way. We obtain the final model
 by repeating the modeling over each slice but fixing their lens parameters
-according to the overall median in the preliminary models, as listed in \Tab{lens}. The corresponding masses within the Einstein radii is
-$M(\theta$\,\,$<$\,\,$\theta_\textrm{E})$\,=\,(7.47\,$\pm$\,0.02)\,$\times$\,10$^{11}$\,\Msun.
+according to the overall median in the preliminary models, as listed in \Tab{lens}. 
 This ensures that all models share the same lens profile.
 The magnification factor is determined by taking the ratio
 between the image plane flux of the model and the source plane flux.
 The best-fit magnification factors are listed in \Tab{model}.
-We compare our model parameters in \Tab{lens} describing
-the mass distribution of the lensing galaxy
-against that of the SIE model presented by C06. The position
-%\footnote{We note that they report a positional offset
-% relative to the light centroid in the HST image, which are at slightly
-%different astrometry. Our comparison takes into
-%account the astrometric correction applied.}
-of lensing mass, Einstein Radius, PA and axial ratio
-are all consistent within the uncertainties.
-% PA = -73.6, ellipticity = 0.45,
-% their theta\_R = 1.84" $\pm$ 0.01.
 
-\subsection{Interpretation and Caveats}
+Our model parameters in \Tab{lens}, describing
+the mass distribution of the lensing galaxy, are consistent (within the uncertainties) 
+with that of the SIE model presented by C06. We find a mass of 
+$M(\theta$\,\,$<$\,\,$\theta_\textrm{E})$\,=\,(7.47\,$\pm$\,0.02)\,$\times$\,10$^{11}$\,\Msun
+within the Einstein radius.
+
+\input{table_medianLens}
+
+\subsubsection{Interpretation and Caveats} \label{sec:caveat}
 The reconstructed source locations in \Fig{model} demonstrate
 an intrinsic velocity gradient in the source plane, which is
 indicative of a disk geometry. While solely based on the
 lens model is insufficient to draw conclusive inference on its
 true geometry. Additional support to the disk conjecture %conjecture of a disk morphology
-can be found in the observed (image plane) velocity field and
-the double-horned line profile in \Fig{CO21spec}. Furthermore,
-the reconstructed source plane emission in optical-NIR
-is also best-reproduced using a $n$\,=\,1 Sersic profile (C06).
+can be found in the double-horned line profile (\Fig{CO21spec})
+and the observed (image plane) velocity field (\Fig{CO21highO}). Furthermore,
+C06 also find that the reconstructed source plane emission in optical-NIR
+is best-reproduced using a $n$\,=\,1 Sersic profile.
 Our interpretation therefore tends in favor of a disk morphology for RXJ1131.
 
 % the companion
-One interesting result from our lens model is that a better fit is
+One other interesting result from our lens model is that a better fit is
 found for the red-most channel if we add a second source component (see
 top left panel in \Fig{model}). This is consistent with previous results
 reported by \citet{Brewer08a}, who find an optically faint companion
-separated by $\sim$2.4\,kpc away from the AGN host galaxy.
+$\sim$2.4\,kpc away from the AGN host galaxy.
 
-We emphasis that the spatial resolution of the data at hand
+We emphasize that the spatial resolution of the data at hand
 is a few arcsec, which implies that despite the high SNR and spectral
 resolution, this data is insufficient to constrain the
 intrinsic sizes of the lensed galaxies, and thus the magnification
-factors is likely under-predicted. We will discuss this further in the following section. % magnification factor is underpredicted, see Bussmann15
+factors ares likely under-predicted. 
+We will discuss this further in the following section. % magnification factor is underpredicted, see Bussmann15
 
 \begin{figure*}[tbph]
 \centering
 \includegraphics[width=0.85\textwidth]{../Figures/PostageStampModel.eps}
 \includegraphics[width=0.85\textwidth]{../Figures/PostageStampResiduals.eps}
 \caption{Each panel corresponds to a lens model of RXJ1131 performed over a
-channel slice $\sim$100\,\kms of the \bco data. Top: Channel maps of the
+channel slice $\sim$100\,\kms of the \bco data. Top: channel maps of the
 PdBI \bco emission (red) overlaid on our best-fit lens models (grayscale).
 The location of the foreground lensing galaxy is indicated by a black dot and
 its critical curve is traced by the orange solid line. The locations and
 morphologies (half-light radii) of the reconstructed sources are
-represented by magenta ellipses (see text in \Sec{lensmodel} for caveats).
+represented by magenta ellipses (see text in \Sec{caveat} for caveats).
 The caustic curves are represented as cyan lines. The beam of the
 PdBI observations is shown in the bottom right corner of each panel.
-Bottom: Residual images of the best-fit models, obtained by
+Bottom: residual images of the best-fit models, obtained by
 taking the Fourier transform after subtracting the best-fit model from the
 data in the $uv$-domain. Contours start
 at $\pm$3$\sigma$ and increment at steps of 3$\times$2$^n\sigma$,
@@ -523,7 +520,7 @@ by the more extended IR emission (hence \SF), well beyond the caustic (C06).
 
 The highly asymmetric \bco line profile also suggests that differential lensing is non-negligible in the CO emission, where
 flux density in the red wing is apparently much higher than in the blue wing, given its lensing configuration.
-By modeling different kinematic components, we find that the magnification factor ranges from BLAH to BLAH. The various magnification factors are listed in \Tab{mag}.
+By modeling different kinematic components, we find that the magnification factor ranges from BLAH to BLAH. The various magnification factors are listed in \Tab{model}.
 \input{table_magFactor}
 
 
