@@ -12,6 +12,7 @@ Last Modified: May 17 2016
 History
 -------
 May 17 2016:
+    update MIPS to account for aperture correction
     updated error on PdBI peak
 May 10 2016:
     add decomposed IRAC points, and the missing 3.6 um point
@@ -95,7 +96,7 @@ data_rows = [(0.555, (0.555*u.micron).to(u.GHz, equivalencies=
              (8.0, (8.0*u.micron).to(u.GHz, equivalencies=u.spectral()).value,
               4.5889, 0.00566, 'Spitzer/IRAC(Archive-Host)'),
              (24, (24*u.micron).to(u.GHz, equivalencies=u.spectral()).value,
-              47.18, 0.02621, 'Spitzer/MIPS'),
+              70.2038, 0.02621, 'Spitzer/MIPS'),
              (250, (250*u.micron).to(u.GHz, equivalencies=u.spectral()).value,
               289.4271426, 9.554673, 'Herschel/SPIRE'),
              (350, (350*u.micron).to(u.GHz, equivalencies=u.spectral()).value,
