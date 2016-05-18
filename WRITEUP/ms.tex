@@ -451,53 +451,74 @@ We first obtain a preliminary lens model for each channel slice independently,
 where their lens parameters are allowed to vary and are initialized according
 to the aforementioned way. We obtain the final model
 by repeating the modeling over each slice but fixing their lens parameters
-according to the overall median in the preliminary models
-(see \Tab{lens}). This ensures the
-lens model of each kinematic component share the same lens profile.
+according to the overall median in the preliminary models, as listed in \Tab{lens}. The corresponding masses within the Einstein radii is
+$M(\theta$\,\,$<$\,\,$\theta_\textrm{E})$\,=\,(7.47\,$\pm$\,0.02)\,$\times$\,10$^{11}$\,\Msun.
+This ensures that all models share the same lens profile.
 The magnification factor is determined by taking the ratio
 between the image plane flux of the model and the source plane flux.
-The source positions and magnification factors are listed in \Tab{model}.
+The best-fit magnification factors are listed in \Tab{model}.
+We compare our model parameters in \Tab{lens} describing
+the mass distribution of the lensing galaxy
+against that of the SIE model presented by C06. The position
+%\footnote{We note that they report a positional offset
+% relative to the light centroid in the HST image, which are at slightly
+%different astrometry. Our comparison takes into
+%account the astrometric correction applied.}
+of lensing mass, Einstein Radius, PA and axial ratio
+are all consistent within the uncertainties.
+% PA = -73.6, ellipticity = 0.45,
+% their theta\_R = 1.84" $\pm$ 0.01.
 
-% disk and caveat
-The location of the reconstructed sources in \Fig{model} are consistent with
-of a disk. This in essence demonstrate a velocity field in the source plane.
- While solely based on the lens model would not be sufficient to
-draw such conclusion/assertion. Yet, with the observed velocity gradient.
-We emphasis that the spatial resolution of is a few arcsec, which means that
-although we have high SNR and spectral resolution, this data is not sufficient
-to constrain the intrinsic sizes of the lensed galaxies, and thus underpredict
-the magnification factors. We will discuss this further in the following
-section.
+\subsection{Interpretation and Caveats}
+The reconstructed source locations in \Fig{model} demonstrate
+an intrinsic velocity gradient in the source plane, which is
+indicative of a disk geometry. While solely based on the
+lens model is insufficient to draw conclusive inference on its
+true geometry. Additional support to the disk conjecture %conjecture of a disk morphology
+can be found in the observed (image plane) velocity field and
+the double-horned line profile in \Fig{CO21spec}. Furthermore,
+the reconstructed source plane emission in optical-NIR
+is also best-reproduced using a $n$\,=\,1 Sersic profile (C06).
+Our interpretation therefore tends in favor of a disk morphology for RXJ1131.
 
+% the companion
+One interesting result from our lens model is that a better fit is
+found for the red-most channel if we add a second source component (see
+top left panel in \Fig{model}). This is consistent with previous results
+reported by \citet{Brewer08a}, who find an optically faint companion
+separated by $\sim$2.4\,kpc away from the AGN host galaxy.
 
-% comparison with C06 model
-
+We emphasis that the spatial resolution of the data at hand
+is a few arcsec, which implies that despite the high SNR and spectral
+resolution, this data is insufficient to constrain the
+intrinsic sizes of the lensed galaxies, and thus the magnification
+factors is likely under-predicted. We will discuss this further in the following section. % magnification factor is underpredicted, see Bussmann15
 
 \begin{figure*}[tbph]
 \centering
 \includegraphics[width=0.85\textwidth]{../Figures/PostageStampModel.eps}
 \includegraphics[width=0.85\textwidth]{../Figures/PostageStampResiduals.eps}
-\caption{
-Lens models of RXJ1131 using \uvmcmcfit on the PdBI \bco data.
-Lens model of channel widths $\sim$ 100\kms.
-Make this bigger in the future
-Top: Channel maps of the PdBI \bco emission (red) overlaid on our best-fit lens models (grayscale). The location of the foreground lensing galaxy is indicated by a black dot and its critical curve is traced by the orange solid line. The locations and morphologies (half-light radii) of the reconstructed sources are
-represented by magenta ellipses (see text in \Sec{lensmodel} for caveat). The caustic curves are shown as cyan lines.
-The beam of the observations is shown in
-the bottom right corner of each panel.
-Bottom: Residual images of the best-fit model, obtained by
+\caption{Each panel corresponds to a lens model of RXJ1131 performed over a
+channel slice $\sim$100\,\kms of the \bco data. Top: Channel maps of the
+PdBI \bco emission (red) overlaid on our best-fit lens models (grayscale).
+The location of the foreground lensing galaxy is indicated by a black dot and
+its critical curve is traced by the orange solid line. The locations and
+morphologies (half-light radii) of the reconstructed sources are
+represented by magenta ellipses (see text in \Sec{lensmodel} for caveats).
+The caustic curves are represented as cyan lines. The beam of the
+PdBI observations is shown in the bottom right corner of each panel.
+Bottom: Residual images of the best-fit models, obtained by
 taking the Fourier transform after subtracting the best-fit model from the
-data in the visibility plane.
-Contours start at $\pm$3$\sigma$ and increment at steps of
-3$\times$2$^n\sigma$, where $n$ is a positive integer.
+data in the $uv$-domain. Contours start
+at $\pm$3$\sigma$ and increment at steps of 3$\times$2$^n\sigma$,
+where $n$ is a positive integer.
 \label{fig:model}}
 \end{figure*}
 
-
-
 \subsubsection{Differential Lensing} \label{sec:differential}
-Lens modeling of this source from previous studies find non-negligible differential lensing effect across H-Band, V-band, and I-band. The magnification factor ranges from 10.9
-to 7.8, where the decrease is caused
+Lens modeling of this source from previous studies find non-negligible
+differential lensing effect across H-Band, V-band, and I-band. The
+magnification factor ranges from 10.9 to 7.8, where the decrease is caused
 by the more extended IR emission (hence \SF), well beyond the caustic (C06).
 
 The highly asymmetric \bco line profile also suggests that differential lensing is non-negligible in the CO emission, where
