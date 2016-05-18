@@ -23,6 +23,7 @@ Ithaca, NY 14853, USA; \myemail}
 
 \keywords{ISM: molecular --
           infrared: galaxies --
+          galaxies: mergers --
           galaxies: starburst --
           galaxies: evolution}
 
@@ -30,7 +31,8 @@ Ithaca, NY 14853, USA; \myemail}
 %                                Introduction
 %--------------------------------------------------------------------------
 \section{Introduction}
-We use a concordance $\Lambda$CDM cosmology throughout this paper, with parameters from the WMAP9 results: $H_0$ = 70 \kms Mpc\pmOne, $\Omega_{\rm M}$ = 0.27, and $\Omega_{\Lambda}$ = 0.7 \citep{Hinshaw13a}.
+We use a concordance $\Lambda$CDM cosmology throughout this paper, with parameters from the WMAP9 results:
+$H_0$ = 70 \kms Mpc\pmOne, $\Omega_{\rm M}$ = 0.27, and $\Omega_{\Lambda}$ = 0.7 \citep{Hinshaw13a}.
 
 %--------------------------------------------------------------------------
 %                          Observations details
@@ -38,7 +40,7 @@ We use a concordance $\Lambda$CDM cosmology throughout this paper, with paramete
 \section{Observations}
 \subsection{PdBI \bco} % DONE
 Observations of the \bco rotational line ($\nu_{\rm rest}$ = 230.5379938 GHz)
-toward the \gl galaxy RXJ1131-1231 at $z_{\rm QSO}$\,=\,0.658 
+toward the \gl galaxy RXJ1131-1231 at $z_{\rm QSO}$\,=\,0.658
 were carried out using IRAM \pdbi (PdBI; Program ID: S14BX001; PI: D.
 Riechers). Two observing runs were carried out on 2014 December 06 and 2015
 February 05 under good weather conditions in the C and D array configurations,
@@ -57,7 +59,7 @@ The \ncode{GILDAS} package was used to reduce and analyze the visibility data
 which are then imaged and deconvolved using the CLEAN algorithm with ``natural"
 weighting. This yields a synthesized clean beam size of 4$\farcs$44 $\times$ 1\farcs95 (PA = 13\degr).
 The final rms noise is $\sigma$ = 1.451 mJy \kms
-beam\pmOne over 10 MHz (21.5 \kms). The continuum image at $\nu_{\rm cont}\sim$139\,GHz 
+beam\pmOne over 10 MHz (21.5 \kms). The continuum image at $\nu_{\rm cont}\sim$139\,GHz
 is created by averaging over all the line-free channels. This
 yields an rms noise of 0.082 mJy beam$^{-1}$. % see README.md in 04Sep15
 
@@ -87,9 +89,9 @@ observed under poor weather conditions and that the phase calibrator used for
 the second track was far from our target source, the phase calibration is
 subpar, with an rms scatter $\sim$60\degr. We thus conservatively estimate
 a calibration accuracy of $\sim$45\% based on the flux scale uncertainties,
-gain variation over time, and the phase scatter on the calibrated data. We
-therefore treat its line intensity with caution and refrain ourselves from 
-using it to derive other physical quantities.
+the gain variations over time, and the phase scatter on the calibrated data. We
+therefore treat its line intensity with caution and ensure that any physical interpretation
+of this system (and thus implications and conclusions of this paper) do not rely on this quantity.
 
 The \ncode{MIRIAD} package was used to calibrate the visibility data which are
 then imaged and deconvolved using the CLEAN algorithm with ``natural" weighting. This yields a synthesized clean
@@ -140,7 +142,7 @@ errors, and beam size.
 %                                Results
 %--------------------------------------------------------------------------
 \section{Results}
-\subsection{\bco Emission} %DONE
+\subsection{\bco Emission} \label{sec:CO21} %DONE
 We dynamically resolved the \bco line emission toward the background galaxies
 at $\gtrsim$27$\sigma$ significance, confirming the redshift at $z_{\rm CO}$ =
 0.65370 $\pm$ 0.0005. A highly asymmetric double-horned line profile is
@@ -168,15 +170,15 @@ We construct the zeroth, first and second moment maps shown in \Fig{CO21mom}
 using the $uv$-continuum subtracted data cube, over $\Delta v$$\sim$750 \kms.
 The first and second moment maps are clipped at 3$\sigma$.
 The peak flux density is 8.12 $\pm$ 0.30 Jy\,\kms\,beam\pmOne in the intensity-integrated
-map. The deconvolved source size is estimated to be 5\farcs1$\pm$0\farcs72 $\times$ 3\farcs72$\pm$0\farcs66 
-and thus the emission is resolved over $\sim$2.2 beams. 
-While the lensed emission is not strictly distributed as 2D-Gaussian, 
+map. The deconvolved source size is estimated to be 5\farcs1$\pm$0\farcs72 $\times$ 3\farcs72$\pm$0\farcs66
+and thus the emission is resolved over $\sim$2.2 beams.
+While the lensed emission is not strictly distributed as 2D-Gaussian,
 the fit recovers the line intensity enclosed within the emitting
 region, we therefore take this as an estimate on the extent of the lensed
 emission. On the other hand, if we assume the spatial distribution of
 the lensed molecular gas emission is similar to that in the optical to \nir
 wavelengths, the lensed emission would be more accurately described by an
-annulus, including the partially complete ``Einstein Ring" and
+annulus, enclosing the partially complete ``Einstein Ring" and
 the lensed knots (see \Fig{CO21mom}).
 
 \begin{figure}[!htbp]
@@ -187,7 +189,7 @@ the lensed knots (see \Fig{CO21mom}).
 An overlay of the velocity-integrated \bco emission on the HST V$-$band (F555W)
 image. The contours start at 3$\sigma$ and increment at steps of
 $\pm$3$\sigma$, where $\sigma$\,=\,0.3 mJy beam\pmOne. The crosses denote the
-location of the foreground galaxy at $z$\,=\,0.295. {\it Right:} The contours
+location of the foreground galaxy at $z$\,=\,0.295. Right: contours
 are color-coded to represent the red and blue wings of the emission.
 \label{fig:CO21mom}}
 \end{figure}
@@ -198,8 +200,8 @@ in the Southeast, whereas the blue component is predominately coming from
 solely the lensed arc shown in \Fig{CO21mom}. To illustrate this, we show the
 channel maps of 21.5\,\kms width and spatial spectra of 1\farcs5 resolution in
 \Fig{chanmap} and \Fig{spatialSpec}, respectively. The figures show that emission
-is present to the West and peaks toward the lensing arc (black across in \Fig{chanmap}) 
-in the red wing, and shifts to the East with decreasing velocity (blue wing). 
+is present to the West and peaks toward the lensing arc (black across in \Fig{chanmap})
+in the red wing, and shifts to the East with decreasing velocity (blue wing).
 This indicates extended emission in the source plane, where
 emission from different kinematic components is separated by different amounts
 relative to the caustics. One consequence of such is the observed asymmetric
@@ -209,11 +211,11 @@ line profile. A detailed analysis on differential lensing of \bco is presented i
 \centering
 \includegraphics[width=1.0\textwidth]{../Figures/co_channel_maps.eps}
 \caption{
-Channel maps of \pdbi \bco toward RXJ1131 in 21.5\,\kms resolution. The
+Channel maps of PdBI \bco toward RXJ1131 in 21.5\,\kms resolution.
 Black crosses indicate the position of the lensed knots (AGN emission,
-which are components ABCD in C06). The central white-filled
+which correspond to components ABCD in C06). The central white-filled
 star indicates the position of the foreground lensing galaxy (component G
-in C06), as detected in the HST image. Contours start and increment at steps of
+in C06). Contours start and increment at steps of
 $\pm$3$\sigma$. The beam is denoted in the bottom right panel. \label{fig:chanmap}}
 \end{figure*}
 
@@ -244,8 +246,9 @@ Indeed, based on our lens model presented in \Sec{lensmodel}, we find it
 highly likely that part of the CO emission originates from
 the companion. We thus classify RXJ1131 as a ``wet-wet'' merger.
 However, we cannot quantify this with a mass ratio given the
-spatial resolution. This will be verified in future higher-resolution observations. In the subsequent sections, we will interpret RXJ1131
-using this scenario (i.e. a ``wet-wet'' merger).
+spatial resolution. This will be verified in future higher-resolution observations.
+In the subsequent sections, we will interpret RXJ1131
+assuming this classification (i.e. a ``wet-wet'' merger).
 
 \subsection{\bco Kinematics} % DONE
 A clear velocity gradient and an unusually high
@@ -257,18 +260,18 @@ high velocity dispersion hints
 at potential perturbations from the AGN, or internal turbulence due to
 interactions with the companion, and/or instability due to the large gas
 content. A velocity gradient across the source plane in \Fig{model} is also
-found in our lens model. This further supports the idea of a kinematically-
-ordered galaxy, but its emission has been lensed differentially.
+found in our lens model. This further supports the idea of a
+kinematically-ordered galaxy, but its emission has been lensed differentially.
 In this scenario, RXJ1131 is a disrupted disk galaxy hosting an optically
 bright quasar and is in the process of merging.
-We will defer the discussion of the implications to \Sec{dynamics},
+We will defer the discussion of its implications to \Sec{dynamics},
 where we analyze the dynamics of the system in the source plane.
 
 \begin{figure}[!htbp]
 \centering
 \includegraphics[width=0.45\textwidth]{../Figures/CO_highOmom_CLIP5sigma}
 \caption{
-Contours for the first (left) and second (right) moment maps are shown in steps of 
+Contours for the first (left) and second (right) moment maps are shown in steps of
 50 \kms, and 100 \kms, respectively. The beam (native resolution) is shown in the right panel.
 \label{fig:CO21highO}}
 \end{figure}
@@ -286,7 +289,7 @@ linewidth used to infer \bco line intensity ($\sim$700 \kms).
 \begin{figure}[!Htbp]
 \centering
 \includegraphics[width=0.455\textwidth]{../Figures/coOverlay.eps}
-\caption{\carma \cco line profile (solid) without continuum subtraction is
+\caption{CARMA \cco line profile (solid) without continuum subtraction is
 over-plotted on the continuum-subtracted \bco line profile (dashed).
 The velocity scale is with respect to $z$=0.6537, which corresponds to the
 dynamical center of the \bco line. The spectral resolution for \cco and \bco
@@ -325,10 +328,10 @@ the background galaxy.
 \includegraphics[width=0.23\textwidth]{../Figures/F555W_ContPdBI.eps}
 \hspace{-0.5em}
 \includegraphics[width=0.235\textwidth]{../Figures/F555W_ContVLA.eps}
-\caption{{\it Left:} An overlay of the 2\,mm continuum emission on the optical image. 
-{\it Right:} VLA 5\,GHz continuum emission is overlaid on the optical image. 
-Contours in both images start and increment at steps of 
-$\pm$3$\sigma$, where $\sigma_{\rm 2mm}$\,=\,0.082 mJy beam\pmOne and 
+\caption{Left: an overlay of the 2\,mm continuum emission on the optical image.
+Right: VLA 5\,GHz continuum emission is overlaid on the optical image.
+Contours in both images start and increment at steps of
+$\pm$3$\sigma$, where $\sigma_{\rm 2mm}$\,=\,0.082 mJy beam\pmOne and
 $\sigma_{\rm 5GHz}$\,=\,13 $\mu$Jy beam\pmOne in the left and right panel, respectively.
 The central crosses indicate the centroid of the foreground galaxy,
 as detected in the optical image. The synthesis beams are shown in the bottom left corner of each panel.
@@ -402,12 +405,69 @@ source position given by the output of SUSSEXtractor.
 %--------------------------------------------------------------------------
 \section{Analysis}
 \subsection{Lens modeling} \label{sec:lensmodel}
-The spectrally resolved lensed emission allows us to probe dynamical structures on smaller spatial scales than otherwise possible.
+At the angular resolution of the \bco data, the images are resolved
+but not within the multiply lensed emission (i.e., sub-optimal for
+performing lens modeling). Nevertheless, the high spectral
+resolution of this data provides dynamical information on
+spatial scales smaller than the beam (see \Fig{CO21highO}).
+Hence, with the high SNR, we reconstruct the intrinsic gas
+dynamics by carrying out parametric lens modeling over different
+channel slices of the interferometric data using our lensing code
+\uvmcmcfit (\citealt{uvmcmcfit15a};see \citealt{Bussmann15a} for details of
+the code). Model of each slice in \Fig{model} thus provides
+properties on the intrinsic kinematics. The slices
+are obtained by binning the data (over the full linewidth
+$\sim$700\kms; see \Sec{CO21}) by five channels (i.e., into seven slices)
+ to increase the SNR.
 
+The lens mass distribution is modeled using a singular isothermal
+ellipsoid (SIE) profile, which is described by five free parameters: the
+positional offset in R.A. and Dec. relative to an arbitrary chosen
+fixed coordinate in the image, the Einstein Radius, the axial ratio, and the
+position angle. We use the VLA radio continuum emission toward
+the foreground galaxy to initialize the positional offset. We impose a
+uniform prior $\pm$0\farcs05 in both $\Delta$R.A. and $\Delta$Dec., which is
+larger than the astrometry uncertainties in the VLA image and is
+constrained by the uncertainties provided from previous SIE lens model (C06).
+We initialize the Einstein Radius based on the optical SIE lens
+model by C06 and impose a uniform prior using their reported $\pm$3$\sigma$.
+The sources are modeled using elliptical Gaussian profiles, which are
+parameterized by six free parameters: the positional offset in R.A.
+and Dec. relative to the lens, the intrinsic flux density, the effective
+radius, the axial ratio, and the position angle. The position of each source
+is allowed to vary between $\pm$1\farcs5 (i.e., within the Einstein Radius)
+and the effective radius is allowed to vary from 0\farcs01$-$2".
 
-With the high SNR and spectral resolution, we model different kinematic components using our lensing code \uvmcmcfit.
+% Check with Shane
+Our code uses an Markov Chain Monte Carlo (MCMC) approach to sample the
+posterior probability distribution function (PDF). In each model, we employ
+$\sim$50,000 samples as the initial ``burn-in'' stage to stabilize the Markov
+chains (which we then discard). We use the final $\sim$5,000
+samplings to determine the posterior probability distributions. Here, we
+identify the best-fit model and the quoted uncertainties using the
+median and the 68\% confidence intervals in the marginal PDFs.
 
-% describe model setup.
+We first obtain a preliminary lens model for each channel slice independently,
+where their lens parameters are allowed to vary and are initialized according
+to the aforementioned way. We obtain the final model
+by repeating the modeling over each slice but fixing their lens parameters
+according to the overall median in the preliminary models
+(see \Tab{lens}). This ensures the
+lens model of each kinematic component share the same lens profile.
+The magnification factor is determined by taking the ratio
+between the image plane flux of the model and the source plane flux.
+The source positions and magnification factors are listed in \Tab{model}.
+
+% disk and caveat
+The location of the reconstructed sources in \Fig{model} are consistent with
+of a disk. This in essence demonstrate a velocity field in the source plane.
+ While solely based on the lens model would not be sufficient to
+draw such conclusion/assertion. Yet, with the observed velocity gradient.
+We emphasis that the spatial resolution of is a few arcsec, which means that
+although we have high SNR and spectral resolution, this data is not sufficient
+to constrain the intrinsic sizes of the lensed galaxies, and thus underpredict
+the magnification factors. We will discuss this further in the following
+section.
 
 
 % comparison with C06 model
@@ -418,9 +478,18 @@ With the high SNR and spectral resolution, we model different kinematic componen
 \includegraphics[width=0.85\textwidth]{../Figures/PostageStampModel.eps}
 \includegraphics[width=0.85\textwidth]{../Figures/PostageStampResiduals.eps}
 \caption{
+Lens models of RXJ1131 using \uvmcmcfit on the PdBI \bco data.
 Lens model of channel widths $\sim$ 100\kms.
 Make this bigger in the future
-Channel maps of the CO emission (red) overlaid on our best-fit lens models (grayscale). The foreground lensing galaxy is represented by a black dot. The reconstructed source morphology (magenta ellipses) is also suggestive of a disk.
+Top: Channel maps of the PdBI \bco emission (red) overlaid on our best-fit lens models (grayscale). The location of the foreground lensing galaxy is indicated by a black dot and its critical curve is traced by the orange solid line. The locations and morphologies (half-light radii) of the reconstructed sources are
+represented by magenta ellipses (see text in \Sec{lensmodel} for caveat). The caustic curves are shown as cyan lines.
+The beam of the observations is shown in
+the bottom right corner of each panel.
+Bottom: Residual images of the best-fit model, obtained by
+taking the Fourier transform after subtracting the best-fit model from the
+data in the visibility plane.
+Contours start at $\pm$3$\sigma$ and increment at steps of
+3$\times$2$^n\sigma$, where $n$ is a positive integer.
 \label{fig:model}}
 \end{figure*}
 
@@ -484,11 +553,31 @@ We note, however, that large differences (up to $\gtrsim$10 deg) can be found be
 axis ratio (e.g., Chemin et al. 2006). We caution that this analysis is based on limited spatial resolution data and will been verified by future higher-resolution observations.
 
 \subsection{SED modeling} \label{sec:SED}
+We extrapolated a power-law to 24 \micron to decompose the flux
+at 24 \micron in MIPS.
 
-We extrapolated a power-law to 24 \micron
-to decompose the flux at 24 \micron in MIPS.
+We fit modified blackbody functions to
+to constrain the dust temperature, \fir (rest-frame 42.5-122.5 \micron) luminosity, dust mass (For the mass absorption coefficient we adopt κν = 2.64 m2 kg−1 at 125 μm (rest frame; Dunne et al. 2003).)
+We added blah\% calibration uncertainties on the PdBI data.
+
+We check convergence of our chains by requiring that the autocorrelation length for each model parameter is several times less than the number of steps taken during an initial burn-in stage (which are then discarded).
+Compared with the version of this code used by Riechers et al. (2013), several improvements have been made. First, we have added the ability to impose upper and lower limits as well as Gaussian priors on the model parameters. These additions are useful for analyzing poorly constrained data, such as when we consider fits to only the SPIRE photometry in Section 3. Second, instead of treating the instrument response as a delta function in wavelength, we now fully model the wavelength response of each instrument. We have applied this improved code to FLS 3, and find that the resulting changes in the model parameters are well within the quoted uncertainties.
+
+% upper limit using decomposed 24 um
+% lower limit using fit without 24 um, but do I still want to fit a power-law for this?
+The best-fit SEDs are shown in \Fig{SED} and the resulting parameters (inferred from the BLAH of the posterior PDF) are listed in \Tab{SED}.
+% parameter estimation problem
+For these parameter estimation problems using MCMC to sample,
+the full answer is the full joint posterior PDF.
+We here report the summary statistics (global mode (where min. chi),
+marginal mode (in log file),
+posterior median (instead of posterior means; need to compute) and the 1$\sigma$ confidence intervals in the marginal PDF) to reflect the PDF shape.
+
+
 
 \subsection{ISM properties}
+We correct for lensing magnification using the median among our models ($\mu_{\rm L}$=BLAH).
+Assuming a Salpeter initial mass function, we find the SFR of blah using the \fir luminosity after corrected for lensing .
 \subsection{Gas Mass}
 \subsection{Source Extent}
 Compared to HST:
