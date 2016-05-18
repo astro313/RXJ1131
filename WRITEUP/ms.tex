@@ -30,6 +30,7 @@ Ithaca, NY 14853, USA; \myemail}
 %                                Introduction
 %--------------------------------------------------------------------------
 \section{Introduction}
+We use a concordance $\Lambda$CDM cosmology throughout this paper, with parameters from the WMAP9 results: $H_0$ = 70 \kms Mpc\pmOne, $\Omega_{\rm M}$ = 0.27, and $\Omega_{\Lambda}$ = 0.7 \citep{Hinshaw13a}.
 
 %--------------------------------------------------------------------------
 %                          Observations details
@@ -116,7 +117,7 @@ beam size of 0$\farcs$49 $\times$ 0\farcs35 (PA\,=\,0\farcs18) and a final
 rms noise of $\sigma$ = 13 $\mu$Jy beam\pmOne.
 
 
-\section{HST astrometry}
+\section{HST astrometry} %DONE
 We obtain HST images from the Hubble Legacy Archive with
 a goal to understand the origins of the emission detected
 in our mm observations. We adopt the VLA 5\,GHz map of $\sim$0\farcs5
@@ -351,33 +352,56 @@ power-law (S$_\nu \propto \nu^{-\alpha}$) to the continuum emission at
 5\,GHz and 2\,mm.
 
 
-\subsection{Photometry}
-We compiled/web-scraped the \mir to \fir photometry
-from 2MASS, WISE, IRAS, IRAC catalogs .
-to characterize
-the dust emission in RXJ1131 from
-from the 2MASS All-Sky Catalog of Point Sources  (Skrutskie et al. 2006), WISE
-magnitudes from the AllWISE Source CatalogBLAH, Spitzer/MIPS
-data from BLAH Catalog, IRAS photometry from the IRAS point source
-and faint source cataloguesBLAH.
+\subsection{Photometry} \label{sec:photometry} %DONE
+We compile \mir to \fir broadband photometry from various
+catalogs available on the NASA/IPAC Infrared Science
+Archive (IRSA) in \Tab{photometry}. These data were obtained from
+the Two Micron All Sky Survey (2MASS; \citealt{Skrutskie06a}),
+Wide-field Infrared Survey Explorer (WISE; \citealt{Wright10a}),
+{\it Infrared Astronomical Satellite} (IRAS; \citealt{Neugebauer84a}), and
+the Multiband Imaging Photometer (MIPS; \citealt{Rieke04a}) and
+Mid-infrared Infrared Array Camera (IRAC; \citealt{Fazio04a}) on
+\spitzer. We retrieve PBCD (level 2) {\it Spitzer}/IRAC images from the
+Spitzer Heritage Archive. We perform aperture photometry on
+the channel 1 image to extract flux density at 3.6\,$\mu$m
+since it is not available from the IRSA archive.
 
-We extract the Herschel/SPIRE photometry using SUSSEXTractor
-within HIPE (Savage \& Oliver 2007, Smith et al 2012, Pearson et al 2014)
-over the data obtained from the Herschel Science Archive, which were
-processed by the SPIRE HIPE pipeline version 12BLAH (Ott 2010).
-The SUSSEXtractor
-task estimates the flux density from an image smoothed with
-a convolution kernel derived from the SPIRE beam FWHM.
-The flux density measured by SUSSEXtractor
-was verified using the SPIRE Timeline Fitter (Bendo et
-al. 2013) which fits a two dimensional elliptical Gaussian
-function at the source position in the timeline data. The
-agreement between the SUSSEXtractor and Timeline Fitter
-flux densities was found to be better than $\sim$BLAH per cent.
+The emission in the IRAC images is slightly extended. We thus use the
+HST image ($\sim$0\fracs07 resolution) to determine
+origins of their centroids, all of which are found to be
+centered at the position corresponding to the lensed emission from the
+background galaxy. To recover the diffuse background emission, we subtract a
+point source model centered on the lensing galaxy. We use the average
+FWHM found by fitting a Gaussian profile to several field stars
+using \ncode{imexam} routine of IRAF.
+We perform aperture photometry on the residual image
+to obtain decomposed flux measurements from the background galaxy.
+The photometries for the foreground galaxy are then obtained
+by subtracting the fluxes decomposed for the background source
+from the observed total flux. The resulting photometry in
+\Tab{photometry} are obtained after performing aperture correction
+described in the IRAC Instrument Handbook\footnote{http://irsa.ipac.caltech.edu/data/SPITZER/docs/irac/iracinstrumenthandbook/} to
+correct for the fact that the IRAC imaging was calibrated
+using a 12" aperture, which is bigger than the aperture (5\farcs8) we used to
+perform aperture photometry. This step was taken to provide
+constraints on the Wien tail beyond the dust peak of the
+spectral energy distribution (SED) of RXJ1131.
+The details of the SED modeling is presented in \Sec{SED}.
 
-We list the photometry from optical to radio in \Tab{photometry}.
+Extraction of the {\it Herschel}/SPIRE photometry was
+carried out using SUSSEXTractor within Herschel Interactive
+Processing Environment (HIPE; \citealt{Ott10a})
+over the Level 2 maps obtained from the Herschel Science Archive.
+These maps were processed by the SPIRE pipeline
+version 13.0 within HIPE. The SUSSEXtractor task estimates
+the flux density from an image convolved with a kernel
+derived from the SPIRE beam. The flux density
+measured by SUSSEXtractor is additionally confirmed
+using the Timeline Fitter. This task performs photometry
+by fitting a 2D elliptical Gaussian to the Level 1 data at the
+source position given by the output of SUSSEXtractor.
+
 \input{table_photometry_AAScustomized}
-
 
 %--------------------------------------------------------------------------
 %                                Analysis
@@ -466,6 +490,10 @@ We note, however, that large differences (up to $\gtrsim$10 deg) can be found be
 axis ratio (e.g., Chemin et al. 2006). We caution that this analysis is based on limited spatial resolution data and will been verified by future higher-resolution observations.
 
 \subsection{SED modeling}
+
+We extrapolated a power-law to 24 \micron
+to decompose the flux at 24 \micron in MIPS.
+
 \subsection{ISM properties}
 \subsection{Gas Mass}
 \subsection{Source Extent}
@@ -489,8 +517,10 @@ SFE at this redshift, how does that relate to the SFH. probably a secondary effe
 %                                Conclusions
 %--------------------------------------------------------------------------
 \section{Summary and Conclusions}
-We studied a wet-wet merger between a AGN/starburst ULIRG and a optically faint companion at $z$ $\sim$ 0.65.
-In this paper, we BLAH, refining the redshift to $z_{\rm CO}$=0.65370$\pm$0.0005.
+We observed the cold molecular gas properties using \bco and \cco line emission
+toward the AGN host galaxy RXJ1131 at $z_{\rm CO}$\,$\sim$0.65.
+Our results suggest that RXJ1131 is a wet-wet merger between a AGN/starburst
+ULIRG and a optically faint companion.
 
 
 
