@@ -4,9 +4,11 @@
 plot source locations from lens model of various channel as markers on observed 1st moment map.
 Kinematics.
 
-Last Modified: 15 May 16
+Last Modified: 17 May 16
 
 History:
+17 May 16:
+  - move var kpc_to_m to calcmass.py
 15 May 16:
   - adjust residual fig outlook
 13 May 16:
@@ -492,9 +494,6 @@ if plotRot:
 # --------------------------------------------------------------
 #  disk model
 # ---------------------------------------------------------------
-kpc_to_m = 3.086e+19
-
-
 def velo_disk(V_obs, theta=0., i=30.):
     """ simple axisymmetric thin disk model
 

@@ -3,13 +3,23 @@
 calculate dynamical mass
 
 
-Last modified: 13 May 16
+Last modified: 17 May 16
 
 History:
+17 May 2016
+    - get mass using quanties reported in paper
 13 May 2016
     - extracted from modelGradient.py
 
 '''
+import numpy as np
+
+kpc_to_m = 3.086e+19
+b_arcsec = 1.8       # from C06
+a_arcsec = 3.25
+i_rad = np.arccos(b_arcsec/a_arcsec)
+i_deg = i_rad * 180./np.pi
+
 def M_encl(R_kpc, v):
     """ calc mass enclosed """     # v in km/s
     from astropy.constants import G
@@ -24,6 +34,20 @@ def M_encl(R_kpc, v):
     return M10
 
 # calc. mass within some physical dist from line center
-R_in_kpc = xdata.max()
-# print("Mass enclosed within {:.2f} kpc: {:.2f} x 1e+10 Msun".format(R_in_kpc, M_encl(R_in_kpc, pfit[0]/np.sin(i_rad))))
+R_in_kpc = 6.22
+V_rot = 345
+# no correction for incl. angle
+print("Mass enclosed within {:.2f} kpc: {:.2f} x 1e+10 Msun".format(R_in_kpc, M_encl(R_in_kpc, V_rot)))
+# corrected
+print M_encl(R_in_kpc, V_rot)/(np.sin(i_rad)**2)
+
+
+# use line peak separation
+R_in_kpc = 6.22
+V_rot = 220/2.
+# no correction for incl. angle
+print("Mass enclosed within {:.2f} kpc: {:.2f} x 1e+10 Msun".format(R_in_kpc, M_encl(R_in_kpc, V_rot)))
+
+# with incl. correction
+print M_encl(R_in_kpc, V_rot)/(np.sin(i_rad)**2)
 
