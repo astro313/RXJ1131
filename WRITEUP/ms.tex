@@ -429,7 +429,7 @@ the foreground galaxy to initialize the positional offset. We impose a
 uniform prior $\pm$0\farcs05 in both $\Delta$R.A. and $\Delta$Dec., which is
 motivated by the astrometry uncertainties in the VLA image as well as
 the uncertainties provided by previous SIE lens model (C06).
-We initialize the Einstein Radius based on the model parameters reported by C06 
+We initialize the Einstein Radius based on the model parameters reported by C06
 and impose a uniform prior using $\pm$3$\sigma$ from their uncertainties.
 The sources are modeled using elliptical Gaussian profiles, which are
 parameterized by six free parameters: the positional offset in R.A.
@@ -451,21 +451,21 @@ We first obtain a preliminary lens model for each channel slice independently,
 where their lens parameters are allowed to vary and are initialized according
 to the aforementioned way. We obtain the final model
 by repeating the modeling over each slice but fixing their lens parameters
-according to the overall median in the preliminary models, as listed in \Tab{lens}. 
+according to the overall median in the preliminary models, as listed in \Tab{lens}.
 This ensures that all models share the same lens profile.
 The magnification factor is determined by taking the ratio
 between the image plane flux of the model and the source plane flux.
 The best-fit magnification factors are listed in \Tab{model}.
 
 Our model parameters in \Tab{lens}, describing
-the mass distribution of the lensing galaxy, are consistent (within the uncertainties) 
-with that of the SIE model presented by C06. We find a mass of 
+the mass distribution of the lensing galaxy, are consistent (within the uncertainties)
+with that of the SIE model presented by C06. We find a mass of
 $M(\theta$\,\,$<$\,\,$\theta_\textrm{E})$\,=\,(7.47\,$\pm$\,0.02)\,$\times$\,10$^{11}$\,\Msun
 within the Einstein radius.
-
 \input{table_medianLens}
+\input{table_magFactor}
 
-\subsubsection{Interpretation and Caveats} \label{sec:caveat}
+\subsubsection{Interpretation and Caveats} \label{sec:caveat} %DONE
 The reconstructed source locations in \Fig{model} demonstrate
 an intrinsic velocity gradient in the source plane, which is
 indicative of a disk geometry. While solely based on the
@@ -488,7 +488,7 @@ We emphasize that the spatial resolution of the data at hand
 is a few arcsec, which implies that despite the high SNR and spectral
 resolution, this data is insufficient to constrain the
 intrinsic sizes of the lensed galaxies, and thus the magnification
-factors ares likely under-predicted. 
+factors ares likely under-predicted.
 We will discuss this further in the following section. % magnification factor is underpredicted, see Bussmann15
 
 \begin{figure*}[tbph]
@@ -512,22 +512,25 @@ where $n$ is a positive integer.
 \label{fig:model}}
 \end{figure*}
 
-\subsubsection{Differential Lensing} \label{sec:differential}
-Lens modeling of this source from previous studies find non-negligible
-differential lensing effect across H-Band, V-band, and I-band. The
-magnification factor ranges from 10.9 to 7.8, where the decrease is caused
-by the more extended IR emission (hence \SF), well beyond the caustic (C06).
-
-The highly asymmetric \bco line profile also suggests that differential lensing is non-negligible in the CO emission, where
-flux density in the red wing is apparently much higher than in the blue wing, given its lensing configuration.
-By modeling different kinematic components, we find that the magnification factor ranges from BLAH to BLAH. The various magnification factors are listed in \Tab{model}.
-\input{table_magFactor}
-
-
+\subsubsection{Differential Lensing} \label{sec:differential} %DONE
+Previous lens models of RXJ1131 find conspicuous
+differential lensing effect across H-Band, V-band, and I-band (C06), where the
+magnification factor ranges from 10.9 to 7.8. C06 attribute
+the decrease toward the IR regime is caused by the more extended
+IR emission, arising from \SF.
+The highly asymmetric \bco line profile suggests that
+differential lensing is non-negligible for the CO emission, where its red wing
+is apparently much brighter than the blue wing, which is consistent
+with the source positions relative to the caustics in \Fig{model}.
+The red wing emission mainly originates near/at the cusp
+in the caustic, whereas the blue wing emission is located beyond the caustics.
+The magnification factor for CO thus ranges from 8.7 to 3.1 (\Tab{model}).
 
 \subsection{\bco Dynamical modeling} \label{sec:dynamics}
 Based on the the source plane position of each kinematic components from the
-lens model, a clear symmetric velocity gradient is seen, which is suggestive of a rotating disk. Assuming the observed velocities of the respective channels
+lens model, a clear symmetric velocity gradient is seen, which is suggestive
+of a rotating disk.
+Assuming the observed velocities of the respective channels
 correspond to solely the tangential components (i.e. $\theta$ = 0), we extract
 the major axis along the best-fit slice across these source plane positions,
 which is along PA of 121\degr.
