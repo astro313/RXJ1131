@@ -120,12 +120,12 @@ rms noise of $\sigma$ = 13 $\mu$Jy beam\pmOne.
 
 
 \section{HST astrometry} %DONE
-We obtain HST images from the Hubble Legacy Archive with
+We obtain {\it HST} images from the Hubble Legacy Archive with
 a goal to understand the origins of the emission detected
 in our mm observations. We adopt the VLA 5\,GHz map of $\sim$0\farcs5
 resolution as the reference coordinate frame to align the optical (V$-$band) image.
 We shift the latter to the east by 0\farcs5963 in R.A. and $+$0\farcs8372 in
-Dec., which is consistent with the typical astrometric precision (1$-$2") of
+Dec., which is consistent with the typical astrometric precision (1$-$2$^{\prime\prime}$) of
 images from the Hubble Legacy Archive\footnote{http://hla.stsci.edu/hla\_faq.
 html}. Such astrometric correction is critical to avoid artificial spatial
 offsets between different emitting regions and to carry out our lens modeling,
@@ -159,7 +159,7 @@ is with respect to $z$=0.6537, which is approximately the line center
 considering the asymmetry is as a result of differential lensing.
 A more detailed discussion of differential lensing effect is presented in
 \Sec{differential} and the magnification factors for various kinematic
-components are listed in \Tab{mag}.
+components are listed in \Tab{model}.
  \label{fig:CO21spec}}
 \end{figure}
 
@@ -187,7 +187,7 @@ the lensed knots (see \Fig{CO21mom}).
 \includegraphics[trim=0 5 0 15, clip, width=0.232\textwidth]{../Figures/{F555WCO21_mom0_single.invertedgray}.eps}
 \includegraphics[trim=0 5 0 0, clip, width=0.22\textwidth]{../Figures/F555W_REDBLUE.eps}
 \caption{
-An overlay of the velocity-integrated \bco emission on the HST V$-$band (F555W)
+An overlay of the velocity-integrated \bco emission on the {\it HST} V$-$band (F555W)
 image. The contours start at 3$\sigma$ and increment at steps of
 $\pm$3$\sigma$, where $\sigma$\,=\,0.3 mJy beam\pmOne. The crosses denote the
 location of the foreground galaxy at $z$\,=\,0.295. Right: contours
@@ -353,14 +353,16 @@ power-law (S$_\nu \propto \nu^{-\alpha}$) to the continuum emission at
 \subsection{Photometry} \label{sec:photometry} %DONE
 We compile \mir to \fir broadband photometry from various
 catalogs available on the NASA/IPAC Infrared Science
-Archive (IRSA) in \Tab{photometry}. These data were obtained from
+Archive (IRSA) in \Tab{photometry} with aperture corrections
+when warranted. These data were obtained from
 the Two Micron All Sky Survey (2MASS; \citealt{Skrutskie06a}),
 Wide-field Infrared Survey Explorer (WISE; \citealt{Wright10a}),
 {\it Infrared Astronomical Satellite} (IRAS; \citealt{Neugebauer84a}), and
 the Multiband Imaging Photometer (MIPS; \citealt{Rieke04a}) and
 Mid-infrared Infrared Array Camera (IRAC; \citealt{Fazio04a}) on
-\spitzer. We retrieve PBCD (level 2) {\it Spitzer}/IRAC images from the
-Spitzer Heritage Archive. We perform aperture photometry on
+\spitzer.
+We retrieve PBCD (level 2) {\it Spitzer}/IRAC images from the
+Spitzer Heritage Archive and perform aperture photometry on
 the channel 1 image to extract flux density at 3.6\,$\mu$m
 since it is not available from the IRSA archive.
 
@@ -369,9 +371,9 @@ HST image ($\sim$0\farcs07 resolution) to determine
 origins of their centroids, all of which are found to be
 centered at the position corresponding to the lensed emission from the
 background galaxy. To recover the diffuse background emission, we subtract a
-point source model centered on the lensing galaxy. We use the average
+point source model centered on the lensing galaxy, using the average
 FWHM found by fitting a Gaussian profile to several field stars
-using \ncode{imexam} routine of IRAF.
+with the \ncode{imexam} routine of IRAF.
 We perform aperture photometry on the residual image
 to obtain decomposed flux measurements from the background galaxy.
 The photometries for the foreground galaxy are then obtained
@@ -384,7 +386,7 @@ using a 12" aperture, which is bigger than the aperture (5\farcs8) we used to
 perform aperture photometry. This step was taken to provide
 constraints on the Wien tail beyond the dust peak of the
 spectral energy distribution (SED) of RXJ1131.
-The details of the SED modeling is presented in \Sec{SED}.
+Details of the SED modeling is presented in \Sec{SED}.
 
 Extraction of the {\it Herschel}/SPIRE photometry was
 carried out using SUSSEXTractor within Herschel Interactive
@@ -395,7 +397,7 @@ version 13.0 within HIPE. The SUSSEXtractor task estimates
 the flux density from an image convolved with a kernel
 derived from the SPIRE beam. The flux density
 measured by SUSSEXtractor is additionally confirmed
-using the Timeline Fitter. This task performs photometry
+using the Timeline Fitter, which performs photometry
 by fitting a 2D elliptical Gaussian to the Level 1 data at the
 source position given by the output of SUSSEXtractor.
 
@@ -412,7 +414,7 @@ performing lens modeling). Nevertheless, the high spectral
 resolution of this data provides dynamical information on
 spatial scales smaller than the beam (see \Fig{CO21highO}).
 Hence, with the high SNR, we reconstruct the intrinsic gas
-dynamics by carrying out parametric lens modeling over different
+dynamics by carrying out a parametric lens modeling over different
 channel slices of the interferometric data using our lensing code
 \uvmcmcfit (\citealt{uvmcmcfit15a}; see \citealt{Bussmann15a} for details of
 the code). Model of each slice in \Fig{model} thus provides
@@ -431,7 +433,7 @@ uniform prior $\pm$0\farcs05 in both $\Delta$R.A. and $\Delta$Dec., which is
 motivated by the astrometry uncertainties in the VLA image as well as
 the uncertainties provided by previous SIE lens model (C06).
 We initialize the Einstein Radius based on the model parameters reported by C06
-and impose a uniform prior using $\pm$3$\sigma$ from their uncertainties.
+and impose a uniform prior using $\pm$3$\sigma$ of their uncertainties.
 The sources are modeled using elliptical Gaussian profiles, which are
 parameterized by six free parameters: the positional offset in R.A.
 and Dec. relative to the lens, the intrinsic flux density, the effective
@@ -442,7 +444,7 @@ and the effective radius is allowed to vary from 0\farcs01$-$2".
 % Check with Shane
 Our code uses an Markov Chain Monte Carlo (MCMC) approach to sample the
 posterior probability distribution function (PDF). In each model, we employ
-$\sim$50,000 samples as the initial ``burn-in'' stage to stabilize the Markov
+$\sim$100,000 samples as the initial ``burn-in'' stage to stabilize the Markov
 chains (which we then discard). We use the final $\sim$5,000
 samplings to determine the posterior probability distributions. Here, we
 identify the best-fit model and the quoted uncertainties using the
@@ -453,11 +455,11 @@ We first obtain a preliminary lens model for each channel slice independently,
 where their lens parameters are allowed to vary and are initialized according
 to the aforementioned way. We obtain the final model
 by repeating the modeling over each slice but fixing their lens parameters
-according to the overall median in the preliminary models, as listed in \Tab{lens}.
+according to the overall median in the preliminary models,
+as listed in \Tab{lens}.
 This ensures that all models share the same lens profile.
-The magnification factor is determined by taking the ratio
-between the image plane flux of the model and the source plane flux.
-The best-fit magnification factors are listed in \Tab{model}.
+The magnification factors in \Tab{model} are determined by taking the ratio
+between the image plane flux and the source plane flux of each model.
 
 Our model parameters in \Tab{lens}, describing
 the mass distribution of the lensing galaxy, are consistent (within the uncertainties)
@@ -467,7 +469,7 @@ within the Einstein radius.
 
 \subsubsection{Interpretation and Caveats} \label{sec:caveat} %DONE
 The reconstructed source locations in \Fig{model} demonstrate
-an intrinsic velocity gradient in the source plane, which is
+an intrinsic velocity gradient across the source plane, which is
 indicative of a disk geometry. While solely based on the
 lens model is insufficient to draw conclusive inference on its
 true geometry. Additional support to the disk conjecture %conjecture of a disk morphology
@@ -515,85 +517,117 @@ where $n$ is a positive integer.
 \subsubsection{Differential Lensing} \label{sec:differential} %DONE
 \input{table_magFactor}
 Previous lens models of RXJ1131 find conspicuous
-differential lensing effect across H-Band, V-band, and I-band (C06), where the
+differential lensing effect across {\it HST}
+H-Band, V-band, and I-band (C06), where the
 magnification factor ranges from 10.9 to 7.8. C06 attribute
 the decrease toward the IR regime is caused by the more extended
 IR emission, arising from \SF.
 The highly asymmetric \bco line profile suggests that
 differential lensing is also non-negligible for CO, where the red wing
-of \bco is apparently much brighter than that in the blue wing, consistent 
+of \bco is apparently much brighter than that in the blue wing, consistent
 with the source positions relative to the caustics in \Fig{model}.
 The red wing emission mainly originates near the cusp
 in the caustic, whereas the blue wing emission is located beyond the caustics.
 The magnification factor for CO ranges from 8.7 to 3.1 (\Tab{model}).
 
-\subsection{\bco Dynamical modeling} \label{sec:dynamics}
-Based on the the source plane position of each kinematic components from the
-lens model, a clear symmetric velocity gradient is seen, which is suggestive
-of a rotating disk.
-Assuming the observed velocities of the respective channels
-correspond to solely the tangential components (i.e. $\theta$ = 0), we extract
-the major axis along the best-fit slice across these source plane positions,
-which is along PA of 121\degr.
-We attempt to characterize the molecular gas kinematics using an empirically motivated disk model (e.g. Courteau97, Peuch+08, Miller+11):
+\subsection{\bco Dynamical modeling} \label{sec:dynamics} %DONE
+This section proceeds under the assumption that RXJ1131 is
+a rotating disk (see previous sections).
+Assuming the velocities of the respective lens models
+correspond to solely the tangential component (i.e., $\theta$ = 0), we extract
+a pseudo PV diagram along the major axis in \Fig{PV} by slicing across their
+source plane positions. The best-fit major axis is along PA of 121\degr.
+
+We attempt to characterize the molecular gas kinematics using an empirically motivated disk model \citep[\eg][]{Courteau97a,Puech08a,Miller11a}:
 \begin{equation}
-V = V_0 + \frac{2}{\pi} V_{\rm a} \arctan(\frac{R}{R_{\rm t}}),
+V = V_0 + \frac{2}{\pi} V_{a} \arctan(\frac{R}{R_{t}}),
 \end{equation}
-where $V$ is the observed velocity, $V_0$ is the velocity at dynamical center, $V_{\rm a}$ is the asymptotic velocity, and $R_{\rm t}$ is the ``turnover'' radius at which the rotation curve
-becomes flat. We perform non-linear least square fitting using an orthogonal distance regression to find the best-fit $V_a$, $r_t$, $V_0$, taking into account
-errors in both velocity and distance offset (see \Fig{PV}). We also place an upper limit on $r_t$ $<$ 15 kpc (Miller+11, Genzel+??, Puech+08?) to keep this
-parameter physical. We then estimate the uncertainties associated with best-fit parameters using a Monte Carlo simulation of 500 iterations, perturbing
-the velocity and physical separation according to a random Gaussian distribution of width/sigma based on the input uncertainties on
-the data. Using this model, we find $V_a$ = 975$\pm$387, $r_t$ = 10.6$\pm$5.7,
-and $V_0$ = 28$\pm$40. We note, however, that since emission is not detected beyond the flat regime of the rotation curve (Figure \ref{fig: PV}), the asymptotic velocity is
-poorly constrained. In particular, $V_a$ and $r_t$ are highly correlated with a Pearson coefficient $r$ = 0.998 between the two, and 0.027 between $V_a$ and $V_0$.
+where $V$ is the observed velocity, $V_0$ is the velocity at dynamical center,
+$V_{a}$ is the asymptotic velocity, and $R_{t}$ is the ``turnover''
+radius at which the rotation curve becomes flat.
+We perform non-linear least square fitting using an orthogonal distance
+regression to find the best-fit parameters,
+taking into account the uncertainties in both velocity (channel width) and
+distance offset. We also place an upper limit on $R_{t}$\,$<$15 kpc
+to keep this parameter physical \citep[\eg][]{Puech08a,Miller11a}.
+The parameter uncertainties are inferred based on Monte Carlo simulation
+of 500 iterations, which we perturb the input parameters according to a random
+Gaussian distribution of sigma corresponding to their uncertainties.
+Using this model, we find $V_{a}$\,=\,975\,$\pm$\,387 \kms,
+$R_{t}$\,=\,10.6\,$\pm$\,5.7\,kpc, and $V_0$\,=\,28\,$\pm$\,40 \kms.
+We note, however, that since emission is not detected beyond the flat regime
+of the rotation curve, the asymptotic velocity is poorly constrained.
+In particular, $V_{a}$ and $R_{t}$ are highly correlated with a
+Pearson coefficient $R$\,=\,0.998, and 0.027 between $V_{a}$ and $V_0$.
 
-While a symmetric velocity field in the source plane is consistent with a rotating disc, such is insufficient to conclude a rotating disk morphology. Additional characteristics such
-as peak velocity dispersion at the center of a galaxy and a ``spider'' diagram are needed. Based on the reconstructed source plane in the optical/NIR emission, C06 find that a
-n=1 Sersic profile is best fit their model or is it the reconstructed emission (TBD).
+\begin{figure}[!Htbp]
+\centering
+\includegraphics[width=0.455\textwidth]{../Figures/bestfit_PV.eps}
+\caption{PV slice along the major axis in the source plane at PA\,=\,121\degr.
+Dashed line shows the best-fit rotation curve using an arctangent model.
+DR may suggest include MC simulation fits, maybe I will do that later.
+ \label{fig:PV}}
+\end{figure}
 
-The frequently used V$_{\rm max}$ (maximum measured velocity) is not equivalent to the
-asymptotic value, Va, a mathematical extrapolation and typically not reached in
-the observed rotation curve. Estimates of Va can depend critically on how well
-the central region and turn over of the rotation curve are constrained. For the
-remaining analysis, we adopt the asymptotic limit as a proxy to the rotation
-curve. We also note that typical studies of the Tully-Fisher relation uses V$_2.2$ (at 2.2 $\times$ disc scalelength $\sim$ 1.375 half-light radius $\sim$ 0.7R$_opt$) as the rotation
-velocity since this would be the radius at which the velocity of a pure
-exponential disc peaks at. However, our source appears to be a disturbed
-rotator, albeit coarse resolution. Hence, rather than adopting V$_2.2$, we use the
-asymptotic value from the best-fit arctangent model. The half light radius in the
-optical is ~xx kpc (from C06; converted in to our cosmology, but BJB 8 kpc
-across?).
+We note that the asymptotic velocity ($V_{a}$) -- an extrapolation of the model
+out to radius beyond the disk scale-length and half-light radius --
+is inequivalent to maximum observed velocity ($V_{\rm max}$),
+which is commonly used in literature to parameterize disc rotation.
+Studies of the Tully-Fisher relation typically use V$_{2.2}$ (velocity
+at 2.2 disc scale-length or $\sim$1.375 half-light radius,
+or $\sim$0.7$R_{\rm opt}$) as the rotation velocity ($V_{\rm max}$ in their
+terminology), which corresponds to the radius at which the velocity
+of a pure exponential disc peaks.
+We here adopt the maximum {\em observed} velocity
+$V_{\rm rot}$\,=\,345\,$\pm$\,55\,\kms at 6\,$\pm$\,3\,kpc from the
+dynamical center as a proxy to the rotation velocity.
+This radius corresponds to $\sim$0.6$R_e$, where $R_e$ is the half-light
+radius $\sim$10.3 kpc inferred from the C06 lens model (converted to
+our cosmology), who use all {\it HST} H--, V--, and I--bands in their
+modeling. If only V$-$band is used, the half-light radius is $\sim$4kpc \citep{Brewer08a}.
+This discrepancy arises owning to the exclusion of the more diffused emission in the V-band
+(\ie V-band is missing the diffused emission).
+This indicates that the molecular gas may be ... (see \Sec{size}). DR: ok, let's discuss this.
 
-If we adopt the best-fit parameters, we find a dynamical mass of $M_{\rm dyn}$($<$blah kpc) sin$^2 i$ = BLAH \Msun. Consider the line widths using the separation between
-the red- and blue- shifted emission of the \bco line profile of $\Delta v_{\rm sep}/2 \sim$ blah \kms and a source size of blah kpc, we find a dynamical mass of $M_{\rm dyn}$
-sin$^2 i$ = BLAH \Msun. If we adopt the inclination angle using the morphological axis ratio from the
-reconstructed optical image reported by C06, where the minor axis is 1\farcs8 and the major axis is 3\farcs3.25, then we find an inclination angle of 56.4
-\degr. Then $M_{\rm dyn}$\,=\,BLAH. The inclination angle is consistent with the observed unobscured AGN and an observable double peak line profile.
-
-We note, however, that large differences (up to $\gtrsim$10 deg) can be found between such kinematically-derived inclinations and the ones inferred from the morphological
-axis ratio (e.g., Chemin et al. 2006). We caution that this analysis is based on limited spatial resolution data and will been verified by future higher-resolution observations.
+Using this $V_{\rm rot}$, we find a dynamical mass of
+$M_{\rm dyn}$\,sin$^2 i$\,($<$\,6\,kpc$)$ = 17\E{10}\,\Msun.
+If we instead consider the line peak separation from the
+\bco line profile $\Delta v_{\rm sep}/2 \sim$110\,\kms, we find
+$M_{\rm dyn}$\,sin$^2 i$\,($<$\,6\,kpc$)$ = 1.8\E{10}\,\Msun.
+DR: here, I list the extrema for possible Mdyn given our data,
+should I say anything more?
+We correct for the inclination effect using the
+morphological axial ratio from the reconstructed image (Figure 3 in C06), where
+the minor axis is 1\farcs8 and the major axis is 3\farcs25.
+We thus find an inclination angle of 56.4\degr, which is consistent with the
+observed unobscured AGN and an observable double peak line profile.
+The dynamical mass is then 2.5\E{10}\Msun$<$$M_{\rm dyn}$($<$6 kpc)$<$25\E{10}\Msun.
+We caution that this analysis is based on limited spatial
+resolution data and will be verified by future higher-resolution
+observations.
 
 \subsection{SED modeling} \label{sec:SED}
 We extrapolated a power-law to 24 \micron to decompose the flux
 at 24 \micron in MIPS.
-
-We fit modified blackbody functions to
-to constrain the dust temperature, \fir (rest-frame 42.5-122.5 \micron) luminosity, dust mass (For the mass absorption coefficient we adopt κν = 2.64 m2 kg−1 at 125 μm (rest frame; Dunne et al. 2003).)
-We added blah\% calibration uncertainties on the PdBI data.
-
-We check convergence of our chains by requiring that the autocorrelation length for each model parameter is several times less than the number of steps taken during an initial burn-in stage (which are then discarded).
-Compared with the version of this code used by Riechers et al. (2013), several improvements have been made. First, we have added the ability to impose upper and lower limits as well as Gaussian priors on the model parameters. These additions are useful for analyzing poorly constrained data, such as when we consider fits to only the SPIRE photometry in Section 3. Second, instead of treating the instrument response as a delta function in wavelength, we now fully model the wavelength response of each instrument. We have applied this improved code to FLS 3, and find that the resulting changes in the model parameters are well within the quoted uncertainties.
-
-% upper limit using decomposed 24 um
-% lower limit using fit without 24 um, but do I still want to fit a power-law for this?
-The best-fit SEDs are shown in \Fig{SED} and the resulting parameters (inferred from the BLAH of the posterior PDF) are listed in \Tab{SED}.
-% parameter estimation problem
-For these parameter estimation problems using MCMC to sample,
-the full answer is the full joint posterior PDF.
-We here report the summary statistics (global mode (where min. chi),
-marginal mode (in log file),
-posterior median (instead of posterior means; need to compute) and the 1$\sigma$ confidence intervals in the marginal PDF) to reflect the PDF shape.
+%
+%We fit modified blackbody functions to
+%to constrain the dust temperature, \fir (rest-frame 42.5-122.5 \micron) luminosity, dust mass (For the mass absorption coefficient we adopt 
+%BLAH (rest frame; Dunne et al. 2003).)
+%We added blah\% calibration uncertainties on the PdBI data.
+%
+%We check convergence of our chains by requiring that the autocorrelation length for each model parameter is 
+%several times less than the number of steps taken during an initial burn-in stage (which are then discarded).
+%The code treats the instrument response. 
+%
+%% upper limit using decomposed 24 um
+%% lower limit using fit without 24 um, but do I still want to fit a power-law for this?
+%The best-fit SEDs are shown in \Fig{SED} and the resulting parameters (inferred from the BLAH of the posterior PDF) are listed in \Tab{SED}.
+%% parameter estimation problem
+%For these parameter estimation problems using MCMC to sample,
+%the full answer is the full joint posterior PDF.
+%We here report the summary statistics (global mode (where min. chi),
+%marginal mode (in log file),
+%posterior median (instead of posterior means; need to compute) and the 1$\sigma$ confidence intervals in the marginal PDF) to reflect the PDF shape.
 
 
 
@@ -601,7 +635,7 @@ posterior median (instead of posterior means; need to compute) and the 1$\sigma$
 We correct for lensing magnification using the median among our models ($\mu_{\rm L}$=BLAH).
 Assuming a Salpeter initial mass function, we find the SFR of blah using the \fir luminosity after corrected for lensing .
 \subsection{Gas Mass}
-\subsection{Source Extent}
+\subsection{Source Extent} \label{sec:size}
 Compared to HST:
 
 %--------------------------------------------------------------------------
@@ -610,7 +644,8 @@ Compared to HST:
 \section{Discussion}
 \subsection{Merger stage of RXJ1131-1231}
 
-
+As discussion in previous sections, while we see evidence such as a symmetric velocity field in the source plane, double-horned profile, observed velocity
+gradient, C06 model $n$=1 Sersic profile, which suggest that RXJ1131 is likely a rotating disc. Yet, this is insufficient to conclude a disk morphology. Additional characteristics such as peak velocity dispersion at the central region and a ``spider'' diagram are needed, which is commonly seen in local spirals.
 
 \subsection{Implications}
 gas fraction at this redshift. how does that relate to
