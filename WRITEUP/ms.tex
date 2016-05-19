@@ -183,6 +183,7 @@ the lensed knots (see \Fig{CO21mom}).
 
 \begin{figure}[!htbp]
 \centering
+% [height=1in,width=5in]
 \includegraphics[trim=0 5 0 15, clip, width=0.232\textwidth]{../Figures/{F555WCO21_mom0_single.invertedgray}.eps}
 \includegraphics[trim=0 5 0 0, clip, width=0.22\textwidth]{../Figures/F555W_REDBLUE.eps}
 \caption{
@@ -446,6 +447,7 @@ chains (which we then discard). We use the final $\sim$5,000
 samplings to determine the posterior probability distributions. Here, we
 identify the best-fit model and the quoted uncertainties using the
 median and the 68\% confidence intervals in the marginal PDFs.
+\input{table_medianLens}
 
 We first obtain a preliminary lens model for each channel slice independently,
 where their lens parameters are allowed to vary and are initialized according
@@ -462,8 +464,6 @@ the mass distribution of the lensing galaxy, are consistent (within the uncertai
 with that of the SIE model presented by C06. We find a mass of
 $M(\theta$\,\,$<$\,\,$\theta_\textrm{E})$\,=\,(7.47\,$\pm$\,0.02)\,$\times$\,10$^{11}$\,\Msun
 within the Einstein radius.
-\input{table_medianLens}
-\input{table_magFactor}
 
 \subsubsection{Interpretation and Caveats} \label{sec:caveat} %DONE
 The reconstructed source locations in \Fig{model} demonstrate
@@ -513,18 +513,19 @@ where $n$ is a positive integer.
 \end{figure*}
 
 \subsubsection{Differential Lensing} \label{sec:differential} %DONE
+\input{table_magFactor}
 Previous lens models of RXJ1131 find conspicuous
 differential lensing effect across H-Band, V-band, and I-band (C06), where the
 magnification factor ranges from 10.9 to 7.8. C06 attribute
 the decrease toward the IR regime is caused by the more extended
 IR emission, arising from \SF.
 The highly asymmetric \bco line profile suggests that
-differential lensing is non-negligible for the CO emission, where its red wing
-is apparently much brighter than the blue wing, which is consistent
+differential lensing is also non-negligible for CO, where the red wing
+of \bco is apparently much brighter than that in the blue wing, consistent 
 with the source positions relative to the caustics in \Fig{model}.
-The red wing emission mainly originates near/at the cusp
+The red wing emission mainly originates near the cusp
 in the caustic, whereas the blue wing emission is located beyond the caustics.
-The magnification factor for CO thus ranges from 8.7 to 3.1 (\Tab{model}).
+The magnification factor for CO ranges from 8.7 to 3.1 (\Tab{model}).
 
 \subsection{\bco Dynamical modeling} \label{sec:dynamics}
 Based on the the source plane position of each kinematic components from the
