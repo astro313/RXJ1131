@@ -112,7 +112,7 @@ The nearby radio quasar 1130$-$149 was observed every 10 minutes for
 pointing, amplitude, and phase calibration, 1331$-$305 was observed as the
 primary flux calibrator, and 0319$+$415 was observed as the bandpass
 calibrator, yielding $\sim$10\% calibration accuracy.
-We use \aips to calibrate the visibility data which
+We use \ncode{AIPS} to calibrate the visibility data which
 are then imaged and deconvolved using
 the CLEAN algorithm using robust\,=\,0. This yields a synthesized clean
 beam size of 0$\farcs$49 $\times$ 0\farcs35 (PA\,=\,0\farcs18) and a final
@@ -123,7 +123,7 @@ rms noise of $\sigma$ = 13 $\mu$Jy beam\pmOne.
 We obtain {\it HST} images from the Hubble Legacy Archive with
 a goal to understand the origins of the emission detected
 in our mm observations. We adopt the VLA 5\,GHz map of $\sim$0\farcs5
-resolution as the reference coordinate frame to align the optical (V$-$band) image.
+resolution as the reference coordinate frame to align the optical ($V$-band) image.
 We shift the latter to the east by 0\farcs5963 in R.A. and $+$0\farcs8372 in
 Dec., which is consistent with the typical astrometric precision (1$-$2$^{\prime\prime}$) of
 images from the Hubble Legacy Archive\footnote{http://hla.stsci.edu/hla\_faq.
@@ -182,16 +182,13 @@ annulus, enclosing the partially complete ``Einstein Ring" and
 the lensed knots (see \Fig{CO21mom}).
 
 \begin{figure}[!htbp]
-\centering
-% [height=1in,width=5in]
-\includegraphics[trim=0 5 0 15, clip, width=0.232\textwidth]{../Figures/{F555WCO21_mom0_single.invertedgray}.eps}
-\includegraphics[trim=0 5 0 0, clip, width=0.22\textwidth]{../Figures/F555W_REDBLUE.eps}
-\caption{
-An overlay of the velocity-integrated \bco emission on the {\it HST} V$-$band (F555W)
-image. The contours start at 3$\sigma$ and increment at steps of
+\includegraphics[trim=3 5 0 15, clip, width=0.242\textwidth]{../Figures/{F555WCO21_mom0_single.invertedgray}.eps}
+\includegraphics[trim=3 5 0 0, clip, width=0.23\textwidth]{../Figures/F555W_REDBLUE.eps}
+\caption{Left: an overlay of the velocity-integrated \bco emission on the {\it HST} $V$--band (F555W)
+image. Right: contours are color-coded to represent the red and blue wings of the emission.
+The contours start at 3$\sigma$ and increment at steps of
 $\pm$3$\sigma$, where $\sigma$\,=\,0.3 mJy beam\pmOne. The crosses denote the
-location of the foreground galaxy at $z$\,=\,0.295. Right: contours
-are color-coded to represent the red and blue wings of the emission.
+location of the foreground galaxy at $z$\,=\,0.295.
 \label{fig:CO21mom}}
 \end{figure}
 
@@ -222,7 +219,7 @@ $\pm$3$\sigma$. The beam is denoted in the bottom right panel. \label{fig:chanma
 
 \begin{figure*}[tbph]
 \centering
-\includegraphics[width=0.8\textwidth]{../Figures/spatialSpec_offsetShifted.eps}
+\includegraphics[width=0.85\textwidth]{../Figures/spatialSpec_offsetShifted.eps}
 \caption{
 \bco spectrum as a function of position, binned by 3 pixels in each
 direction (1\farcs5). The spectra map covers an extent of $\sim$10"$\times$10"
@@ -238,18 +235,21 @@ $\sigma$ = 1.451mJy per channel beam\pmOne.
 Assuming a typical line width of 300 \kms, this corresponds to a 3$\sigma$
 limit of 4.353 mJy \kms beam\pmOne.
 
-\subsection{Origin of the \bco emission} \label{sec:origin} %DONE
+\subsection{Origin of the \bco Emission} \label{sec:origin} %DONE
 Evidently, the CO emission is co-spatial with the lensed optical emission in
-the background AGN host galaxy. The question is then whether the optically
+the background AGN host galaxy.
+The question is then whether the optically
 faint companion also contributes to the CO flux and thus contains a
 non-negligible amount of molecular gas.
 Indeed, based on our lens model presented in \Sec{lensmodel}, we find it
 highly likely that part of the CO emission originates from
 the companion. We thus classify RXJ1131 as a ``wet-wet'' merger.
 However, we cannot quantify this with a mass ratio given the
-spatial resolution. This will be verified in future higher-resolution observations.
-In the subsequent sections, we will interpret RXJ1131
-assuming this classification (i.e. a ``wet-wet'' merger).
+spatial resolution, nor can we rule out the possibility that
+the ``companion'' is instead a gas component/tidal feature ripped out
+from previous interaction. In the subsequent sections, we will interpret
+the this additional source component as gas emission
+in a nearby galaxy (i.e. a ``wet-wet'' merger), as suggested by previous studies of RXJ1131.
 
 \subsection{\bco Kinematics} % DONE
 A clear velocity gradient and an unusually high
@@ -325,12 +325,11 @@ $S_\nu$ = 0.39$\pm$0.08 mJy as the 2\,mm continuum emission toward
 the background galaxy.
 
 \begin{figure}[!htbp]
-\centering
-\includegraphics[width=0.23\textwidth]{../Figures/F555W_ContPdBI.eps}
-\hspace{-0.5em}
-\includegraphics[width=0.235\textwidth]{../Figures/F555W_ContVLA.eps}
-\caption{Left: an overlay of the 2\,mm continuum emission on the optical image.
-Right: VLA 5\,GHz continuum emission is overlaid on the optical image.
+%\centering
+\includegraphics[trim=12 27 0 0, clip, width=0.45\textwidth]{../Figures/F555W_ContPdBI.eps}
+\includegraphics[trim=10 5 0 0, clip, width=0.475\textwidth]{../Figures/F555W_ContVLA.eps}
+\caption{Top: an overlay of the 2\,mm continuum emission on the optical image.
+Bottom: VLA 5\,GHz continuum emission is overlaid on the optical image.
 Contours in both images start and increment at steps of
 $\pm$3$\sigma$, where $\sigma_{\rm 2mm}$\,=\,0.082 mJy beam\pmOne and
 $\sigma_{\rm 5GHz}$\,=\,13 $\mu$Jy beam\pmOne in the left and right panel, respectively.
@@ -345,9 +344,9 @@ as well as emission toward the background quasar.
 Multiple peaks are seen along the arc and their centroids
 coincide with the optical emission from the quasar.
 We extract the flux densities for the arc and the core in \Tab{photometry}.
-We find a spectral index of $\alpha$\,=\,0.024 for the foreground
-galaxy and $\alpha$\,=\,0.345 for the background galaxy by fitting a
-power-law (S$_\nu \propto \nu^{-\alpha}$) to the continuum emission at
+We find a spectral index of $\alpha$\,=\,$-$0.024 for the foreground
+galaxy and $\alpha$\,=\,$-$0.345 for the background galaxy by fitting a
+power-law (S$_\nu \propto \nu^{\alpha}$) to the continuum emission at
 5\,GHz and 2\,mm.
 
 \subsection{Photometry} \label{sec:photometry} %DONE
@@ -356,8 +355,9 @@ catalogs available on the NASA/IPAC Infrared Science
 Archive (IRSA) in \Tab{photometry} with aperture corrections
 when warranted. These data were obtained from
 the Two Micron All Sky Survey (2MASS; \citealt{Skrutskie06a}),
-Wide-field Infrared Survey Explorer (WISE; \citealt{Wright10a}),
-{\it Infrared Astronomical Satellite} (IRAS; \citealt{Neugebauer84a}), and
+Wide-field Infrared Survey Explorer ({\it WISE}; \citealt{Wright10a}),
+{\it Infrared Astronomical Satellite}
+({\it IRAS};\citealt{Neugebauer84a}), and
 the Multiband Imaging Photometer (MIPS; \citealt{Rieke04a}) and
 Mid-infrared Infrared Array Camera (IRAC; \citealt{Fazio04a}) on
 \spitzer.
@@ -367,7 +367,7 @@ the channel 1 image to extract flux density at 3.6\,$\mu$m
 since it is not available from the IRSA archive.
 
 The emission in the IRAC images is slightly extended. We thus use the
-HST image ($\sim$0\farcs07 resolution) to determine
+{\it HST} image ($\sim$0\farcs07 resolution) to determine
 origins of their centroids, all of which are found to be
 centered at the position corresponding to the lensed emission from the
 background galaxy. To recover the diffuse background emission, we subtract a
@@ -429,7 +429,7 @@ positional offset in R.A. and Dec. relative to an arbitrary chosen
 fixed coordinate in the image, the Einstein Radius, the axial ratio, and the
 position angle. We use the VLA radio continuum emission toward
 the foreground galaxy to initialize the positional offset. We impose a
-uniform prior $\pm$0\farcs05 in both $\Delta$R.A. and $\Delta$Dec., which is
+uniform prior $\pm$0\farcs05 in both $\Delta$R.A. and $\Delta$Dec.,
 motivated by the astrometry uncertainties in the VLA image as well as
 the uncertainties provided by previous SIE lens model (C06).
 We initialize the Einstein Radius based on the model parameters reported by C06
@@ -442,11 +442,16 @@ is allowed to vary between $\pm$1\farcs5 (i.e., within the Einstein Radius)
 and the effective radius is allowed to vary from 0\farcs01$-$2".
 
 % Check with Shane
+{\bf NEEDS EDIT}
 Our code uses an Markov Chain Monte Carlo (MCMC) approach to sample the
-posterior probability distribution function (PDF). In each model, we employ
-$\sim$100,000 samples as the initial ``burn-in'' stage to stabilize the Markov
-chains (which we then discard). We use the final $\sim$5,000
-samplings to determine the posterior probability distributions. Here, we
+posterior probability distribution function (PDF).
+In each model, we require the target acceptance rate of $\sim$0.25$-$0.5
+and check for chain convergence by inspecting the trace plots
+AND BLAH to verify we can samples beyond an autocorrelation time.
+We employ $\sim$50,000 samples as the initial ``burn-in'' stage
+to stabilize the Markov chains (which we then discard).
+We then use the final $\sim$5,000 steps, sampled by 128 walkers.
+Here, we
 identify the best-fit model and the quoted uncertainties using the
 median and the 68\% confidence intervals in the marginal PDFs.
 \input{table_medianLens}
@@ -484,7 +489,13 @@ One other interesting result from our lens model is that a better fit is
 found for the red-most channel if we add a second source component (see
 top left panel in \Fig{model}). This is consistent with previous results
 reported by \citet{Brewer08a}, who find an optically faint companion
-$\sim$2.4\,kpc away from the AGN host galaxy.
+(component F in their paper) $\sim$2.4\,kpc away from the AGN host galaxy,
+and C06, who find evidence for an interacting dusty galaxy.
+Spatially, the red velocity component of the CO also coincides with this
+component F. While we cannot quantify the type of
+merger (major v.s. minor) with a mass ratio given the
+spatial resolution, the symmetric velocity gradient may lean support
+towards a minor merger.
 
 We emphasize that the spatial resolution of the data at hand
 is a few arcsec, which implies that despite the high SNR and spectral
@@ -494,9 +505,9 @@ factors ares likely under-predicted.
 We will discuss this further in the following section. % magnification factor is underpredicted, see Bussmann15
 
 \begin{figure*}[tbph]
-\centering
-\includegraphics[width=0.85\textwidth]{../Figures/PostageStampModel.eps}
-\includegraphics[width=0.85\textwidth]{../Figures/PostageStampResiduals.eps}
+%\centering
+\includegraphics[width=1.0\textwidth]{../Figures/PostageStampModel.eps}
+\includegraphics[width=1.0\textwidth]{../Figures/PostageStampResiduals.eps}
 \caption{Each panel corresponds to a lens model of RXJ1131 performed over a
 channel slice $\sim$100\,\kms of the \bco data. Top: channel maps of the
 PdBI \bco emission (red) overlaid on our best-fit lens models (grayscale).
@@ -518,13 +529,14 @@ where $n$ is a positive integer.
 \input{table_magFactor}
 Previous lens models of RXJ1131 find conspicuous
 differential lensing effect across {\it HST}
-H-Band, V-band, and I-band (C06), where the
+$H$-, $V$-, and $I$-band (C06), where the
 magnification factor ranges from 10.9 to 7.8. C06 attribute
 the decrease toward the IR regime is caused by the more extended
 IR emission, arising from \SF.
 The highly asymmetric \bco line profile suggests that
-differential lensing is also non-negligible for CO, where the red wing
-of \bco is apparently much brighter than that in the blue wing, consistent
+differential lensing is also non-negligible for CO, where the redshifted
+emission is apparently much brighter than that in the
+blueshifted emission, consistent
 with the source positions relative to the caustics in \Fig{model}.
 The red wing emission mainly originates near the cusp
 in the caustic, whereas the blue wing emission is located beyond the caustics.
@@ -533,10 +545,11 @@ The magnification factor for CO ranges from 8.7 to 3.1 (\Tab{model}).
 \subsection{\bco Dynamical modeling} \label{sec:dynamics} %DONE
 This section proceeds under the assumption that RXJ1131 is
 a rotating disk (see previous sections).
-Assuming the velocities of the respective lens models
-correspond to solely the tangential component (i.e., $\theta$ = 0), we extract
-a pseudo PV diagram along the major axis in \Fig{PV} by slicing across their
-source plane positions. The best-fit major axis is along PA of 121\degr.
+Assuming the velocities of the respective channels used in
+lens modeling correspond to solely the tangential component of the
+true velocity vector (i.e., along the major axis), we extract
+a one dimensional PV diagram in \Fig{PV}
+by slicing across their source plane positions (PA: 121\degr).
 
 We attempt to characterize the molecular gas kinematics using an empirically motivated disk model \citep[\eg][]{Courteau97a,Puech08a,Miller11a}:
 \begin{equation}
@@ -551,20 +564,25 @@ taking into account the uncertainties in both velocity (channel width) and
 distance offset. We also place an upper limit on $R_{t}$\,$<$15 kpc
 to keep this parameter physical \citep[\eg][]{Puech08a,Miller11a}.
 The parameter uncertainties are inferred based on Monte Carlo simulation
-of 500 iterations, which we perturb the input parameters according to a random
-Gaussian distribution of sigma corresponding to their uncertainties.
+of 500 iterations, where the input parameters are perturbed
+according to random Gaussian distributions of sigmas
+corresponding to their uncertainties.
 Using this model, we find $V_{a}$\,=\,975\,$\pm$\,387 \kms,
 $R_{t}$\,=\,10.6\,$\pm$\,5.7\,kpc, and $V_0$\,=\,28\,$\pm$\,40 \kms.
 We note, however, that since emission is not detected beyond the flat regime
-of the rotation curve, the asymptotic velocity is poorly constrained.
+of the rotation curve, the asymptotic velocity is poorly constrained and
+the ``turnover'' radius is at most a lower limit.
 In particular, $V_{a}$ and $R_{t}$ are highly correlated with a
 Pearson coefficient $R$\,=\,0.998, and 0.027 between $V_{a}$ and $V_0$.
 
-\begin{figure}[!Htbp]
+\begin{figure}[!htbp]
 \centering
 \includegraphics[width=0.455\textwidth]{../Figures/bestfit_PV.eps}
 \caption{PV slice along the major axis in the source plane at PA\,=\,121\degr.
 Dashed line shows the best-fit rotation curve using an arctangent model.
+The vertical error bars show the channel width for
+each model and the horizontal error bars are the
+1$\sigma$ uncertainties on the source plane positions.
 DR may suggest include MC simulation fits, maybe I will do that later.
  \label{fig:PV}}
 \end{figure}
@@ -573,21 +591,29 @@ We note that the asymptotic velocity ($V_{a}$) -- an extrapolation of the model
 out to radius beyond the disk scale-length and half-light radius --
 is inequivalent to maximum observed velocity ($V_{\rm max}$),
 which is commonly used in literature to parameterize disc rotation.
-Studies of the Tully-Fisher relation typically use V$_{2.2}$ (velocity
+The arctangent model is most commonly used in studies of the
+Tully-Fisher relation, where an extrapolation to V$_{2.2}$ (velocity
 at 2.2 disc scale-length or $\sim$1.375 half-light radius,
-or $\sim$0.7$R_{\rm opt}$) as the rotation velocity ($V_{\rm max}$ in their
-terminology), which corresponds to the radius at which the velocity
+or $\sim$0.7$R_{\rm opt}$\footnote{Radius enclosing 83\% of the light
+distribution.}) is typically adopted
+as the rotation velocity ($V_{\rm max}$ in their
+terminology) since this corresponds to the radius at which the velocity
 of a pure exponential disc peaks.
 We here adopt the maximum {\em observed} velocity
 $V_{\rm rot}$\,=\,345\,$\pm$\,55\,\kms at 6\,$\pm$\,3\,kpc from the
 dynamical center as a proxy to the rotation velocity.
 This radius corresponds to $\sim$0.6$R_e$, where $R_e$ is the half-light
-radius $\sim$10.3 kpc inferred from the C06 lens model (converted to
-our cosmology), who use all {\it HST} H--, V--, and I--bands in their
-modeling. If only V$-$band is used, the half-light radius is $\sim$4kpc \citep{Brewer08a}.
-This discrepancy arises owning to the exclusion of the more diffused emission in the V-band
-(\ie V-band is missing the diffused emission).
-This indicates that the molecular gas may be ... (see \Sec{size}). DR: ok, let's discuss this.
+radius $\sim$10.3\,kpc inferred from the C06 lens model (converted to
+our cosmology) over the {\it HST} $I$-band image.
+We note that the source plane half-light radius varies substantially with
+wavelength: $R_e$ $\sim$\,4kpc and $\sim$7\,kpc based on models over
+$V$-band \citep{Brewer08a} and $H$-band (C06), respectively.
+This discrepancy arises owing to the exclusion of the more
+diffused emission in $V$-band (rest-frame UV),
+which traces recent massive \SF.
+% On the other hand, $I$-band traces the more evolved stellar population.
+This indicates that the molecular gas may be ....
+DR: ok, let's discuss this.
 
 Using this $V_{\rm rot}$, we find a dynamical mass of
 $M_{\rm dyn}$\,sin$^2 i$\,($<$\,6\,kpc$)$ = 17\E{10}\,\Msun.
@@ -607,56 +633,151 @@ resolution data and will be verified by future higher-resolution
 observations.
 
 \subsection{SED modeling} \label{sec:SED}
+By fitting a power-law spectrum $S_\nu \propto \nu^\alpha$ to the decomposed
+IRAC photometry. We find a spectral index of $\alpha\sim-$1.9 and
+$\alpha\sim-$0.85 for the lensing galaxy and RXJ1131, respectively.
+This is consistent with the mean spectral slope of optical quasars
+(optically-selected) ($\alpha\sim-$1, Elvis et al. 1994;
+Neugebauer et al. 1979).
+For comparison, broad-line AGN from the AGN and Galaxy
+Evolution Survey (AGES, C. S. Kochanek et al., in prep) have 3.6$-$8 \micron slopes of $\alpha$ = $-$1.07$\pm$0.53 (Stern et al. 2005).
+
+
+
 We extrapolated a power-law to 24 \micron to decompose the flux
 at 24 \micron in MIPS.
-%
-%We fit modified blackbody functions to
-%to constrain the dust temperature, \fir (rest-frame 42.5-122.5 \micron) luminosity, dust mass (For the mass absorption coefficient we adopt 
-%BLAH (rest frame; Dunne et al. 2003).)
-%We added blah\% calibration uncertainties on the PdBI data.
-%
-%We check convergence of our chains by requiring that the autocorrelation length for each model parameter is 
-%several times less than the number of steps taken during an initial burn-in stage (which are then discarded).
-%The code treats the instrument response. 
-%
-%% upper limit using decomposed 24 um
-%% lower limit using fit without 24 um, but do I still want to fit a power-law for this?
-%The best-fit SEDs are shown in \Fig{SED} and the resulting parameters (inferred from the BLAH of the posterior PDF) are listed in \Tab{SED}.
-%% parameter estimation problem
-%For these parameter estimation problems using MCMC to sample,
-%the full answer is the full joint posterior PDF.
-%We here report the summary statistics (global mode (where min. chi),
-%marginal mode (in log file),
-%posterior median (instead of posterior means; need to compute) and the 1$\sigma$ confidence intervals in the marginal PDF) to reflect the PDF shape.
+Since the contribution from AGN is not taken into account in SBURT, it is expected that the SEDs of AGN candidates show an excess in the MIR, owing to hot dust around the central massive black hole,
+NIR not corrected for extinction.
+
+
+We fit SED models to the photometry of dust emission in RXJ1131-1231 with a power-law attached to the blue side.
+We include the IRAS 60\micron and 100\micron upper limits to constrain the dust peak.
+We also fit SED models including the decomposed 24.0\micron data (see \Sec{photometry})
+
+Spitzer mid-IR spectroscopy of local ULIRGs will indicate the appropriate luminosity fraction that needs to be assigned to the AGN for ULIRGs before and after nuclear coalescence.
+ULIRG Lir
+Our SED model find a rest-frame characteristic dust temperature of BLAH (cf. 60-70K in the cores of local ULIRGs/SB; Pauzzo+11, Rangwala+10)
+
+
+\begin{figure*}[tbph]
+\centering
+\includegraphics[width=0.8\textwidth]{../Figures/FullSED.eps}
+\caption{
+WISE flux is higher than the IRAC data, probably just due to smaller aperture used in IRAC.
+Spitzer IRAC: Aperture flux in 5\farcs diameter with aperture correction applied.
+Spitzer/MIPS: PSF fit flux, as source size <
+native PSF FWHM of 6".
+Might want to add NVSS constraints.
+ \label{fig:SED}}
+\end{figure*}
 
 
 
-\subsection{ISM properties}
+We fit modified blackbody functions to
+to constrain the dust temperature, \fir (rest-frame 42.5-122.5 \micron) luminosity, dust mass (For the mass absorption coefficient we adopt
+BLAH (rest frame; Dunne et al. 2003).)
+We added blah\% calibration uncertainties on the PdBI data.
+
+We check convergence of our chains by requiring that the autocorrelation length for each model parameter is
+several times less than the number of steps taken during an initial burn-in stage (which are then discarded).
+The code treats the instrument response.
+flux using the set of photometric filters used to obtain the observations.
+
+identical to the modified blackbody fit,
+where the Wien side is removed and replaced by MIR power-law consistent with any mid-IR data available.
+We find a power-law slope of BLAH,
+Previous studies find that in the absence of mid-IR data, a powerlaw slope of $\alpha$ = 2 is consistent with SB and slightly more shallow, $\sim$1.5, for SB/AGN composite systems (Blain et al., 2003; Casey, 2012; Koss et al., 2013).
+
+
+% upper limit using decomposed 24 um
+% lower limit using fit without 24 um, but do I still want to fit a power-law for this?
+The best-fit SEDs are shown in \Fig{SED} and the resulting parameters (inferred from the BLAH of the posterior PDF) are listed in \Tab{SED}.
+% parameter estimation problem
+For these parameter estimation problems using MCMC to sample,
+the full answer is the full joint posterior PDF.
+We here report the summary statistics (global mode (where min. chi),
+marginal mode (in log file),
+posterior median (instead of posterior means; need to compute) and the 1$\sigma$ confidence intervals in the marginal PDF) to reflect the PDF shape.
+
+
+\subsection{Physical properties}
+\subsubsection{SB versus AGN contribution}
+
 We correct for lensing magnification using the median among our models ($\mu_{\rm L}$=BLAH).
 Assuming a Salpeter initial mass function, we find the SFR of blah using the \fir luminosity after corrected for lensing .
-\subsection{Gas Mass}
-\subsection{Source Extent} \label{sec:size}
-Compared to HST:
+
+\subsubsection{Gas properties}
+% Gas, dynamical, etc
+Since RXJ1131 has a companion, i.e. not dynamically relaxed, the dynamical mass estimate using a virial estimator is likely underestimated.
+
+\subsubsection{SF and Molecular Gas}
+C06: 814
 
 %--------------------------------------------------------------------------
 %                                Discussion
 %--------------------------------------------------------------------------
 \section{Discussion}
+% summarize (conflicting ) results from recent studies.
+% lead way into our results
+\subsection{Mass in RXJ1131}
+black hole mass
+dynamical mass
+stellar mass
+dust mass
+
+Assuming local $M_{\rm BH}-M_{\rm bulge}$ relation, this would imply $M_{\rm bulge}$$\sim$BLAH\Msun.
+
+
 \subsection{Merger stage of RXJ1131-1231}
+We put our results in content with ULIRGs/mergers in $z$=0$-$1.
 
 As discussion in previous sections, while we see evidence such as a symmetric velocity field in the source plane, double-horned profile, observed velocity
 gradient, C06 model $n$=1 Sersic profile, which suggest that RXJ1131 is likely a rotating disc. Yet, this is insufficient to conclude a disk morphology. Additional characteristics such as peak velocity dispersion at the central region and a ``spider'' diagram are needed, which is commonly seen in local spirals.
+\\
+
+Kinematics and mergers:
+For major mergers, two galaxy mass centres separated on the same scale as the gas disk (4 kpc or more), the gas dynamics would be strongly perturbed and would deviate substantially from that of a simple disk.
+
+In a minor merger (a mass ratio of more than 3:1) the more massive galaxy, including its gas distribution, can retain a significant angular momentum and resemble a rotating disk.
+
+RXJ kinematics:
+The smooth, symmetric velocity field seen in our lens model and image plane
+suggest a kinematically-order (i.e., disk) galaxy. However, the high
+dispersion near the dynamical center suggest that RXJ1131 is turbulent, albeit
+lack of spatial resolution. Overall implies RXJ1131 is a minor merger of a turbulent disc, but higher-resolution data are needed to confirm this.
+Although these values are discussed in \Sec{blah} we cannot draw any general conclusions concerning BLAH.
+
+
+Mergers are observable for 0.2-0.4 Gyr,
+between 2nd passage and coalescence.
+Kinematic asymmetries follow morphological asymmetries during
+mergers. Mergers are kinematically detectable for 0.2-0.4 Gyr
+between second passage and colaescence.
+
+
+Numerical simulations of mergers between two galaxies have shown that multiple, discrete starburst events can be triggered even in double mergers. The timing of the starbursts is thought to depend on the progenitor galaxy morphologies, with early starbursts (before the galaxies start to merge) occurring in bulgeless disc galaxies, and late starbursts (after the galaxies have started to merge) occur- ring in disc galaxies with a bulge component (Mihos \& Hernquist 1994, 1996.
+Maybe the more compact rest-frame SF and the more recent NIR SF, which is also more extended and diffuse is consistent with the spinning blackhole, i.e.
+already encountered?
+
 
 \subsection{Implications}
+At low redshifts the ULIRG luminosity function shows strong evolution with redshift (Veilleux et al. 1999).
+not known whether the IR luminosity of these high- redshift sources arises due to mergers between two or more large spiral galaxies, as in local ULIRGs, or via a different mechanism/galaxy formation processes at high-z.
+
 gas fraction at this redshift. how does that relate to
 the SFH, and the change in cosmic SFD is due to change in gas content.
 SFE at this redshift, how does that relate to the SFH. probably a secondary effect to the drop in SFH
 
+What are the conclusions of the paper (qualitative and/or quantitative)?
+What is the evidence for those conclusions?
+How do these results relate to prior work?
+What are the implications of this work – i.e. what theories are being tested/questions are being answered etc?
 
 %--------------------------------------------------------------------------
 %                                Conclusions
 %--------------------------------------------------------------------------
 \section{Summary and Conclusions}
+% see Hodge12_dynamics.pdf for guide
 We observed the cold molecular gas properties using \bco and \cco line emission
 toward the AGN host galaxy RXJ1131 at $z_{\rm CO}$\,$\sim$0.65.
 Our results suggest that RXJ1131 is a wet-wet merger between a AGN/starburst
