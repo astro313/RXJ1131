@@ -350,7 +350,8 @@ power-law (S$_\nu \propto \nu^{\alpha}$) to the continuum emission at
 5\,GHz and 2\,mm.
 
 \subsection{Photometry} \label{sec:photometry} %DONE
-We compile \mir to \fir broadband photometry from various
+We compile \mir to \fir broadband photometry (uncorrected for
+dust extinction) from various
 catalogs available on the NASA/IPAC Infrared Science
 Archive (IRSA) in \Tab{photometry} with aperture corrections
 when warranted. These data were obtained from
@@ -445,13 +446,13 @@ and the effective radius is allowed to vary from 0\farcs01$-$2".
 {\bf NEEDS EDIT}
 Our code uses an Markov Chain Monte Carlo (MCMC) approach to sample the
 posterior probability distribution function (PDF).
-In each model, we require the target acceptance rate of $\sim$0.25$-$0.5
+In each model, we require a target acceptance rate of $\sim$0.25$-$0.5
 and check for chain convergence by inspecting the trace plots
-AND BLAH to verify we can samples beyond an autocorrelation time.
+AND BLAH to verify we are sampling beyond an autocorrelation time.
 We employ $\sim$50,000 samples as the initial ``burn-in'' stage
-to stabilize the Markov chains (which we then discard).
-We then use the final $\sim$5,000 steps, sampled by 128 walkers.
-Here, we
+to stabilize the Markov chains (which we then discard) and
+use the final $\sim$5,000 steps, sampled by 128 walkers, to identify
+the posterior. Here, we
 identify the best-fit model and the quoted uncertainties using the
 median and the 68\% confidence intervals in the marginal PDFs.
 \input{table_medianLens}
@@ -616,8 +617,9 @@ This indicates that the molecular gas may be ....
 DR: ok, let's discuss this.
 
 Using this $V_{\rm rot}$, we find a dynamical mass of
-$M_{\rm dyn}$\,sin$^2 i$\,($<$\,6\,kpc$)$ = 17\E{10}\,\Msun.
-If we instead consider the line peak separation from the
+$M_{\rm dyn}$\,sin$^2 i$\,($<$\,6\,kpc$)$ = 17\E{10}\,\Msun enclosed
+within the CO-emitting region. If we instead consider the
+line peak separation from the
 \bco line profile $\Delta v_{\rm sep}/2 \sim$110\,\kms, we find
 $M_{\rm dyn}$\,sin$^2 i$\,($<$\,6\,kpc$)$ = 1.8\E{10}\,\Msun.
 DR: here, I list the extrema for possible Mdyn given our data,
@@ -627,8 +629,13 @@ morphological axial ratio from the reconstructed image (Figure 3 in C06), where
 the minor axis is 1\farcs8 and the major axis is 3\farcs25.
 We thus find an inclination angle of 56.4\degr, which is consistent with the
 observed unobscured AGN and an observable double peak line profile.
-The dynamical mass is then 2.5\E{10}\Msun$<$$M_{\rm dyn}$($<$6 kpc)$<$25\E{10}\Msun.
-We caution that this analysis is based on limited spatial
+The dynamical mass is then
+2.5\E{10}\Msun\,$<$\,$M_{\rm dyn}$($<$6\,kpc)\,$<$\,25\E{10}\Msun.
+Since this quantity is derived under the assumption that the gas is
+virialized, which is highly unlikely given the velocity dispersion and the
+presence of a close companion, our estimate is
+at most a lower limit. We caution that this analysis is
+based on limited spatial
 resolution data and will be verified by future higher-resolution
 observations.
 
@@ -668,6 +675,7 @@ Spitzer IRAC: Aperture flux in 5\farcs diameter with aperture correction applied
 Spitzer/MIPS: PSF fit flux, as source size <
 native PSF FWHM of 6".
 Might want to add NVSS constraints.
+The data are not corrected for dust extinction.
  \label{fig:SED}}
 \end{figure*}
 
@@ -700,7 +708,64 @@ marginal mode (in log file),
 posterior median (instead of posterior means; need to compute) and the 1$\sigma$ confidence intervals in the marginal PDF) to reflect the PDF shape.
 
 
+
+
+
+
 \subsection{Physical properties}
+In this section, we derive the gas properties of RXJ1131 based on \bco,
+and compare the derived quantities against those reported by
+\citet[; hereafter C13]{Combes13a}, which is the largest sample of
+ULIRGs at intermediate redshift (0.6\,$<$\,$z$\,1.0) with CO measurements,
+to place RXJ1131 in context of existing studies. Their results are
+based on \bco and \rot{4}{3} line observations on the IRAM 30-m dish.
+
+%line width & extent
+We find that the linewidths for both components (redshifted and blueshifted)
+inferred from a double Gaussian fit to the \bco line profile are
+consistent with the C13 sample (FWHM of 370\,\kms). Such linewidths are higher
+than in local ULIRGs (240\,\kms; \citet[][]{Solomon97a}).
+Since C13 do not have resolved observations, we compare the
+gas distribution (size) with local ULIRGs. The CO gas in RXJ1131 is
+distributed $\sim$6\,kpc in radius across (in
+the source plane), which is more extended than the
+sample of disk-like ULIRGs studied by \citet{Ueda14a},
+who find an average radius of 3.5\,$\pm$\,2.3\,kpc,
+(with a range from 1.1 kpc to 9.3 kpc).
+This indicates that the positive correlation in the linewidth-size relation
+holds in ULIRGs at intermediate redshifts. Yet we cannot quantify this further
+with the data represented in this paper.
+{\bf implication on this in discussion}
+% gas mass
+To derive the molecular gas mass, we first correct for lensing magnification
+using the respective magnification factors listed in \Tab{model}, which to
+first order takes into account effect of differential lensing. This yields
+$I$\,=\,5.9$\pm$2.7 Jy\,\kms, where the uncertainty includes those on
+the magnification factors. This includes the CO emission from the companion
+as the resolution of our data do not allow us decompose its contribution
+to the total line flux. Without direct \rot{1}{0} measurements,
+we derive \rot{1}{0} intensity
+using a brightness temperature ratio of $r_{\rm 32}$\,=\,1, which was chosen
+solely to facilitate a comparison with the C13 sample. For the same reason, we
+adopt a luminosity-to-mass conversion factor of
+\alphaco\,=0.8 (K \kms pc$^2$)\pmOne. This yields
+\Lp\,=\,(3.47\,$\pm$\,1.58)\E{10}\,\Lsun and a gas mass
+of (2.8$\pm$1.3)\,\E{10} \Msun in RXJ1131. This is likely
+an overestimation due to a contribution from the companion, but is
+nevertheless consistent with C13 ($M_{\rm gas}$\,=\,1.5\E{10}\Msun) within the
+uncertainties. Using the dynamical mass of BLAH (see \Sec{dynamics}), we find
+a gas-to-dynamical mass fraction of $f_{\rm gas-dyn}$\,=\,BLAH.
+% gas to dust ratio:
+Based on the dust mass derived from SED fitting, we find a gas-to-dust ratio of
+$f_{\rm gas-dust}$\,=\,BLAH, consistent with Combes+13: 206 ?
+ Typical local (U)LIRGs are found to have a
+gas-to-dust mass ratio of 200–350 (Sanders et al. 1991; Contini
+& Contini 2003; Seaquist et al. 2004; Wilson et al. 2008).
+
+% SFE and depletion time
+
+
+
 \subsubsection{SB versus AGN contribution}
 
 We correct for lensing magnification using the median among our models ($\mu_{\rm L}$=BLAH).
@@ -717,8 +782,9 @@ C06: 814
 %                                Discussion
 %--------------------------------------------------------------------------
 \section{Discussion}
-% summarize (conflicting ) results from recent studies.
-% lead way into our results
+% What are the conclusions of the paper (qualitative and/or quantitative)?
+% What is the evidence for those conclusions?
+
 \subsection{Mass in RXJ1131}
 black hole mass
 dynamical mass
@@ -727,6 +793,9 @@ dust mass
 
 Assuming local $M_{\rm BH}-M_{\rm bulge}$ relation, this would imply $M_{\rm bulge}$$\sim$BLAH\Msun.
 
+% gas-dyn fraction:
+% can we quantify the merger stage of RXJ1131? what are typical gas fraction at different merger stage. What are the alpha CO used in those (0.8, see Uedaa14)
+% since ellipticals are not expected to have high gas fraction. The fact that there are on-going, recent, massive episodes of SF activity, the velocity gradient, and the best-fit sersic profile from C06 all support the picture that RXJ is a disk galaxy.
 
 \subsection{Merger stage of RXJ1131-1231}
 We put our results in content with ULIRGs/mergers in $z$=0$-$1.
@@ -736,7 +805,7 @@ gradient, C06 model $n$=1 Sersic profile, which suggest that RXJ1131 is likely a
 \\
 
 Kinematics and mergers:
-For major mergers, two galaxy mass centres separated on the same scale as the gas disk (4 kpc or more), the gas dynamics would be strongly perturbed and would deviate substantially from that of a simple disk.
+For major mergers, two galaxy mass centers separated on the same scale as the gas disk (4 kpc or more), the gas dynamics would be strongly perturbed and would deviate substantially from that of a simple disk.
 
 In a minor merger (a mass ratio of more than 3:1) the more massive galaxy, including its gas distribution, can retain a significant angular momentum and resemble a rotating disk.
 
@@ -752,15 +821,24 @@ Mergers are observable for 0.2-0.4 Gyr,
 between 2nd passage and coalescence.
 Kinematic asymmetries follow morphological asymmetries during
 mergers. Mergers are kinematically detectable for 0.2-0.4 Gyr
-between second passage and colaescence.
+between second passage and coalescence.
 
 
-Numerical simulations of mergers between two galaxies have shown that multiple, discrete starburst events can be triggered even in double mergers. The timing of the starbursts is thought to depend on the progenitor galaxy morphologies, with early starbursts (before the galaxies start to merge) occurring in bulgeless disc galaxies, and late starbursts (after the galaxies have started to merge) occur- ring in disc galaxies with a bulge component (Mihos \& Hernquist 1994, 1996.
-Maybe the more compact rest-frame SF and the more recent NIR SF, which is also more extended and diffuse is consistent with the spinning blackhole, i.e.
+Numerical simulations of mergers between two galaxies have shown that multiple, discrete starburst events can be triggered even in double mergers. The timing of the starbursts is thought to depend on the progenitor galaxy morphologies, with early starbursts (before the galaxies start to merge) occurring in bulges disc galaxies, and late starbursts (after the galaxies have started to merge) occur- ring in disc galaxies with a bulge component (Mihos \& Hernquist 1994, 1996.
+Maybe the more compact rest-frame SF and the more recent NIR SF, which is also more extended and diffuse is consistent with the spinning black hole, i.e.
 already encountered?
 
 
-\subsection{Implications}
+
+% ------------------------------------------------------------------------
+% How do these results relate to prior work?
+% What are the implications of this work – i.e. what theories are being tested/questions are being answered etc?
+
+
+% summarize (conflicting ) results from recent studies.
+% lead way into our results
+
+\subsection{ULIRG Evolution}
 At low redshifts the ULIRG luminosity function shows strong evolution with redshift (Veilleux et al. 1999).
 not known whether the IR luminosity of these high- redshift sources arises due to mergers between two or more large spiral galaxies, as in local ULIRGs, or via a different mechanism/galaxy formation processes at high-z.
 
@@ -768,20 +846,28 @@ gas fraction at this redshift. how does that relate to
 the SFH, and the change in cosmic SFD is due to change in gas content.
 SFE at this redshift, how does that relate to the SFH. probably a secondary effect to the drop in SFH
 
-What are the conclusions of the paper (qualitative and/or quantitative)?
-What is the evidence for those conclusions?
-How do these results relate to prior work?
-What are the implications of this work – i.e. what theories are being tested/questions are being answered etc?
-
 %--------------------------------------------------------------------------
 %                                Conclusions
 %--------------------------------------------------------------------------
 \section{Summary and Conclusions}
 % see Hodge12_dynamics.pdf for guide
+
+%- summarize the findings from the entire study
+%    - firm conclusions
+%    - speculative possibilities
+
 We observed the cold molecular gas properties using \bco and \cco line emission
 toward the AGN host galaxy RXJ1131 at $z_{\rm CO}$\,$\sim$0.65.
 Our results suggest that RXJ1131 is a wet-wet merger between a AGN/starburst
 ULIRG and a optically faint companion.
+
+
+Fitting SED models, we find that the AGN host galaxy is a ULIRG.
+A faint companion as seen in HST observations (BJB) is also detected in our CO, confirming it's redshift and gas rich nature.
+
+
+
+% any further work needed to resolve the remaining problems
 
 
 
