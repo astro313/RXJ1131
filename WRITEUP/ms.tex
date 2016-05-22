@@ -55,7 +55,7 @@ observed as bandpass calibrators for both tracks.
 MWC349 and 3C279 were observed as the primary flux calibrator for C and D
 array observations, respectively, yielding $\lesssim$15\% calibration accuracy.
 
-The \ncode{GILDAS} package was used to reduce and analyze the visibility data
+The \ncode{gildas} package was used to reduce and analyze the visibility data
 which are then imaged and deconvolved using the CLEAN algorithm with ``natural"
 weighting. This yields a synthesized clean beam size of 4$\farcs$44 $\times$ 1\farcs95 (PA = 13\degr).
 The final rms noise is $\sigma$ = 1.451 mJy \kms
@@ -93,7 +93,7 @@ the gain variations over time, and the phase scatter on the calibrated data. We
 therefore treat its line intensity with caution and ensure that any physical interpretation
 of this system (and thus implications and conclusions of this paper) do not rely on this quantity.
 
-The \ncode{MIRIAD} package was used to calibrate the visibility data which are
+The \ncode{miriad} package was used to calibrate the visibility data which are
 then imaged and deconvolved using the CLEAN algorithm with ``natural" weighting. This yields a synthesized clean
 beam size of 3\farcs2 $\times$ 1\farcs9 (PA = 8\degr) for the lower sideband
 image cube. The final rms noise is $\sigma$ = 13.3 mJy km s$^{-1}$ beam$^{-1}$
@@ -112,7 +112,7 @@ The nearby radio quasar 1130$-$149 was observed every 10 minutes for
 pointing, amplitude, and phase calibration, 1331$-$305 was observed as the
 primary flux calibrator, and 0319$+$415 was observed as the bandpass
 calibrator, yielding $\sim$10\% calibration accuracy.
-We use \ncode{AIPS} to calibrate the visibility data which
+We use \ncode{aips} to calibrate the visibility data which
 are then imaged and deconvolved using
 the CLEAN algorithm using robust\,=\,0. This yields a synthesized clean
 beam size of 0$\farcs$49 $\times$ 0\farcs35 (PA\,=\,0\farcs18) and a final
@@ -382,7 +382,7 @@ by subtracting the fluxes decomposed for the background source
 from the observed total flux. The resulting photometry in
 \Tab{photometry} are obtained after performing aperture correction
 described in the IRAC Instrument Handbook\footnote{http://irsa.ipac.caltech.edu/data/SPITZER/docs/irac/iracinstrumenthandbook/} to
-correct for the fact that the IRAC imaging was calibrated
+correct for the fact that the imaging was calibrated
 using a 12" aperture, which is bigger than the aperture (5\farcs8) we used to
 perform aperture photometry. This step was taken to provide
 constraints on the Wien tail beyond the dust peak of the
@@ -390,17 +390,17 @@ spectral energy distribution (SED) of RXJ1131.
 Details of the SED modeling is presented in \Sec{SED}.
 
 Extraction of the {\it Herschel}/SPIRE photometry was
-carried out using SUSSEXTractor within Herschel Interactive
+carried out using \ncode{sussextractor} within Herschel Interactive
 Processing Environment (HIPE; \citealt{Ott10a})
 over the Level 2 maps obtained from the Herschel Science Archive.
 These maps were processed by the SPIRE pipeline
-version 13.0 within HIPE. The SUSSEXtractor task estimates
+version 13.0 within HIPE. The \ncode{sussextractor} task estimates
 the flux density from an image convolved with a kernel
 derived from the SPIRE beam. The flux density
-measured by SUSSEXtractor is additionally confirmed
+measured by \ncode{sussextractor} is additionally confirmed
 using the Timeline Fitter, which performs photometry
 by fitting a 2D elliptical Gaussian to the Level 1 data at the
-source position given by the output of SUSSEXtractor.
+source position given by the output of \ncode{sussextractor}.
 
 \input{table_photometry_AAScustomized}
 
@@ -420,9 +420,9 @@ channel slices of the interferometric data using our lensing code
 \uvmcmcfit (\citealt{uvmcmcfit15a}; see \citealt{Bussmann15a} for details of
 the code). Model of each slice in \Fig{model} thus provides
 properties on the intrinsic kinematics. The slices
-are obtained by binning the data (over the full linewidth
-$\sim$700\kms; see \Sec{CO21}) by five channels (i.e., into seven slices)
- to increase the SNR.
+are obtained by binning the data over the full linewidth
+$\sim$700\,\kms by five channels,
+that is, into seven slices, to increase the SNR.
 
 The lens mass distribution is modeled using a singular isothermal
 ellipsoid (SIE) profile, which is described by five free parameters: the
@@ -440,7 +440,7 @@ parameterized by six free parameters: the positional offset in R.A.
 and Dec. relative to the lens, the intrinsic flux density, the effective
 radius, the axial ratio, and the position angle. The position of each source
 is allowed to vary between $\pm$1\farcs5 (i.e., within the Einstein Radius)
-and the effective radius is allowed to vary from 0\farcs01$-$2".
+and the effective radius is allowed to vary from 0\farcs01$-$2$^{\prime\prime}$.
 
 % Check with Shane
 {\bf NEEDS EDIT}
@@ -476,7 +476,7 @@ within the Einstein radius.
 \subsubsection{Interpretation and Caveats} \label{sec:caveat} %DONE
 The reconstructed source locations in \Fig{model} demonstrate
 an intrinsic velocity gradient across the source plane, which is
-indicative of a disk geometry. While solely based on the
+indicative of a disk-like galaxy. While solely based on the
 lens model is insufficient to draw conclusive inference on its
 true geometry. Additional support to the disk conjecture %conjecture of a disk morphology
 can be found in the double-horned line profile (\Fig{CO21spec})
@@ -495,14 +495,14 @@ and C06, who find evidence for an interacting dusty galaxy.
 Spatially, the red velocity component of the CO also coincides with this
 component F. While we cannot quantify the type of
 merger (major v.s. minor) with a mass ratio given the
-spatial resolution, the symmetric velocity gradient may lean support
-towards a minor merger.
+spatial resolution, the symmetric velocity gradient lean support
+to the case of a minor merger.
 
 We emphasize that the spatial resolution of the data at hand
 is a few arcsec, which implies that despite the high SNR and spectral
 resolution, this data is insufficient to constrain the
 intrinsic sizes of the lensed galaxies, and thus the magnification
-factors ares likely under-predicted.
+factors are likely under-predicted.
 We will discuss this further in the following section. % magnification factor is underpredicted, see Bussmann15
 
 \begin{figure*}[tbph]
@@ -528,16 +528,15 @@ where $n$ is a positive integer.
 
 \subsubsection{Differential Lensing} \label{sec:differential} %DONE
 \input{table_magFactor}
-Previous lens models of RXJ1131 find conspicuous
-differential lensing effect across {\it HST}
+Previous lens models of RXJ1131 find evidence for
+differential lensing across {\it HST}
 $H$-, $V$-, and $I$-band (C06), where the
 magnification factor ranges from 10.9 to 7.8. C06 attribute
 the decrease toward the IR regime is caused by the more extended
-IR emission, arising from \SF.
-The highly asymmetric \bco line profile suggests that
+IR emission. The highly asymmetric \bco line profile suggests that
 differential lensing is also non-negligible for CO, where the redshifted
 emission is apparently much brighter than that in the
-blueshifted emission, consistent
+blueshifted part, consistent
 with the source positions relative to the caustics in \Fig{model}.
 The red wing emission mainly originates near the cusp
 in the caustic, whereas the blue wing emission is located beyond the caustics.
@@ -604,30 +603,32 @@ We here adopt the maximum {\em observed} velocity
 $V_{\rm rot}$\,=\,345\,$\pm$\,55\,\kms at 6\,$\pm$\,3\,kpc from the
 dynamical center as a proxy to the rotation velocity.
 This radius corresponds to $\sim$0.6$R_e$, where $R_e$ is the half-light
-radius $\sim$10.3\,kpc inferred from the C06 lens model (converted to
-our cosmology) over the {\it HST} $I$-band image.
+radius $\sim$10.3\,kpc inferred from the {\it HST} $I$-band
+lens model (C06; converted to
+our cosmology).
 We note that the source plane half-light radius varies substantially with
-wavelength: $R_e$ $\sim$\,4kpc and $\sim$7\,kpc based on models over
-$V$-band \citep{Brewer08a} and $H$-band (C06), respectively.
+wavelength. In particular, the half-light radius is found to be
+$\sim$\,4kpc and $\sim$7\,kpc in $V$-band
+\citep{Brewer08a} and $H$-band (C06), respectively.
 This discrepancy arises owing to the exclusion of the more
 diffused emission in $V$-band (rest-frame UV),
-which traces recent massive \SF. The may be explained in part
-due to the fact that $V$-band emission is
+which traces young massive stars. 
+The $V$-band compactness may be explained in part
+due to the fact that its emission is
 more susceptible to dust extinction than other bands.
-The fact that the molecular gas (fuel for \SF) is more compact
-than emission in the $I$ and $H$-bands,
-which trace the more evolved stellar population, is consistent
-with the picture that stars diffuse outward
-after formation \citep{Calzetti01a}.
+On the other hand, the molecular gas (fuel for \SF) is more compact
+than the more evolved stellar population, as traced by $I$ and $H$-bands.
+This is consistent with the picture that stars diffuse outward
+after their formation \citep{Calzetti01a}.
 
-Using this $V_{\rm rot}$, we find a dynamical mass of
-$M_{\rm dyn}$\,sin$^2 i$\,($<$\,6\,kpc$)$ = 17\E{10}\,\Msun enclosed
+Using the $V_{\rm rot}$ from last paragraph, we find a dynamical mass of
+$M_{\rm dyn}$\,sin$^2 i$\,($<$\,6\,kpc$)$\,=\,17\E{10}\,\Msun enclosed
 within the CO-emitting region. If we instead consider the
 line peak separation from the
 \bco line profile $\Delta v_{\rm sep}/2 \sim$110\,\kms, we find
 $M_{\rm dyn}$\,sin$^2 i$\,($<$\,6\,kpc$)$ = 1.8\E{10}\,\Msun.
-DR: here, I list the extrema for possible Mdyn given our data,
-should I say anything more?
+{\bf DR: here, I list the extrema for possible Mdyn given our data,
+should I say anything more?}
 We correct for the inclination effect using the
 morphological axial ratio from the reconstructed image (Figure 3 in C06), where
 the minor axis is 1\farcs8 and the major axis is 3\farcs25.
@@ -640,7 +641,7 @@ virialized, which is highly unlikely given the velocity dispersion and the
 presence of a close companion, our estimate is
 at most a lower limit. We caution that this analysis is
 based on limited spatial
-resolution data and will be verified by future higher-resolution
+resolution data and will be verified with future higher-resolution
 observations.
 
 \subsection{SED modeling} \label{sec:SED}
@@ -648,49 +649,35 @@ By fitting a power-law spectrum $S_\nu \propto \nu^\alpha$ to the decomposed
 IRAC photometry. We find a spectral index of $\alpha\sim-$1.9 and
 $\alpha\sim-$0.85 for the lensing galaxy and RXJ1131, respectively.
 This is consistent with the mean spectral slope of optical quasars
-(optically-selected) ($\alpha\sim-$1, Elvis et al. 1994;
-Neugebauer et al. 1979).
+($\alpha\sim-$1, Elvis et al. 1994; Neugebauer et al. 1979).
 For comparison, broad-line AGN from the AGN and Galaxy
-Evolution Survey (AGES, C. S. Kochanek et al., in prep) have 3.6$-$8 \micron slopes of $\alpha$ = $-$1.07$\pm$0.53 (Stern et al. 2005).
-
-
+Evolution Survey (AGES, C. S. Kochanek et al., in prep) have 3.6$-$8
+\micron slopes of $\alpha$ = $-$1.07$\pm$0.53 (Stern et al. 2005).
 
 We extrapolated a power-law to 24 \micron to decompose the flux
 at 24 \micron in MIPS.
 Since the contribution from AGN is not taken into account in SBURT, it is expected that the SEDs of AGN candidates show an excess in the MIR, owing to hot dust around the central massive black hole,
 NIR not corrected for extinction.
 
-
-We fit SED models to the photometry of dust emission in RXJ1131-1231 with a power-law attached to the blue side.
-We include the IRAS 60\micron and 100\micron upper limits to constrain the dust peak.
-We also fit SED models including the decomposed 24.0\micron data (see \Sec{photometry})
-
-Spitzer mid-IR spectroscopy of local ULIRGs will indicate the appropriate luminosity fraction that needs to be assigned to the AGN for ULIRGs before and after nuclear coalescence.
-ULIRG Lir
-Our SED model find a rest-frame characteristic dust temperature of BLAH (cf. 60-70K in the cores of local ULIRGs/SB; Pauzzo+11, Rangwala+10)
-
-
-
-
-We fit modified blackbody functions to
-to constrain the dust temperature, \fir (rest-frame 42.5-122.5 \micron) luminosity, dust mass (For the mass absorption coefficient we adopt
-BLAH (rest frame; Dunne et al. 2003).)
-We added blah\% calibration uncertainties on the PdBI data.
-
-We check convergence of our chains by requiring that the autocorrelation length for each model parameter is
-several times less than the number of steps taken during an initial burn-in stage (which are then discarded).
-The code treats the instrument response.
-flux using the set of photometric filters used to obtain the observations.
-
+% describe the SED model
+We fit SED models to the photometry from BLAH$-$BLAH \micron
+using a modified-blackbody function
+with a power-law attached to the blue side.
+% We added blah\% calibration uncertainties on the PdBI data.
+We include
+the IRAS 60\micron and 100\micron upper limits
+to constrain the dust peak. We also fit SED models
+including the decomposed 24.0\micron data.
 identical to the modified blackbody fit,
 where the Wien side is removed and replaced by MIR power-law consistent with any mid-IR data available.
 We find a power-law slope of BLAH,
 Previous studies find that in the absence of mid-IR data, a powerlaw slope of $\alpha$ = 2 is consistent with SB and slightly more shallow, $\sim$1.5, for SB/AGN composite systems (Blain et al., 2003; Casey, 2012; Koss et al., 2013).
 
-
-% upper limit using decomposed 24 um
-% lower limit using fit without 24 um, but do I still want to fit a power-law for this?
-The best-fit SEDs are shown in \Fig{SED} and the resulting parameters (inferred from the BLAH of the posterior PDF) are listed in \Tab{SED}.
+% describe mbb_emcee
+We check convergence of our chains by requiring that the autocorrelation length for each model parameter is
+several times less than the number of steps taken during an initial burn-in stage (which are then discarded).
+The code treats the instrument response.
+flux using the set of photometric filters used to obtain the observations.
 % parameter estimation problem
 For these parameter estimation problems using MCMC to sample,
 the full answer is the full joint posterior PDF.
@@ -698,8 +685,13 @@ We here report the summary statistics (global mode (where min. chi),
 marginal mode (in log file),
 posterior median (instead of posterior means; need to compute) and the 1$\sigma$ confidence intervals in the marginal PDF) to reflect the PDF shape.
 
-
-
+% upper limit using decomposed 24 um
+% lower limit using fit without 24 um, but do I still want to fit a power-law for this?
+The best-fit SEDs are shown in \Fig{SED} and the resulting parameters (inferred from the BLAH of the posterior PDF) are listed in \Tab{SED}.
+Our SED model find a rest-frame characteristic dust temperature of BLAH
+(cf. 60$-$70\,K in the cores of local ULIRGs/SB; Pauzzo+11, Rangwala+10),
+\fir (rest-frame 42.5-122.5 \micron) of blah, and a dust mass of blah.
+For the mass absorption coefficient, we adopt BLAH (rest frame; Dunne et al. 2003).
 
 
 \begin{figure*}[tbph]
@@ -715,72 +707,71 @@ The data are not corrected for dust extinction.
  \label{fig:SED}}
 \end{figure*}
 
-
-\subsection{Physical properties}
-In this section, we derive the gas properties of RXJ1131 based on \bco,
-and compare the derived quantities against those reported by
-\citet[; hereafter C13]{Combes13a}, which is the largest sample of
-ULIRGs at intermediate redshift (0.6\,$<$\,$z$\,1.0) with CO measurements,
-to place RXJ1131 in context of existing studies. Their results are
-based on \bco and \rot{4}{3} line observations on the IRAM 30-m dish.
-
-%line width & extent
-We find that the linewidths for both components (redshifted and blueshifted)
-inferred from a double Gaussian fit to the \bco line profile are
-consistent with the C13 sample (FWHM of 370\,\kms). Such linewidths are higher
-than in local ULIRGs (240\,\kms; \citet[][]{Solomon97a}).
-Since C13 do not have resolved observations, we compare the
-gas distribution (size) with local ULIRGs. The CO gas in RXJ1131 is
-distributed $\sim$6\,kpc in radius across (in
-the source plane), which is more extended than the
-sample of disk-like ULIRGs studied by \citet{Ueda14a},
-who find an average radius of 3.5\,$\pm$\,2.3\,kpc,
-(with a range from 1.1 kpc to 9.3 kpc).
-This indicates that the positive correlation in the linewidth-size relation
-holds in ULIRGs at intermediate redshifts. Yet we cannot quantify this further
-with the data represented in this paper.
-{\bf implication on this in discussion}
-% gas mass
-To derive the molecular gas mass, we first correct for lensing magnification
-using the respective magnification factors listed in \Tab{model}, which to
-first order takes into account effect of differential lensing. This yields
-$I$\,=\,5.9$\pm$2.7 Jy\,\kms, where the uncertainty includes those on
-the magnification factors. This includes the CO emission from the companion
-as the resolution of our data do not allow us decompose its contribution
-to the total line flux. Without direct \rot{1}{0} measurements,
-we derive \rot{1}{0} intensity
-using a brightness temperature ratio of $r_{\rm 32}$\,=\,1, which was chosen
-solely to facilitate a comparison with the C13 sample. For the same reason, we
-adopt a luminosity-to-mass conversion factor of
-\alphaco\,=0.8 (K \kms pc$^2$)\pmOne. This yields
-\Lp\,=\,(3.47\,$\pm$\,1.58)\E{10}\,\Lsun and a gas mass
-of (2.8$\pm$1.3)\,\E{10} \Msun in RXJ1131. This is likely
-an overestimation due to a contribution from the companion, but is
-nevertheless consistent with C13 ($M_{\rm gas}$\,=\,1.5\E{10}\Msun) within the
-uncertainties. Using the dynamical mass of BLAH (see \Sec{dynamics}), we find
-a gas-to-dynamical mass fraction of $f_{\rm gas-dyn}$\,=\,BLAH.
-% gas to dust ratio:
-Based on the dust mass derived from SED fitting, we find a gas-to-dust ratio of
-$f_{\rm gas-dust}$\,=\,BLAH, consistent with Combes+13: 206 ?
- Typical local (U)LIRGs are found to have a
-gas-to-dust mass ratio of 200–350 (Sanders et al. 1991; Contini
-& Contini 2003; Seaquist et al. 2004; Wilson et al. 2008).
-
-% SFE and depletion time
-
-
-
 \subsubsection{SB versus AGN contribution}
 
 We correct for lensing magnification using the median among our models ($\mu_{\rm L}$=BLAH).
 Assuming a Salpeter initial mass function, we find the SFR of blah using the \fir luminosity after corrected for lensing .
 
-\subsubsection{Gas properties}
-% Gas, dynamical, etc
-Since RXJ1131 has a companion, i.e. not dynamically relaxed, the dynamical mass estimate using a virial estimator is likely underestimated.
 
-\subsubsection{SF and Molecular Gas}
-C06: 814
+\subsection{Gas properties}
+In this section, we derive the gas properties of RXJ1131 based on \bco,
+and compare the derived quantities against those reported by
+\citet[hereafter C13]{Combes13a}, which is the largest sample of
+ULIRGs at intermediate redshift (0.6\,$<$\,$z$\,$<$\,1.0) with CO measurements,
+to place RXJ1131 in context of existing studies. Their results are
+based on \bco and \rot{4}{3} line observations on the IRAM 30-m dish.
+
+\subsubsection{Linewidth \& Sizes}
+We find that the linewidths for both components (redshifted and blueshifted)
+inferred from a double Gaussian fit to the line profile are
+consistent with the C13 sample (FWHM of 370\,\kms). Such linewidths are higher
+than in local ULIRGs (240\,\kms; \citealt[][]{Solomon97a}).
+Since C13 do not have resolved observations, we compare the
+gas distribution (size) with local ULIRGs. The CO gas in RXJ1131 is
+distributed $\sim$6\,kpc in radius across (in
+the source plane), which is more extended than the average in the
+sample of disk-like ULIRGs studied by \citet{Ueda14a},
+who find an average radius of 3.5\,$\pm$\,2.3\,kpc
+(with a range from 1.1 kpc to 9.3 kpc).
+This indicates that the positive correlation in the linewidth-size relation
+holds at intermediate redshifts. Yet we cannot quantify this further
+with the data represented in this paper.
+
+\subsubsection{Gas Mass}
+To derive the molecular gas mass, we first correct for lensing magnification
+using the respective magnification factors listed in \Tab{model}, which to
+first order takes into account effect of differential lensing. This yields
+$I$\,=\,5.9$\pm$2.7 Jy\,\kms, where the uncertainty includes those on
+the magnification factors. 
+We note that the derived intensity includes emission from the companion
+as the spatial resolution of our data do not allow us decompose its contribution
+to the total line flux. 
+
+Without direct \rot{1}{0} measurements,
+we derive \rot{1}{0} intensity
+using a brightness temperature ratio of $r_{\rm 32}$\,=\,1, which was chosen
+solely to facilitate a comparison with the C13 sample. For the same reason, we
+adopt a luminosity-to-mass conversion factor of
+\alphaco\,=\,0.8 (K \kms pc$^2$)\pmOne. This yields
+\Lp\,=\,(3.47\,$\pm$\,1.58)\E{10}\,\Lsun and a gas mass
+of (2.8$\pm$1.3)\,\E{10} \Msun. This is likely
+an overestimation due to a contribution from the companion, but is
+nevertheless consistent with the C13 sample ($M_{\rm gas}$\,=\,1.5\E{10}\Msun) within the
+uncertainties. 
+
+% gas-to-dyn ratio
+Using the dynamical mass of BLAH (see \Sec{dynamics}), we find
+a gas-to-dynamical mass fraction of $f_{\rm gas-dyn}$\,=\,BLAH.
+% gas to dust ratio:
+Based on the dust mass derived from SED fitting, we find a gas-to-dust ratio of
+$f_{\rm gas-dust}$\,=\,BLAH, consistent with Combes+13: 206 ?
+ Typical local (U)LIRGs are found to have a
+gas-to-dust mass ratio of 200$-$350 (Sanders et al. 1991; Contini
+\& Contini 2003; Seaquist et al. 2004; Wilson et al. 2008).
+
+\subsubsection{SFE and Depletion Time}
+dot dot dot
+
 
 %--------------------------------------------------------------------------
 %                                Discussion
