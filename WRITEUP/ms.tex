@@ -247,7 +247,8 @@ the companion. We thus classify RXJ1131 as a ``wet-wet'' merger.
 However, we cannot quantify this with a mass ratio given the
 spatial resolution, nor can we rule out the possibility that
 the ``companion'' is instead a gas component/tidal feature ripped out
-from previous interaction. In the subsequent sections, we will interpret
+from previous interaction.
+In the subsequent sections, we will interpret
 the this additional source component as gas emission
 in a nearby galaxy (i.e. a ``wet-wet'' merger), as suggested by previous studies of RXJ1131.
 
@@ -495,10 +496,15 @@ and C06, who find evidence for an interacting dusty galaxy.
 Spatially, the red velocity component of the CO also coincides with this
 component F. While we cannot quantify the type of
 merger (major v.s. minor) with a mass ratio given the
-spatial resolution, the symmetric velocity gradient lean support
-to the case of a minor merger.
+spatial resolution, the symmetric velocity gradient retained under
+such close separation between the two lean support
+to the idea of a minor merger.
+% For major mergers, two galaxy mass centers separated on the same scale as the
+% gas disk (4 kpc or more), the gas dynamics would be strongly perturbed and
+% would deviate substantially from that of a simple disk.
+% In a minor merger (a mass ratio of more than 3:1) the more massive galaxy, including its gas distribution, can retain a significant angular momentum and resemble a rotating disk.
 
-We emphasize that the spatial resolution of the data at hand
+We emphasize that the spatial resolution of the data in hand
 is a few arcsec, which implies that despite the high SNR and spectral
 resolution, this data is insufficient to constrain the
 intrinsic sizes of the lensed galaxies, and thus the magnification
@@ -612,7 +618,7 @@ $\sim$\,4kpc and $\sim$7\,kpc in $V$-band
 \citep{Brewer08a} and $H$-band (C06), respectively.
 This discrepancy arises owing to the exclusion of the more
 diffused emission in $V$-band (rest-frame UV),
-which traces young massive stars. 
+which traces young massive stars.
 The $V$-band compactness may be explained in part
 due to the fact that its emission is
 more susceptible to dust extinction than other bands.
@@ -683,11 +689,13 @@ For these parameter estimation problems using MCMC to sample,
 the full answer is the full joint posterior PDF.
 We here report the summary statistics (global mode (where min. chi),
 marginal mode (in log file),
-posterior median (instead of posterior means; need to compute) and the 1$\sigma$ confidence intervals in the marginal PDF) to reflect the PDF shape.
+posterior median (instead of posterior means; need to compute) and the
+1$\sigma$ confidence intervals in the marginal PDF) to reflect the PDF shape.
 
 % upper limit using decomposed 24 um
 % lower limit using fit without 24 um, but do I still want to fit a power-law for this?
-The best-fit SEDs are shown in \Fig{SED} and the resulting parameters (inferred from the BLAH of the posterior PDF) are listed in \Tab{SED}.
+The best-fit SEDs are shown in \Fig{SED} and the resulting parameters
+are listed in \Tab{SED}.
 Our SED model find a rest-frame characteristic dust temperature of BLAH
 (cf. 60$-$70\,K in the cores of local ULIRGs/SB; Pauzzo+11, Rangwala+10),
 \fir (rest-frame 42.5-122.5 \micron) of blah, and a dust mass of blah.
@@ -708,9 +716,10 @@ The data are not corrected for dust extinction.
 \end{figure*}
 
 \subsubsection{SB versus AGN contribution}
-
-We correct for lensing magnification using the median among our models ($\mu_{\rm L}$=BLAH).
-Assuming a Salpeter initial mass function, we find the SFR of blah using the \fir luminosity after corrected for lensing .
+To derive the intrinsic properties, we correct for lensing using the 
+median magnification factor derived from the CO lens models.
+Assuming a Salpeter initial mass function, we find the SFR of blah using the 
+lensing-corrected \fir luminosity.
 
 
 \subsection{Gas properties}
@@ -725,9 +734,9 @@ based on \bco and \rot{4}{3} line observations on the IRAM 30-m dish.
 We find that the linewidths for both components (redshifted and blueshifted)
 inferred from a double Gaussian fit to the line profile are
 consistent with the C13 sample (FWHM of 370\,\kms). Such linewidths are higher
-than in local ULIRGs (240\,\kms; \citealt[][]{Solomon97a}).
+than local ULIRGs (240\,\kms; \citealt[][]{Solomon97a}).
 Since C13 do not have resolved observations, we compare the
-gas distribution (size) with local ULIRGs. The CO gas in RXJ1131 is
+gas distribution with local ULIRGs. The CO gas in RXJ1131 is
 distributed $\sim$6\,kpc in radius across (in
 the source plane), which is more extended than the average in the
 sample of disk-like ULIRGs studied by \citet{Ueda14a},
@@ -741,11 +750,11 @@ with the data represented in this paper.
 To derive the molecular gas mass, we first correct for lensing magnification
 using the respective magnification factors listed in \Tab{model}, which to
 first order takes into account effect of differential lensing. This yields
-$I$\,=\,5.9$\pm$2.7 Jy\,\kms, where the uncertainty includes those on
-the magnification factors. 
+$I_{\tiny \bco}$\,=\,5.9$\pm$2.7 Jy\,\kms, where the uncertainty includes those on
+the magnification factors.
 We note that the derived intensity includes emission from the companion
 as the spatial resolution of our data do not allow us decompose its contribution
-to the total line flux. 
+from the total line flux.
 
 Without direct \rot{1}{0} measurements,
 we derive \rot{1}{0} intensity
@@ -757,7 +766,7 @@ adopt a luminosity-to-mass conversion factor of
 of (2.8$\pm$1.3)\,\E{10} \Msun. This is likely
 an overestimation due to a contribution from the companion, but is
 nevertheless consistent with the C13 sample ($M_{\rm gas}$\,=\,1.5\E{10}\Msun) within the
-uncertainties. 
+uncertainties.
 
 % gas-to-dyn ratio
 Using the dynamical mass of BLAH (see \Sec{dynamics}), we find
@@ -777,40 +786,48 @@ dot dot dot
 %                                Discussion
 %--------------------------------------------------------------------------
 \section{Discussion}
-% What are the conclusions of the paper (qualitative and/or quantitative)?
-% What is the evidence for those conclusions?
-
-\subsection{Mass in RXJ1131}
-black hole mass
-dynamical mass
-stellar mass
-dust mass
-
-Assuming local $M_{\rm BH}-M_{\rm bulge}$ relation, this would imply $M_{\rm bulge}$$\sim$BLAH\Msun.
-
-% gas-dyn fraction:
-% can we quantify the merger stage of RXJ1131? what are typical gas fraction at different merger stage. What are the alpha CO used in those (0.8, see Uedaa14)
-% since ellipticals are not expected to have high gas fraction. The fact that there are on-going, recent, massive episodes of SF activity, the velocity gradient, and the best-fit sersic profile from C06 all support the picture that RXJ is a disk galaxy.
-
 \subsection{Merger stage of RXJ1131-1231}
-We put our results in content with ULIRGs/mergers in $z$=0$-$1.
+In this section, we put our results in context with other ULIRGs/mergers at
+$z$\,=\,0$-$1. It is clear that RXJ1131 has a gas-rich companion, but how does
+this affect its internal dynamics and what is the merger stage of RXJ1131?
+We argued that the symmetric source-plane velocity field suggest
+the system is a minor merger, consistent with an earlier study by B08, who
+independently conclude that the companion is likely
+a dwarf of size $\sim$700\,kpc across.
+While our result is consistent with previous studies of RXJ1131, this
+contrast strongly with studies of mergers, where powerful AGN are
+usually found in late stage mergers (Yuan+10, Iwasawa+11) and
+that only major mergers near their final
+coalescence can power/provide \LIR\,$>$\,10$^{12}$\,\Lsun, based on
+a recent study of a sample of 65 local U/LIRGs
+(\LIR\,=\,10$^{11-12.5}$\,\Lsun; $z$\,$<$\,0.1; Larson+16).
+If this is also the case at $z$$\sim$0.65, this would imply RXJ1131
+is a major merger near its final coalescence and that the spatially offset
+component is an expulsion of gas driven by AGN winds or is some
+tidally ejected material from previous passage.
+In that case, the molecular gas fraction in the host
+galaxy should have declined (as in ellipticals) compared to early
+stage mergers (can we find molecular gas mass fraction as a
+function of merger stage?) and that the molecular gas would
+be more concentrated in the nuclear region.
+This is inconsistent with what
+is observed (which strongly favors a disk morphology; 
+but there are outliers --  Ueda+14 find
+extended molecular gas in merger remnant) and
+the fact that there is on-going \SF activity.
+Hence, we reject this and speculate the discrepancy is a consequence
+of (the power source of) IR luminous galaxies are already very different by this redshift.
+An alternative explanation might be that the
+CO is less strongly-magnified as compared to the dust emission,
+in which case, the lensing-corrected \LFIR is overestimated.
+This is plausible given the extent of the source with respect to the caustics
+and that substantial differential lensing effect has been seen across CO and other
+wavelengths. If we instead use the NIR ($H$-band) magnification factor ($\mu_{\rm L}$\,=\,BLAH; C06), 
+we find \LFIR\,=\,BLAH. This would imply that RXJ1131 is consistent with a minor
+merger in the context of the results reported by Larson+16.
 
-As discussion in previous sections, while we see evidence such as a symmetric velocity field in the source plane, double-horned profile, observed velocity
-gradient, C06 model $n$=1 Sersic profile, which suggest that RXJ1131 is likely a rotating disc. Yet, this is insufficient to conclude a disk morphology. Additional characteristics such as peak velocity dispersion at the central region and a ``spider'' diagram are needed, which is commonly seen in local spirals.
-\\
-
-Kinematics and mergers:
-For major mergers, two galaxy mass centers separated on the same scale as the gas disk (4 kpc or more), the gas dynamics would be strongly perturbed and would deviate substantially from that of a simple disk.
-
-In a minor merger (a mass ratio of more than 3:1) the more massive galaxy, including its gas distribution, can retain a significant angular momentum and resemble a rotating disk.
-
-RXJ kinematics:
-The smooth, symmetric velocity field seen in our lens model and image plane
-suggest a kinematically-order (i.e., disk) galaxy. However, the high
-dispersion near the dynamical center suggest that RXJ1131 is turbulent, albeit
-lack of spatial resolution. Overall implies RXJ1131 is a minor merger of a turbulent disc, but higher-resolution data are needed to confirm this.
-Although these values are discussed in \Sec{blah} we cannot draw any general conclusions concerning BLAH.
-
+\subsubsection{Fate of RXJ1131-1231}
+Has RXJ1131 encountered with the companion?
 
 Mergers are observable for 0.2-0.4 Gyr,
 between 2nd passage and coalescence.
@@ -818,28 +835,37 @@ Kinematic asymmetries follow morphological asymmetries during
 mergers. Mergers are kinematically detectable for 0.2-0.4 Gyr
 between second passage and coalescence.
 
+Numerical simulations of mergers have shown that
+multiple starburst episodes can be triggered even in double mergers.
+The timing of the starbursts is thought to depend on the progenitor galaxy
+morphologies, with early starbursts (before the galaxies start to merge)
+occurring in bulges disc galaxies, and late starbursts (after the galaxies
+have started to merge) occurring in disc galaxies with a bulge component (Mihos \& Hernquist 1994, 1996.
+The spinning black hole already encountered?
 
-Numerical simulations of mergers between two galaxies have shown that multiple, discrete starburst events can be triggered even in double mergers. The timing of the starbursts is thought to depend on the progenitor galaxy morphologies, with early starbursts (before the galaxies start to merge) occurring in bulges disc galaxies, and late starbursts (after the galaxies have started to merge) occur- ring in disc galaxies with a bulge component (Mihos \& Hernquist 1994, 1996.
-Maybe the more compact rest-frame SF and the more recent NIR SF, which is also more extended and diffuse is consistent with the spinning black hole, i.e.
-already encountered?
+The future of RXJ1131:
+classical picture is that merger will evolve into local ellipticals, but more
+recent studies (springel \& Hernquist 05, cite) suggest that mergers can also
+form local large-disks (bulge dominated) $<--$ double check this. Given the
+extended molecular gas distribution, we suggest RXJ1131 may evolve into the
+latter (large-disk) unless the ``companion'' BKAH SOME STUFF or some other
+mechanisms at play in the latter stage, transporting the gas
+toward the central nuclear region.
 
+\subsection{ULIRG Evolution and Cosmic SFH}
+At low redshifts, the luminosity function of ULIRG shows strong evolution with
+redshift (Veilleux et al. 1999). It is not known whether the IR luminosity of
+these high-$z$ sources arises due to mergers between two or more large spiral
+galaxies, as in local ULIRGs, or via a different mechanism/galaxy formation
+processes at high-z.
 
+% AGN contribution.
 
-% ------------------------------------------------------------------------
-% How do these results relate to prior work?
-% What are the implications of this work – i.e. what theories are being tested/questions are being answered etc?
-
-
-% summarize (conflicting ) results from recent studies.
-% lead way into our results
-
-\subsection{ULIRG Evolution}
-At low redshifts the ULIRG luminosity function shows strong evolution with redshift (Veilleux et al. 1999).
-not known whether the IR luminosity of these high- redshift sources arises due to mergers between two or more large spiral galaxies, as in local ULIRGs, or via a different mechanism/galaxy formation processes at high-z.
-
-gas fraction at this redshift. how does that relate to
-the SFH, and the change in cosmic SFD is due to change in gas content.
-SFE at this redshift, how does that relate to the SFH. probably a secondary effect to the drop in SFH
+% Implication on SFH
+Our result indicates that the gas mass fraction has already decreased
+at this redshift, which may suggest that the change in cosmic SFD is due to
+change in gas content. The SFE is also BLAH at this redshift,
+consistent with current speculation of how the SFRD decreases over cosmic time.
 
 %--------------------------------------------------------------------------
 %                                Conclusions
@@ -856,16 +882,23 @@ toward the AGN host galaxy RXJ1131 at $z_{\rm CO}$\,$\sim$0.65.
 Our results suggest that RXJ1131 is a wet-wet merger between a AGN/starburst
 ULIRG and a optically faint companion.
 
-
 Fitting SED models, we find that the AGN host galaxy is a ULIRG.
 A faint companion as seen in HST observations (BJB) is also detected in our CO, confirming it's redshift and gas rich nature.
 
-
-
 % any further work needed to resolve the remaining problems
-
-
-
+We list several pieces of evidence through out
+this work to argue that RXJ1131 is likely a rotating disk.
+The double-horned profile, smooth, symmetric velocity field
+seen in our lens model and in the
+image plane and C06 model $n$=1 Sersic profile all suggest
+a kinematically-order (i.e., disk) galaxy.
+Yet, these are insufficient to conclude a disk morphology. Additional
+characteristics such as peak velocity dispersion at the central region and a
+``spider'' diagram are needed, which is commonly seen in local spirals.
+The high dispersion near the dynamical center also
+suggest that RXJ1131 is turbulent, albeit lack of spatial resolution. Overall
+implies RXJ1131 is a minor merger of a turbulent disc, but higher-resolution
+data are needed to confirm this.
 
 %==============================================================================
 %                                Back matters
