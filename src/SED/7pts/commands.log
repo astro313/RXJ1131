@@ -3,7 +3,11 @@
 
 don't fix any parameters, prior on beta, Temp
 ================================================================
-Parameters: f_norm, T, alpha, lambda_0, beta
->>> mbb_emcee --initT 27.21 --upT 80 -b 100 -t 3 --initBeta 1.5 --priorBeta 1.9 0.5 --upLambda0 1500 --get_peaklambda --get_lir --lir_range 42.5 122.5  -v -z 0.6537 -p ./ --response --get_dustmass Contdata_7pts.txt thickPower_priorBeta_limT.h5 > thickPower_priorBeta_limT.log
+Parameters: f_norm, T (obs frame), alpha, lambda_0 (obs frame), beta
+>>> mbb_emcee --initT 27.21 --upT 80 -b 100 -t 3 --initBeta 1.5 --priorBeta 1.9 0.5 --upLambda0 1000 --get_peaklambda --get_lir --lir_range 42.5 122.5  -v -z 0.6537 -p ./ --response --get_dustmass Contdata_7pts.txt thickPower_priorBeta_limT.h5 > thickPower_priorBeta_limT.log
 
 
+# no power law
+================================================================
+Parameters: f_norm, T (obs frame), lambda_0 (obs frame), beta
+>>> mbb_emcee --initT 27.21 --upT 80 -b 100 -t 3 --initBeta 1.5 --priorBeta 1.9 0.5 --upLambda0 1000 --get_peaklambda --get_lir --lir_range 42.5 122.5 --noalpha -v -z 0.6537 -p ./ --response --get_dustmass Contdata_7pts.txt thickPower_priorBeta_limT_noPower.h5 > thickPower_priorBeta_limT_noPower.log
