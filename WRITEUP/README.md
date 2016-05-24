@@ -1,6 +1,5 @@
 
 # HST photometry:
-- on NED
 - or Claeskens+06
 
 # IR photometry
@@ -70,11 +69,14 @@
 
 
 ### PdBI data
-- natural weighting beam size: 4.44 x 1.95, PA 13deg
-
 ### Not PB corrected
 ### see 10Nov15/README.md:
 #### continuum
+- averaged over chan 1 120 165 360
+- number of channels = 316
+- sigma = 1.451 mJy/B / sqrt(316) = 0.081625 mJy/B
+- go noise on map (whole map) after cleaning: 89.274 uJy/B
+- F = 1.2 mJy (integrated spatially, from ~ 1 sigma contour; 150 pixels)
 1. logfile: CASA2Dfit_region1.log
    * 2D fit
    * region1
@@ -87,16 +89,17 @@
        * deconvolved source size (N/A)
 2. imstat()
    - region1
-   - **continuum: 1.130 mJy**; # of pixels = 277
+   - continuum: 1.130 mJy, over 277 px
    - max value = 799.269 µJy/beam
 
 #### CO(2-1)
 ##### Continuum-subtracted
 CO (2-1) velocity ranges used for different purpose:
 - line flux Intensity: 124-156
-- moment 0 map: 127-155
+- moment 0 map: 127-155 (deprecated as of 15May16)
+  + --> use chan 126-160 (highest SNR)
 - RGB: 126-160
-- RedBlue: 134-150
+- RedBlue: 126-160 (17May16)
 
 # See 14Oct15/README.md (Deprecated)
 - cell size =0.5"
@@ -109,28 +112,49 @@ CO (2-1) velocity ranges used for different purpose:
 - sigma_I (spatially integrated) = 176.6 * 2.5 = 441.5 mJy km/s << wrong, because *region* is >2.5 beams, altho source is resovled over ~2.2 beams
 
 # updated, see 15May16/README.md
-- based on moment 0 map based with channel range [124, 156]
-- updated CO21 I = 24.14 +/- 0.62 Jy kms
+- made moment 0 map with channel range [124, 156] (deprecated because this gives highest flux, but not highest SNR, 126-160 has highest SNR)
+
+- updated CO21 I = 24.14 +/- 0.62 Jy kms, but report 2.44 Jy km/s
+  - chan: 124-156, most flux
 - sigma_ch: same as above
 - velocity resolution per bin: same as above
-- region ~ 13 beams
-- sigma_I = 1.451 * sqrt(156-124+1) * 21.5 * 13 beam = 2.33 Jy km/s/beam
-- peak flux from moment 0 map = 7.23 +/- 0.46 Jy km/s /Beam
+- intensity region ~ 13 beams
+- sigma_I = 1.451 * sqrt(156-124+1) * 21.5 * 13 beam = 2.33 Jy km/s
+- peak flux from moment 0 map = 7.23 +/- 0.46 Jy km/s /Beam (Deprecated)
 - source size, deconvolved from beam: 5.1"+/-0.72" x 3.72"+/-0.66", PA: 158+/-23
 - this corresponds to 85.5 px
 --> resolved over ~2.2 beams
 - note that our source is not quite like a 2D gaussian, but since it recovers the intensity from region, it's probably a good enough estimate for source size
 
+22 May 2016:
+- derive intrinsic line flux from 24.14
+  + sum up flux in chan 124-156, but divided by magnification
+  + 124-156 <-> -258.3, 430.6 km/s (z=0 frame)
+  + see 22May16/
+  + assume same magnification factor as 126-130 for channel 125
+  + for 126-160: magnification factor = average between the source 1 and source 2, since we can't separate them and we have to include emission from source 2 anyway
+  + assume no mag. factor for channel 124 (suggested by channel map)
+  + CO21 I intrinsic = sum up all flux * 21.528 * (1+z) = 5.919 Jy km/s
+  + for uncertainty, assuming overall uncertainty with all the magnification factors ~ sum(unc. on each**2)/5 = 1.43, where I am only using error from 126-155 and assuming they contribute to the intrinsic I calculation equally (which is not true beucase some channel 125 uses magnification factor from 126-130)
+  + then the final uncertainty on the intrinsic I CO 21 = sqrt(1.43^2 + 2.3^2)
+
 # 0th moment map (all channels):
-- 14Oct15/mom0.fits
+- 15May16/centralizedCube4GILDAS-CASA_ch126-160_mom0.fits
+- highest SNR: 
+  + CASA chan=125~159 <=> GILDAS 126-160 <=> python 125-160
+- no clipping
+- sigma = 0.305 Jy km/s/Beam
+  - note that theoretical sigma is lower = 1.5 * sqrt(160-126+1) * 21.5 ~ 0.2 Jy km/s /beam
+  - due to higher noise in some channels with emission
+
+- 14Oct15/mom0.fits (Deprecated because noise properties is messed up)
 - Range By eye in go view:
   - chan: 155, 127
   - vel: -530.33, 72.73 (z=0 obs. frame)
 - no clipping
-- 0th moments
 - 14Oct15/README.md
 
--0th moment RGB:
+-0th moment RGB: (Deprecated)
 - see 12Nov15/README.md
 - blue: channel [160, 146]; velocity [-651.90, -342.664]
 Noise:
@@ -142,29 +166,44 @@ Map Noise:
     calculate:
 - red: channel [126, 140]; velocity [75.81, -220.335]
 
--1st, 2nd moments (clipped @ 5sigma):
+# 1st, 2nd moments (clipped):
 - see 26Dec15/README.md & 30Apr16/README.md
 
 
 ### CARMA data, combined D2, D3
 #### ~1.4mm Continuum
-- @ spatial position of CO emission is burried in noise - 2.2 +/- 3.0 mJy
+- spatial position of CO emission is burried in noise - 2.2 +/- 3.0 mJy
+- consistent with the Gaussian + poly fit to the spectrum where continuum: 2.2 $\pm$ 3.0 mJy.
+- line free channels:1, 118, 160, 600
+- nchan =(117+600-160+1) = 558
+- sigma =  0.83 mJy/B
 - **upper limit: line-free channels mfs image rms = 8.30807E-04 Jy/B**
 
 #### CO (3-2):
 - natural weighting beam size: **3.19 x 1.86 PA: 8 deg**
 - **channel width = 2x17.935 = 35.87 km/s**
 - Theoretical rms noise: 8.834E-03 Jy/B per channel
-- map off region rms: 1.31957E-02 Jy/B per channel (before clean);  1.32997E-02 Jy/B per channel (after clean)
+- map off region rms: 13.1957 mJy/B per channel (before clean);  1.32997E-02 Jy/B per channel (after clean)
 - image cubes: /Users/admin/Research/RXJ1131/CARMA/imagingD23/
 - Line intensity FWZI from Gauss Fit = sqrt(2*pi)*a*c = **37.509 Jy km/s**, see /Users/admin/Research/RXJ1131/CARMA/imagingD23/GILDAS/Gaussfit_bin2.greg
 - ~ chan [49,70]
 
 ##### Intensity from summing up fluxes within velo range guided by CO21
-see CARMA/specOPlot/README.md
-- I = 37.1 Jy km/s 
-- in 21 channels [49, 69]
+- I = 35.7 Jy km/s from `go view`
+- Update channel range to be consistent with the velocity range used to get the new CO21 Intensity (124-156)
+- --> integrated over velocity width ~ 710 km/s
+- Channel:     48-68
+- velocity:   -441.57, 278.79
+- I_sigma: see below
+
+see CARMA/specOPlot/README.md (Deprecated)
+- I = 37.1 Jy km/s from `go view`
+- in 21 channels [49, 69] 
 - velocity [-430.94, 305.26] km/s
+- vertices of polygon (Xi, Yi) = (133,150), (118,138), (122,104), (153, 114), (150,141)
+- CASA region file of the above polygon: Flux_CO32_37.2Jy_region.txt
+- pts area within region = 1159 px
+- # of pix in a beam = 112.867 PX
 - --> # of beams ~ 10
-- Isigma ~ 13.3 mJy/B/channel * 21 channels * 10 beams ~ 2.793 Jy km/s
+- Isigma ~ 13.3 mJy/B/channel * np.sqrt(21) channels * 35.87 km/s * 10 beams ~ 21.8621 Jy km/s
 
