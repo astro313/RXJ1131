@@ -379,15 +379,30 @@ with the \ncode{imexam} routine of IRAF.
 We perform aperture photometry on the residual image
 to obtain decomposed flux measurements from the background galaxy.
 The photometries for the foreground galaxy are then obtained
-by subtracting the fluxes decomposed for the background source
-from the observed total flux. The resulting photometry in
+by subtracting the background emission from the
+observed total flux. The resulting photometry in
 \Tab{photometry} are obtained after performing aperture correction
 described in the IRAC Instrument Handbook\footnote{http://irsa.ipac.caltech.edu/data/SPITZER/docs/irac/iracinstrumenthandbook/} to
 correct for the fact that the imaging was calibrated
 using a 12" aperture, which is bigger than the aperture (5\farcs8) we used to
-perform aperture photometry. This step was taken to provide
-constraints on the Wien tail beyond the dust peak of the
-spectral energy distribution (SED) of RXJ1131.
+perform aperture photometry.
+We then fit a power-law spectrum $S_\nu \propto \nu^\alpha$ to the
+decomposed IRAC photometry to disentangle the observed total flux
+at MIPS 24\micron. We find a spectral index of $\alpha\sim-$1.8 and
+$\alpha\sim-$0.85 for the lensing galaxy and RXJ1131, respectively.
+This is consistent with the mean 3.6$-$8\micron spectral slope of
+$\alpha$\,=\,$-$1.07$\pm$0.53 found for unobscured AGN
+\citep{Stern05a}. An extrapolation of the fit to 24\micron
+yields 33.96$\pm$0.01\,mJy and 25.19\,$\pm$\,0.03\,mJy
+for the foreground galaxy and RXJ1131, respectively.
+We note that the IRAC photometry includes
+contributions from old stellar population and is prone to
+dust extinction. Hence, the decomposed fluxes are only
+our best estimate of the warm dust emission.
+We incorporate the decomposed 24\micron point in our
+SED fitting to provide some constraints on
+the Wien tail beyond the dust peak
+of the spectral energy distribution (SED) of RXJ1131.
 Details of the SED modeling is presented in \Sec{SED}.
 
 Extraction of the {\it Herschel}/SPIRE photometry was
@@ -443,14 +458,12 @@ radius, the axial ratio, and the position angle. The position of each source
 is allowed to vary between $\pm$1\farcs5 (i.e., within the Einstein Radius)
 and the effective radius is allowed to vary from 0\farcs01$-$2$^{\prime\prime}$.
 
-% Check with Shane
-{\bf NEEDS EDIT}
 Our code uses an Markov Chain Monte Carlo (MCMC) approach to sample the
 posterior probability distribution function (PDF).
 In each model, we require a target acceptance rate of $\sim$0.25$-$0.5
-and check for chain convergence by inspecting the trace plots
-AND BLAH to verify we are sampling beyond an autocorrelation time.
-We employ $\sim$50,000 samples as the initial ``burn-in'' stage
+and check for chain convergence by inspecting trace plots
+and requiring the samples are beyond at least an autocorrelation time.
+We thus employ $\sim$50,000 samples as the initial ``burn-in'' phase
 to stabilize the Markov chains (which we then discard) and
 use the final $\sim$5,000 steps, sampled by 128 walkers, to identify
 the posterior. Here, we
@@ -589,7 +602,7 @@ Dashed line shows the best-fit rotation curve using an arctangent model.
 The vertical error bars show the channel width for
 each model and the horizontal error bars are the
 1$\sigma$ uncertainties on the source plane positions.
-DR may suggest include MC simulation fits, maybe I will do that later.
+DR may suggest include 68\& fits from MC simulation, maybe I will do that later.
  \label{fig:PV}}
 \end{figure}
 
@@ -651,39 +664,27 @@ resolution data and will be verified with future higher-resolution
 observations.
 
 \subsection{SED modeling} \label{sec:SED}
-By fitting a power-law spectrum $S_\nu \propto \nu^\alpha$ to the decomposed
-IRAC photometry. We find a spectral index of $\alpha\sim-$1.9 and
-$\alpha\sim-$0.85 for the lensing galaxy and RXJ1131, respectively.
-This is consistent with the mean spectral slope of optical quasars
-($\alpha\sim-$1, Elvis et al. 1994; Neugebauer et al. 1979).
-For comparison, broad-line AGN from the AGN and Galaxy
-Evolution Survey (AGES, C. S. Kochanek et al., in prep) have 3.6$-$8
-\micron slopes of $\alpha$ = $-$1.07$\pm$0.53 (Stern et al. 2005).
+We fit dust SED models to the
+24\micron$-$2.2\,mm photometry in \Tab{photometry}, where we also
+include the IRAS 60\micron and 100\micron upper limits
+to constrain the dust peak.
+The fit is performed with the code
+\ncode{mbb\_emcee} \citep[\eg][]{Dowell14a}, which
+uses instrumental response curves to perform color correction on-the-fly.
+The first SED model is a modified-blackbody
+function with a power-law attached to the
+blue/Wien side to account for an excess in the MIR owing to warm dust emission.
+%We add $\sim$15\% calibration uncertainties in quadrature to obtain the total
+%uncertainties for the PdBI continuum in our fitting procedure.
 
-We extrapolated a power-law to 24 \micron to decompose the flux
-at 24 \micron in MIPS.
-Since the contribution from AGN is not taken into account in SBURT, it is expected that the SEDs of AGN candidates show an excess in the MIR, owing to hot dust around the central massive black hole,
-NIR not corrected for extinction.
 
-% describe the SED model
-We fit SED models to the photometry from BLAH$-$BLAH \micron
-using a modified-blackbody function
-with a power-law attached to the blue side.
-% We added blah\% calibration uncertainties on the PdBI data.
-We include
-the IRAS 60\micron and 100\micron upper limits
-to constrain the dust peak. We also fit SED models
-including the decomposed 24.0\micron data.
-identical to the modified blackbody fit,
-where the Wien side is removed and replaced by MIR power-law consistent with any mid-IR data available.
+
 We find a power-law slope of BLAH,
-Previous studies find that in the absence of mid-IR data, a powerlaw slope of $\alpha$ = 2 is consistent with SB and slightly more shallow, $\sim$1.5, for SB/AGN composite systems (Blain et al., 2003; Casey, 2012; Koss et al., 2013).
 
 % describe mbb_emcee
-We check convergence of our chains by requiring that the autocorrelation length for each model parameter is
-several times less than the number of steps taken during an initial burn-in stage (which are then discarded).
-The code treats the instrument response.
-flux using the set of photometric filters used to obtain the observations.
+We check for chain convergence by requiring the autocorrelation
+length for each model parameter is less than the number of steps
+taken during the burn-in phase (which are then discarded).
 % parameter estimation problem
 For these parameter estimation problems using MCMC to sample,
 the full answer is the full joint posterior PDF.
@@ -700,22 +701,37 @@ Our SED model find a rest-frame characteristic dust temperature of BLAH
 (cf. 60$-$70\,K in the cores of local ULIRGs/SB; Pauzzo+11, Rangwala+10),
 \fir (rest-frame 42.5-122.5 \micron) of blah, and a dust mass of blah.
 For the mass absorption coefficient, we adopt BLAH (rest frame; Dunne et al. 2003).
+Previous studies find that in the absence of mid-IR data, a powerlaw slope of $\alpha$ = 2 is consistent with SB and slightly more shallow, $\sim$1.5, for SB/AGN composite systems (Blain et al., 2003; Casey, 2012; Koss et al., 2013).
+
+We also fit an SED model excluding the decomposed 24.0\micron data.
+
+
 
 
 \begin{figure*}[tbph]
 \centering
 \includegraphics[width=0.8\textwidth]{../Figures/FullSED.eps}
 \caption{
-WISE flux is higher than the IRAC data, probably just due to smaller aperture used in IRAC.
-Spitzer IRAC: Aperture flux in 5\farcs diameter with aperture correction applied.
+WISE flux is slightly higher than the IRAC point, probably due to a smaller
+aperture used in IRAC extraction, both of which were taken from the archive.
+Spitzer IRAC:
+Aperture flux in 5\farcs diameter with aperture correction applied.
 Spitzer/MIPS: PSF fit flux, as source size <
 native PSF FWHM of 6".
 Might want to add NVSS constraints.
 The data are not corrected for dust extinction.
- \label{fig:SED}}
+\label{fig:SED}}
 \end{figure*}
 
 \subsubsection{SB versus AGN contribution}
+% brief argument
+What does it imply to the dust properties if we see the QSO.. contribution to the hot dust is not as much as if we were viewing it edge-on? --> warm dust and cold dust.
+
+We quantify the AGN contribution to total IR.
+important how the power source differ from high-z or local.
+
+
+
 To derive the intrinsic properties, we correct for lensing using the
 median magnification factor derived from the CO lens models.
 Assuming a Salpeter initial mass function, we find the SFR of blah using the
