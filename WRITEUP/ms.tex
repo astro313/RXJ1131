@@ -2,6 +2,11 @@
 \usepackage{amsmath}
 \input{preamble}
 \slugcomment{To be submitted to the ApJ}
+ \makeatletter
+% \renewcommand\normalsize{\@setfontsize\normalsize\@xpt{11.56}}
+\renewcommand\normalsize{\@setfontsize\normalsize{10.56}{11.4}}
+\makeatother
+
 
 \citestyle{aa}
 \shorttitle{Molecular Gas in the Lensed Wet-Merger RXJ1131 at $z$\,=\,0.65}
@@ -14,6 +19,7 @@
 \author{T. K. Daisy Leung and Dominik A. Riechers}
 \affil{Department of Astronomy, Space Sciences Building, Cornell University,
 Ithaca, NY 14853, USA; \myemail}
+
 %==============================================================================
 %                                Front matters
 %==============================================================================
@@ -772,19 +778,23 @@ from the CO lens models. This yields a \LFIR of $($6.9\pmm3.6$)$\E{11}\,\Lsun.
 Assuming a Salpeter initial
 mass function \citep{Salpeter55a}, we find a
 SFR of (120\pmm63)\,\Msun\,yr\pmOne using the
-standard conversion \citep{Kennicutt98a}. 
-In the following section, we compare the properties of RXJ1131 
+standard conversion \citep{Kennicutt98a}.
+To place RXJ1131 in context of existing studies,
+we compare its properties
 with those reported by C13, which is the largest sample of
-ULIRGs at similar redshift (0.6\,$<$\,$z$\,$<$\,1.0) with CO measurements,
-to place RXJ1131 in context of existing studies.  
-Since C13 adopt a different definition of 
-\LFIR (40$-$500\micron)\footnote{We also note that the \fir luminosity in C13 is derived 
-based on 60\,$\micron$ and 100\,$\micron$ IRAS fluxes.}, we derive the \fir luminosity
-following this convention.
-This yields \LFIR of $($8.8\pmm0.4$)$\E{11}$(\mu_{\rm L}$/5.5$)$\,\Lsun and 
-a SFR of $($150\pmm 70$)$\,\sfrU. 
-This implies RXJ1131 is considered a LIRG in regards to their sample, and consequently, 
-the SFR of RXJ1131 is lower than the C13 sample (SFR $>$ 200, with an average of 1200).
+IR-luminous galaxy at similar redshift
+(0.6\,$<$\,$z$\,$<$\,1.0) with CO measurements.
+Since C13 adopt a different definition of
+\LFIR (40$-$500\micron)\footnote{We also note that the
+\fir luminosity in C13 is derived
+based on 60\,$\micron$ and 100\,$\micron$ IRAS fluxes.},
+we derive the \fir luminosity following this convention.
+This yields \LFIR of $($8.8\pmm0.4$)$\E{11}$(\mu_{\rm L}$/5.5$)$\,\Lsun and
+a SFR of $($150\pmm 70$)$\,\sfrU.
+This implies RXJ1131 is considered a LIRG in regards to their
+sample, and consequently,
+the SFR of RXJ1131 is lower than that of the C13 sample
+(SFR\,$>$\,200, with an average of 1200).
 
 \subsection{Gas properties} \label{sec:properties}
 In this section, we derive the gas properties of RXJ1131 based on \bco,
@@ -803,9 +813,10 @@ the source plane), which is more extended than the average in the
 sample of disk-like ULIRGs studied by \citet{Ueda14a},
 who find an average radius of 3.5\,$\pm$\,2.3\,kpc
 (with a range from 1.1 kpc to 9.3 kpc).
-This indicates that the positive correlation in the linewidth-size relation
-holds at intermediate redshifts. Yet we cannot quantify this further
-with the data represented in this paper.
+% This also indicates that the positive correlation
+% in the linewidth-size relation
+% holds at intermediate redshifts. Yet we cannot quantify this further
+% with the data represented in this paper.
 
 \subsubsection{Gas Mass}
 To derive the molecular gas mass, we first correct for lensing magnification
@@ -825,7 +836,7 @@ adopt a luminosity-to-mass conversion factor of
 \alphaco\,=\,0.8 (K \kms pc$^2$)\pmOne. This yields
 \Lp\,=\,(3.47\,$\pm$\,1.58)\E{10}\,\Lsun and a gas mass
 of (2.8$\pm$1.3)\,\E{10} \Msun. This is likely
-an overestimation due to a contribution from the companion, but 
+an overestimation due to a contribution from the companion, but
 comparable to the C13 sample ($M_{\rm gas}$\,=\,1.5\E{10}\Msun) within the
 uncertainties.
 
@@ -834,10 +845,9 @@ Using the dynamical mass of BLAH (see \Sec{dynamics}), we find
 a gas-to-dynamical mass fraction of $f_{\rm gas-dyn}$\,=\,BLAH.
 % gas to dust ratio:
 Based on the dust mass derived from SED fitting, we find a gas-to-dust ratio of
-$f_{\rm gas-dust}$\,=\,70\petm{blah}{blah}, consistent with Combes+13: 206 ?
-% Typical local (U)LIRGs are found to have a
-%gas-to-dust mass ratio of 200$-$350 (Sanders et al. 1991; Contini
-%\& Contini 2003; Seaquist et al. 2004; Wilson et al. 2008).
+$f_{\rm gas-dust}$\,=\,70\petm{blah}{blah}, which is consistent lower than C13
+(who finds 206) sample as well as those of local (U)LIRGs
+(200$-$350; Sanders et al. 1991; Contini \& Contini 2003; Seaquist et al. 2004; Wilson et al. 2008).
 
 \subsubsection{SFE and Depletion Time}
 dot dot dot
