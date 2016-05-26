@@ -740,7 +740,9 @@ Thus, the \fir luminosity in
 this model should, in principle, corresponds to a
 lower limit on the cold dust emission.
 Using the best-fit parameters
-for this model, we find a  \LFIR of 4.72\petm{2.54}{2.26}\E{12}\,\Lsun and a $M_{\rm dust}$ of 11\petm{5}{6}\E{8}\,\Msun.
+for this model, we find a total IR luminosity
+\LIR (rest-frame 1\,$-$\,1000\,\micron) of 10.28\petm{1.89}{1.97}\E{12}\,\Lsun,
+\LFIR of 4.72\petm{2.54}{2.26}\E{12}\,\Lsun and a $M_{\rm dust}$ of 11\petm{5}{6}\E{8}\,\Msun.
 Again, the inferred quantities are uncorrected for lensing.
 %The best-fit SEDs are shown in \Fig{SED} and the
 % resulting parameters are listed in \Tab{SED}.
@@ -761,19 +763,19 @@ should be considered as an estimate.
 \begin{figure*}[!htbp]
 \centering
 \includegraphics[width=0.8\textwidth]{../Figures/FullSED.eps}
-\caption{SED model fits to the dust photometry of RXJ1131.
+\caption{SED models of the IR dust emission toward RXJ1131.
+The data are not corrected for lensing magnification and dust extinction.
 WISE flux is slightly higher than the IRAC point, probably due to a smaller
-aperture used in IRAC extraction, both of which were taken from the archive.
-Spitzer IRAC:
-Aperture flux in 5\farcs diameter with aperture correction applied.
-Spitzer/MIPS: PSF fit flux, as source size <
-native PSF FWHM of 6".
+aperture used in IRAC extraction,
+both of which were taken from the archive.
+IRAC: Aperture flux in 5\farcs diameter.
+MIPS: use PSF fit flux from archive as source size $<$ PSF FWHM of 6$^{\prime\prime}$.
 Might want to add NVSS constraints.
-The data are not corrected for dust extinction.
 \label{fig:SED}}
 \end{figure*}
 
-We correct for lensing using the median magnification factor $(\mu_{\rm L}\eq5.5)$
+We correct for lensing using the median magnification
+factor $(\mu_{\rm L}\eq5.5)$
 from the CO lens models. This yields a \LFIR of $($6.9\pmm3.6$)$\E{11}\,\Lsun.
 Assuming a Salpeter initial
 mass function \citep{Salpeter55a}, we find a
@@ -791,20 +793,24 @@ based on 60\,$\micron$ and 100\,$\micron$ IRAS fluxes.},
 we derive the \fir luminosity following this convention.
 This yields \LFIR of $($8.8\pmm0.4$)$\E{11}$(\mu_{\rm L}$/5.5$)$\,\Lsun and
 a SFR of $($150\pmm 70$)$\,\sfrU.
-This implies RXJ1131 is considered a LIRG in regards to their
-sample, and consequently,
-the SFR of RXJ1131 is lower than that of the C13 sample
-(SFR\,$>$\,200, with an average of 1200).
+This implies that RXJ1131 is considered a LIRG in regard to their
+sample, and consequently, the SFR of RXJ1131 is lower
+(cf. SFR\,$>$\,200, with an average of 1200). If we instead adopt the
+more generally adopted total IR luminosity
+classification (\LIR\,$>$\,10$^{12}$), RXJ1131 would be
+considered as a ULIRG given its lensing-corrected
+\LIR of $\sim$2\E{12}\,\Lsun.
 
 \subsection{Gas properties} \label{sec:properties}
 In this section, we derive the gas properties of RXJ1131 based on \bco,
 and compare the derived quantities against those reported by
 C13, where their results are based on \bco and \rot{4}{3} line observations on the IRAM 30-m dish.
 
-\subsubsection{Linewidth \& Sizes}
+\subsubsection{Linewidth \& Sizes} %DONE
 We find that the linewidths for both components (redshifted and blueshifted)
 inferred from a double Gaussian fit to the line profile are
-consistent with the C13 sample (FWHM of 370\,\kms). Such linewidths are higher
+comparable to the C13 ULIRG sample
+(FWHM of 370\,\kms). Such linewidths are higher
 than local ULIRGs (240\,\kms; \citealt[][]{Solomon97a}).
 Since C13 do not have resolved observations, we compare the
 gas distribution with local ULIRGs. The CO gas in RXJ1131 is
@@ -812,11 +818,10 @@ distributed $\sim$6\,kpc in radius across (in
 the source plane), which is more extended than the average in the
 sample of disk-like ULIRGs studied by \citet{Ueda14a},
 who find an average radius of 3.5\,$\pm$\,2.3\,kpc
-(with a range from 1.1 kpc to 9.3 kpc).
-% This also indicates that the positive correlation
-% in the linewidth-size relation
-% holds at intermediate redshifts. Yet we cannot quantify this further
-% with the data represented in this paper.
+with a range spanning 1.1$-$9.3\,kpc.
+This is expected if the positive correlation in the linewidth-size relation
+holds at intermediate redshifts. Yet we cannot quantify this further
+with the data represented in this paper.
 
 \subsubsection{Gas Mass}
 To derive the molecular gas mass, we first correct for lensing magnification
