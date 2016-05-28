@@ -1,12 +1,17 @@
 ! Author: Daisy Leung
 !
-! Last Modified: 04 May 2016
+! Last Modified: 27 May 2016
 !
 ! Purpose:
 !     Overplot CO21 spectrum on CO32
 !
 ! History
 ! -------
+! 27 May 2016:
+!     - remove white space
+!     - move yaxis label closer to axis
+!     - increase pen weight
+!
 ! 04 May 2016:
 !     - added code to fit Gauss with fixed FWHM
 !     - copied script from Gaussfit_bin2_noCont.greg
@@ -14,7 +19,7 @@
 !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 
 begin procedure plot_legend
-  g\pen /weight 2
+  g\pen /weight 3
   g\draw relo -3700 &1 /user        ! start point for line
   g\draw line -3500 &1 /user        ! end point for line
   g\draw text -1500 &1 "&2" /user   ! x, y loc, "string"
@@ -30,7 +35,7 @@ begin procedure plot_model
   g\clear
   ! Plot the spectrum
 !  g\limits /var x y
-  g\limits -2000 2000 -85.0 135  ! x y range
+  g\limits -2000 2000 -65.0 135  ! x y range
   g\box
 !   @ plot_legend &1 "Spectrum"
 end procedure plot_model
@@ -48,7 +53,7 @@ column x 1 y 2 /file co32_bin2_D2D3.spec
 let x 208.9401-(x/299792.458*208.9401)
 let x x*1.6537
 let x (((345.7959899-x)/345.7959899)*299792.458)
-g\pen 0 /col 0 /dash 1 /weight 1
+g\pen 0 /col 0 /dash 1 /weight 2
 @ plot_model 100
 @ plot_fit 0 0
 
@@ -63,7 +68,7 @@ draw text -1000 115 "\\2 Solid: CO(\iJ=3-2) in RXJ1131" /user
 draw text -1000 100 "\\2 Dashed: CO(\iJ=2-1) in RXJ1131" /user
 set expand 1
 label "Velocity offset [km/s]" /x
-label "Flux density [mJy]" /y
+label "Flux density [mJy]" /y 4
 
 ! CO21
 column x 1 y 2 /file sup127_155_2ndcln_noCont.spec
@@ -71,7 +76,7 @@ column x 1 y 2 /file sup127_155_2ndcln_noCont.spec
 let x 139.256-(x/299792.458*139.256)
 let x x*(1+0.6537)
 let x (((230.538-x)/230.538)*299792.458)                  ! vel. in 0.6537 frame
-g\pen 0 /col 0 /dash 2 /weight 4
+g\pen 0 /col 0 /dash 2 /weight 3
 @ plot_fit 0 2
 
 ! --- draw dotted baseline ------------------------------------
