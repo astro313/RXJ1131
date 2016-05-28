@@ -2,13 +2,17 @@
 !
 ! Plot spatial spectra for CO(2-1) data
 !
-! Last Modified: 30 Apr 16
+! Last Modified: 27 May 2016
 !
 ! Author: Daisy Leung
 !
 !
 ! History
 ! -------
+! 27 May 2016:
+! - change mark pixel to mark offset
+! - change yaxis unit to lower case
+!
 ! 30 Apr 2016:
 ! - put axes of inner panel (velo v.s. flux) at top right corner
 !
@@ -228,14 +232,14 @@ for iwx 1 to nx_box
         greg1\axis xl /label N
         greg1\axis yl /label N
         label "Velocity offset [km/s]" /x -11
-        label "Flux density [Jy/Beam]" /y -19
+        label "Flux density [Jy/beam]" /y -19
       else
         greg1\box n n
       endif
 
       !
       ! annotate each panel with pixel
-      let mark "pixels"
+      let mark "coordinates"
 
       if (mark.ne."none") then
          greg1\set coord box
@@ -252,7 +256,7 @@ for iwx 1 to nx_box
          endif
 
          ! mark at the corner
-         set expand min(6.0/(nx_box+ny_box),1.05)*2
+         set expand min(6.0/(nx_box+ny_box),1.05)*1.75
          greg1\draw text 0.1 -0.1 'cmark' 3 /box 7
 
       endif
