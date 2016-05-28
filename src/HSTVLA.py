@@ -67,7 +67,7 @@ sizep = 0.00215
 ra_cross, dec_cross = ra_center, dec_center
 row_a = 0.1
 width = 0.35
-full_width = 0.7
+full_width = 0.65
 x_gap = 0.05
 x0 = 0.2
 dy = 0.9
@@ -143,7 +143,7 @@ markers_cross(fig1, ra_cross, dec_cross, layer='marker_set_1')
 # if '_' in sym[:-1]: symf = sym.replace('_', ' ')
 
 # put_label(fig1, 0.20, 0.95, 'HST F555W', 'titleBand')
-put_label(fig1, 0.36, 0.9, 'HST F555W, 5GHz Continuum', 'titleBand')
+put_label(fig1, 0.38, 0.9, 'HST F555W, 5GHz Continuum', 'titleBand')
 put_label(fig1, 0.15725, 0.95, 'RXJ1131', 'titleObj')
 # put_label(figHST, 0.20, 0.95, 'HST F555W', 'titleBand')
 # put_label(figHST, 0.1825, 0.9, 'RXJ1131', 'titleObj')
