@@ -4,9 +4,14 @@
 plot source locations from lens model of various channel as markers on observed 1st moment map.
 Kinematics.
 
-Last Modified: 17 May 16
+Last Modified: 28 May 16
 
 History:
+28 May 2016
+  - add beam to 1st moment + markers plot
+  - add scale bar
+  - add color bar
+  - use patheffects to make markers stand out from background
 17 May 16:
   - move var kpc_to_m to calcmass.py
 15 May 16:
@@ -55,6 +60,8 @@ History:
 
 Note
 ----
+Can only save 1st plot (1st moment + source marker) as pdf, not eps
+
 Fitting data w/ unc. on both x, y using ordinary least squares can lead to bias in the solution. Use Orthogonal Distance Regression (ODR), rather than minimizing the sum of squared errors in the dependent variable, ODR minimizes the orthogonal distance from the data to the fitted curve by adjusting both the model coefficients and an adjustment to the values of the independent variable.
 
  The results of the covariance matrix, as implemented by optimize.curvefit and optimize.leastsq rely on assumptions regarding the probability distribution of the errors and the interactions between parameters; interactions which may exist, depending on the fit function f(x).
@@ -68,16 +75,17 @@ import pyfits
 import pywcs
 import wcsaxes
 import numpy as np
+from astropy.cosmology import WMAP9
+
 
 font = {'family': 'Arial Narrow',
         'weight': 'bold',
         'size': 18}
 matplotlib.rc('font', **font)
-
+matplotlib.rc('text', usetex=True)
 
 Plotpath = '/Users/admin/Research/RXJ1131/Figures/'
 firstMom_obs = '/Users/admin/Research/RXJ1131/PdBI/data/30Apr16/centralizedCube4GILDAS-momCLIP5sigma.velo.fits'
-
 
 interval = 50.        # km/s between velocity contour
 DecCentroid = -12.5328629
@@ -98,7 +106,7 @@ p_list_err = [(0.39, 0.3), (0.25, 0.2), (0.06, 0.21), (0.14, 0.22),
 # corresponding velocity in km/s for each points in p_list
 z = [344.46, 344.46, 236.82, 129.16, 21.54, -86.08, -193.76, -301.38]
 
-plotMajorFit = True
+plotMajorFit = False
 plotMajor_FirstMom = False
 plotPV = False
 plotRot = False
@@ -109,6 +117,11 @@ plotMdyn = False
 # -----------------------------------------------
 a = pyfits.open(firstMom_obs)
 hdr = a[0].header
+cdelt1 = np.abs(hdr['CDELT1'] * 3600)       # arcsec/pix
+cdelt2 = np.abs(hdr['CDELT2'] * 3600)
+major_px = hdr['BMAJ'] * 3600 / cdelt1                 # arcsrc/pix
+minor_px = hdr['BMIN'] * 3600 / cdelt2
+BPA_deg = hdr['BPA']         # should be 13 deg
 wcs = pywcs.WCS(hdr).sub([1, 2])
 plotwcs = wcsaxes.WCS(hdr, naxis=2)
 LensRA_PX, LensDEC_PX = wcs.wcs_sky2pix(RACentroid, DecCentroid, 1)
@@ -117,22 +130,60 @@ dat = a[0].data.reshape(a[0].data.shape[2], a[0].data.shape[3])
 # -----------------------------------------------
 #  Set up Figure
 # -----------------------------------------------
-fig = plt.figure(figsize=(8, 12), dpi=100)
-plt.subplots_adjust(top=0.9)
+fig = plt.figure(1)
 ax = fig.add_subplot(1, 1, 1, projection=plotwcs)
 ra, dec = ax.coords
 ra.set_major_formatter('hh:mm:ss.s')
 ra.display_minor_ticks(True)
 dec.display_minor_ticks(True)
 ra.set_minor_frequency(5)
-ra.set_axislabel(" RA (J2000)", minpad=0.5)
-dec.set_axislabel(" Dec (degrees)", minpad=-0.4)
-ra.set_separator((':', ':'))
+ra.set_axislabel(" R.A. (J2000)", minpad=0.5)
+dec.set_axislabel(" Dec", minpad=-0.4)
+# ra.set_separator((':', ':'))
 ra.set_ticks(size=10, width=1.5)
 dec.set_ticks(size=10, width=1.5)
-ax.set_xlim(120, 145)
+ax.set_xlim(120, 143)
 ax.set_ylim(110, 140)
 
+
+# beam
+def draw_ellipse(ax):
+    """ Draw beam in data coordinate
+    """
+    from mpl_toolkits.axes_grid1.anchored_artists import AnchoredEllipse
+    ae = AnchoredEllipse(ax.transData, width=minor_px, height=major_px,
+                         angle=BPA_deg,
+                         loc=3, pad=0.5, borderpad=0.4, frameon=False)
+    ax.set_alpha(0.6)
+    ax.add_artist(ae)
+
+
+def draw_sizebar(ax, z, pxScale, arcsec=1.0):
+    """ Draw a scale bar with length of 0.1 in Data coordinate
+    (ax.transData) with a label underneath.
+
+    z: float
+        redshift
+    pxScale: float
+        arcsec per 1D-pixel
+    arcsec: float
+        how many arcsec to draw
+    """
+    from mpl_toolkits.axes_grid1.anchored_artists import AnchoredSizeBar
+
+    kpc = WMAP9.kpc_proper_per_arcmin(z).value / 60. * arcsec
+
+    # num px
+    length = arcsec / pxScale
+    asb = AnchoredSizeBar(ax.transData,
+                          length,
+                          str(round(kpc))+" kpc at " + r"$z = $" + (("{0:.3f}").format(z)),
+                          loc=8,
+                          pad=0.1, borderpad=0.5, sep=5,
+                          frameon=False)
+    ax.add_artist(asb)
+
+# setup color
 cmap = plt.cm.jet
 import matplotlib.colors as mcolors
 norm = mcolors.Normalize()
@@ -140,16 +191,17 @@ norm = mcolors.Normalize()
 # -----------------------------------------------
 # 1st moment map
 # -----------------------------------------------
-im = ax.imshow(dat, origin="lower", norm=norm, cmap=cmap)
+im = ax.imshow(dat, origin="lower", norm=norm, cmap=cmap, alpha=0.65)
 cont_list = [interval * i for i in range(-10, 10) if i != 0]
 ax.contour(dat,
            cont_list,
-           colors='black')
-ax.plot([LensRA_PX], [LensDEC_PX], marker='x', zorder=1, mec='k', ms=8)
+           colors='black', alpha=0.5)
+ax.plot([LensRA_PX], [LensDEC_PX], marker='x', zorder=5,    # lens galaxy
+         mec='black', ms=8, mew=1.75)
 
 from matplotlib.pyplot import cm
 color = iter(cm.rainbow_r(np.linspace(0, 1, len(p_list))))
-
+import matplotlib.patheffects as path_effects
 ra_px_ls = []
 dec_px_ls = []
 ra_coord_ls = []
@@ -176,24 +228,42 @@ for i, p1 in enumerate(p_list):
     dec_err = p_list_err[i][1] / CellSize
     ra_err_ls.append(ra_err)
     dec_err_ls.append(dec_err)
-    ax.errorbar(x=[ra_px], y=[dec_px], xerr=[ra_err], yerr=[dec_err],
-                marker='+', ms=8, mec=c, mew=1.25, zorder=3.1, ecolor=c,
-                capsize=5, capthick=2, lw=2, label=str(i))
+    m = ax.errorbar(x=[ra_px], y=[dec_px], xerr=[ra_err], yerr=[dec_err],
+                marker='+', ms=8, mec=c, mew=2, zorder=3.1, ecolor=c,
+                capsize=1.5, capthick=1.5, lw=2, label=str(i))
+
+    # to make marker stand out from background
+    m[0].set_path_effects([path_effects.Stroke(linewidth=2.5, foreground='black'), path_effects.Normal()])
+    m[1][0].set_path_effects([path_effects.Stroke(linewidth=2.5, foreground='black'), path_effects.Normal()])
+    m[1][1].set_path_effects([path_effects.Stroke(linewidth=2.5, foreground='black'), path_effects.Normal()])
+    m[1][2].set_path_effects([path_effects.Stroke(linewidth=2.5, foreground='black'), path_effects.Normal()])
+    m[1][3].set_path_effects([path_effects.Stroke(linewidth=2.5, foreground='black'), path_effects.Normal()])
+    m[2][0].set_path_effects([path_effects.Stroke(linewidth=2.5, foreground='black'), path_effects.Normal()])
+    m[2][1].set_path_effects([path_effects.Stroke(linewidth=2.5, foreground='black'), path_effects.Normal()])
 #     print ra_px, dec_px
 
+# ------ additional setup -----
 # matplotlib.rcParams['legend.handlelength'] = 0
 # matplotlib.rcParams['legend.markerscale'] = 0
 # ax.legend(loc=2, bbox_to_anchor=(0.9, 0.9), borderaxespad=0., fontsize=15, numpoints=1)
-plt.tight_layout()
+draw_ellipse(ax)
+draw_sizebar(ax, redshift, cdelt1)
+
+# make colorbar
+cb = fig.colorbar(im, fraction=0.1, pad=0.0)
+cb.set_label("Velocity [km s" + r"$^{-1}$]")
+
+plt.tight_layout(h_pad=0.4, w_pad=0.1)
 plt.show()
 a.close()
-# User_input = raw_input('Save figure? (Y/N): ')
-# if User_input == 'Y':
-#     filename = "veloGradient_markers.eps"
-#     fig.savefig(Plotpath + filename, dpi=100,
-#                 bbox_inches="tight", pad_inches=0.1)
-#     print "-- Saved figure as : %s --" % (Plotpath + filename)
+User_input = raw_input('Save figure? (Y/N): ')
+if User_input == 'Y':
+    filename = "veloGradient_markers.pdf"
+    fig.savefig(Plotpath + filename, dpi=100,
+                bbox_inches="tight", pad_inches=0.1)
+    print "-- Saved figure as : %s --" % (Plotpath + filename)
 
+# -------------------------------
 theta_rad = abs(np.arctan((dec_coord_ls[0] - dec_coord_ls[-1]) / ((ra_coord_ls[0] - ra_coord_ls[-1]) * np.cos(np.mean(dec_coord_ls) * np.pi/180.))))
 theta_deg = theta_rad * 180. / np.pi
 PA_deg = theta_deg + 90.
@@ -518,7 +588,6 @@ def velo_disk(V_obs, theta=0., i=30.):
 
 def offset_to_physicalR(R_arcsec, z):
     """ Convert offset to physical radius"""
-    from astropy.cosmology import WMAP9
     arcsec_to_kpc = WMAP9.kpc_proper_per_arcmin(z).value / 60.
     return arcsec_to_kpc * R_arcsec
 
