@@ -1,12 +1,14 @@
 """
 Author: Daisy Leung
 
-Last edited: 17 May 2016
+Last edited: 27 May 2016
 
 Purpose:
 - Plot single panel 5GHz VLA continuum on HST F555W, investigate continuum offset
 
 History:
+May 27 2016:
+    - aspect ratio
 May 17 2016:
     - update cosmetics
     - add beam
@@ -53,23 +55,22 @@ for k in label_vla.iterkeys():
     label_vla[k] = file_vla
 # print label_vla
 
-figC = plt.figure(1, figsize=(7, 7))
-figC.subplots_adjust(top=0.9, left=0.1, right=0.95)
+figC = plt.figure(1)
 # figRed = plt.figure(2, figsize=(12, 7))
 ########################################
 # user define area
 ########################################
 ra_center = 172.96434563888
 dec_center = -12.5328629
-sizep = 0.002
+sizep = 0.00215
 
 ra_cross, dec_cross = ra_center, dec_center
-row_a = 0.10
+row_a = 0.1
 width = 0.35
 full_width = 0.7
 x_gap = 0.05
 x0 = 0.2
-dy = 0.85
+dy = 0.9
 sigma = 1.3e-5
 
 ########################################
@@ -142,7 +143,7 @@ markers_cross(fig1, ra_cross, dec_cross, layer='marker_set_1')
 # if '_' in sym[:-1]: symf = sym.replace('_', ' ')
 
 # put_label(fig1, 0.20, 0.95, 'HST F555W', 'titleBand')
-put_label(fig1, 0.4, 0.9, 'HST F555W, 5GHz Continuum', 'titleBand')
+put_label(fig1, 0.36, 0.9, 'HST F555W, 5GHz Continuum', 'titleBand')
 put_label(fig1, 0.15725, 0.95, 'RXJ1131', 'titleObj')
 # put_label(figHST, 0.20, 0.95, 'HST F555W', 'titleBand')
 # put_label(figHST, 0.1825, 0.9, 'RXJ1131', 'titleObj')
