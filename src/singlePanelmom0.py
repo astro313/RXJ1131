@@ -6,11 +6,15 @@ Plot mom0 of all channels overlay on HST (single panel)
 Author: Daisy Leung
 
 
-Last edited: 17 May 2016
+Last edited: 28 May 2016
 
 
 History:
 --------
+28 May 2016:
+    - increase font size
+    - longer ticks
+    - zoom in a little to avoid tick label overlaps
 17 May 2016:
     - pythonic
 16 May 2016:
@@ -41,11 +45,11 @@ Plotpath = '../Figures/'
 
 font = {'family': 'Arial Narrow',
         'weight': 'normal',
-        'size': 12.5}
+        'size': 13.5}
 xtick = {'major.size': 10,
-         'minor.size': 6}
+         'minor.size': 6.5}
 ytick = {'major.size': 10,
-         'minor.size': 6}
+         'minor.size': 6.5}
 mpl.rc('font', **font)
 mpl.rc('xtick', **xtick)
 
@@ -63,23 +67,22 @@ for k in label_pdbi.iterkeys():
     file_pdBI = glob.glob(path_pdbi + '*' + k + '*.fits')
     label_pdbi[k] = file_pdBI
 
-figC = plt.figure(1, figsize=(8, 8))
-figC.subplots_adjust(top=0.9, left=0.05, right=0.95)
+figC = plt.figure(1)
 figC.clf()
 ########################################
 # user define area
 ########################################
 ra_center = 172.96434563888
 dec_center = -12.5328629
-sizep = 0.00225
+sizep = 0.0021
 
 ra_cross, dec_cross = ra_center, dec_center
 row_a = 0.1
 width = 0.35
-full_width = 0.78
+full_width = 0.65
 x_gap = 0.05
 x0 = 0.2
-dy = 0.80
+dy = 0.9
 sigma = 0.305       # 0.43    # 0.32e-3 Jy/B
 
 line_min = 0.035668
@@ -145,7 +148,7 @@ if __name__ == '__main__':
     if saveFig:
         outname = 'F555WCO21_mom0_single.eps'
         if inverted_HSTleft: outname = outname.replace('.eps', '.invertedgray.eps')
-        figC.savefig(Plotpath + outname, dpi=600, box_inches='tight')
+        figC.savefig(Plotpath + outname, dpi=600, bbox_inches='tight')
     else:
         #        figC.canvas.draw()
         plt.show()

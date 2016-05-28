@@ -1,7 +1,7 @@
 """
 Author: Daisy Leung
 
-Last edited: 17 May 2016
+Last edited: 28 May 2016
 
 Purpose:
     Plot Red wing and Blue wing different color overlay on HST
@@ -9,6 +9,10 @@ Purpose:
 
 
 History:
+28 May 2016:
+    - hide axis labels
+    - increase font size
+    - longer ticks
 17 May 2016:
     - update to use integrated maps from 17May16/, channel range consistent with mom0 map
     - update sigma
@@ -36,11 +40,11 @@ Plotpath = '../Figures/'
 
 font = {'family': 'Arial Narrow',
         'weight': 'normal',
-        'size': 12.5}
+        'size': 13.5}
 xtick = {'major.size': 10,
-         'minor.size': 6}
+         'minor.size': 6.5}
 ytick = {'major.size': 10,
-         'minor.size': 6}
+         'minor.size': 6.5}
 mpl.rc('font', **font)
 mpl.rc('xtick', **xtick)
 
@@ -58,9 +62,8 @@ for k in label_pdbi.iterkeys():
     label_pdbi[k] = file_pdBI
 # print label_pdbi
 
-figC = plt.figure(1, figsize=(7, 7))
-figC.subplots_adjust(top=0.9, left=0.1, right=0.95)
-
+figC = plt.figure(1)
+figC.clf()
 ########################################
 # user define area
 ########################################
@@ -69,12 +72,12 @@ dec_center = -12.5328629
 sizep = 0.002                # 0.00158066
 
 ra_cross, dec_cross = ra_center, dec_center
-row_a = 0.10
+row_a = 0.1
 width = 0.35
-full_width = 0.7
+full_width = 0.65
 x_gap = 0.05
 x0 = 0.2
-dy = 0.85
+dy = 0.9
 sigma_blue = 0.53733    # noise free region
 sigma_red = 0.4323
 
@@ -118,6 +121,7 @@ lg_1arcsec = 1. / 3600
 # axes
 ########################################
 standard_plot_setup(fig1, ra_center, dec_center, sizep, tickc=tickcolor)
+fig1.axis_labels.hide()
 
 ########################################
 # markers
