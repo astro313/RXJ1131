@@ -1,11 +1,15 @@
 '''
-Last Modified: 30 Apr 16
+Last Modified: 27 May 16
 
 
 Author: Daisy Leung
 
 
 History:
+27 May 2016
+- change flux label unit
+- update font inside panel
+
 30 Apr 2016
 - change velocity labels, reference systemic velocity
 - use data cube with velo. axis 0 km/s == line center (see shiftRefVelo.py)
@@ -216,7 +220,7 @@ except ImportError:
 for i, ax in enumerate(g):
     channel_number = start_channel + i
     v = vel.to_vel(channel_number) / 1.e3
-    t = ax.add_inner_title(r"$v=%4.1f$ km s$^{-1}$" % (v),
+    t = ax.add_inner_title(r"$v=%4.1f\ {\rm km s}^{-1}$" % (v),
                            loc=2,
                            frameon=False
                            )
@@ -226,7 +230,8 @@ for i, ax in enumerate(g):
                                                  linewidth=2.5)])
     else:
         # show velocity text in some color
-        t.txt._text.set_color('k')
+        t.txt._text.set_color("#243106")
+        t.txt._text.set_fontweight('black')
 
 # Beam
 g[-1].add_beam_size(minor_px, major_px, BPA_deg,      # y, x, angle
@@ -236,7 +241,7 @@ g[-1].add_beam_size(minor_px, major_px, BPA_deg,      # y, x, angle
 
 # make colorbar
 cb = plt.colorbar(im, cax=cax)
-cb.set_label("Flux Density [mJy B" + r"$^{-1}$]")
+cb.set_label("Flux Density [mJy beam" + r"$^{-1}$]")
 cb.set_ticks([-0.01, 0, 0.01, 0.02, 0.03])   # place tick locations
 
 # customize to mJy B^-1 instead of Jy B^-1, uncomment to use same as cb.set_ticks
