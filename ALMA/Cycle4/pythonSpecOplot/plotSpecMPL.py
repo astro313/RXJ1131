@@ -1,10 +1,12 @@
 '''
 Overplot spectra at different spatial location for ALMA C4 proposal
 
+Last Modified: April 16 2016
+
 
 History:
 --------
-Appril 14 2016:
+April 14 2016:
     - edit labels and text annotations
 April 11 2016:
     - copied from Zsearch project: ~/Research/zsearch_Conley/science_goal.uidA001_X121_X1fc/combine

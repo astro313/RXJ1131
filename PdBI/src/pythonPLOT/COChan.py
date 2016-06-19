@@ -221,6 +221,7 @@ for i, ax in enumerate(g):
     channel_number = start_channel + i
     v = vel.to_vel(channel_number) / 1.e3
     t = ax.add_inner_title(r"$v=%4.1f\ {\rm km s}^{-1}$" % (v),
+                           # (u'$\\mathrm{km/s}$')
                            loc=2,
                            frameon=False
                            )

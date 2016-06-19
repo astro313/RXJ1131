@@ -4,9 +4,12 @@
 plot source locations from lens model of various channel as markers on observed 1st moment map.
 Kinematics.
 
-Last Modified: 28 May 16
+Last Modified: 29 May 16
 
 History:
+29 May 2016
+  - increase font size for first plot
+  - scale bar padding
 28 May 2016
   - add beam to 1st moment + markers plot
   - add scale bar
@@ -137,14 +140,13 @@ ra.set_major_formatter('hh:mm:ss.s')
 ra.display_minor_ticks(True)
 dec.display_minor_ticks(True)
 ra.set_minor_frequency(5)
-ra.set_axislabel(" R.A. (J2000)", minpad=0.5)
-dec.set_axislabel(" Dec", minpad=-0.4)
+ra.set_axislabel(" R.A. (J2000)", minpad=0.5, size=16)
+dec.set_axislabel(" Dec", minpad=-0.4, size=16)
 # ra.set_separator((':', ':'))
-ra.set_ticks(size=10, width=1.5)
-dec.set_ticks(size=10, width=1.5)
+ra.set_ticks(size=16, width=1.5, exclude_overlapping=True)
+dec.set_ticks(size=16, width=1.5)
 ax.set_xlim(120, 143)
 ax.set_ylim(110, 140)
-
 
 # beam
 def draw_ellipse(ax):
@@ -179,7 +181,7 @@ def draw_sizebar(ax, z, pxScale, arcsec=1.0):
                           length,
                           str(round(kpc))+" kpc at " + r"$z = $" + (("{0:.3f}").format(z)),
                           loc=8,
-                          pad=0.1, borderpad=0.5, sep=5,
+                          pad=0.35, borderpad=0.65, sep=5,
                           frameon=False)
     ax.add_artist(asb)
 
