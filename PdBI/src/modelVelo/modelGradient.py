@@ -4,10 +4,13 @@
 plot source locations from lens model of various channel as markers on observed 1st moment map.
 Kinematics.
 
-Last Modified: 29 May 16
+Last Modified: 19 June 16
 
 History:
-29 May 2016
+19 June 2016:
+  - change z of source from 0.6357 to 0.6537
+  - fix latex rendering ylabel
+29 May 2016:
   - increase font size for first plot
   - scale bar padding
 28 May 2016
@@ -94,7 +97,7 @@ interval = 50.        # km/s between velocity contour
 DecCentroid = -12.5328629
 RACentroid = 172.96434563
 CellSize = 0.5        # arcsec per pixel in 1D
-redshift = 0.6357
+redshift = 0.6537
 b_arcsec = 1.8       # from C06
 a_arcsec = 3.25
 i_rad = np.arccos(b_arcsec/a_arcsec)
@@ -111,10 +114,9 @@ z = [344.46, 344.46, 236.82, 129.16, 21.54, -86.08, -193.76, -301.38]
 
 plotMajorFit = False
 plotMajor_FirstMom = False
-plotPV = False
-plotRot = False
+plotPV = True
+plotRot = True
 plotODR_arctan = False
-plotMdyn = False
 # -----------------------------------------------
 #  Read fits file and Set up WCS
 # -----------------------------------------------
@@ -523,7 +525,7 @@ z_err = 21.5*5/2.     # range of channels combined to make models/2. --> error b
 if plotPV:
     f, ax = plt.subplots()
     ax.errorbar(off, z, yerr=z_err, fmt='ko', xerr=offset_err)
-    plt.ylabel('v_r = v sin i')
+    plt.ylabel(r'$v_{r}$ = $v$ $\sin$ $i$')
     plt.xlabel(' offset from line center position ["] ')
     plt.title('PV along major axis at PA {:.2f} deg'.format(PA_deg))
     plt.tight_layout()
@@ -546,7 +548,7 @@ if plotRot:
     ax.errorbar(off[3], z[3], xerr=offset_err[3], yerr=z_err, fmt='go', label='line center')
     ax.errorbar(off[:3], z[:3], yerr=z_err, fmt='ro', label='red', xerr=offset_err[:3])
 
-    plt.ylabel('|v_r = v sin i|')
+    plt.ylabel(r'abs($v_r$ = $v \sin i$)')
     ax.errorbar(off[4:], abs(np.array(z[4:])), yerr=z_err, fmt='bo', label='blue', xerr=offset_err[4:])
     plt.xlabel(' radial offset from line center position ["] ')
     plt.title('"Rotation Curve" taken along major axis at PA {:.2f} deg'.format(PA_deg))
@@ -619,7 +621,7 @@ xerr = offset_to_physicalR(np.array(offset_err), redshift)
 # plot velocity v.s. physical radius
 if plotRot:
     plt.errorbar(xdata, ydata, yerr=yerr, fmt='ko', xerr=xerr)
-    plt.ylabel('V sin i')
+    plt.ylabel(r'$v$ $\sin i$')
     plt.xlabel('Physical distance from line center [kpc]')
     plt.xlim(-1, 8.5)
     plt.ylim(-50, 450)
