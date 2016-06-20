@@ -332,9 +332,9 @@ Contours for the first (left) and second (right) moment maps are shown in steps 
 \end{figure}
 
 
-\subsection{\cco Emission} % DONE
-We detect resolved \cco line emission toward RXJ1131. The spectrum is shown in
-\Fig{co32spec}, which seems to have a double-peak profile.
+\subsection{\cco Emission}
+We detect \cco line emission toward RXJ1131 at {\bf BLAH}$\sigma$ significance.
+The spectrum is shown in \Fig{co32spec}, which seems to have a double-peak profile.
 This is expected if RXJ1131 is truly a disk galaxy (see previous
 sections). The high phase noise in the calibration leads to a low SNR
 detection. We thus estimate the line intensity to be
@@ -353,7 +353,7 @@ is 35.8 \kms and 21.5 \kms, respectively.
 \end{figure}
 
 Assuming the spatial extents between \bco and \cco are similar and therefore
-a negligible differential lensing effect, the line intensities
+magnified by similar amounts, the line intensities
 correspond to a brightness temperature ratio of
 $r_{\rm 32}$\,=\,T$_{\small \cco}$$/$T$_{\small \bco}$\,=\,0.66\,$\pm$\,0.41.
 
@@ -473,7 +473,7 @@ measured by \ncode{sussextractor} is additionally confirmed
 using the Timeline Fitter, which performs photometry
 by fitting a 2D elliptical Gaussian to the Level 1 data at the
 source position given by the output of \ncode{sussextractor}. The fluxes
-extracted from both methods are consistent to within 1.5\%.
+obtained from both methods are consistent within the uncertainties.
 
 \input{table_photometry_AAScustomized}
 
@@ -481,9 +481,12 @@ extracted from both methods are consistent to within 1.5\%.
 %                                Analysis
 %--------------------------------------------------------------------------
 \section{Analysis} \label{sec:anal}
-\subsection{Lens modeling} \label{sec:lensmodel} %DONE
-At the angular resolution of the \bco data, the images are resolved
-but not within the multiply lensed emission (i.e., sub-optimal for
+\subsection{Lens modeling} \label{sec:lensmodel}
+At the angular resolution of the \bco data, the images are resolved over
+$\sim$2 resolution elements. Given the extent of the lensed emission,
+this implies that our \bco observations do not resolve
+structures (e.g. knots and arcs) of the lensed emission
+(i.e., sub-optimal for
 performing lens modeling). Nevertheless, the high spectral
 resolution of this data provides dynamical information on
 spatial scales smaller than the beam (see \Fig{CO21highO}).
@@ -491,11 +494,12 @@ Hence, with the high SNR, we reconstruct the intrinsic gas
 dynamics by carrying out a parametric lens modeling over different
 channel slices of the interferometric data using our lensing code
 \uvmcmcfit (\citealt{uvmcmcfit15a}; see \citealt{Bussmann15a} for details of
-the code). Model of each slice in \Fig{model} thus provides
-properties on the intrinsic kinematics. The slices
-are obtained by binning the data over the full linewidth
-$\sim$700\,\kms by five channels,
-that is, into seven slices, to increase the SNR.
+the code). Models of each slice thus provide the
+properties on the intrinsic kinematics. To increase the SNR for modeling, the
+slices are obtained by binning five native channels
+($\Delta v$\,$\sim$\,21.5\kms) over the full
+linewidth of $\sim$750\,\kms in the original data, resulting in seven
+independent channels.
 
 The lens mass distribution is modeled using a singular isothermal
 ellipsoid (SIE) profile, which is described by five free parameters: the
@@ -532,7 +536,7 @@ We first obtain a preliminary lens model for each channel slice independently,
 where their lens parameters are allowed to vary and are initialized according
 to the aforementioned way. We obtain the final model
 by repeating the modeling over each slice but fixing their lens parameters
-according to the overall median in the preliminary models,
+to the overall median in the preliminary models,
 as listed in \Tab{lens}.
 This ensures that all models share the same lens profile.
 The magnification factors in \Tab{model} are determined by taking the ratio
@@ -544,16 +548,16 @@ with that of the SIE model presented by C06. We find a mass of
 $M(\theta$\,\,$<$\,\,$\theta_\textrm{E})$\,=\,(7.47\,$\pm$\,0.02)\,$\times$\,10$^{11}$\,\Msun
 within the Einstein radius.
 
-\subsubsection{Interpretation and Caveats} \label{sec:caveat} %DONE
+\subsubsection{Interpretation of the source-plane morphology} \label{sec:caveat}
 The reconstructed source locations in \Fig{model} demonstrate
 an intrinsic velocity gradient across the source plane, which is
 indicative of a disk-like galaxy.
-Additional support to the disk conjecture %conjecture of a disk morphology
+Additional support to the disk conjecture
 can be found in the double-horned line profile (\Fig{CO21spec})
 and the observed (image plane) velocity field (\Fig{CO21highO}). Furthermore,
 C06 also find that the reconstructed source plane emission in optical-NIR
 is best-reproduced using a $n$\,=\,1 Sersic profile.
-Our interpretation therefore tends in favor of a disk morphology for RXJ1131.
+We thus interpret RXJ1131 to be a disk galaxy.
 
 % the companion
 One other interesting result from our lens model is that a better fit is
@@ -562,23 +566,42 @@ top left panel in \Fig{model}). This is consistent with previous results
 reported by \citet{Brewer08a}, who find an optically faint companion
 (component F in their paper) $\sim$2.4\,kpc away from the AGN host galaxy,
 and C06, who find evidence for an interacting galaxy near RXJ1131.
-Spatially, the red velocity component of the CO also coincides with this
-component F. While we cannot quantify the type of
-merger (major v.s. minor) with a mass ratio given the
-spatial resolution, the symmetric velocity gradient retained under
-such close separation between the two lean support
-to the idea of a minor merger.
-% For major mergers, two galaxy mass centers separated on the same scale as the
-% gas disk (4 kpc or more), the gas dynamics would be strongly perturbed and
-% would deviate substantially from that of a simple disk.
-% In a minor merger (a mass ratio of more than 3:1) the more massive galaxy, including its gas distribution, can retain a significant angular momentum and resemble a rotating disk.
+Spatially, the red velocity component of the CO emission
+also coincides with this component F. It is therefore evident that we
+detect \bco emission in the companion galaxy.
+To quantify the type of merger (major v.s. minor) conventionally with a mass
+ratio, we decompose the total line flux into two components:
+one from RXJ1131 and the other from its companion.
+Since the companion is only detected in the red-most channel, we
+use the best-fit flux densities and magnification factors obtained
+from the model of this channel to derive the gas mass in the companion.
+Without direct \rot{1}{0} measurements, we derive \rot{1}{0} intensity
+assuming a brightness temperature ratio of $r_{\rm 21}$\,=\,1, which was chosen
+solely to facilitate a comparison with other U/LIRGs. % also ULIRGs are found to be thermalized up to Jup = 3 or 4
+For the same reason, we adopt a luminosity-to-mass conversion factor of
+\alphaco\,=\,0.8 (K \kms pc$^2$)\pmOne. This yields a gas mass
+$M_{\rm gas}$ of (1.68\pmm0.68)\,\E{10} \Msun. 
+%statistical unc. only (i.e. draw from from distributions of on mag. factor & intrinsic flux)
+For the molecular gas mass in RXJ1131, we derive
+its intrinsic line flux over the FWZI linewidth
+using the respective magnification
+factors listed in \Tab{model}, which to
+first order takes into account effect of differential lensing.
+This yields $I_{\small \bco}$\,=\,5.41$\pm$2.71 Jy\,\kms,
+where the uncertainty includes those on
+the magnification factors.
+Adopting the same brightness temperature ratio and \alphaco\ as
+used for the companion, this corresponds to a gas mass of
+$M_{\rm gas}$\,=\,(3.17\pmm1.59)\,\E{10} \Msun.
+The implies a gas mass ratio of $\sim$2:1.
+Therefore, the system is a gas-rich major merger according to
+the classification scheme commonly used in literature.
 
 The spatial resolution of the data in hand
 is a few arcsec, which implies that despite the high SNR and spectral
 resolution, this data is insufficient to constrain the
 intrinsic sizes of the lensed galaxies, and thus the magnification
-factors may be under-predicted.
-% magnification factor is underpredicted, see Bussmann15
+factors may be under-predicted. % see Bussmann15
 
 \begin{figure*}[tbph]
 \centering
@@ -592,7 +615,7 @@ PdBI \bco emission (red) overlaid on our best-fit lens models (grayscale).
 The location of the foreground lensing galaxy is indicated by a black dot and
 its critical curve is traced by the orange solid line. The locations and
 morphologies (half-light radii) of the reconstructed sources are
-represented by magenta ellipses (see text in \Sec{caveat} for caveats).
+represented by magenta ellipses.
 The caustic curves are represented as cyan lines. The beam of the
 PdBI observations is shown in the bottom right corner of each panel.
 Bottom: residual images of the best-fit models, obtained by
@@ -605,19 +628,22 @@ where $n$ is a positive integer.
 
 \subsubsection{Differential Lensing} \label{sec:differential} %DONE
 \input{table_magFactor}
-Previous lens models of RXJ1131 find evidence for
+Similar to previous studies of RXJ1131, where
 differential lensing across {\it HST}
-$H$-, $V$-, and $I$-band (C06), where the
-magnification factor ranges from 10.9 to 7.8. C06 attribute
-the decrease toward the IR regime is caused by the more extended
-IR emission. The highly asymmetric \bco line profile suggests that
-differential lensing is also non-negligible for CO, where the redshifted
-emission is apparently much brighter than that in the
-blueshifted part, consistent
-with the source positions relative to the caustics in \Fig{model}.
-The red wing emission mainly originates near the cusp
+$H$-, $V$-, and $I$-band has been detected with a
+magnification factor decreasing from 10.9 to 7.8 (C06),
+the highly asymmetric \bco line profile suggests that
+differential lensing is also non-negligible for the CO emission, whereby
+causing the redshifted emission to be apparently much brighter than the
+blueshifted component.
+Such an effect is consistent with the source plane
+positions relative to the caustics in \Fig{model}; the red wing emission mainly originates near the cusp
 in the caustic, whereas the blue wing emission is located beyond the caustics.
-The magnification factor for CO ranges from 8.7 to 3.1 (\Tab{model}).
+From our best-fit lens models, the magnification factor varies from 8.7 to 3.1 across the \bco line (\Tab{model}).
+
+%If we estimate the intrinsic I:
+%red I =
+%blue wing I =
 
 \subsection{\bco Dynamical modeling} \label{sec:dynamics} %DONE
 Assuming the velocities of the respective channels used in the
@@ -877,9 +903,6 @@ first order takes into account effect of differential lensing. This yields
 $I_{\small \bco}$\,=\,5.9$\pm$2.7 Jy\,\kms,
 where the uncertainty includes those on
 the magnification factors.
-We note that this includes emission from the companion
-as the spatial resolution of our data do not allow us decompose its
-contribution from the total line flux.
 
 Without direct \rot{1}{0} measurements,
 we derive \rot{1}{0} intensity
@@ -889,8 +912,8 @@ For the same reason, we
 adopt a luminosity-to-mass conversion factor of
 \alphaco\,=\,0.8 (K \kms pc$^2$)\pmOne, this yields a
 CO luminosity \Lp\,=\,(3.47\,$\pm$\,1.58)\E{10}\,\LpU and a gas mass
-$M_{\rm gas}$ of (2.8$\pm$1.3)\,\E{10} \Msun. This is likely
-an overestimation for RXJ1131 due to a contribution from the companion.
+$M_{\rm gas}$ of (xx\pmm xx)\,\E{10} \Msun. 
+BLAH
 The inferred gas mass is comparable to
 C13 sample ($M_{\rm gas}$\,=\,1.5\E{10}\Msun) as well as
 local U/LIRGs \citep{Solomon97a, Sanders96a} but higher than
