@@ -1,0 +1,28 @@
+!
+! Write out spectrum in ASCII with velocity shifted to ref. velocity (i.e. as if extracted from centralizedCube4GILDAS.lmv-clean); used for getting intrinsic intensity for source in different velocity channels according to the corresponding magnifications in those channels
+!
+! Last modified: 20 June 2016
+!
+! History:
+! 20 Jun 2016: created
+!
+!
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+!
+column x 1 y 2 /file sup127_155_2ndcln_noCont.spec
+def double z /like x
+
+def int nx
+let nx 360                                   ! length of x_array
+
+def int shiftv
+let shiftv 21.528*15
+
+let x x+shiftv
+
+sic out veloLineCenterShifted.spec
+for i 1 to nx
+    say 'x[i]' 'y[i]' /format f10.3 f10.3
+next
+sic out
+
