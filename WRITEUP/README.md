@@ -130,21 +130,24 @@ CO (2-1) velocity ranges used for different purpose:
 - drive intrinsic line flux from the updated CO21 I = 24.14 Jy km/s
   + sum up flux in chan 124 - 156, divide by mag. from respective models
   + 124-156 <-> -258.3, 430.6 km/s (z=0 frame, after shifting velo in ASCII file; see 22May16/)
-  + assume same magnification factor as 126-130 for channel 125
-  + assume no mag. factor for channel 124 (suggested by channel map)
+  + assume no mag. factor for channel 124 (suggested by channel map) & no mag. for 125
   + 126-130: derive Mgas separately for RXJ and companion
-  + Companion: M_gas = (1.355 +/- 0.68) e10 Msun
+  + Companion: M_gas = (0.192 +/- 0.090)e10 Msun
   + delensed flux_CO(2-1) for just RXJ1131 from 124, 125, 131-156: -0.825 + 5.157 + (72.845 + 59.771 + 48.868 + 41.295 + 31.943) / 7.6 + (38.128 + 25.169 + 29.686 + 14.481 + 17.699) / 8.7 + (13.464 + 13.718 + 14.077 + 6.991 + 9.303) / 4.1 + (14.191 + 14.675 + 21.192 + 32.956 + 22.292) / 4.2   + (18.555 + 24.522 + 23.988 + 16.965 + 17.155)/4.3 + 6.809 / 3.1 = 117.0726 mJy
   + --> intrinsic I(2-1) for just RXJ1131 from chan 124, 125, 131-156 = 117.0726 * 21.5/1e3 = 2.517 Jy km/s
-  + ---> total intrinsic I(2-1) for just RXJ1131 = 2.517 + 2.892 = 5.409 Jy km/s; 
-  + ---> unc. on intrinsic I(2-1) on RXJ: assuming overall uncertainty with all the magnification factors ~ sum(unc. on each**2)/5 = 1.43, where I am only using error from 126-155 and assuming they contribute to the intrinsic I calculation equally (which is not true beucase some channel 125 uses magnification factor from 126-130) = sqrt(1.43^2 + 2.3^2) = 2.708 Jy km/s
-  + ---> RXJ M_gas = (3.168 +/- 1.59) e10 Msun 
+  + ---> total intrinsic I(2-1) for just RXJ1131 = 2.517 + 0.417 = 2.934 Jy km/s; 
+  + ---> unc. on intrinsic I(2-1) on RXJ: assuming overall uncertainty with all the magnification factors ~ sum((unc. on each/mag of each)**2)/5 = 1.00, where I am using error from 126-160 and assuming they contribute to the intrinsic I calculation equally (which is not true beucase chan 124,125  dont have mag. factor) = sqrt((1.0/5.5)^2 + (1.451e-3 * 2.5 * 21.5 * sqrt(156-124+1)/2.934)^2) * 2.934 = 0.697 Jy km/s
+  + ---> RXJ M_gas = (1.375 +/- 0.327) e10 Msun 
 - for diff. lensing section: derive intrinsic line flux for red and blue wing respectively. 
-  + Ired = 21.5 * (-0.825 + 5.157 + (72.845 + 59.771 + 48.868 + 41.295 + 31.943) / 7.6 + (38.128 + 25.169 + 29.686 + 14.481 + 17.699) / 8.7 + (13.464 + 13.718 + 14.077 + 6.991 + 9.303) / 4.1) = 1.425 Jy km/s
-  + Iblue = 21.5 * ((14.191 + 14.675 + 21.192 + 32.956 + 22.292) / 4.2   + (18.555 + 24.522 + 23.988 + 16.965 + 17.155)/4.3 + 6.809 / 3.1) = 1.092 Jy km/s
-  + ratio = 
-  + symmetric disk? <-- Not really
-
+  + spectrum for corrected for lensing: de-lensed.spec in 22May16/
+  + --> spectrum look symmetric
+  + --> fit double Gauss to refine channel ranges for the red and blue-shifted kinematic components
+    * --> peak flux densities are consistent with being same 
+    * ----> symmetric disk
+  + ---> red: channel [124-142]; blue: [143-156]
+  + Ired = 21.5 * (-0.825 + 5.157 + (72.845 + 59.771 + 48.868 + 41.295 + 31.943) / 7.6 + (38.128 + 25.169 + 29.686 + 14.481 + 17.699) / 8.7 + (13.464 + 13.718) / 4.1) + 0.417 = 1266 +/- (sqrt((1.0/5.5)^2 + (1.451e-3 * 2.5 * 21.5 * sqrt(142-124+1)/1266)^2) * 1266 = 230.2) mJy km/s
+  + Iblue = 21.5 * ((14.077 + 6.991 + 9.303) /4.1 + (14.191 + 14.675 + 21.192 + 32.956 + 22.292) / 4.2 + (18.555 + 24.522 + 23.988 + 16.965 + 17.155)/4.3 + 6.809 / 3.1) = 1251.5 +/- (sqrt((1.0/5.5)^2 + (1.451e-3 * 2.5 * 21.5 * sqrt(156-143+1)/1251.5)^2) * 1251.5 = 227.5) mJy km/s
+  + --> approximately a symmetric disk
 
 # 0th moment map (all channels):
 - 15May16/centralizedCube4GILDAS-CASA_ch126-160_mom0.fits
