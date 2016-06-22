@@ -7,6 +7,8 @@ Last Modified: June 22 2016
 History
 -------
 June 22 2016:
+    - change zorder on mbb fits
+    - change savefig() save as .pdf instead of .eps to conserve alpha setting in saved figure
     - change SED plot figsize, xylim
     - remove IRAC MIR fit in final full SED plot
 May 24 2016:
@@ -306,7 +308,7 @@ def savefigure(figure, f, verbose=True, dirStr='../../Figures/'):
             os.mkdir(dirStr)
         else:
             print "... Directory {:s} exists...".format(dirStr)
-    figure.savefig(dirStr + f + '.eps', dvi=600, bbox_inches='tight')
+    figure.savefig(dirStr + f + '.pdf', dvi=600, bbox_inches='tight')
     print('... Saved Figure: {:s}').format(dirStr + f + '.eps')
 
 
@@ -352,9 +354,9 @@ wave_SED, flux_SED, flux_unc_SED = res.data
 p_wave = np.linspace(wave_SED.min() * 0.5, wave_SED.max() * 1.5, 200)
 
 ax.plot(p_wave, res.best_fit_sed(p_wave), 'b--', lw=2.5,
-        label='MBB fit with 24 um', alpha=0.45)
+        label='MBB fit with 24 um', alpha=0.45, zorder=0.5)
 ax.plot(p_wave, res_noMIPS.best_fit_sed(p_wave), '-',
-        color='c', lw=2.5, label='MBB fit without 24 um', alpha=0.45)
+        color='c', lw=2.5, label='MBB fit without 24 um', alpha=0.45, zorder=0.5)
 
 
 # ------- pretty plot configuration below -------
