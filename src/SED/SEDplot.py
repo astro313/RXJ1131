@@ -1,11 +1,14 @@
 '''
 
-Plot SED
+Plot SED with MIPS extrapolation to 24 um and MBB_EMCEE fit
 
-Last Modified: May 24 2016
+Last Modified: June 22 2016
 
 History
 -------
+June 22 2016:
+    - change SED plot figsize, xylim
+    - remove IRAC MIR fit in final full SED plot
 May 24 2016:
     - add using MC to get uncertainties on 24 um
     - use MC best-fit for quote spectral index
@@ -254,32 +257,32 @@ xspan = wave_fg[3:7].max() - wave_fg[3:7].min()
 xspace = space * xspan
 xarray = np.linspace(wave_fg[3:7].min()-space, 24+xspace, 500)
 
-plt.figure()
-plt.errorbar(wave_fg[3:7], flux_fg[3:7], fluxErr_fg[3:7], fmt='.g', ms=8, ecolor='gray', capsize=8, elinewidth=4, capthick=1.5)
-plt.errorbar(wave_host[3:7], flux_host[3:7], fluxErr_host[3:7], fmt='.b', ms=8,
-             ecolor='gray',
-             capsize=8,
-             elinewidth=4, capthick=1.5)
+# plt.figure()
+# plt.errorbar(wave_fg[3:7], flux_fg[3:7], fluxErr_fg[3:7], fmt='.g', ms=8, ecolor='gray', capsize=8, elinewidth=4, capthick=1.5)
+# plt.errorbar(wave_host[3:7], flux_host[3:7], fluxErr_host[3:7], fmt='.b', ms=8,
+#              ecolor='gray',
+#              capsize=8,
+#              elinewidth=4, capthick=1.5)
 
-# plot the fits in MC simulations for fg
-for f, h in zip(fg_MC, host_MC):
-    plt.plot(xarray, powerf(xarray, *f), color="#b44682", alpha=0.2)
-    plt.plot(xarray, powerf(xarray, *h), color="#67A9CF", alpha=0.2)
+# # plot the fits in MC simulations for fg
+# for f, h in zip(fg_MC, host_MC):
+#     plt.plot(xarray, powerf(xarray, *f), color="#b44682", alpha=0.2)
+#     plt.plot(xarray, powerf(xarray, *h), color="#67A9CF", alpha=0.2)
 
-# plot extrapolation
-plt.plot(xarray, powerf(xarray, *fg_MC_fit), 'r--', label='fit slope to FG IRAC')
-plt.plot(xarray, powerf(xarray, *host_MC_fit), 'b--', label='fit slope to host IRAC')
+# # plot extrapolation
+# plt.plot(xarray, powerf(xarray, *fg_MC_fit), 'r--', label='fit slope to FG IRAC')
+# plt.plot(xarray, powerf(xarray, *host_MC_fit), 'b--', label='fit slope to host IRAC')
 
-# Plot the extrapolate flux at 24 um with error bars
-plt.errorbar(24., flux_host_24, fluxerr_host_24, fmt=".b", ms=8, ecolor='gray',
-             label='Extrapolated from fit to decomposed IRAC; Host', capsize=8,
-             elinewidth=4, capthick=1.5)
-plt.errorbar(24., flux_fg_24, fluxerr_fg_24, fmt='.g', ms=8, ecolor='gray',
-             label='Extrapolated from fit to decomposed IRAC; Foreground',
-             capsize=8, elinewidth=4, capthick=1.5)
-plt.xscale('log')
-plt.yscale('log')
-plt.show(block=False)
+# # Plot the extrapolate flux at 24 um with error bars
+# plt.errorbar(24., flux_host_24, fluxerr_host_24, fmt=".b", ms=8, ecolor='gray',
+#              label='Extrapolated from fit to decomposed IRAC; Host', capsize=8,
+#              elinewidth=4, capthick=1.5)
+# plt.errorbar(24., flux_fg_24, fluxerr_fg_24, fmt='.g', ms=8, ecolor='gray',
+#              label='Extrapolated from fit to decomposed IRAC; Foreground',
+#              capsize=8, elinewidth=4, capthick=1.5)
+# plt.xscale('log')
+# plt.yscale('log')
+# plt.show(block=False)
 
 # --------------- Plot Data points ----------------------
 def savefigure(figure, f, verbose=True, dirStr='../../Figures/'):
@@ -311,9 +314,10 @@ font = {'family': 'Arial Narrow',
         'weight': 'bold',
         'size': 15}
 matplotlib.rc('font', **font)
+matplotlib.rc('text', usetex=True)
 
 
-f, ax = plt.subplots()
+f, ax = plt.subplots(figsize=(10, 8))
 f.subplots_adjust(left=0.10, bottom=0.09, top=0.85, right=0.98)
 
 # plot photometry
@@ -325,27 +329,16 @@ ax.errorbar(wave_host, flux_host, fluxErr_host, fmt=".b", ms=8, ecolor='gray',
 ax.errorbar(wave_fg, flux_fg, fluxErr_fg, fmt=".g", ms=8, ecolor='gray',
             label='Foreground', capsize=8, elinewidth=4, capthick=1.5)
 ax.errorbar(waveUpLimit_total, fluxUpLimit_total, uplims=True, fmt="vk", ms=8,
-            ecolor='gray', label='upperlimits', capsize=8, elinewidth=4,
-            capthick=1.5)
-
-# plot least sq result, fit to decomposed IRAC points
-# extrapolate
-space = 0.2
-xspan = wave_fg[3:7].max() - wave_fg[3:7].min()
-xspace = space * xspan
-xarray = np.linspace(wave_fg.min()-xspace, 24+xspace, 500)
-
-# plot extrapolation
-plt.plot(xarray, powerf(xarray, *fg_MC_fit), 'r--', label='fit slope to FG IRAC')
-plt.plot(xarray, powerf(xarray, *host_MC_fit), 'b--', label='fit slope to host IRAC')
+            ecolor='gray', capsize=8, elinewidth=4, capthick=1.5)  # label='upper limits'
 
 # Plot the extrapolate flux at 24 um with error bars
 plt.errorbar(24., flux_host_24, fluxerr_host_24, fmt=".b", ms=8, ecolor='gray',
-             label='Extrapolated from fit to decomposed IRAC; Host', capsize=8,
-             elinewidth=4, capthick=1.5)
+             capsize=8,
+             elinewidth=4, capthick=1.5)    # label='Extrapolated from fit to decomposed IRAC; Host',
+
 plt.errorbar(24., flux_fg_24, fluxerr_fg_24, fmt='.g', ms=8, ecolor='gray',
-             label='Extrapolated from fit to decomposed IRAC; Foreground',
              capsize=8, elinewidth=4, capthick=1.5)
+             # label='Extrapolated from fit to decomposed IRAC; Foreground',
 
 # plot MBB results
 import mbb_emcee
@@ -361,20 +354,21 @@ p_wave = np.linspace(wave_SED.min() * 0.5, wave_SED.max() * 1.5, 200)
 ax.plot(p_wave, res.best_fit_sed(p_wave), 'b--', lw=2.5,
         label='MBB fit with 24 um', alpha=0.45)
 ax.plot(p_wave, res_noMIPS.best_fit_sed(p_wave), '-',
-        color='c', lw=2.5, label='MBB fit w/o 24 um', alpha=0.45)
+        color='c', lw=2.5, label='MBB fit without 24 um', alpha=0.45)
 
 
 # ------- pretty plot configuration below -------
-ax.set_ylim(0.1, 1700.)
+ax.set_ylim(0.001, 2500.)
+ax.set_xlim(0.1, 3e5)
 ax.set_yscale("log")
 ax.set_xscale("log")
 
 ax.set_ylabel(r'$\rm S_{\nu}$ [mJy]', fontsize=16)
 ax.set_xlabel(r'$\lambda_{\rm obs}\ [\mu$m]', fontsize=16, fontweight='bold')
 
-led = plt.legend(loc='best', fontsize=15, numpoints=1,
-                 fancybox=True, borderpad=0.5,
-                 handlelength=2, labelspacing=0.1)
+led = plt.legend(loc='best', fontsize=13, numpoints=1,
+                 fancybox=True, borderpad=0.85,
+                 handlelength=1.5, labelspacing=0.3)
 ax.tick_params(length=14, pad=5)
 
 # get the existing axes limits and convert to an array
@@ -404,3 +398,5 @@ if response.lower() in ['y', 'yes']:
     savefigure(f, plotName)
 else:
     print('...Exiting...')
+    plt.close()
+
