@@ -181,9 +181,9 @@ coordinates in the optical image, where its emission is clearly detected.
 The VLA image is calibrated using a well-monitored phase
 calibrator, with absolute positional accuracy of $\sim$2 mas.
 For this reason, the absolute alignment between the VLA image and other
-interferometric images reported in this paper are expected to have astrometric
+interferometric images reported in this paper are expected to have an astrometric
 precision better than 0\farcs1, modulo uncertainties related to the SNR, phase
-errors, and beam size.
+instabiliy, and beam size.
 \defcitealias{Claeskens06a}{C06}
 
 %--------------------------------------------------------------------------
@@ -1212,55 +1212,86 @@ distributed over a larger extent.
 %                                Discussion
 %--------------------------------------------------------------------------
 \section{Discussion} \label{sec:diss}
-\subsection{Offset from Systemic Redshift of Host Galaxy and Recoiling BH}
+\subsection{Velocity Offset and Recoiling BH}
+Using the redshift deduced from the CO line 
+as the systemic redshift, we find
+a velocity offset of $\sim$780\,\kms with the optical lines:
+the broad Mg{\scriptsize II}~2798\AA\ and the narrow 
+$[$O{\scriptsize III}$]$~4959, 5007\AA\ lines \citep[$z_{\rm AGN} = 0.658$;][]{Sluse03a}.
+This indicates that the broad line region (BLR) of the AGN is at a
+slightly higher redshift than the host galaxy.
+From the CO renzogram and channel maps in \Fig{CO21mom} and \Fig{chanmap}, the emission 
+corresponding to the the line center are not co-spatial
+with the optical quasar. In particular, the quasar emission forms 
+the point-like images along the lensing arc, which is 
+spatially offset to the NW
+of the CO line center emission.
+Spatial offsets between optical BLRs and CO emission are not uncommon
+but such a high kinematic offset is not commonly observed.
+For instance, the
+velocity offset between AGNs and their hosts galaxies in 
+an SDSS sample of ongoing mergers at $z$\,$<$\,0.21 is at most $\sim$410\,km/s \citep{Comerford14a}.
+The same authors also suggest mechanisms
+such as AGN outflows, jets, and gravitational recoil of SMBHs in post-merger
+as plausible explanations for these offsets.
 
-Using the redshift inferred from the line center of the CO gas disk
-$(z_{\rm CO} = 0.6537)$ as the systemic redshift. The velocity offset from
-the optical lines $(z_{\rm AGN} = 0.658)$
-(broad Mg{\sc II}$\lambda$ 2798$\AA$ and narrow lines [O{\sc III}]$\lambda\lambda$ 4959, 5007$\AA$ emission, Sluse03a)
-is $\sim$780\,\kms, which indicates that the
-BLR of the AGN is at a slightly higher z than the host galaxy.
-This is consistent with the CO renzogram, where the emission from the line center channels are not co-spatial. In particular, the lensed QSO emission forms the point-like images along the arc and the lensed emission of the line center is spatially offset to the SE of the QSO lensing arc.
-Such a spatial offset between optical BLR and CO is not uncommon, but the velocity offset is not common.
+AGN outflows or starburst-driven winds have been observed
+in \eg SMMJ1636+4057 \citep[][]{Swinbank05a}, but 
+no evidence for outflows are found in RXJ1131 in the existing data. 
+% an explanation due to the in/outflows arising from radiation pressure or AGN winds.
+Alternatively, it can be an indication of the BH(s) orbiting the a common center in
+the host galaxy.
+In principle, this would only be valid if the velocity offset between the BLR and 
+the narrow line of the gas in the host galaxy is consistent with its orbital velocity. 
+%(\ie carrying along its accretion disc and BLR)
+Since \citet{Sluse03a} only report a redshift combining the broad and narrow lines, 
+% \ie it is unclear what's the velocity offset between MgII and [OIII]
+the lack of a redshift from solely the BLR of the AGN precludes us from interpreting this as the favoured
+explanation for the velocity offset.
+
+In fact, a large velocity offset can also result from a recoiling BH where its
+BLR is moving at high velocity relative to the bulk of the host galaxy and
+the ionized gas \citep{Madau04a, Bonning07a, Loeb07a}. % narrow AGN lines.
+Such a scenario may occur after galaxies and their BHs merge, during which 
+their orbital energy is being released as gravitational wave to overcome the last stable orbit.
+This results in a recoil in the merged BH for an uneven BH mass merger as a
+non-zero net angular momentum is also being carried away.
+Depending on their initial conditions, % mass ratios, spin, rotational direction, 
+numerical relativity simulation have shown that
+the recoil velocity can reach up to $\sim$4000\,\kms for spinning BHs \citep[\eg][]{Campanelli07a}.
+% The BH is displaced from the galactic nucleus in this scenario, and might 
+% return to the center in a few dynamical time-scales 
+% by dynamical friction or be kicked out of the gravitational potential of the host galaxy.
+This together with the fact that the BH in RXJ1131 has a high spin parameter \citep{Reis14a} 
+renders the recoiling BH scenario a viable option for the origin
+of the optical velocity offset.
+To reconcile this picture with the fact that a companion is still observed, 
+the system may be at its subsequent minor merger stages but was intially
+a major merger. 
+This would imply previous encounters between RXJ1131 and its companion, 
+which would also explain the spinning BH.
+
+It is worth noting that
+while these large velocity offsets are theoretically achievable,
+they are not commonly observed --- only a few objects have been reported with optical offsets $\gtrsim$1000\,\kms.  
 For instance,
-AGN in ongoing galaxy mergers are observed to have kinematics offsets in AGN relative to their host galaxies, SDSS sample at z $<$ 0.21, max offset 410 km/s, not accounted for projection effects in the observed velocities.
-elo offsets can be produced by rot. gas disks, AGN outflows, jets, gravi. recoil of SMBH (Comerford \& Greene, 2014, ApJ, 789, 112).
+the most promising candidate of a recoiling BH with both spectroscopy and imaging
+signatures is CID-42 at $z$\,=\,0.359, which has 
+a velocity offset of $\sim$1300\,\kms between the narrow and broad component of H$\beta$ \citep{Civano10a}. 
+% which has a similar velocity offset
+% of $\sim$1300\,\kms between the narrow and broad component of H$\beta$ 
+% in two optical component separated by $\sim$ 2.5 kpc within the same galaxy \citep{Civano10a}. 
+Other examples include 
+the type-1 QSO SDSS 0956+5127 at $z$\,$\sim$\,0.714, with an offset of 1200\,\kms
+between Mg{\scriptsize II}~2798\AA\ and $[$O{\scriptsize III}$]$~4959, 5007\AA\ lines 
+\citep{Steinhardt12a}, 
+and
+SDSSJ0927+2943 at $z$\,$\sim$\,0.713, with an offset of 2650\,\kms \citep{Komossa08a}.
+% shows an exceptional optical emission-line spectrum with two
+% sets of emission lines: one set of very narrow emission lines, and a second set of broad Balmer and
+% broad high-ionization forbidden lines which are blueshifted by 2650 \kms
+% relative to the set of narrow emission lines \citep{Komossa08a}.
 
-which may be kinematic indication of a recoiling BH.
-There are a few reasons to this e.g. SB/AGN driven winds or AGN outflows, jets, gravitational recoil of BH in post-merger. % (Comerford & Greene, 2014, ApJ, 789, 112).
-Here we discuss the possibility of a GW recoiling merged BH.
-The recoiling is expected to happen after the merging because their orbital energy is emitted as GW to overcome the stable orbit for the binary,
-carrying away a non-zero angular momentum for uneven (i.e. not 1:1) BH mass mergers, which at the same time will cause a recoil in the merger BH. Depending on their initial mass ratios, spin, rotational direction, the recoil velocity can reach as high as $\sim$4000\,\kms for spinning BHs, suggested by numerical relativity simulations \citep[\eg][]{Campanelli+07a}
-The BH is displaced from the galactic nucleus in this scenario, and might return to the center in a few dynamical time-scales by dynamical friction or be kicked out of the gravitational potential of the host galaxy.
-In terms of RXJ1131,
-while we still see the gas-rich companion, it could be that they were initially major mergers that had encounter before (causing the high spinning BH), and we are currently witnessing the subsequent minor merger stages.
-
-Alternatively, it can be indication of the BH orbiting in the host galaxy. Since we cannot quantify this further without the separate redshifts based on the broad Mg II and the narrow OIII lines as Slues+03 only report the combined $z$. If we have that, it could be indication of an AGN orbiting the host galaxy (but only if the velocity offset between the BLR and the narrow line of the gas in the host is lower than its orbital velocity), or AGN outflow or SB driven wind as in the case of SMMJ1636+4057\citep{Swinbank05a}.
-
-offset from the galaxy core \citep{Madau04a},
-or in the form of broad emission lines kinematically
-offset from the narrow emission lines \citep{Bonning07a} (\ie carrying along its accretion disc and BLR). Thus offset from narrow lines can also be offset AGN than outflow gas.
-From Slues03 spectrum, doesn't appear to see a broad component and a narrow component or I should say their z is derived using both the broad MgII line and the narrow [OIII] lines, which means we can rule out an explanation due to the in/outflows due to radiation pressure or AGN winds.
-Also we don't see double-peaked in optical lines and are not skewed lines.
-
-% Other objects seen with such big velocity offset:
-It may be worth noting that while such big velocity offset is not commonly
-seen even in mergers, it has been reported in a few objects. For instance,
-the most promising candidate of GW recoiling with both spectroscopy and imaging
-signature:
-CID-42 at z=0.359 has a similar velocity offset ($\sim$1300\,\kms; between the narrow and broad component of H$\beta$) in two
-optical component separated by $\sim$ 2.5 kpc within the same galaxy \citep{Civano10a}, which has been proposed to
-be a good candidate for a recoiling BH.
-
-Also type-1 QSO, SDSS 0956+5127 at $z_{\rm sys}$$\sim$0.714 from narrow lines, and $z_{Mg II}$ at $z\sim$0.707, corresponding to 1200 \kms offset \citep{Steinhardt12a}.
-Other example:
-SDSSJ0927+2943 at $z$$\sim$0.713 shows an exceptional optical emission-line spectrum with two
-sets of emission lines: one set of very narrow emission lines, and a second set of broad Balmer and
-broad high-ionization forbidden lines which are blueshifted by 2650 \kms
-relative to the set of narrow emission lines \citep{Komossa08a}.
-This observation is most naturally explained if the SMBH was ejected from the core
-of the galaxy, carrying with it the broad-line gas while leaving behind the bulk of the narrow-line
-gas.
 %==============================================================================
 %                                Back matters
 %==============================================================================
