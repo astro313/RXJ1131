@@ -1,7 +1,5 @@
 
 \usepackage[breaklinks,colorlinks,citecolor=blue,linkcolor=blue]{hyperref}
-%urlcolor=
-%
 \usepackage{etoolbox}
 
 \makeatletter
@@ -19,15 +17,13 @@
 \patchcmd{\NAT@citex}
   {\@citea\NAT@hyper@{%
      \NAT@nmfmt{\NAT@nm}%
-
-\hyper@natlinkbreak{\NAT@spacechar\NAT@@open\if*#1*\else#1\NAT@spacechar\fi}%
+     \hyper@natlinkbreak{\NAT@spacechar\NAT@@open\if*#1*\else#1\NAT@spacechar\fi}%
        {\@citeb\@extra@b@citeb}%
      \NAT@date}}
   {\@citea\NAT@nmfmt{\NAT@nm}%
-
-\NAT@spacechar\NAT@@open\if*#1*\else#1\NAT@spacechar\fi\NAT@hyper@{\NAT@date}}
+   \NAT@spacechar\NAT@@open\if*#1*\else#1\NAT@spacechar\fi\NAT@hyper@{\NAT@date}}
   {}{}
-
+  
 \makeatother
 %
 \usepackage{xspace}
@@ -52,15 +48,16 @@
 \newcommand{\cco}{\mbox{CO($J$\,=\,3\,\rarr\,2) }}
 \newcommand{\rot}[3][CO]{\mbox{#1($J$\,=\,#2\,\rarr\,#3)}}
 %
-\newcommand{\alphaco}{$\alpha_{\rm CO}$}
 \newcommand{\cii}{[C{\scriptsize II}]}
-\newcommand{\Lp}[1][CO]{\mbox{$L^{\prime}_\textrm{\fontsize{8pt}{12pt}\selectfont{#1}}$}}
-\newcommand{\kms}{km\,s$^{-1}$\xspace}
+\newcommand{\Lp}[1][CO]{\mbox{$L^{\prime}_\textrm{\fontsize{8pt}{12pt}\selectfont{#1}}$}\xspace}
+\newcommand{\kms}{\mbox{km\,s$^{-1}$}\xspace}
 \newcommand{\LpU}{\mbox{K\,\,km\,\,s$^{-1}$\,\,pc$^2$}\xspace}
 \newcommand{\pmOne}{\mbox{$^{-1}$}\xspace}
+\newcommand{\alphaco}{\mbox{$\alpha_{\rm CO}$}\xspace}
+\newcommand{\alphaU}{\mbox{$($K\,\,\kms\,\,pc$^2$$)$\pmOne}}
 \newcommand{\sfrU}{\mbox{\Msun\,yr$^{-1}$}\xspace}
 % Numerical values
-\newcommand{\E}[1]{$\times10^{#1}$}
+\newcommand{\E}[1]{\mbox{$\times10^{#1}$}}
 \newcommand{\petm}[2]{$^{+#1}_{-#2}$}
 \newcommand{\eq}{\,=\,}
 \newcommand{\pmm}{\,$\pm$\,}
@@ -104,7 +101,10 @@
 \newcommand{\lowZ}{low-metallicity\xspace}
 \newcommand{\mulw}{multi-wavelength\xspace}
 \newcommand{\SF}{star formation\xspace}
+\newcommand{\SB}{starburst\xspace}
+\newcommand{\SBs}{starbursts\xspace}
 \newcommand{\gl}{gravitationally lensed\xspace}
+\newcommand{\MCMC}{Markov Chain Monte Carlo (MCMC)\xspace}
 % Wavelength regimes
 \newcommand{\fir}{far-IR\xspace}
 \newcommand{\fuv}{far-UV\xspace}
