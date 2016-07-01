@@ -2,13 +2,16 @@
 !
 ! Plot spatial spectra for CO(2-1) data
 !
-! Last Modified: 27 May 2016
+! Last Modified: 30 June 2016
 !
 ! Author: Daisy Leung
 !
 !
 ! History
 ! -------
+! 30 June 2016:
+! - add arcsec symbol to cmark in pixel
+!
 ! 27 May 2016:
 ! - change mark pixel to mark offset
 ! - change yaxis unit to lower case
@@ -248,7 +251,7 @@ for iwx 1 to nx_box
             let ymark ((iy-aaa%convert[1,3])*aaa%convert[3,3]+aaa%convert[2,3])/sec
             let xmark 0.1*nint(10*xmark)
             let ymark 0.1*nint(10*ymark)
-            let cmark "("'xmark'","'ymark'")"
+            let cmark "("'xmark'"`,"'ymark'"`)"
          else if (mark.eq."pixels") then
             let cmark "("'ix'","'iy'")"
          else
