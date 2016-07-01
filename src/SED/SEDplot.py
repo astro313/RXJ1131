@@ -2,10 +2,12 @@
 
 Plot SED with MIPS extrapolation to 24 um and MBB_EMCEE fit
 
-Last Modified: June 22 2016
+Last Modified: June 30 2016
 
 History
 -------
+June 30 2016:
+    - bigger font
 June 22 2016:
     - change zorder on mbb fits
     - change savefig() save as .pdf instead of .eps to conserve alpha setting in saved figure
@@ -314,7 +316,7 @@ def savefigure(figure, f, verbose=True, dirStr='../../Figures/'):
 
 font = {'family': 'Arial Narrow',
         'weight': 'bold',
-        'size': 15}
+        'size': 18}
 matplotlib.rc('font', **font)
 matplotlib.rc('text', usetex=True)
 
@@ -368,7 +370,7 @@ ax.set_xscale("log")
 ax.set_ylabel(r'$\rm S_{\nu}$ [mJy]', fontsize=16)
 ax.set_xlabel(r'$\lambda_{\rm obs}\ [\mu$m]', fontsize=16, fontweight='bold')
 
-led = plt.legend(loc='best', fontsize=13, numpoints=1,
+led = plt.legend(loc='best', fontsize=15, numpoints=1,
                  fancybox=True, borderpad=0.85,
                  handlelength=1.5, labelspacing=0.3)
 ax.tick_params(length=14, pad=5)
