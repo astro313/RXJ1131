@@ -15,8 +15,10 @@
 dev xlandscape white
 set plot landscape
 pen 0 /col 0 /dash 1 /weight 3
-set box 3.6 29 3.6 17
+set box 3.6 29 3.6 20
+let BOX_LIMITS 3.6 29 3.6 17
 cle
+cle al
 column x 1 y 2 /file full-res_centralChans.spec   ! velo axis w/o shifting, & is in z=0 frame
 
 let x 139.256-(x/299792.458*139.256)
@@ -72,8 +74,8 @@ column x 1 y 2 /file binned_centralChans.spec
 let x 139.256-(x/299792.458*139.256)
 let x x*(1+0.6537)
 let x (((230.538-x)/230.538)*299792.458)
-pen 0 /dash 5 /weight 3
-histo /fill 2
+pen 0 /dash 5 /weight 2
+histo /fill 0
 
 column x 1 y 2 /file de-lensed_RXJ1131_binned.spec
 let x 139.256-(x/299792.458*139.256)
@@ -82,9 +84,6 @@ let x (((230.538-x)/230.538)*299792.458)
 pen /col 0 /dash 1 /weight 4
 histo /base /fill 5
 histo /fill 0
-
-pen 0 /col 0 /dash 1
-box
 pen 0
 
 sic delete de-lensedSpecCO21_complicated.eps
