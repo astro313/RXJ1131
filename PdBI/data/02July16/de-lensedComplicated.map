@@ -1,0 +1,91 @@
+!
+! Plot pseudo spectrum of companion after correcting for diff. lensing.
+!
+!
+! Last modified: 02 July 2016
+!
+! History:
+! 02 July 2016
+!       - created
+!
+! Purpose:
+!       - oplot delensed, lensed full-spec, lensed-binned, annotate
+!
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+dev xlandscape white
+set plot landscape
+pen 0 /col 0 /dash 1 /weight 3
+set box 3.6 29 3.6 17
+cle
+column x 1 y 2 /file full-res_centralChans.spec   ! velo axis w/o shifting, & is in z=0 frame
+
+let x 139.256-(x/299792.458*139.256)
+let x x*(1+0.6537)
+let x (((230.538-x)/230.538)*299792.458)                  ! vel. in z_guess frame
+
+limits -550 550 0 98.0          ! x y range
+axis xlow
+axis xup
+axis yleft
+axis yright
+set expand 1
+label "Velocity offset [km/s]" /x
+label "Flux density [mJy]" /y
+
+! marker location is rest-frame velocity
+set marker 2 0 2.5 0
+draw marker 367.8 87.5 /user
+draw marker 261.045 87.5 /user
+draw marker 153.52 87.5 /user
+draw marker 45.9976 87.5 /user
+draw marker -61.5264 87.5 /user
+draw marker -169.050 87.5 /user
+draw marker -276.573 87.5 /user
+
+set marker 2 0 0.5 90
+draw marker 367.8+55 87.5 /user
+draw marker 367.8-54 87.5 /user
+draw marker 261.045-54.5 87.5 /user
+draw marker 153.52-54 87.5 /user
+draw marker 45.9976-54 87.5 /user
+draw marker -61.5264-54 87.5 /user
+draw marker -169.050-54 87.5 /user
+draw marker -276.573-54.5 87.5 /user
+
+draw text 367.8 90 "7.2" /user
+draw text 261.045 90 "7.6" /user
+draw text 153.52 90 "8.7" /user
+draw text 45.9976 90 "4.1" /user
+draw text -61.5264 90 "4.2" /user
+draw text -169.050 90 "4.3" /user
+draw text -276.573 90 "3.1" /user
+
+pen 0 /dash 3 /weight 4
+histo /fill 2
+
+! pen 0 /col 0 /dash 2 /weight 4
+! let y 0    ! dotted base line
+! connect x y
+pen 0
+
+column x 1 y 2 /file binned_centralChans.spec
+let x 139.256-(x/299792.458*139.256)
+let x x*(1+0.6537)
+let x (((230.538-x)/230.538)*299792.458)
+pen 0 /dash 5 /weight 3
+histo /fill 2
+
+column x 1 y 2 /file de-lensed_RXJ1131_binned.spec
+let x 139.256-(x/299792.458*139.256)
+let x x*(1+0.6537)
+let x (((230.538-x)/230.538)*299792.458)
+pen /col 0 /dash 1 /weight 4
+histo /base /fill 5
+histo /fill 0
+
+pen 0 /col 0 /dash 1
+box
+pen 0
+
+sic delete de-lensedSpecCO21_complicated.eps
+hard de-lensedSpecCO21_complicated.eps /dev eps colo
