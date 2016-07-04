@@ -5,8 +5,13 @@
 ! Last modified: 02 July 2016
 !
 ! History:
+! 03 July 2016
+!       - use log on yaxis
+!       - update color scheme
+!
 ! 02 July 2016
 !       - created
+!       - also plot unbinned de-lensed spectrum for better looking
 !
 ! Purpose:
 !       - oplot delensed, lensed full-spec, lensed-binned, annotate
@@ -25,14 +30,13 @@ let x 139.256-(x/299792.458*139.256)
 let x x*(1+0.6537)
 let x (((230.538-x)/230.538)*299792.458)                  ! vel. in z_guess frame
 
-limits -550 550 0 98.0          ! x y range
-axis xlow
-axis xup
-axis yleft
-axis yright
-set expand 1
-label "Velocity offset [km/s]" /x
-label "Flux density [mJy]" /y
+define real ymin ymax yrange
+let ymax 98
+let ymin 0.01
+let yrange log(ymax)-log(ymin)
+let ymin exp(log(ymin)-0.1*yrange)
+let ymax exp(log(ymax)+0.1*yrange)
+limits -400 500 ymin ymax /ylog         ! x y range
 
 ! marker location is rest-frame velocity
 set marker 2 0 2.5 0
@@ -54,16 +58,18 @@ draw marker -61.5264-54 87.5 /user
 draw marker -169.050-54 87.5 /user
 draw marker -276.573-54.5 87.5 /user
 
-draw text 367.8 90 "7.2" /user
-draw text 261.045 90 "7.6" /user
-draw text 153.52 90 "8.7" /user
-draw text 45.9976 90 "4.1" /user
-draw text -61.5264 90 "4.2" /user
-draw text -169.050 90 "4.3" /user
-draw text -276.573 90 "3.1" /user
+draw text 367.8 107 "7.2" /user
+draw text 261.045 107 "7.6" /user
+draw text 153.52 107 "8.7" /user
+draw text 45.9976 107 "4.1" /user
+draw text -61.5264 107 "4.2" /user
+draw text -169.050 107 "4.3" /user
+draw text -276.573 107 "3.1" /user
 
-pen 0 /dash 3 /weight 4
-histo /fill 2
+pen 0 /dash 3 /weight 5
+histo /base /fill 5
+histo /fill 6
+
 
 ! pen 0 /col 0 /dash 2 /weight 4
 ! let y 0    ! dotted base line
@@ -77,14 +83,22 @@ let x (((230.538-x)/230.538)*299792.458)
 pen 0 /dash 5 /weight 2
 histo /fill 0
 
-column x 1 y 2 /file de-lensed_RXJ1131_binned.spec
+column x 1 y 2 /file de-lensed_RXJ1131_binned.spec    ! de-lensed_RXJ1131_binned.spec
 let x 139.256-(x/299792.458*139.256)
 let x x*(1+0.6537)
 let x (((230.538-x)/230.538)*299792.458)
 pen /col 0 /dash 1 /weight 4
-histo /base /fill 5
+histo /base /fill 4
 histo /fill 0
 pen 0
 
-sic delete de-lensedSpecCO21_complicated.eps
-hard de-lensedSpecCO21_complicated.eps /dev eps colo
+axis xlow
+axis xup
+axis yleft
+axis yright
+set expand 1
+label "Velocity offset [km/s]" /x
+label "Flux density [mJy]" /y
+
+sic delete de-lensedSpecCO21_complicated_binned_ylog.eps
+hard de-lensedSpecCO21_complicated_binned_ylog.eps /dev eps colo
