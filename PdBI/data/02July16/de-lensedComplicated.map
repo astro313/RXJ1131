@@ -2,9 +2,12 @@
 ! Plot pseudo spectrum of companion after correcting for diff. lensing.
 !
 !
-! Last modified: 02 July 2016
+! Last modified: 05 July 2016
 !
 ! History:
+! 05 July 2016
+!       - change yaxis limit
+!
 ! 03 July 2016
 !       - use log on yaxis
 !       - update color scheme
@@ -32,7 +35,7 @@ let x (((230.538-x)/230.538)*299792.458)                  ! vel. in z_guess fram
 
 define real ymin ymax yrange
 let ymax 98
-let ymin 0.01
+let ymin 0.3
 let yrange log(ymax)-log(ymin)
 let ymin exp(log(ymin)-0.1*yrange)
 let ymax exp(log(ymax)+0.1*yrange)
@@ -66,10 +69,9 @@ draw text -61.5264 107 "4.2" /user
 draw text -169.050 107 "4.3" /user
 draw text -276.573 107 "3.1" /user
 
-pen 0 /dash 3 /weight 5
 histo /base /fill 5
-histo /fill 6
-
+pen 0 /dash 3 /weight 5
+histo /fill 11
 
 ! pen 0 /col 0 /dash 2 /weight 4
 ! let y 0    ! dotted base line
@@ -80,10 +82,10 @@ column x 1 y 2 /file binned_centralChans.spec
 let x 139.256-(x/299792.458*139.256)
 let x x*(1+0.6537)
 let x (((230.538-x)/230.538)*299792.458)
-pen 0 /dash 5 /weight 2
+pen 0 /dash 5 /weight 3
 histo /fill 0
 
-column x 1 y 2 /file de-lensed_RXJ1131_binned.spec    ! de-lensed_RXJ1131_binned.spec
+column x 1 y 2 /file de-lensed_RXJ1131.spec    ! de-lensed_RXJ1131_binned.spec
 let x 139.256-(x/299792.458*139.256)
 let x x*(1+0.6537)
 let x (((230.538-x)/230.538)*299792.458)
@@ -100,5 +102,5 @@ set expand 1
 label "Velocity offset [km/s]" /x
 label "Flux density [mJy]" /y
 
-sic delete de-lensedSpecCO21_complicated_binned_ylog.eps
-hard de-lensedSpecCO21_complicated_binned_ylog.eps /dev eps colo
+sic delete de-lensedSpecCO21_complicated_unbinned_ylog.eps
+hard de-lensedSpecCO21_complicated_unbinned_ylog.eps /dev eps colo
