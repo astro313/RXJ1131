@@ -33,6 +33,7 @@ The molecular gas of $M_{\rm gas}$\eq123BLAH\E{10}\,\Msun in the host galaxy
 is extended ($\sim$6\,kpc). An optically faint companion galaxy with gas mass BLAH (gas mass ratio 1:7). 
 RXS J1131-1231 a wet-merger, 
 Dynamical lens modeling, the intrinsic dynamics and blah are suggestive of a rotating disk morphology , consistent with previous results based on optical observations.
+turbulent disk
 is indicative of, and suggests...
 % Our results is consistent with the picture that gas-rich mergers may evolve into small bulge disk galaxies.
 The gas mass fraction of $\sim$19\%, consistent with the trend of decreasing gas fraction at this epoch.
@@ -49,7 +50,7 @@ The gas mass fraction of $\sim$19\%, consistent with the trend of decreasing gas
 %                                Introduction
 %--------------------------------------------------------------------------
 \section{Introduction}
-Studies of galaxy evolution have been focusing on the interplay between baryonic physics
+Studies of galaxy evolution have been focusing on the interplay between baryonic physics/process
 (\eg feedback and gas dissipation) and \SF and active galactic nucleus (AGN) activity across cosmic epochs.
 It is not well-understood when and how baryons of present-day galaxies were assembled, 
 but it is clear that both the co-moving \SF rate and black hole accretion rate densities
@@ -62,8 +63,8 @@ but confirmation from direct molecular gas measurements at intermediate redshift
 $($0.2\,$<$\,$z$\,$<$\,1$)$ is still limited both in number and in the variety of galaxy populations probed --- 
 only unresolved CO observations have been carried out for $\sim$\,70 ULIRGs up to date \citep{Combes11a, Combes13a}.
 
-In the current paradigm, it is posited that every nearby, massive galaxy host a supermassive black hole (SMBH), which
-grows by accretion of the cold molecular gas from its host galaxy.
+% In the current paradigm, it is posited that every nearby, massive galaxy host a supermassive black hole (SMBH), which
+% grows by accretion of the cold molecular gas from its host galaxy.
 Meanwhile, empirical scaling relations such as the Magorrian relation \citep{Magorrian98a}
 --- a tight correlation between black hole mass and stellar bulge mass ---
 have been established locally, implying a self-regulating co-eval growth between local SMBHs and their host galaxies.
@@ -75,12 +76,12 @@ lying above
 the relation \citep[\eg][]{McLure06a,Peng06a}.
 Stellar mass of quasar host galaxies at $z$\,$>$\,4 constrained by their CO-based dynamical mass 
 are also too small compared to that based from the local relation \citep{Walter04a, Riechers08a,Coppin08a}. 
-It is evident that high-$z$ galaxies deviates from the local relation, and among their galaxy populations, but
-the AGN-host galaxy connection at intermediate redshift is still poorly-constrained. 
+While it has become clearer that high-$z$ galaxies deviates from the local relation, and among their galaxy populations, 
+such a picture is still unclear  at intermediate redshift.
 This owes to the difficulties in measuring stellar emission in the host galaxy under the presence of a bright quasar, or alternatively
 owing to the lack of spatially resolved CO observations to provide dynamical constraints on the stellar mass. 
 With gravitational lensing, emission of the background quasar and its host galaxy 
-is magnified and stretched out to different extents, and is projected to different locations in the image plane.
+is magnified and stretched out to different extents, and is projected onto different locations in the image plane.
 This in effect increases the surface brightness contrast between their emission and allows for the
 relatively uncontaminated measurements of their emission. 
 
@@ -89,21 +90,15 @@ The ``Einstein ring'' RXS J113151.62$-$123158 (hereafter RXJ1131)
 at $z_\textrm{s, QSO}$\eq0.685 \citep[hereafter S03]{Sluse03a} is a particularly well-suited source for
 studying the evolution of molecular gas properties in quasar host galaxies and the 
 connection between SMBHs and their host galaxies at intermediate redshift
-given its unique lensing configuration and its redshift.
+given its unique lensing configuration.
 The stellar emission in the host galaxy of RXJ1131 is lensed into
 an Einstein ring of radius 1\farcs83
 that is clearly separated from the quadruply imaged quasar emission \citep[hereafter C06]{Claeskens06a}.
-We have thus carried out a detailed study for RXJ1131, as presented in this paper.
+We have thus carried out a detailed study for RXJ1131 as presented in this paper.
 RXJ1131 is strongly lensed by an elliptical galaxy at $z_\textrm{L}$\eq0.295 \citepalias{Sluse03a}.
-The black hole residing in RXJ1131 is rotating with a high spin parameter
-\citep[$a$\,$\sim$\,0.9;][]{Reis14a}. 
-Previous studies also report a black hole mass of
-\mbh\,$<$\,2\E{8}\Msun\footnote{Various values for the black hole 
-mass have been reported based on the different methods and normalizations used. \citet{Dai10a} find a 
-\mbh\ssim10$^{8}$\,\Msun using the virial estimator with H$\beta$ linewidth,
-and \citet{Pooley07a} report $M_{\rm BH}$\,=\,2.5\E{7}\,\Msun using the
-AGN bolometric luminosity of $L_{\rm bol, X}$ =1.3\E{45}\, ergs\,s\pmOne, 
-assuming $L$$/$$L_\textrm{Edd}$ = 0.25 and $\eta$ = 0.15.}.
+The moderate mass black hole $M_{\rm BH}$\eq8\E{7}\Msun \citep{Sluse12a} %based on H beta line
+residing in RXJ1131 is rotating with a high spin parameter \citep[$a$\,$\sim$\,0.9;][]{Reis14a}, and
+is radiating at an intrinsic bolometric luminosity of $L_{\rm bol, X}$\eq1.3\E{45}\, ergs\,s\pmOne \citep{Pooley07a}.
 
 This paper is structured as follows.
 In \Sec{obs}, we outline the details of the observations and our data reduction process.
@@ -547,7 +542,7 @@ Our code uses an Markov Chain Monte Carlo (MCMC) approach to sample the
 posterior probability distribution function (PDF).
 In each model, we require a target acceptance rate of $\sim$0.25$-$0.5
 and check for chain convergence by inspecting trace plots
-and requiring the samples are beyond at least an autocorrelation time.
+and by requiring the samples are obtained beyond at least an autocorrelation time.
 We thus employ $\sim$50,000 samples as the initial ``burn-in'' phase
 to stabilize the Markov chains (which we then discard) and
 use the final $\sim$5,000 steps, sampled by 128 walkers, to identify
@@ -770,7 +765,7 @@ V = V_0 + \frac{2}{\pi} V_{a} \arctan(\frac{R}{R_{t}}),
 \end{equation}
 where $V$ is the observed velocity, $V_0$ is the velocity at dynamical center,
 $V_{a}$ is the asymptotic velocity, and $R_{t}$ is the ``turnover''
-radius at which the rotation curve becomes flat.
+radius at which the rising part of the curve begins to flatten.
 We perform non-linear least square fitting using an orthogonal distance
 regression to find the best-fit parameters,
 taking into account the uncertainties in both velocity (channel width) and
@@ -783,8 +778,8 @@ corresponding to their uncertainties.
 Using this model, we find $V_{a}$\,=\,975\,$\pm$\,387 \kms,
 $R_{t}$\,=\,10.7\,$\pm$\,5.7\,kpc, and $V_0$\,=\,28\,$\pm$\,40 \kms.
 However, since emission is not resolved along the flat regime
-of the rotation curve, the asymptotic velocity is poorly constrained and
-the ``turnover'' radius is at most an upper limit.
+of the rotation curve, the asymptotic velocity
+and the ``turnover'' radius are poorly constrained.
 In particular, $V_{a}$ and $R_{t}$ are highly correlated with a
 Pearson coefficient $R$\,=\,0.998, and 0.027 between $V_{a}$ and $V_0$.
 
@@ -813,11 +808,11 @@ or $\sim$0.7$R_{\rm opt}$\footnote{Radius enclosing 83\% of the light
 distribution.}) is typically adopted
 as the rotation velocity ($V_{\rm max}$ in their
 terminology) since this corresponds to the radius at which the velocity
-of a pure exponential disk peaks \citep{Courteau97b}.
-We here adopt the maximum {\em observed} velocity
+of a pure exponential disk peaks \citep{Courteau97b}. % \ie commonly use Vmax (taken at R2.2) as V_rot
+Here, we adopt the maximum {\em observed} velocity
 $V_{\rm rot}$\,=\,345\,$\pm$\,55\,\kms at 6\,$\pm$\,3\,kpc from the % line center velo of the reddest channel slice, unc = slice width
 dynamical center as a proxy to the rotation velocity.
-This radius corresponds to $\sim$0.6$R_e$, where $R_e$ is the half-light
+This radius corresponds to $\sim$0.6\,$R_e$, where $R_e$ is the half-light
 radius $\sim$10.3\,kpc inferred from the {\it HST} $I$-band
 lens model (\citetalias{Claeskens06a}; converted to
 our cosmology).
@@ -846,8 +841,7 @@ from interactions with the companion
 \citep[\eg][]{DiMatteo05a}.
 This is consistent with the picture that old stars form first and constitute the bulge component
 of a spiral galaxy and that nuclear starbursts (in the inner few kpc) can be triggered 
-in a later time as the progenitor disk galaxy interacts with other galaxies, 
-and thereby forming a larger bulge.
+at a later time as the progenitor disk galaxy interacts with other galaxies to form a larger bulge.
 
 \subsection{SED Modeling} \label{sec:SED}  % DONE
 We fit dust SED models to the
@@ -1264,90 +1258,93 @@ an E/S0 galaxy. Without these, it is more conceivable that RXJ1131 will retain i
 evolve into a disk galaxy upon its final coalescence with the companion.
 
 \subsection{Velocity Offset and a Recoiling Black Hole}
-Using the CO line center redshift as the systemic redshift, we find
-a velocity offset of $\sim$780\,\kms from the optical
-\mgii line and the \oiii lines \citepalias[$z_{\rm QSO} = 0.658$;][]{Sluse03a}. This implies that the AGN is dynamically offset from the centroid of its host galaxy. 
-From the CO channel maps in \Fig{CO21mom} and \Fig{chanmap}, it is also apparent that the 
-line center of the gas is not co-spatial with the optical quasar as the point-like images
-along the lensing arc
-are spatially offset to the NW of the CO line center.
-While spatial offsets between optical lines and CO line
-have been reported in other galaxies, the velocity offsets are typically $\lesssim$\,500\kms.
-{\bf
-In the classical SDSS analysis for line offsets \citep{Richards02a}?.
-\oiii and \mgii analysis \citep{Boroson05a, Bae14a}?.
-with the corresponding trends and possible explanations?.
-More extreme offsets between CO and optical lines have been seen \citep{Hainline04a} 
-or between \cii and \mgii \citep[\eg][]{Venemans16a}.}
-For instance, the
-velocity offset in
-an SDSS sample of ongoing mergers at $z$\,$<$\,0.21 is at most $\sim$410\,km/s \citep{Comerford14a}.
+%Outflow:
+% Not AGN outflows because require different velocity offsets in Balmer and forbidden lines (Zamanov02a)
+% line origins:
+% \mgii & Hbeta: outer part of the BLR (Goad12a) compared to high-ionization lines (\eg CIV)
+% Hbeta can also come from NLR
 
-A large velocity offset can also result from a recoiling black hole (BH) where its broad line region
-is moving at high velocity relative to the bulk of its host galaxy 
-\citep{Madau04a, Bonning07a, Loeb07a}. 
-Such a scenario is expected to occur 
+\defcitealias{Sluse07a}{S07}
+\citet[hereafter S07]{Sluse07a} report two sets of AGN lines observed in RXJ1131. 
+The first set of lines is at $z$\ssim0.653, including the narrow component of the Balmer lines, the \oiii lines, and the \mgii absorption line; the second set is at $z$\ssim0.658, including the broad component of the Balmer lines and 
+the \mgii emission line.
+Using the CO line center redshift as the systemic redshift, the second set of lines is blueshifted by $\sim$780\,\kms.
+This implies 
+that the broad line region (BLR) of the AGN is dynamically offset from the centroid of its host galaxy.
+We confirm this spatially in the channel maps in \Fig{CO21mom} and 
+\Fig{chanmap}, where the line center of the CO gas is not co-spatial 
+with the optical quasar --- the point-like images along the lensing arc is 
+offset to the NW of the CO line center emission. 
+On the other hand, we find that the redshift of the \oiii lines tracing the narrow line region (NLR) 
+is fully consistent with the systemic redshift, supporting previous claims that \oiii lines are good proxies
+to the true systemic redshift \citep[e.g.,][]{Vrtilek85a, Nelson00a}.
+% since BLR are gravitationally bound to BH, and NLR may not be
+
+%Velocity Offsets of $\lesssim$\,500\,\kms in other AGNs and their host galaxies have been reported in the literature.
+%% In an SDSS sample of ongoing mergers at $z$\,$<$\,0.21, AGN lines are offset by $\lesssim$410\,km/s 
+%\citep[\eg][]{Richards02a, Comerford14a}. % between AGN lines (forbidden, Balmer) and stellar absorption
+
+Large velocity offsets between emission lines of the
+BLR and the NLR may arise in a recoiling black hole (BH),
+% recoiling SMBHs as well as subparsec-scale binary SMBHs produce velocity offsets in the broad AGN emission lines and not the narrow AGN emission lines (e.g., Gaskell 1983; Bonning et al. 2007; Eracleous et al. 2012; Ju et al. 2013; Shen et al. 2013). 
+where its BLR is moving at high velocity relative to the bulk of its host galaxy 
+\citep{Madau04a, Bonning07a, Loeb07a}.
+A recoiling black hole is expected 
 when a pair of uneven mass BH coalesce, during which their orbital energy is being released 
 as gravitational wave and a 
 non-zero net angular momentum is being carried away.
 Depending on their initial conditions, numerical relativity simulations have shown that
 the recoil velocity can reach up to $\sim$4000\,\kms for spinning BHs \citep[\eg][]{Campanelli07a}.
-%While such large velocity offsets are theoretically achievable,
-%they are not commonly observed --- only a few objects 
-%have been reported with optical offsets $\gtrsim$1000\,\kms. For instance,
-%the most promising candidate with both spectroscopy and imaging
+Several sources have been proposed as recoiling BH candidates, such as CID-42 at $z$\,=\,0.359 \citep{Civano10a} and
+SDSS 0956+5127 at $z$\,$\sim$\,0.714 \citep{Steinhardt12a}.
+%To date, the most promising candidate with both spectroscopy and imaging
 %signatures of a recoiling BH is CID-42 at $z$\,=\,0.359, with 
 %an offset of $\sim$1300\,\kms between the narrow and broad component of H$\beta$ \citep{Civano10a}.
-%Other example includes the type-1 QSO SDSS 0956+5127 at $z$\,$\sim$\,0.714, with an offset of 1200\,\kms
-%between Mg{\scriptsize II}~2798\AA\ and $[$O{\scriptsize III}$]$~4959, 5007\AA\ lines
-%\citep{Steinhardt12a}. % but here its between CO and optical lines
-%% SDSSJ0927+2943 at $z$\,$\sim$\,0.713, with an offset of 2650\,\kms \citep{Komossa08a}, but disproved by Decarli+14; Hence, I am going to cut this out because I listed this source here just to demonstrate the scarcity of high velocity offsets; but the offset in this system is between a set of redshifted versus a set of blueshifted.. which is not quite the same our case here.
+%This is similar to the case here for RXJ1131, where the two components of H$\beta$ are offset by 
+%\ssim550\,\kms.
+%Other example of recoiling BH 
+%includes the type-1 QSO SDSS 0956+5127 at $z$\,$\sim$\,0.714, with an offset of 1200\,\kms 
+%between \mgii and \oiii lines \citep{Steinhardt12a}.
+One notable system is SDSSJ0927+2943 at $z$\,$\sim$\,0.713, \citet{Komossa08a} 
+suggest the possibility of a recoiling black hole in this system due to an offset of 2650\,\kms 
+between a set of narrow emission lines and a second set of broad Balmer 
+and high-ionization forbidden lines.  % offset in this system: between a set of redshifted (narrow) versus a set of blueshifted (broad).
+However, this scenario is refuted recently by \citet{Decarli14a}, who confirm that the
+BLR lines in SDSSJ0927+2943 are consistent with the CO systemic redshift.
+This is in contrast with the case in RXJ1131, our CO observations confirm the blueshifted BLR lines.
 The fact that the BH in RXJ1131 has a high spin parameter \citep{Reis14a}
-renders this scenario a viable option for the origin
-of the velocity offset. 
-However, since this model requires a merged BH, this interpretation would imply RXJ1131 have 
-already encountered with the companion galaxy, which is consistent with
+renders the recoiling BH scenario a viable option for the origin of the blueshift. 
+Since this model requires a merged BH, this interpretation would imply RXJ1131 have 
+already encountered with the companion galaxy, which could explain
 the highly spinning BH observed in RX1131.
-Given the presence of a nearby companion observed in our data, the system may be in its 
+In this picture, the presence of a nearby companion observed in our data may reflect that RXJ1131 is in its 
 subsequent stages of (minor) merging resulting from previous passage of a major merger.
-
-As demonstrated here using \mgii and \oiii lines, large velocity offsets between CO and optical lines may be present.
-We thus caution against the use of optical lines as 
-true systematic redshift indicators as the resulting redshift can deviate from the 
-true value.
 
 \subsection{The $M_{\rm BH}$$-$\mdyn Relation}
 % the gas mass of RXJ1131 is 1.3\E{10}\,\Msun, 
 % dynamical mass in RXJ1131 is $\sim$8.3\E{10}\,\Msun 
 % total dust mass in the merging system is $\sim$2-4\E{8}\,\Msun,  % using CO magnification factor
 Assuming RXJ1131 follows the local $M_{\rm BH}$$-$$M_{\rm bulge}$ relation reported by \citet{HR04a}, 
-the virial-based black hole mass \mbh$\sim$\,6\E{7}\,\Msun \citep{Peng06a} corresponds 
-to a stellar bulge mass of $M_{\rm bulge}$\eq4.2\E{10}\,\Msun.
-This implies that the bulge component is responsible for making up roughly half the dynamical mass. 
-If we subtract the black hole mass, gas mass, and dust mass\footnote{Here, we adopt the lowest dust mass among the two SED models to derive an upper limit on the stellar mass.}
+the virial-based black hole mass \mbh$\sim$\,8\E{7}\,\Msun \citep{Sluse12a} corresponds 
+to a stellar bulge mass of $M_{\rm bulge}$\eq5.4\E{10}\,\Msun.
+% \ie $M_{\rm BH}$/$M_{\rm bulge}$\ssim0.15\% or equivalently $\log{M_{\rm BH}/M_{\rm bulge}}$\ssim$-$2.83
+This implies that the bulge component is responsible for making up $\sim$65\% of the dynamical mass. 
+If we subtract the black hole mass, gas mass, and dust mass\footnote{Here, we adopt the lowest dust mass among the two SED models to derive an upper limit on the stellar mass. Since the dust mass only contributes a small fraction of the total mass, a factor of $\sim$2 difference is minor.}
 from the dynamical mass and ignore a contribution from the dark matter, this would
 yield an upper limit on the stellar mass of 6.8\E{10}\,\Msun. 
-Thus, the bulge mass derived above based on the local relation is not physically infeasible.
+Thus, the bulge mass derived above based on the local relation is not unphysical.
 The stellar mass upper limit would also imply a lower limit on the 
-$M_{\rm BH}$$/$$M_{\rm bulge}$ ratio of $\sim$0.09\%, which falls below the local relation 
-but is consistent within the range found in other intermediate-$z$ radio-loud AGNs \citep{McLure06a}. 
-A dark matter fraction of over $f_{\rm DM}$\ssim0.6 would be needed for RXJ1131 to 
+$M_{\rm BH}$$/$$M_{\rm bulge}$ ratio of $\sim$0.12\%, which is consistent with the local relation within the scatter and with other intermediate-$z$ radio-loud AGNs \citep{McLure06a}. 
+%Depending on the exact dark matter fraction, RXJ1131 may lie above the local $M_{\rm BH}$/$M_{\rm bulge}$.
+
+A dark matter fraction of over $f_{\rm DM}$\ssim0.5 within the radius of which we used to derive the 
+dynamical mass (\ie $\lesssim$\,6\,kpc or $\sim$\,0.6$R_e$) would be required for RXJ1131 to 
 lie above the local relation and fall outside the range of $M_{\rm BH}$$/$$M_{\rm bulge}$ found in 
-\citep{McLure06a}. 
-% local: $M_{\rm BH}$/$M_{\rm bulge}$\ssim0.14\% or equivalently $\log{M_{\rm BH}/M_{\rm bulge}}$\ssim$-$2.85, 
-
-\subsection{Dynamical lens modeling of high-$z$ quasars}
-%
-Riechers08a is the only other similar system at emission in host galaxy lensed into an Einstein ring configuration and
-with dynamical lens modeling of CO.
-Which also velocity gradient.
-Constraints on the.
-
-\subsection{Others}
-Comparing the spatial extents of the CO with the stellar components traced by {\it HST}\\
-The dusty nature of this system?? \\
-compare to Riechers08a \\=
-{\bf compare to J04135 in R13} \\
+\citet{McLure06a}, which is unlikely given its dynamical mass and rotation velocity 
+% \ie based on the dark matter fraction as a function of half light radius found; Figure 2 in Courteau15
+% Courteau15a: f<0.5 at 0.6*Re for gal. with cir. velocity like RXJ1131
+\citep{Courteau15a}.
+% $f_\textrm{DM}$ is expected to increase with cosmic time \citep{Beifiori14a} and that the local DM fraction is 16-28% from dynamical studies \citep{Thomas11a, Cappellari13a} and based on predictions from simulations of 18%-38% \citep{Naab07a}.
 
 %--------------------------------------------------------------------------
 %                                Conclusions
@@ -1365,6 +1362,10 @@ thermalized excitation between these lines in other ULIRGs.
 The (gas) mass ratio, the intrinsic CO line profile,
 and the source-plane velocity field are all evident of
 a minor merger, in good agreement with previous studies of RXJ1131 in the optical \citepalias{Claeskens06a,Brewer08a}. 
+{\bf Say more about dusty nature, IR luminous, gas-rich, CO and stellar emission.}
+We were able to compare the CO size with the stellar size because of lensing, and the uniqueness of this source. 
+From dynamical constraints on the companion and the fact that RXJ1131 is optically bright, implies 
+a large portion of the dust from SED fitting is residing in the companion and not RXJ1131. %so probably also means dust magnification factor is quite different, probably higher, because the companion CO magnification is also higher than the median CO, implying its in a lensing configuration with higher magnification.
 
 % explicit discussion of RXJ1131 being IR luminous, and gas-rich
 The intrinsically symmetric double-horned line profile, the smooth and
@@ -1417,13 +1418,17 @@ arising from perturbations in the disk from/interactions with the companion.
 %Our results indicate a self-consistent picture of ... followed by gravitationally instability and SF in a massive, gas-rich disk and a subsequent build-up of a central bulge through inflow triggered by disk installbilities and/or minor merger.
 Theoretical simulations suggest disk in progenitor galaxy may be retained post-merging in gas-rich 
 mergers. BLAH. Thus, the merging system studied here will likely evolve into a merged disk galaxy.
+The nature of the merger system of RXJ1131 is quite distinct from that of SMM J04135$+$10277 \citep[hereafter J04135][]{Riechers13a}.
 
 % broader
 The use of dynamical mass as a proxy to the \bhrelation have been proposed in a few high-$z$ studies 
 but requires resolved observations to provide constraints on the spatial extent tracing the potential of 
 the host galaxy. Lensing likely the the way to allow observations of quasar emission and 
 host galaxy emission. Dynamical lens modeling provides a promising avenue to study the velocity 
-structure and dynamics of the cold gas in greater detail. 
+structure and dynamics of the cold gas in quasars in greater detail. 
+To study high-z quasars.Riechers08a is the only other similar system at emission in host galaxy lensed into an Einstein ring configuration and
+with dynamical lens modeling of CO.
+Which also velocity gradient.
 To date, only a few other studies using similar techniques \eg other luminous,
 gas-rich interacting galaxies and mergers.
 This study of RXJ1131 serves as a benchmark/demonstrate the use of gravitational lensing and 
