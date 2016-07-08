@@ -2,9 +2,13 @@
 ! Plot pseudo spectrum of companion after correcting for diff. lensing.
 !
 !
-! Last modified: 05 July 2016
+! Last modified: 08 July 2016
 !
 ! History:
+! 08 July 2016
+!       - change xaxis, yaxis limit
+!       - make square box
+!
 ! 05 July 2016
 !       - change yaxis limit
 !
@@ -23,8 +27,7 @@
 dev xlandscape white
 set plot landscape
 pen 0 /col 0 /dash 1 /weight 3
-set box 3.6 29 3.6 20
-let BOX_LIMITS 3.6 29 3.6 17
+set box 3.6 20 3.6 20
 cle
 cle al
 column x 1 y 2 /file full-res_centralChans.spec   ! velo axis w/o shifting, & is in z=0 frame
@@ -35,11 +38,11 @@ let x (((230.538-x)/230.538)*299792.458)                  ! vel. in z_guess fram
 
 define real ymin ymax yrange
 let ymax 98
-let ymin 0.3
+let ymin 0.8
 let yrange log(ymax)-log(ymin)
 let ymin exp(log(ymin)-0.1*yrange)
 let ymax exp(log(ymax)+0.1*yrange)
-limits -400 500 ymin ymax /ylog         ! x y range
+limits -350 450 ymin ymax /ylog         ! x y range
 
 ! marker location is rest-frame velocity
 set marker 2 0 2.5 0
