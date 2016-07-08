@@ -192,7 +192,7 @@ Map Noise:
 
 #### CO (3-2):
 - natural weighting beam size: **3.19 x 1.86 PA: 8 deg**
-- **channel width = 2x17.935 = 35.87 km/s**
+- **channel width = 2x17.935 = 35.87 km/s <=> 25 MHz**
 - Theoretical rms noise: 8.834E-03 Jy/B per channel
 - map off region rms: 13.1957 mJy/B per channel (before clean);  1.32997E-02 Jy/B per channel (after clean)
 - image cubes: /Users/admin/Research/RXJ1131/CARMA/imagingD23/
@@ -200,12 +200,25 @@ Map Noise:
 - ~ chan [49,70]
 
 ##### Intensity from summing up fluxes within velo range guided by CO21
+(for paper)
 - I = 35.7 Jy km/s from `go view`
 - Update channel range to be consistent with the velocity range used to get the new CO21 Intensity (124-156)
 - --> integrated over velocity width ~ 710 km/s
 - Channel:     48-68
 - velocity:   -441.57, 278.79
 - I_sigma: see below
+###### Moment 0 map using chan 48-68: LSB_withCont.co32_quarter_chan48_68.mom0.fits
+-script: CARMA/imagingD23/moments0.csh
+- gildas noise ~2.5 Jy/B
+- cell size = 0.25"^2 per pix
+- MAPPING> extrema /compute    
+  - Xmin =  7.75702E-05  Xmax = -7.63582E-05
+  - Ymin = -7.75702E-05  Ymax =  7.63582E-05
+  - Zmin =  -8.2859      at X = -2.42407E-05  Y = -4.24212E-05
+  - Zmax =   12.480      at X = -1.57564E-05  Y = -8.48424E-06
+- --> go nice show max 5*sigma contour, where sigma = 2.5 Jy km/s /B
+- consistency check: Zmax / noise ~ 5*sigma
+- `let spacing -1` & `levels -3*2.5 -1*2.5 2.5 3*2.5 4*2.5 5*2.5 6*2.5`
 
 see CARMA/specOPlot/README.md (Deprecated)
 - I = 37.1 Jy km/s from `go view`
