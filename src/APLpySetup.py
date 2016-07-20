@@ -81,7 +81,9 @@ def standard_plot_setup(sp, ra_center, dec_center, size, tickc='black'):
 
     sp.axis_labels.set_font(size='xx-large', weight='bold')      # (size='12')
     sp.axis_labels.set_xtext('Right Ascension (J2000)')
+#    sp.axis_labels.set_xtext(u'$\\mathrm{Right}$'+' '+u'$\\mathrm{Ascension}$' + ' ' + u'$\\mathrm{(J2000)}$')
     sp.axis_labels.set_ytext('Declination (J2000)')
+#    sp.axis_labels.set_ytext(u'$\\mathrm{Declination}$'+' '+u'$\\mathrm{(J2000)}$')
     sp.axis_labels.set_xpad(5)
     sp.axis_labels.set_ypad(-25)
     sp.axis_labels.set_xposition('bottom')
