@@ -3,7 +3,7 @@
 \tabletypesize{\scriptsize}
 \tablecolumns{4}
 \tablecaption{Photometry data}
-\tablehead{\colhead{Wavelength} & \colhead{Frequency} & \colhead{Flux Density} & \colhead{Instrument}\\ 
+\tablehead{\colhead{Wavelength} & \colhead{Frequency} & \colhead{Flux Density} & \colhead{Instrument}\\
 \colhead{$\micron$} & \colhead{GHz} & \colhead{mJy} & \colhead{ } \vspace{0.05in}
 \\  \cline{1-4} \vspace{-0.05in} \\
 \multicolumn{4}{c}{Combined/Unresolved}
@@ -30,7 +30,7 @@
 500     & 599.585 & 56.8 $\pm$ 8.8      & {\it Herschel}/SPIRE \\
 1387.93 & 216     & $<$2.492            & CARMA \\
 2152.82 & 139.256 & 1.230 $\pm$ 0.220   & PdBI \\
-\cutinhead{Foreground Lensing Galaxy} \\ [-1.5ex]
+\cutinhead{Foreground Lensing Galaxy (deblended bands)} \\ [-1.5ex]
 0.555   & 540167  & 0.056 $\pm$ 0.006   & {\it HST}-ACS/V-Band \\
 0.814   & 368295  & 0.238 $\pm$ 0.013   & {\it HST}-ACS/I-Band \\
 1.6     & 187370  & 0.539 $\pm$ 0.041   & {\it HST}-NICMOS(NIC2)/H-Band \\
@@ -40,21 +40,22 @@
 8.0     & 37474.1 & 4.589 $\pm$ 0.0057\tna  & {\it Spitzer}/IRAC \\
 2152.82 & 139.256 & 0.799 $\pm$ 0.082   & PdBI \\
 61414   & 4.8815  & 0.866 $\pm$ 0.027   & VLA \\
-\cutinhead{Background Galaxy RXJ1131}
-0.555   & 540167  & 0.009 $\pm$ 0.0041  & {\it HST}-ACS/V-Band \\
-0.814   & 368295  & 0.041 $\pm$ 0.0054  & {\it HST}-ACS/I-Band \\
-1.6     & 187370  & 0.133 $\pm$ 0.004   & {\it HST}-NICMOS(NIC2)/H-Band \\
+\cutinhead{Background Galaxy RXJ1131 (deblended bands)}
+0.555   & 540167  & 0.009 $\pm$ 0.0041\tnb  & {\it HST}-ACS/V-Band \\
+0.814   & 368295  & 0.041 $\pm$ 0.0054\tnb  & {\it HST}-ACS/I-Band \\
+1.6     & 187370  & 0.133 $\pm$ 0.004\tnb   & {\it HST}-NICMOS(NIC2)/H-Band \\
 3.6     & 83275.7 & 5.034 $\pm$ 0.0021  & {\em Spitzer}/IRAC \\
 4.5     & 66620.5 & 6.009 $\pm$ 0.0017  & {\em Spitzer}/IRAC \\
 5.8     & 51688.4 & 7.557 $\pm$ 0.003   & {\it Spitzer}/IRAC \\
 8.0     & 37474.1 & 9.881 $\pm$ 0.0039  & {\it Spitzer}/IRAC\\
-2152.82 & 139.256 & 0.400 $\pm$ 0.082\tnb   & PdBI \\
-61414   & 4.8815  & 1.273 $\pm$ 0.042   & VLA  
+2152.82 & 139.256 & 0.400 $\pm$ 0.082\tnc   & PdBI \\
+61414   & 4.8815  & 1.273 $\pm$ 0.042   & VLA
 \enddata
 \label{tab:photometry}
 \tablecomments{The IRAC photometry for channel 1 (3.6\,$\micron$) is extracted directly from the image and
 from the Spitzer Heritage Archive for channels 2$-$4 (4.5, 5.8, and 8.0\,$\micron$). All upper limits are 3$\sigma$.}
-\tablenotetext{a}{Flux obtained using aperture photometry after subtracting the emission of RXJ1131 from the total emission. }
-\tablenotetext{b}{Flux extracted from the residual map after subtracting a point-source model.}
+\tablenotetext{a}{Flux obtained using aperture photometry after subtracting the emission of RXJ1131 from the total emission.}
+\tablenotetext{b}{A contribution from the quasar has been removed (see C06), and thus the flux density corresponds to the host galaxy only.}
+\tablenotetext{c}{Flux extracted from the residual map after subtracting a point-source model.}
 \tablerefs{The {\it HST} photometry is taken from C06.}
 \end{deluxetable}
