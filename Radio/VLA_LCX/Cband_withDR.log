@@ -3,67 +3,9 @@ Last login: Fri Mar 18 14:47:20 2016 from dhcp-ccc-2771.eduroam.cornell.edu
 
 dleung@serenity:~$ echo $DISPLAY
 localhost:10.0
-dleung@serenity:~$ aips tv=local:10
-START_AIPS: Will use or start first available Unix Socket based TV
-START_AIPS: Your initial AIPS printer is the
-START_AIPS:  - system name , AIPS type
 
-START_AIPS: User data area assignments:
-DADEVS.PL: This program is untested under Perl version 5.010
-  (Using private file /data/dleung/.dadevs for DADEVS.PL)
-   Disk 1 (1) is /data/dleung/AIPS_DISKS/AREA1
-   Disk 2 (2) is /data/dleung/AIPS_DISKS/AREA2
-
-Tape assignments:
-   Tape 1 is REMOTE
-   Tape 2 is REMOTE
-
-START_AIPS: Starting TV servers on serenity asynchronously
-START_AIPS:  - WITH Unix Sockets as requested...
-START_AIPS: Starting TPMON daemons on SERENITY asynchronously...
-Starting up 31DEC15 AIPS with normal priority
-Begin the one true AIPS number 1 (release of 31DEC15) at priority =   0
-AIPS 1: ZDCHIN: NO NETSP ENTRY FOR DA01
-AIPS 1: ZDCHIN: NO NETSP ENTRY FOR DA02
-AIPS 1: You are not on a local TV device, welcome stranger
-AIPS 1: You are assigned TV device/server   2
-AIPS 1: You are assigned graphics device/server   2
-AIPS 1: Enter user ID number
-?DADEVS.PL: This program is untested under Perl version 5.010
-UNIXSERVERS: TVSRV1 is already running on host serenity, user dleung
-UNIXSERVERS: Start XAS1 on serenity, DISPLAY localhost:10.0
-XAS: ** TrueColor FOUND!!!
-XAS: Cannot use shared memory on remote XAS link
-Host name is SERENITY, display shows it at LOCALHOST
-XAS: !!! Shared memory not selected !!!
-XAS: Using screen width 2550 height 1318,
-     max grey level 8191 in 16 grey-scale memories
-UNIXSERVERS: Start graphics server TKSRV1 on serenity, display localhost:10.0
-UNIXSERVERS: Start message server MSSRV1 on serenity, display localhost:10.0
-STARTPMON: [SERENITY] Starting TPMON1 with output SUPPRESSED
-ZVTPO3: tcp/aipsmt0 is not a service
-ZVTPO3: check /etc/services or NIS map!
-?101
-AIPS 1:                          31DEC15 AIPS:
-AIPS 1:      Copyright (C) 1995-2016 Associated Universities, Inc.
-AIPS 1:            AIPS comes with ABSOLUTELY NO WARRANTY;
-AIPS 1:                 for details, type HELP GNUGPL
-AIPS 1: This is free software, and you are welcome to redistribute it
-AIPS 1: under certain conditions; type EXPLAIN GNUGPL for details.
-AIPS 1: Previous session command-line history recovered.
-AIPS 1: TAB-key completions enabled, type HELP READLINE for details.
-AIPS 1: Recovered POPS environment from last exit
 >kleenex
-AIPS 1: Begin check for any 'standard' scratch files
-AIPS 1: Scratch files -- destroyed:    0  still active:    0
-AIPS 1: Destroyed empty user catalog on disk   1
-AIPS 1: Destroyed empty user catalog on disk   2
-AIPS 1: User  101:    33 messages, oldest written 16-MAR-2016  18:17:11
-AIPS 1: Deleted      0 messages
-AIPS 1: Saved POPS environment in area named 'LASTEXIT'
-XAS: Quitting NOW.
-AIPS 1: Session command-line history saved.
-AIPS 1: serenity 31DEC15 TST: Cpu=      0.0  Real=     18  IO=         2
+
 dleung@serenity:~$ export PATH1=/data/dleung/DATA/RXJ1131/Radio/VLA_LCX/
 dleung@serenity:~$ aips tv=local:10
 START_AIPS: Will use or start first available Unix Socket based TV
