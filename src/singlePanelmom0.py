@@ -6,11 +6,13 @@ Plot mom0 of all channels overlay on HST (single panel)
 Author: Daisy Leung
 
 
-Last edited: 28 May 2016
+Last edited: 20 july 2016
 
 
 History:
 --------
+20 July 2016
+    - change zoom & HST contrast to match RedBlue.py
 28 May 2016:
     - increase font size
     - longer ticks
@@ -43,6 +45,7 @@ from APLpySetup import *
 path = '../HST/'
 Plotpath = '../Figures/'
 
+mpl.rcdefaults()
 font = {'family': 'Arial Narrow',
         'weight': 'normal',
         'size': 13.5}
@@ -74,7 +77,7 @@ figC.clf()
 ########################################
 ra_center = 172.96434563888
 dec_center = -12.5328629
-sizep = 0.0021
+sizep = 0.002
 
 ra_cross, dec_cross = ra_center, dec_center
 row_a = 0.1
@@ -95,7 +98,7 @@ tickcolor = 'k' if inverted_HSTleft else 'white'
 ########################################
 fig1 = aplpy.FITSFigure(label['F555W_drzcroplinearShift'][0],
                         figure=figC, subplot=[x0, row_a, full_width, dy])
-fig1.show_grayscale(stretch='log', vmin=-0.02, vmax=20, vmid=-0.025)
+fig1.show_grayscale(stretch='log', vmin=-0.00256, vmax=1.922, vmid=-0.02)
 if inverted_HSTleft: fig1.set_theme('publication')
 ########################################
 # Contours

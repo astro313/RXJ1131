@@ -1,12 +1,14 @@
 """
 Author: Daisy Leung
 
-Last edited: 27 May 2016
+Last edited: 20 July 2016
 
 Purpose:
 - Overlay 2mm Cont contour on HST
 
 History:
+July 20 2016:
+    - change zoom to match VLA image (HSTVLA.py)
 May 27 2016:
     - update aspect ratio
 May 17 2016:
@@ -32,6 +34,7 @@ from APLpySetup import *
 path = '../HST/'
 Plotpath = '../Figures/'
 
+mpl.rcdefaults()
 font = {'family': 'Arial Narrow',
         'weight': 'normal',
         'size': 11.5}
@@ -40,6 +43,7 @@ xtick = {'major.size': 10,
 ytick = {'major.size': 10,
          'minor.size': 6}
 mpl.rc('font', **font)
+mpl.rcParams.update({'font.size': 11.5})
 mpl.rc('xtick', **xtick)
 
 label = dict.fromkeys(['F555W_drzcroplinearShift'])
@@ -63,7 +67,7 @@ figC = plt.figure(1)
 ########################################
 ra_center = 172.96434563888
 dec_center = -12.5328629
-sizep = 0.002058066
+sizep = 0.00215 # 0.002058066
 
 ra_cross, dec_cross = ra_center, dec_center
 row_a = 0.1
@@ -126,7 +130,7 @@ standard_plot_setup(fig1, ra_center, dec_center, sizep, tickc='white')
 # standard_plot_setup(figHST, ra_center, dec_center, sizep, tickc='white')
 # standard_plot_setup(figred, ra_center, dec_center, sizep, tickc='white')
 #figO.tick_labels.hide()
-#figO.axis_labels.hide()
+# fig0.axis_labels.hide()
 # figred.tick_labels.hide()
 # figred.axis_labels.hide()
 

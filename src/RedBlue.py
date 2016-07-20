@@ -38,6 +38,7 @@ from APLpySetup import *
 path = '../HST/'
 Plotpath = '../Figures/'
 
+mpl.rcdefaults()
 font = {'family': 'Arial Narrow',
         'weight': 'normal',
         'size': 13.5}
