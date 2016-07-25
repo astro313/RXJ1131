@@ -4,9 +4,11 @@
 plot source locations from lens model of various channel as markers on observed 1st moment map.
 Kinematics.
 
-Last Modified: 19 June 16
+Last Modified: 25 July 2016
 
 History:
+25 July 2016:
+  - update alpha for 1st moment overplot
 19 June 2016:
   - change z of source from 0.6357 to 0.6537
   - fix latex rendering ylabel
@@ -83,7 +85,7 @@ import wcsaxes
 import numpy as np
 from astropy.cosmology import WMAP9
 
-
+matplotlib.rcdefaults()
 font = {'family': 'Arial Narrow',
         'weight': 'bold',
         'size': 18}
@@ -199,7 +201,7 @@ im = ax.imshow(dat, origin="lower", norm=norm, cmap=cmap, alpha=0.65)
 cont_list = [interval * i for i in range(-10, 10) if i != 0]
 ax.contour(dat,
            cont_list,
-           colors='black', alpha=0.5)
+           colors='black', alpha=1.0)
 ax.plot([LensRA_PX], [LensDEC_PX], marker='x', zorder=5,    # lens galaxy
          mec='black', ms=8, mew=1.75)
 
@@ -266,7 +268,7 @@ if User_input == 'Y':
     fig.savefig(Plotpath + filename, dpi=100,
                 bbox_inches="tight", pad_inches=0.1)
     print "-- Saved figure as : %s --" % (Plotpath + filename)
-
+import sys; sys.exit()
 # -------------------------------
 theta_rad = abs(np.arctan((dec_coord_ls[0] - dec_coord_ls[-1]) / ((ra_coord_ls[0] - ra_coord_ls[-1]) * np.cos(np.mean(dec_coord_ls) * np.pi/180.))))
 theta_deg = theta_rad * 180. / np.pi

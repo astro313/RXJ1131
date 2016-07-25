@@ -2,9 +2,12 @@
 ! Plot pseudo spectrum of companion after correcting for diff. lensing.
 !
 !
-! Last modified: 08 July 2016
+! Last modified: 25 July 2016
 !
 ! History:
+! 25 July 2016
+!       - change y axis limit for VLA17A proposal
+!
 ! 08 July 2016
 !       - change xaxis, yaxis limit
 !       - make square box
@@ -38,7 +41,7 @@ let x (((230.538-x)/230.538)*299792.458)                  ! vel. in z_guess fram
 
 define real ymin ymax yrange
 let ymax 98
-let ymin 0.8
+let ymin 1.2
 let yrange log(ymax)-log(ymin)
 let ymin exp(log(ymin)-0.1*yrange)
 let ymax exp(log(ymax)+0.1*yrange)
