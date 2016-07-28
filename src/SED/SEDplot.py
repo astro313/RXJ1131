@@ -2,10 +2,12 @@
 
 Plot SED with MIPS extrapolation to 24 um and MBB_EMCEE fit
 
-Last Modified: June 30 2016
+Last Modified: July 28 2016
 
 History
 -------
+July 28 2016:
+    - change alpha and color for MBB fit
 June 30 2016:
     - bigger font
 June 22 2016:
@@ -313,7 +315,6 @@ def savefigure(figure, f, verbose=True, dirStr='../../Figures/'):
     figure.savefig(dirStr + f + '.pdf', dvi=600, bbox_inches='tight')
     print('... Saved Figure: {:s}').format(dirStr + f + '.eps')
 
-
 font = {'family': 'Arial Narrow',
         'weight': 'bold',
         'size': 18}
@@ -355,10 +356,11 @@ res_noMIPS = mbb_emcee.mbb_results(h5file=filename_noMIPS)
 wave_SED, flux_SED, flux_unc_SED = res.data
 p_wave = np.linspace(wave_SED.min() * 0.5, wave_SED.max() * 1.5, 200)
 
-ax.plot(p_wave, res.best_fit_sed(p_wave), 'b--', lw=2.5,
-        label='MBB fit with 24 um', alpha=0.45, zorder=0.5)
+ax.plot(p_wave, res.best_fit_sed(p_wave), 'k--', lw=1.25,
+        label='MBB fit with 24 um', alpha=1.0, zorder=0.65)
 ax.plot(p_wave, res_noMIPS.best_fit_sed(p_wave), '-',
-        color='c', lw=2.5, label='MBB fit without 24 um', alpha=0.45, zorder=0.5)
+        color='b', lw=1.25, label='MBB fit without 24 um',
+        alpha=0.9, zorder=0.5)
 
 
 # ------- pretty plot configuration below -------
