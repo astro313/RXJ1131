@@ -1,5 +1,10 @@
 '''
 
+change the best-fit (.sed) values into flux [mJy] versus microns.
+
+
+
+
 If we want to plot on the mbb_fit?... but the data points on that was not lensing corrected...
 
 Maybe want to make a bigger plot to also show the delensed?
