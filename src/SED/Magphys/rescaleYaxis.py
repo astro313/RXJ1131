@@ -37,11 +37,13 @@ y_at = x * 10**(atten_lambLum) * Lsun_to_cgs      # total attenuated SED
 y_un = x * 10**(unatten_lambLum) * Lsun_to_cgs    # unattenuated SED
 
 
-# need to divide by Area^2 and Hz^-1?
+# need to divide by Hz^-1 or cm^-1
 # ergs/s/cm
 y_at_ = y_at / (x*1e-8)
 y_un_ = y_un / (x*1e-8)
 
+# dlam / dnu = c/nu^2 = lam^2/c
+# L_nu = L_lam * dlam / dnu = L_lam * lam^2 /c
 # from 1/cm to /hz
 y_at_ *= (x*1e-8)**2 /3.e10
 y_un_ *= (x*1e-8)**2 /3.e10
