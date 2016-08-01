@@ -4,9 +4,11 @@
 plot source locations from lens model of various channel as markers on observed 1st moment map.
 Kinematics.
 
-Last Modified: 25 July 2016
+Last Modified: 31 July 2016
 
 History:
+31 July 2016:
+  - add option to do PV fit using lmfit
 25 July 2016:
   - update alpha for 1st moment overplot
 19 June 2016:
@@ -119,6 +121,7 @@ plotMajor_FirstMom = False
 plotPV = True
 plotRot = True
 plotODR_arctan = False
+lmfit = False
 # -----------------------------------------------
 #  Read fits file and Set up WCS
 # -----------------------------------------------
@@ -802,5 +805,118 @@ err_pfit_MC = Nsigma * np.std(ps, 0)
 print "\n MC method :"
 print "pfit = ", mean_pfit
 print "perr = ", err_pfit_MC
+
+
+if lmfit:
+    xdataPV_err = list(xerr[:4])
+    _blue = -xerr[4:]
+    for i in range(len(_blue)): xdataPV_err.append(_blue[i])
+    xdataPV_err = np.array(xdataPV_err)
+
+    from lmfit import Parameters, minimize, Minimizer, report_fit, report_errors, conf_interval2d, conf_interval, report_ci
+
+
+    def arctang2p(p, R_kpc):
+        vcsini, r_t, v_0 = p['vcsini'].value, p['r_t'].value, p['v_0'].value
+        return vcsini*(2./np.pi)*np.arctan(R_kpc/r_t) + v_0
+
+    err_arctang2p = lambda p, x, y, xerr, yerr: ((arctang2p(p, x) - y)/(xerr**2. + yerr**2.)**0.5)**2
+
+
+    p_arctang2p = Parameters()
+    p_arctang2p.add('r_t', value=3., min=0.1, max=15)
+    p_arctang2p.add('vcsini', value=50., min=0., max=1000.)
+    p_arctang2p.add('v_0', value=50., min=0.)
+
+    minner_arctang2p = Minimizer(err_arctang2p, p_arctang2p, fcn_args=(xdataPV, np.array(z), xdataPV_err, yerr))
+    fitout_arctang2p = minner_arctang2p.minimize()
+    report_fit(fitout_arctang2p)
+    # [[Fit Statistics]]
+    #     # function evals   = 74
+    #     # data points      = 7
+    #     # variables        = 3
+    #     chi-square         = 0.352
+    #     reduced chi-square = 0.088
+    #     Akaike info crit   = -14.928
+    #     Bayesian info crit = -15.090
+    # [[Variables]]
+    #     r_t:      10.7504224 +/- 6.986341 (64.99%) (init= 3)
+    #     vcsini:   974.812953 +/- 567.5189 (58.22%) (init= 50)
+    #     v_0:      32.5218778 +/- 8.678262 (26.68%) (init= 50)
+    # [[Correlations]] (unreported correlations are <  0.100)
+    #     C(r_t, vcsini)               =  0.997
+    #     C(r_t, v_0)                  =  0.299
+    #     C(vcsini, v_0)               =  0.263
+
+    #
+    # calc. CI for parameters
+    # parameter for which CI is calc will be varied, while others are re-optimzied
+    # resulting chi-sq is used to calc. the prob. w/ a given statistics (e.g. F-    stat)
+    ci, trace = conf_interval(minner_arctang2p, fitout_arctang2p, sigmas=[0.68, 0.95], trace=True)  # to plot "profile traces"
+
+    # Look and see if the estimates symmetric or asymmetric?
+    # One can only assumed uncer. correspond to those from covariance matrix if the correlation plots is elliptical, which isn't in most cases
+    report_ci(ci)
+    #           95.00%    68.00%    _BEST_    68.00%    95.00%
+    # r_t   :  -6.12896  -3.99844  10.75042  +0.79096  +1.40594
+    # vcsini:-483.24360-322.71178 974.81295      +inf      +inf
+    # v_0   : -18.36988  -8.08144  32.52188  +7.28447 +16.06363
+
+    # to demonstrate the asymmetric in CI using correlation plots
+    # here we plot profile traces
+    # to plot depedence betwee parameters
+    cx1, cy1, prob = trace['r_t']['r_t'], trace['r_t']['vcsini'], trace['r_t']['prob']
+    cx2, cy2, prob2 = trace['vcsini']['vcsini'], trace['vcsini']['r_t'], trace['vcsini']['prob']
+    plt.scatter(cx1, cy1, c=prob, s=30)
+    plt.scatter(cx2, cy2, c=prob2, s=30)
+    # plt.gca().set_xlim((150, 200))
+    # plt.gca().set_ylim((-130, -100))
+    plt.xlabel('$r_t$')
+    plt.ylabel('vcsini')
+    plt.show()
+
+    # Error ellipse (contour where the chi-2 increase by some unit) from its mimimum
+    #
+    # NOTE: the "1sigma" ellipse != 68% confidence region; instead the projection of the 1sigma ellipse are the 68% confidence intervals (assuming normality) for the 1D subspace
+    #
+    # fixing for r_t and vcsini
+    x, y, grid_arctang2p = conf_interval2d(minner_arctang2p, fitout_arctang2p, 'r_t', 'vcsini')
+    plt.contour(x, y, grid_arctang2p)
+    plt.title(" blah % of time within certain region")
+    plt.xlabel('$r_t$')
+    plt.ylabel('vcsini')
+    plt.show()
+
+    plt.contourf(x, y, grid_arctang2p, np.linspace(0, 1, 11))   # normalized prob. 0 to 1
+    plt.colorbar()
+    plt.xlabel('$r_t$')
+    plt.ylabel('vcsini')
+    plt.show()
+
+    # reformat bestfit parameters
+    pars_arctang2p = [fitout_arctang2p.params['r_t'].value, fitout_arctang2p.params['vcsini'].value, fitout_arctang2p.params['v_0'].value]
+fit_arctang2p = arctang2p(fitout_arctang2p.params, xarray)  # extrapolate
+resid_arctang2p = arctang2p(fitout_arctang2p.params, xdataPV) - np.array(z)
+
+fig3 = plt.figure()
+f1 = fig3.add_axes((.1, .3, .8, .6))
+plt.errorbar(xdataPV, np.array(z), yerr, xerr, 'k.')     # data
+pgh, = plt.plot(xarray, fit_arctang2p, 'b')  # fit
+f1.set_xticklabels([])
+plt.title('LMFit')
+plt.ylabel('Velocity (km s$^{-1}$)')
+f1.legend([pgh],
+          ['best-fit'],
+          prop={'size': 10}, loc='center left')
+
+# avoid tick label overlap
+from matplotlib.ticker import MaxNLocator
+plt.gca().yaxis.set_major_locator(MaxNLocator(prune='lower'))
+
+f2 = fig3.add_axes((.1, .1, .8, .2))
+plt.plot(xdataPV, resid_arctang2p, 'k--')
+plt.ylabel('Residuals')
+plt.xlabel('R kpc')
+plt.show()
 
 
