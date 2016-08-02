@@ -2,10 +2,12 @@
 
 Plot SED with MIPS extrapolation to 24 um and MBB_EMCEE fit
 
-Last Modified: July 28 2016
+Last Modified: Aug 1 2016
 
 History
 -------
+Aug 1 2016:
+    - update boiler plate for MPL
 July 28 2016:
     - change alpha and color for MBB fit
 June 30 2016:
@@ -43,8 +45,28 @@ Note
 '''
 
 import numpy as np
-import matplotlib.pyplot as plt
 import matplotlib
+
+# font = {'family': 'Arial Narrow',
+#         'weight': 'bold',
+#         'size': 18}
+# matplotlib.rc('font', **font)
+# matplotlib.rc('text', usetex=True)
+
+
+matplotlib.rcParams.update({#'figure.figsize': (8, 5),    # inches
+                            'font.size': 18,      # points
+                            'legend.fontsize': 16,      # points
+                            'text.usetex': True,
+                            'font.family': "Arial Narrow",
+                            'font.weight': 'bold',
+                            'lines.linewidth': 1.5,       # points
+                            'axes.linewidth': 1.5,       # points
+                            'font.family': "simplex"
+                            })
+
+import matplotlib.pyplot as plt
+
 
 photoFile = 'RXJ1131photometry.dat'
 plotName = 'FullSED'
@@ -314,13 +336,6 @@ def savefigure(figure, f, verbose=True, dirStr='../../Figures/'):
             print "... Directory {:s} exists...".format(dirStr)
     figure.savefig(dirStr + f + '.pdf', dvi=600, bbox_inches='tight')
     print('... Saved Figure: {:s}').format(dirStr + f + '.eps')
-
-font = {'family': 'Arial Narrow',
-        'weight': 'bold',
-        'size': 18}
-matplotlib.rc('font', **font)
-matplotlib.rc('text', usetex=True)
-
 
 f, ax = plt.subplots(figsize=(10, 8))
 f.subplots_adjust(left=0.10, bottom=0.09, top=0.85, right=0.98)
