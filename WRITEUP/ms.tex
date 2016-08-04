@@ -981,14 +981,14 @@ To minimize contaminations from the quasar, we only fit to the {\it HST}, {\it H
 where both the {\it HST} and the PdbI 2\,mm photometry are de-blended from the AGN
 (see bottom section of \Tab{photometry}).
 The input photometry are corrected for lensing using their respective magnification factors
-to account for differential lensing.
+to account for differential lensing (light blue circles in \Fig{SED}).
 We thus find a stellar mass of $M^*$\eq2.95\petm{1.32}{0.86}\E{10}\,\Msun, which
 is the median value of the posterior probability distribution and
 the uncertainties are derived from the 16$^{\rm th}$ and 84$^{\rm th}$ percentiles.
 We note that the models are over-fitted with a best-fit $\chi^2$\eq0.41
 which is unsurprising due to sparse sampling of the SED
 compare to the number of free parameters.
-The resulting dust mass and \LIR are consistent with those obtained
+The resulting dust mass and IR luminosity are consistent with those obtained
 from the MBB$+$power-law models within the uncertainties, albeit some differences
 in the assumptions behind the two methods.
 The consistency may be attributed to the large uncertainties arising from the lack of photometric constraints on the models and the fact that the best-fit parameters from the MBB method are similar to those of the \ncode{magphys} method.
@@ -1003,12 +1003,16 @@ The consistency may be attributed to the large uncertainties arising from the la
 % aperture used in IRAC extraction (both from archive).
 \begin{figure}[!htbp]
 \centering
-\includegraphics[trim=5 5 5 5, clip, width=0.45\textwidth]{../Figures/FullSED}
-\caption{SEDs of RXJ1131 at $z$\eq0.654 and its lensing galaxy at $z$\eq0.295.
-The photometry data (colored markers) are not corrected for lensing (see \Tab{photometry}).
-Best-fit SED models of the thermal dust emission towards RXJ1131
-are obtained assuming a MBB$+$power-law model.
-The dashed (solid) line corresponds to a model with (without) MIR constraint at 24\,$\micron$, respectively.
+\includegraphics[trim=5 5 5 5, clip, width=0.445\textwidth]{../Figures/FullSED_withMagphys}
+\caption{SEDs of the host galaxy of RXJ1131 at 
+$z_{\rm CO}$\eq0.654 and of the lensing galaxy at $z$\eq0.295.
+The photometry data (colored markers) are listed in \Tab{photometry}, except for those
+shown in light blue circles, which are corrected for lensing magnification (see \Sec{SED}).
+Assuming an MBB$+$power-law model for the thermal dust emission towards RXJ1131,
+the dashed (dashed-dotted) line corresponds to the best-fit model 
+with (without) MIR constraint at 24\,$\micron$.
+The solid black line shows the best-fit SED model with dust attenuation (light blue solid line)
+obtained using the \ncode{magphys} code.
 \label{fig:SED}}
 \end{figure}
 
