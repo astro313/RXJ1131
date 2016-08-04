@@ -395,10 +395,10 @@ res_noMIPS = mbb_emcee.mbb_results(h5file=filename_noMIPS)
 wave_SED, flux_SED, flux_unc_SED = res.data
 p_wave = np.linspace(wave_SED.min() * 0.5, wave_SED.max() * 1.5, 200)
 
-ax.plot(p_wave, res.best_fit_sed(p_wave), 'k--', lw=1.25,
+ax.plot(p_wave, res.best_fit_sed(p_wave), 'k--',
         label='MBB fit with 24 um', alpha=1.0, zorder=0.65)
-ax.plot(p_wave, res_noMIPS.best_fit_sed(p_wave), '-',
-        color='#152863', lw=1.25, label='MBB fit without 24 um',
+ax.plot(p_wave, res_noMIPS.best_fit_sed(p_wave), '-.',
+        color='#152863', label='MBB fit without 24 um',
         alpha=0.9, zorder=0.5)
 
 
@@ -424,7 +424,7 @@ ax.set_xscale("log")
 ax.set_ylabel(r'S$_{\nu}$ [mJy]', fontsize=16)
 ax.set_xlabel(r'$\lambda_{\rm obs}$ [$\mu$m]', fontsize=16, fontweight='bold')
 
-led = plt.legend(loc='upper right', fontsize=13, numpoints=1,
+led = plt.legend(loc='upper right', fontsize=14, numpoints=1,
                  fancybox=True, borderpad=0.8,
                  handlelength=1.25, labelspacing=0.3)
 ax.tick_params(length=14, pad=5)
