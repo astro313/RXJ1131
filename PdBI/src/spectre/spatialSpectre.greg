@@ -2,13 +2,16 @@
 !
 ! Plot spatial spectra for CO(2-1) data
 !
-! Last Modified: 30 June 2016
+! Last Modified: 7 Aug 2016
 !
 ! Author: Daisy Leung
 !
 !
 ! History
 ! -------
+! 7 Aug 2016:
+! - define cmark with more char to fit the whole label
+!
 ! 30 June 2016:
 ! - add arcsec symbol to cmark in pixel
 !
@@ -98,7 +101,7 @@ gtvl\clear alpha
 !
 !
 define double xmark ymark
-define character old_type*12 cmark*12
+define character old_type*12 cmark*15
 !
 !
 !
