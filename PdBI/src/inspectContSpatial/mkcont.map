@@ -1,0 +1,214 @@
+!
+! from imaging.map: we made cont. using channels 1 120 165 360
+! see PdBI/data/04Sep16/co21_trial1_cont.uvt
+!
+
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+!
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+begin procedure click-pause
+  !
+  g\draw relo
+  if (cursor_code.eq."E") then
+     message w click-pause "Exiting"
+     return base
+  endif
+  !
+end procedure click-pause
+!
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+
+! where the .uvt file is
+def char NewPath*50
+sic\let NewPath = "/Users/admin/Research/RXJ1131/PdBI/data/16Aug16/"
+sic DIRECTORY 'NewPath'
+
+define char UVTname*40
+sic\let UVTname = "co21_trial1"
+
+
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+!! Continuum
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+say ""
+say " *** Make continuum uvt "
+
+! prefix
+let name cont_test
+
+
+! try 1-100
+let first 1
+let last 100
+
+
+sic delete uv_average.init
+sic out uv_average.init
+say "TASK\CHARACTER ""I"" UV_INPUT$ """'UVTname'".uvt"""
+say "TASK\CHARACTER ""O"" UV_OUTPUT$ """'name'"-"'first'"-"'last'".uvt"""
+say "TASK\CHARACTER ""C"" RANGES$ """'first' 'last'""""
+say "TASK\CHARACTER ""T"" CTYPE$ ""CHANNEL"""
+say "TASK\GO"
+sic out
+run uv_average uv_average.init /nowin
+
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+!!! image continuum
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+let name 'name'"-"'first'"-"'last'
+!!! determine clean parameters for uv_map
+go UVSTAT WEIGHT
+say " need to change uv_cell? for best weighting scheme"
+@click-pause
+input uv_map
+@ click-pause
+let map_size 256
+let map_cell 0.5
+go uv_map
+
+sys "ls -hltr"
+@ click-pause
+let first 0
+let last 0
+let size 20
+go bit
+@ click-pause
+go noise
+@ click-pause
+
+fits 'name'.fits from 'name'.lmv
+
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+!!! Repeat for cont. created from chan 200 - 350
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+!
+! try 200 350
+!
+
+let name cont_test
+let first 200
+let last 350
+
+sic delete uv_average.init
+! sic delete *.amx
+sic out uv_average.init
+say "TASK\CHARACTER ""I"" UV_INPUT$ """'UVTname'".uvt"""
+say "TASK\CHARACTER ""O"" UV_OUTPUT$ """'name'"-"'first'"-"'last'".uvt"""
+say "TASK\CHARACTER ""C"" RANGES$ """'first' 'last'""""
+say "TASK\CHARACTER ""T"" CTYPE$ ""CHANNEL"""
+say "TASK\GO"
+sic out
+run uv_average uv_average.init /nowin
+
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+!!! image continuum
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+let name "cont_test-"'first'"-"'last'
+!!! determine clean parameters for uv_map
+
+input uv_map
+let map_size 256
+let map_cell 0.5
+go uv_map
+
+sys "ls -hltr"
+@ click-pause
+let first 0
+let last 0
+let size 20
+go bit
+@ click-pause
+go noise
+@ click-pause
+
+fits 'name'.fits from 'name'.lmv
+
+
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+!!! Repeat for cont. created from chan 225 - 325
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+
+let name cont_test
+let first 225
+let last 325
+
+sic delete uv_average.init
+! sic delete *.amx
+sic out uv_average.init
+say "TASK\CHARACTER ""I"" UV_INPUT$ """'UVTname'".uvt"""
+say "TASK\CHARACTER ""O"" UV_OUTPUT$ """'name'"-"'first'"-"'last'".uvt"""
+say "TASK\CHARACTER ""C"" RANGES$ """'first' 'last'""""
+say "TASK\CHARACTER ""T"" CTYPE$ ""CHANNEL"""
+say "TASK\GO"
+sic out
+run uv_average uv_average.init /nowin
+
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+!!! image continuum
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+let name "cont_test-"'first'"-"'last'
+!!! determine clean parameters for uv_map
+
+input uv_map
+let map_size 256
+let map_cell 0.5
+go uv_map
+
+sys "ls -hltr"
+@ click-pause
+let first 0
+let last 0
+let size 20
+go bit
+@ click-pause
+go noise
+@ click-pause
+
+fits 'name'.fits from 'name'.lmv
+
+
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+!!! Repeat for cont. created from chan 1-50
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+
+let name cont_test
+let first 1
+let last 50
+
+sic delete uv_average.init
+! sic delete *.amx
+sic out uv_average.init
+say "TASK\CHARACTER ""I"" UV_INPUT$ """'UVTname'".uvt"""
+say "TASK\CHARACTER ""O"" UV_OUTPUT$ """'name'"-"'first'"-"'last'".uvt"""
+say "TASK\CHARACTER ""C"" RANGES$ """'first' 'last'""""
+say "TASK\CHARACTER ""T"" CTYPE$ ""CHANNEL"""
+say "TASK\GO"
+sic out
+run uv_average uv_average.init /nowin
+
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+!!! image continuum
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+let name "cont_test-"'first'"-"'last'
+!!! determine clean parameters for uv_map
+
+input uv_map
+let map_size 256
+let map_cell 0.5
+go uv_map
+
+sys "ls -hltr"
+@ click-pause
+let first 0
+let last 0
+let size 20
+go bit
+@ click-pause
+go noise
+@ click-pause
+
+fits 'name'.fits from 'name'.lmv
+
+
+
+! compare w/ the continuum image we got (see 10Nov15/co21_trial1_cont.fits)
