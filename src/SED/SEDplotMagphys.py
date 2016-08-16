@@ -3,10 +3,12 @@
 Plot SED with MIPS extrapolation to 24 um and MBB_EMCEE fit
 + magphys and de-lensed photometry
 
-Last Modified: Aug 4 2016
+Last Modified: Aug 16 2016
 
 History
 -------
+Aug 16 2016:
+    - update label micron
 Aug 4 2016:
     - copied from SEDplot.py
     - added MAGPHYS best-fit
@@ -358,8 +360,9 @@ def savefigure(figure, f, verbose=True, dirStr='../../Figures/'):
             os.mkdir(dirStr)
         else:
             print "... Directory {:s} exists...".format(dirStr)
-    figure.savefig(dirStr + f + '.pdf', dvi=600, bbox_inches='tight')
-    print('... Saved Figure: {:s}').format(dirStr + f + '.eps')
+    ext = '.pdf'
+    figure.savefig(dirStr + f + ext, dvi=600, bbox_inches='tight')
+    print('... Saved Figure: {:s}').format(dirStr + f + ext)
 
 f, ax = plt.subplots(figsize=(10, 8))
 f.subplots_adjust(left=0.10, bottom=0.09, top=0.85, right=0.98)
@@ -396,9 +399,9 @@ wave_SED, flux_SED, flux_unc_SED = res.data
 p_wave = np.linspace(wave_SED.min() * 0.5, wave_SED.max() * 1.5, 200)
 
 ax.plot(p_wave, res.best_fit_sed(p_wave), 'k--',
-        label='MBB fit with 24 um', alpha=1.0, zorder=0.65)
+        label='MBB fit with 24 '+r'$\mu$m', alpha=1.0, zorder=0.65)
 ax.plot(p_wave, res_noMIPS.best_fit_sed(p_wave), '-.',
-        color='#152863', label='MBB fit without 24 um',
+        color='#152863', label='MBB fit without 24 '+r'$\mu$m',
         alpha=0.9, zorder=0.5)
 
 
