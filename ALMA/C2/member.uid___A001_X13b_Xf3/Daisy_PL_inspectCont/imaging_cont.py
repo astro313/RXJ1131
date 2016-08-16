@@ -8,8 +8,8 @@ History:
   - modified up to making .ms for all SBs, USBs, and LSBs; then making clean & dirty images of the full SB cont
 
 Note:
-- only ran up to making a clean image using all SBs
-- in the future, if we want to generate separate images for the LSB or the USB, will have to modified the remaning code that are currently commented out
+- only ran up to making a clean image using all SBs & LSB
+- in the future, if we want to generate separate images for the USB, will have to modified the remaning code that are currently commented out
 
 Make dirty and clean continuum images
 
@@ -59,8 +59,10 @@ print '-- Create an Averaged Continuum MS of Both Basebands--'
 plotms(vis=outputvis, xaxis='channel', yaxis='amp', ydatacolumn='data', avgtime='1e8s', avgscan=True, avgchannel='2', iteraxis='spw')
 
 
-plotms(vis=outputvis, xaxis='channel', yaxis='amp', ydatacolumn='data', avgtime='1e8s', avgscan=True, spw='2,6')
+plotms(vis=outputvis, xaxis='channel', yaxis='amp', ydatacolumn='data', avgtime='1e8s', avgscan=True, spw='2:100~300,6:100~300')
 # chan ~170-210 is line
+
+plotms(vis=outputvis,xaxis='velocity', yaxis='amp', avgtime='1e7', avgscan=T, restfreq='139.40738949023GHz', xselfscale=T, freqframe='LSRK', transform=T, correlation='XX,YY', spw='2,6', avgbaseline=True)
 
 plotms(vis=outputvis, xaxis="frequency", yaxis="amp",
        avgtime='1e7', avgscan=True, avgbaseline=True)
@@ -326,91 +328,112 @@ viewer(clnimage)
 # print '>> Dynamic range: '+str(peak/rms)
 
 
-# # ------------ Repeat for basebnad continuum image --------------
-# #=====================================================================
-# # Make dirty continuum map of RXJ1131
-# #
+# ------------ Repeat for basebnad continuum image --------------
+#=====================================================================
+# Make dirty continuum map of RXJ1131
+#
 
-# print '-- Clean (make dirty continuum image) --'
+print '-- Clean (make dirty continuum image) --'
 
-# contimagename = prefix.replace('RXJ1131', 'RXJ1131_contL')
-# imname = contimagename + '.dirty'
-# for ext in ['.flux', '.image', '.mask', '.model', '.pbcor', '.psf', '.residual', '.flux.pbcoverage']:
-#     rmtables(imname + ext)
+contimagename = contvisL[:contvisL.find('.ms')]
+imname = contimagename + '.dirty'
+for ext in ['.flux', '.image', '.mask', '.model', '.pbcor', '.psf', '.residual', '.flux.pbcoverage']:
+    rmtables(imname + ext)
 
-# default('clean')
+default('clean')
 
-# vis = contvisL
-# imagename = imname
+vis = contvisL
+imagename = imname
 
-# mode = 'mfs'
-# psfmode = 'clark'
-# imsize = [256]
-# cell = ['0.75arcsec']
-# niter = 0
-# threshold = 0
-# stokes = 'I'
-# interactive = False
+mode = 'mfs'
+psfmode = 'clark'
+imsize = [640]
+cell = ['0.07arcsec']
+niter = 0
+threshold = 0
+stokes = 'I'
+interactive = False
 
-# # weighting = 'briggs'
-# # robust = 0.5
+weighting = 'briggs'
+robust = 0.5
 
-# saveinputs('clean', prefix + '.contL.invert.saved')
+saveinputs('clean', prefix + '.contL.invert.saved')
 
-# # Pause script if you are running in scriptmode
-# if scriptmode:
-#     inp()
-#     user_check = raw_input('Return to continue script\n')
+# Pause script if you are running in scriptmode
+if scriptmode:
+    inp()
+    user_check = raw_input('Return to continue script\n')
 
-# clean()
+clean()
 
-# dirtyimage = imname + '.image'
-# viewer(dirtyimage)
-# # get offline rms
-# rms = 0.45        # mJy/beam
+dirtyimage = imname + '.image'
+viewer(dirtyimage)
+# get offline rms
+rms = 1.9e-5
 
-# #=====================================================================
-# #
-# # Make and clean continuum map of RXJ1131
-# #
-# print '-- Clean (clean) Continuum image --'
+#=====================================================================
+#
+# Make and clean continuum map of RXJ1131
+#
+print '-- Clean (clean) Continuum image --'
 
-# contimagename = prefix.replace('RXJ1131', 'RXJ1131_contL')
-# imname = contimagename + '.clean'
-# for ext in ['.flux', '.image', '.mask', '.model', '.pbcor', '.psf', '.residual', '.flux.pbcoverage']:
-#     rmtables(imname + ext)
+imname = contimagename + '.clean'
+for ext in ['.flux', '.image', '.mask', '.model', '.pbcor', '.psf', '.residual', '.flux.pbcoverage']:
+    rmtables(imname + ext)
 
-# default('clean')
+default('clean')
 
-# vis = contvisL
-# imagename = imname
+vis = contvisL
+imagename = imname
 
-# mode = 'mfs'
-# psfmode = 'clark'
-# imsize = [256]
-# cell = ['0.75arcsec']
-# niter = 10000
-# threshold = rms
-# stokes = 'I'
-# interactive = True
-# threshold = threshold
+mode = 'mfs'
+psfmode = 'clark'
+imsize = [640]
+cell = ['0.07arcsec']
+niter = 10000
+threshold = rms
+stokes = 'I'
+interactive = True
+threshold = threshold
 
-# # Set up the weighting
-# # Use Briggs weighting (a moderate value, on the uniform side)
-# # weighting = 'briggs'
-# # robust = 0.5
+# Set up the weighting
+# Use Briggs weighting (a moderate value, on the uniform side)
+# weighting = 'briggs'
+# robust = 0.5
 
-# saveinputs('clean', prefix + '.contL.clean.saved')
+saveinputs('clean', prefix + '.contL.clean.saved')
 
-# # Pause script if you are running in scriptmode
-# if scriptmode:
-#     inp()
-#     user_check = raw_input('Return to continue script\n')
+# Pause script if you are running in scriptmode
+if scriptmode:
+    inp()
+    user_check = raw_input('Return to continue script\n')
 
 
-# clean()
+clean()
 
-# clnimage = imname + '.image'
+clnimage = imname + '.image'
+
+
+# convolve w/ the beam size of our PdBI obs.
+BMJ = 4.44
+BMN = 1.95
+BPAa = 13.0
+
+# smooth images
+inputimage = clnimage
+outputimage = inputimage + '.smooth'
+imsmooth(imagename=inputimage,
+         outfile=outputimage,
+         kernel='gauss',
+         major=str(BMJ)+'arcsec',
+         minor=str(BMN)+'arcsec',
+         pa=str(BPAa)+'deg',
+         targetres=True
+        )
+
+viewer(outputimage)
+
+
 # #=====================================================================
 # #
 # # Done with imaging
@@ -655,3 +678,23 @@ viewer(clnimage)
 # print '>> Peak: '+str(peak)
 
 # print '>> Dynamic range: '+str(peak/rms)
+
+
+# Maybe we didn't exclude all the line channels when making LSB cont., maybe we just excluded the red wing CO..?
+# if we just make the LSB cont. using the line-free channels, is the background still brighter than the fg cont?
+
+dirtyimage = '/Users/admin/Research/RXJ1131/ALMA/C2/member.uid___A001_X13b_Xf3/Daisy_PL_inspectCont/RXJ1131_cont_spw3_7.dirty'
+
+clean(vis=splitms,
+      imagename=dirtyimage,
+      spw='3,7',
+      mode='mfs',
+      interactive=False,
+      imsize=[640, 640],
+      cell='0.07arcsec',
+      niter=0)
+
+dirtyim = dirtyimage + '.image'
+viewer(dirtyim)
+
+# --> still.. bg is brighter
