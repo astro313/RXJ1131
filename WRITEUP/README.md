@@ -28,6 +28,7 @@
   - 5 sigma photometry sensitivity = 5.4 mJy
 - cite: WISE: Wright+10
 3. 2MASS
+- probably the 2MASS South: http://www.ipac.caltech.edu/2mass/releases/allsky/doc/figures/seciii2bf1.gif
 - there are also values on NED, but with much larger aperture
 - The ones listed below ~ enclosing the Einstein Ring
 - J band (1.25 µm; instrumental FWHM = 2.9"):
