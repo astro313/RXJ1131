@@ -4,9 +4,11 @@
 plot source locations from lens model of various channel as markers on observed 1st moment map.
 Kinematics.
 
-Last Modified: 31 July 2016
+Last Modified: 29 Aug 2016
 
 History:
+29 Aug 2016:
+  - shift scale bar text to the right
 31 July 2016:
   - add option to do PV fit using lmfit
 25 July 2016:
@@ -187,7 +189,7 @@ def draw_sizebar(ax, z, pxScale, arcsec=1.0):
     asb = AnchoredSizeBar(ax.transData,
                           length,
                           str(round(kpc))+" kpc at " + r"$z = $" + (("{0:.3f}").format(z)),
-                          loc=8,
+                          loc=4,
                           pad=0.35, borderpad=0.65, sep=5,
                           frameon=False)
     ax.add_artist(asb)
