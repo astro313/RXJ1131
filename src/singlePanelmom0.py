@@ -6,11 +6,13 @@ Plot mom0 of all channels overlay on HST (single panel)
 Author: Daisy Leung
 
 
-Last edited: 20 july 2016
+Last edited: 29 Aug 2016
 
 
 History:
 --------
+29 Aug 2016
+    - changing save filename to exclude . between name and ext, else would mess up the prepare to submit codes
 20 July 2016
     - change zoom & HST contrast to match RedBlue.py
 28 May 2016:
@@ -150,7 +152,7 @@ if __name__ == '__main__':
     saveFig = True if sys.argv[1].lower() == 'true' else False
     if saveFig:
         outname = 'F555WCO21_mom0_single.eps'
-        if inverted_HSTleft: outname = outname.replace('.eps', '.invertedgray.eps')
+        if inverted_HSTleft: outname = outname.replace('.eps', '_invertedgray.eps')
         figC.savefig(Plotpath + outname, dpi=600, bbox_inches='tight')
     else:
         #        figC.canvas.draw()
