@@ -1,11 +1,14 @@
 '''
 Overplot spectra at different spatial location for ALMA C4 proposal
 
-Last Modified: April 16 2016
+Last Modified: Sept 13 2016
 
 
 History:
 --------
+Sept 13 2016:
+    - shift central velocity for NOEMA proposal figure; from PdBI/data/30Apr16/: 0 km/s shifted from chan 130 to chan 145
+        --> shift velocity by ~ 21.528154*15 to postive velocity
 April 14 2016:
     - edit labels and text annotations
 April 11 2016:
@@ -21,6 +24,7 @@ import matplotlib.pyplot as plt
 from scipy.optimize import curve_fit
 import scipy
 
+# plt.rc('font', family='simplex')
 
 def gauss(x, a, b, c):
     '''
@@ -92,7 +96,7 @@ def setup_spec_plot(ax, xax, xlabel=False, ylabel=False):
     ax.yaxis.set_minor_locator(minorLocator)
 
     if ylabel:
-        ax.set_ylabel('Flux density [mJy/Beam]')
+        ax.set_ylabel('Flux density [mJy/beam]')
     if xax == 'velocity':
         if xlabel:
             ax.set_xlabel('Velocity [km/s]')
@@ -186,9 +190,11 @@ fig.subplots_adjust(top=0.8)
 
 ax1 = fig.add_subplot(111)
 setup_spec_plot(ax1, xaxis, xlabel=True, ylabel=True)
-plot_spec_base(ax1, x1[70:200], flux1[70:200], width1, color='green', fill=False)
-plot_spec_base(ax1, x2[70:200], flux2[70:200], width2, color='blue', c=None, fill=False) # , ls='dashed')
-plot_spec_base(ax1, x3[70:200], flux3[70:200], width3, color='red', c=None, fill=False) #, ls='dashed')
+
+pad_xaxis = 21.528154*15
+plot_spec_base(ax1, x1[70:200]+pad_xaxis, flux1[70:200], width1, color='green', fill=False)
+plot_spec_base(ax1, x2[70:200]+pad_xaxis, flux2[70:200], width2, color='blue', c=None, fill=False) # , ls='dashed')
+plot_spec_base(ax1, x3[70:200]+pad_xaxis, flux3[70:200], width3, color='red', c=None, fill=False) #, ls='dashed')
 put_baseline(ax1)
 
 fluxMin = min(flux1.min(), flux2.min(), flux3.min())
@@ -196,8 +202,8 @@ fluxMax = max(flux1.max(), flux2.max(), flux3.max())
 ylim(ax1, fluxMin, fluxMax)
 ax1.set_xlim(x1[200], x1[70])
 
-plt.figtext(0.7, 0.7, "CO(2-1)", fontsize=20, fontweight='bold')
-plt.figtext(0.15, 0.7, "Position vs color", fontsize=20, fontweight='bold')
+plt.figtext(0.7, 0.748, "CO(2-1)", fontsize=20, fontweight='bold')
+plt.figtext(0.15, 0.748, "Position vs color", fontsize=20, fontweight='bold')
 
 plt.savefig('olayCO21Spectra.eps', bbox_inches='tight')
 plt.show()
