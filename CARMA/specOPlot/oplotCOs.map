@@ -1,12 +1,14 @@
 ! Author: Daisy Leung
 !
-! Last Modified: 27 May 2016
+! Last Modified: 05 Nov 2016
 !
 ! Purpose:
 !     Overplot CO21 spectrum on CO32
 !
 ! History
 ! -------
+! 05 Nov 2016:
+!     - update redshift
 ! 27 May 2016:
 !     - remove white space
 !     - move yaxis label closer to axis
@@ -51,7 +53,7 @@ end procedure plot_fit
 ! CO32
 column x 1 y 2 /file co32_bin2_D2D3.spec
 let x 208.9401-(x/299792.458*208.9401)
-let x x*1.6537
+let x x*1.65406
 let x (((345.7959899-x)/345.7959899)*299792.458)
 g\pen 0 /col 0 /dash 1 /weight 2
 @ plot_model 100
@@ -74,10 +76,10 @@ label "Flux density [mJy]" /y 4
 column x 1 y 2 /file sup127_155_2ndcln_noCont.spec
 
 let x 139.256-(x/299792.458*139.256)
-let x x*(1+0.6537)
-let x (((230.538-x)/230.538)*299792.458)                  ! vel. in 0.6537 frame
+let x x*(1+0.65406)
+let x (((230.538-x)/230.538)*299792.458)                  ! vel. in 0.65406 frame
 g\pen 0 /col 0 /dash 2 /weight 3
-@ plot_fit 0 2
+@ plot_fit 0 3
 
 ! --- draw dotted baseline ------------------------------------
 g\pen 0 /col 0 /dash 3
