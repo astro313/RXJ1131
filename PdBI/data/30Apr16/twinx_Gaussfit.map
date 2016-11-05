@@ -1,10 +1,10 @@
-! MFIT%PAR[01]   75.291473388671875        2.6129542286331398
-! MFIT%PAR[02]   310.36535644531250        3.7423396445373625
-! MFIT%PAR[03]   75.965797424316406        3.9577200902247860
-! MFIT%PAR[04] -0.14037190377712250       0.27428663726614227
-! MFIT%PAR[05]   24.037385940551758        1.9804854670085186
-! MFIT%PAR[06]  -87.929214477539062        11.182289255840114
-! MFIT%PAR[07]   109.25851440429688        12.335906970861426
+! MFIT%PAR[01]   76.040885925292969        2.8121963391491911
+! MFIT%PAR[02]   239.81163024902344        3.8399642385640123
+! MFIT%PAR[03]   73.728561401367188        3.7327954727735979
+! MFIT%PAR[04] -0.17511582374572754       0.27243937704287990
+! MFIT%PAR[05]   23.027374267578125        1.8945228940170187
+! MFIT%PAR[06]  -149.02239990234375        12.585890049082153
+! MFIT%PAR[07]   123.55547332763672        14.496062202214908
 
 dev xlandscape white
 set plot landscape
@@ -28,7 +28,7 @@ let xrangeMax 2000
 let xrangeMin -4000
 let datfr 139.256                            ! rest/ref freq in data header
 let linefr 230.538                           ! co2-1 line rest freq
-let z_guess 0.6537
+let z_guess 0.6541
 let dum linefr/(1+z_guess)                       ! nu_obs of CO2-1 source at z_guess in z=0 frame
 
 let x datfr-(x/c*datfr)
@@ -44,7 +44,7 @@ axis xup xrangeMin/c*linefr/dum+z_guess xrangeMax/c*linefr/dum+z_guess /label P 
 axis yleft
 axis yright
 set expand 1.25   ! font size
-draw text -2500 80 "\\2 CO(\iJ=2-1) (z=0.6537) RXJ1131" /user     ! to use user specific
+draw text -2500 80 "\\2 CO(\iJ=2-1) (z=0.6541) RXJ1131" /user     ! to use user specific
 set expand 1
 draw text -1000 110 "redshift" /user
 ! draw text -1000 165 "\gu\do\db\ds [GHz]" /user
@@ -61,7 +61,7 @@ histo /fill 0       ! black line
 !connect
 pen 0 /col 0 /dash 1 /weight 3
 ! mfit y=&a*Exp(-((x-&b)^2|(2*&c^2)))+&d /metho powell /start 122,-460,100,0.1
-mfit y=&a*Exp(-((x-&b)^2|(2*&c^2)))+&d + &e*Exp(-((x-&f)^2|(2*&g^2))) /metho powell /start 50,300,180,0.1,35,-25.2,60
+mfit y=&a*Exp(-((x-&b)^2|(2*&c^2)))+&d + &e*Exp(-((x-&f)^2|(2*&g^2))) /metho powell /start 75,300,60,0.01,24,-110,80
 ! peak, velocity, line width= sigma (FWHM/2.355), continuum amplitude
 ! mfit y=&m*x+&b /metho powell /start 25
 curve x mfit%fit      ! plot and fit
