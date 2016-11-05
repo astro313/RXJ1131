@@ -1,0 +1,79 @@
+! MFIT%PAR[01]   75.291473388671875        2.6129542286331398
+! MFIT%PAR[02]   310.36535644531250        3.7423396445373625
+! MFIT%PAR[03]   75.965797424316406        3.9577200902247860
+! MFIT%PAR[04] -0.14037190377712250       0.27428663726614227
+! MFIT%PAR[05]   24.037385940551758        1.9804854670085186
+! MFIT%PAR[06]  -87.929214477539062        11.182289255840114
+! MFIT%PAR[07]   109.25851440429688        12.335906970861426
+
+dev xlandscape white
+set plot landscape
+pen 0 /col 0 /dash 1 /weight 3
+set box 3.6 29 3.6 17
+cle
+cle al
+column x 1 y 2 /file sup127_155_2ndcln_noCont.spec
+def double z /like x
+
+def double c
+def double xrangeMax                         ! for plot, unit w.r.t x
+def double xrangeMin
+def double datfr
+def double linefr
+def double dum
+def double z_guess                           ! best_z guess from literature
+
+let c 299792.458
+let xrangeMax 2000
+let xrangeMin -4000
+let datfr 139.256                            ! rest/ref freq in data header
+let linefr 230.538                           ! co2-1 line rest freq
+let z_guess 0.6537
+let dum linefr/(1+z_guess)                       ! nu_obs of CO2-1 source at z_guess in z=0 frame
+
+let x datfr-(x/c*datfr)
+let x x*(1+z_guess)
+let x (((linefr-x)/linefr)*c)                  ! vel. in z_guess frame
+
+limits xrangeMin xrangeMax -15.0 100.0407682          ! x y range
+axis xlow
+
+! let z (x/c*linefr/dum)+z_guess                 ! redshift array
+! axis xup ((linefr-(xrangeMin/c*linefr))/(1+z_guess)) ((linefr-(xrangeMax/c*linefr))/(1+z_guess)) /label P        ! xup observed freq
+axis xup xrangeMin/c*linefr/dum+z_guess xrangeMax/c*linefr/dum+z_guess /label P            ! xup redshift
+axis yleft
+axis yright
+set expand 1.25   ! font size
+draw text -2500 80 "\\2 CO(\iJ=2-1) (z=0.6537) RXJ1131" /user     ! to use user specific
+set expand 1
+draw text -1000 110 "redshift" /user
+! draw text -1000 165 "\gu\do\db\ds [GHz]" /user
+!draw text 798.31 3.05 "100.0" /user
+!draw text 200.32 3.05 "100.2" /user
+!draw text -397.66 3.05 "100.4" /user
+label "Velocity offset [km/s]" /x
+!label "\gn(obs) [GHz]" /x
+label "Flux density [mJy]" /y
+pen 0 /col 0 /dash 1 /weight 2
+histo /base 0 /fill 5
+!histo /base 3.893 /fill 5  ! yellow
+histo /fill 0       ! black line
+!connect
+pen 0 /col 0 /dash 1 /weight 3
+! mfit y=&a*Exp(-((x-&b)^2|(2*&c^2)))+&d /metho powell /start 122,-460,100,0.1
+mfit y=&a*Exp(-((x-&b)^2|(2*&c^2)))+&d + &e*Exp(-((x-&f)^2|(2*&g^2))) /metho powell /start 50,300,180,0.1,35,-25.2,60
+! peak, velocity, line width= sigma (FWHM/2.355), continuum amplitude
+! mfit y=&m*x+&b /metho powell /start 25
+curve x mfit%fit      ! plot and fit
+pen 0 /col 0 /dash 3
+let y -0.136937    ! dotted line
+connect x y
+pen 0 /col 0 /dash 1
+! axis xlow /label n
+!axis yleft
+!axis yright
+!axis xup 5.2598036 5.329044
+! box n o /abs
+! box  ! draw box
+sic delete SpecCO21_twinx.eps
+hard SpecCO21_twinx.eps /dev eps colo
