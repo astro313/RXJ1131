@@ -24,5 +24,9 @@ copy full_res_centralChans.spec --> binned_centralChans.spec
 - bin by 5
 - pad one each at begin and end
 
+copy ../22May16/de-lensed_companion.spec to this dir
+- keep only chan 126-160
+- pad one each at begin and end
+
 - make noise.spec for line-free channels, original full-res
 --> not actually needed

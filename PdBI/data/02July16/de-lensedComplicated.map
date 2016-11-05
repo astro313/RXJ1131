@@ -2,9 +2,13 @@
 ! Plot pseudo spectrum of companion after correcting for diff. lensing.
 !
 !
-! Last modified: 25 July 2016
+! Last modified: 05 Nov 2016
 !
 ! History:
+! 05 Nov 2016
+!       - add command to oplot companion de-lensed
+!       - update redshift to z=0.65406
+!       - shift markers correspondingly to lineup with new velo scale
 ! 25 July 2016
 !       - change y axis limit for VLA17A proposal
 !
@@ -36,7 +40,7 @@ cle al
 column x 1 y 2 /file full-res_centralChans.spec   ! velo axis w/o shifting, & is in z=0 frame
 
 let x 139.256-(x/299792.458*139.256)
-let x x*(1+0.6537)
+let x x*(1+0.65406)
 let x (((230.538-x)/230.538)*299792.458)                  ! vel. in z_guess frame
 
 define real ymin ymax yrange
@@ -45,35 +49,35 @@ let ymin 1.2
 let yrange log(ymax)-log(ymin)
 let ymin exp(log(ymin)-0.1*yrange)
 let ymax exp(log(ymax)+0.1*yrange)
-limits -350 450 ymin ymax /ylog         ! x y range
+limits -410 370 ymin ymax /ylog         ! x y range
 
 ! marker location is rest-frame velocity
 set marker 2 0 2.5 0
-draw marker 360.5 87.5 /user
-draw marker 261.045 87.5 /user
-draw marker 153.52 87.5 /user
-draw marker 45.9976 87.5 /user
-draw marker -61.5264 87.5 /user
-draw marker -169.050 87.5 /user
-draw marker -270 87.5 /user
+draw marker 360.5-62 87.5 /user
+draw marker 261.045-62 87.5 /user
+draw marker 153.52-62 87.5 /user
+draw marker 45.9976-62 87.5 /user
+draw marker -61.5264-62 87.5 /user
+draw marker -169.050-62 87.5 /user
+draw marker -270-62 87.5 /user
 
 set marker 2 0 0.5 90
-draw marker 367.8+55 87.5 /user
-draw marker 367.8-54 87.5 /user
-draw marker 261.045-54.5 87.5 /user
-draw marker 153.52-54 87.5 /user
-draw marker 45.9976-54 87.5 /user
-draw marker -61.5264-54 87.5 /user
-draw marker -169.050-54 87.5 /user
-draw marker -276.573-54.5 87.5 /user
+draw marker 367.8+55-62 87.5 /user
+draw marker 367.8-54-62 87.5 /user
+draw marker 261.045-54.5-62 87.5 /user
+draw marker 153.52-54-62 87.5 /user
+draw marker 45.9976-54-62 87.5 /user
+draw marker -61.5264-54-62 87.5 /user
+draw marker -169.050-54-62 87.5 /user
+draw marker -276.573-54.5-62 87.5 /user
 
-draw text 367.8 107 "7.2" /user
-draw text 261.045 107 "7.6" /user
-draw text 153.52 107 "8.7" /user
-draw text 45.9976 107 "4.1" /user
-draw text -61.5264 107 "4.2" /user
-draw text -169.050 107 "4.3" /user
-draw text -276.573 107 "3.1" /user
+draw text 367.8-62 107 "7.2" /user
+draw text 261.045-62 107 "7.6" /user
+draw text 153.52-62 107 "8.7" /user
+draw text 45.9976-62 107 "4.1" /user
+draw text -61.5264-62 107 "4.2" /user
+draw text -169.050-62 107 "4.3" /user
+draw text -276.573-62 107 "3.1" /user
 
 histo /base /fill 5
 pen 0 /dash 3 /weight 5
@@ -86,14 +90,25 @@ pen 0
 
 column x 1 y 2 /file binned_centralChans.spec
 let x 139.256-(x/299792.458*139.256)
-let x x*(1+0.6537)
+let x x*(1+0.65406)
 let x (((230.538-x)/230.538)*299792.458)
 pen 0 /dash 5 /weight 3
 histo /fill 0
 
+! companion
+! column x 1 y 2 /file de-lensed_companion.spec
+! let x 139.256-(x/299792.458*139.256)
+! let x x*(1+0.65406)
+! let x (((230.538-x)/230.538)*299792.458)
+! pen /col 0 /dash 1 /weight 4
+! histo /base /fill 3
+! histo /fill 11
+! pen 0
+
+
 column x 1 y 2 /file de-lensed_RXJ1131.spec    ! de-lensed_RXJ1131_binned.spec
 let x 139.256-(x/299792.458*139.256)
-let x x*(1+0.6537)
+let x x*(1+0.65406)
 let x (((230.538-x)/230.538)*299792.458)
 pen /col 0 /dash 1 /weight 4
 histo /base /fill 4
