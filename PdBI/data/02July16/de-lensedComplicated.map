@@ -62,14 +62,14 @@ draw marker -169.050-62 87.5 /user
 draw marker -270-62 87.5 /user
 
 set marker 2 0 0.5 90
-draw marker 367.8+55-62 87.5 /user
-draw marker 367.8-54-62 87.5 /user
-draw marker 261.045-54.5-62 87.5 /user
-draw marker 153.52-54-62 87.5 /user
-draw marker 45.9976-54-62 87.5 /user
-draw marker -61.5264-54-62 87.5 /user
-draw marker -169.050-54-62 87.5 /user
-draw marker -276.573-54.5-62 87.5 /user
+draw marker 367.8+55-64 87.5 /user
+draw marker 367.8-54-65 87.5 /user
+draw marker 261.045-54.5-65 87.5 /user
+draw marker 153.52-54-65 87.5 /user
+draw marker 45.9976-54-65 87.5 /user
+draw marker -61.5264-54-65 87.5 /user
+draw marker -169.050-54-65 87.5 /user
+draw marker -276.573-54.5-65 87.5 /user
 
 draw text 367.8-62 107 "7.2" /user
 draw text 261.045-62 107 "7.6" /user
