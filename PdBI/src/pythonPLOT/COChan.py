@@ -1,11 +1,15 @@
 '''
-Last Modified: 27 May 16
+Last Modified: 05 Nov 16
 
 
 Author: Daisy Leung
 
 
 History:
+05 Nov 2016
+- use old non-shifted cube
+- change label to show rest-frame velocity (central of each unbinned channel) w.r.t z=0.65406
+
 27 May 2016
 - change flux label unit
 - update font inside panel
@@ -118,8 +122,8 @@ def setup_axes(fig, header, nx, ny):
     return g, cax
 
 Plotpath = '/Users/admin/Research/RXJ1131/Figures/'
-# fits_cube = pyfits.open("/Users/admin/Research/RXJ1131/PdBI/data/04Sep15/sup127_155_2ndcln_noCont.fits")
-fits_cube = pyfits.open("/Users/admin/Research/RXJ1131/PdBI/data/30Apr16/centralizedCube.fits")
+fits_cube = pyfits.open("/Users/admin/Research/RXJ1131/PdBI/data/04Sep15/sup127_155_2ndcln_noCont.fits")
+# fits_cube = pyfits.open("/Users/admin/Research/RXJ1131/PdBI/data/30Apr16/centralizedCube.fits")
 
 dxy = 124                   # starting channel
 nx = 7
@@ -217,10 +221,18 @@ try:
 except ImportError:
     use_path_effect = False
 
+datfr = 139.256
+c = 299792.458
+linefr = 230.538
+
 for i, ax in enumerate(g):
     channel_number = start_channel + i
     v = vel.to_vel(channel_number) / 1.e3
-    t = ax.add_inner_title(r"$v=%4.1f\ {\rm km s}^{-1}$" % (v),
+    x = datfr - (v / c * datfr)
+    x = x * (1 + 0.65406)
+    v_res = (((linefr - x)/linefr) * c)
+    print channel_number, v, v_res
+    t = ax.add_inner_title(r"$v=%4.1f\ {\rm km s}^{-1}$" % (v_res),
                            # (u'$\\mathrm{km/s}$')
                            loc=2,
                            frameon=False
