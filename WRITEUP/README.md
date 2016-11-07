@@ -232,3 +232,8 @@ see CARMA/specOPlot/README.md (Deprecated)
 - --> # of beams ~ 10
 - Isigma ~ 13.3 mJy/B/channel * np.sqrt(21) channels * 35.87 km/s * 10 beams ~ 21.8621 Jy km/s
 
+# 07 Nov 2016: sigma SHOULD BE = 13.3 * sqrt(21chan) * ∆v=35.87 * sqrt(10 beams) = 6.91 Jy km/s, missed a sqrt in the # of beams before... 
+
+
+SED: Cont 
+paper is reporting values from the 7pts/thickPower_priorBeta_limT.h5 fit
