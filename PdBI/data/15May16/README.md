@@ -91,6 +91,7 @@ imstat(imagename='centralizedCube4GILDAS-mom0.image', region='Flux_CO32_20.3Jy_r
 - number of pix in a beam = numpy.pi * 4.43 * 1.93 / 4 / numpy.log(2) / 0.5**2 = 38.8 px
 - --> # of beams ~ 13 within the region
 - theoretical Isigma ~ 1.451 mJy/B/channel * sqrt(156-124+1) channels * 21.5 * 13 beams ~ 2.330 Jy km/s
+- --> should be 1.451 mJy/B/channel * sqrt(156-124+1) channels * 21.5 * 13^.5 beams ~ 0.647 Jy km/s
 
 Altho region is 13 beams, if we do imfit():
 imfit(imagename='centralizedCube4GILDAS-mom0.image', region='Flux_CO32_20.3Jy_region.txt', logfile='centralizedCube4GILDAS-mom0.imfit.log')
