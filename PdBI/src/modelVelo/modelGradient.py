@@ -4,13 +4,22 @@
 plot source locations from lens model of various channel as markers on observed 1st moment map.
 Kinematics.
 
-Last Modified: 29 Aug 2016
+Last Modified: 05 Nov 2016
 
 History:
+08 Nov 2016:
+  - updated 3rd axis (velocity) to rest-frame, consistent with labelling in Fig. 6
+  - update marker color to show first two (companion and RXJ in redmost) using same color
+  - add inset to show marker in first figure
+  - fix docstrong of calc_dist()
+  - get Phyiscal distance for PV from original, not along the fitted major axis
+05 Nov 2016:
+  - print out physical offset position
+  - update redshift
 29 Aug 2016:
   - shift scale bar text to the right
 31 July 2016:
-  - add option to do PV fit using lmfit
+  - add option to do PV fit using LMFIT
 25 July 2016:
   - update alpha for 1st moment overplot
 19 June 2016:
@@ -103,27 +112,30 @@ interval = 50.        # km/s between velocity contour
 DecCentroid = -12.5328629
 RACentroid = 172.96434563
 CellSize = 0.5        # arcsec per pixel in 1D
-redshift = 0.6537
+redshift = 0.65406
 b_arcsec = 1.8       # from C06
 a_arcsec = 3.25
 i_rad = np.arccos(b_arcsec/a_arcsec)
 i_deg = i_rad * 180./np.pi
 
 # source positions from models of different channel, offset in arcsec
+# 2nd element is companion
 p_list = [(-0.20, 0.12), (-0.02, 0.11), (0.20, -0.13), (0.29, -0.01),
           (0.57, -0.76), (0.87, -0.57), (1.04, -0.56), (1.32, -0.77)]
 # corresponding error in arcsec
 p_list_err = [(0.39, 0.3), (0.25, 0.2), (0.06, 0.21), (0.14, 0.22),
               (0.12, 0.29), (0.09, 0.15), (0.06, 0.12), (0.34, 0.45)]
 # corresponding velocity in km/s for each points in p_list
-z = [344.46, 344.46, 236.82, 129.16, 21.54, -86.08, -193.76, -301.38]
+# z = [344.46, 344.46, 236.82, 129.16, 21.54, -86.08, -193.76, -301.38]   # observed frame
 
-plotMajorFit = False
+z = [303, 196, 88, -19, -127, -234, -342]     # from z = 0.65406, Fig. 6
+
+plotMajorFit = True
 plotMajor_FirstMom = False
 plotPV = True
-plotRot = True
+plotRot = False
 plotODR_arctan = False
-lmfit = False
+lmfit = True
 # -----------------------------------------------
 #  Read fits file and Set up WCS
 # -----------------------------------------------
@@ -220,7 +232,8 @@ dec_coord_ls = []
 ra_err_ls = []
 dec_err_ls = []
 for i, p1 in enumerate(p_list):
-    c = next(color)
+    if i != 1:
+        c = next(color)
     ra_offset_arcsec, dec_offset_arcsec = p1
 
     # convert into coord in deg
@@ -264,8 +277,47 @@ draw_sizebar(ax, redshift, cdelt1)
 cb = fig.colorbar(im, fraction=0.1, pad=0.0)
 cb.set_label("Velocity [km s" + r"$^{-1}$]")
 
+
+# add inset to zoom in on markers
+axins = plt.axes([.57, .68, .22, .26], projection=plotwcs)
+ra, dec = axins.coords
+ra.set_major_formatter('hh:mm:ss.s')
+# ra.display_minor_ticks(True)
+# dec.display_minor_ticks(True)
+# ra.set_minor_frequency(5)
+ra.set_ticks(size=10, width=1, exclude_overlapping=True)
+dec.set_ticks(size=10, width=1)
+# sub region of the original
+axins.set_xlim(130, 135)
+axins.set_ylim(123, 128)
+
+_ = ra.ticklabels
+_.set_visible(False)
+_ = dec.ticklabels
+_.set_visible(False)
+
+axins.plot([LensRA_PX], [LensDEC_PX], marker='x', zorder=5,    # lens galaxy
+           mec='black', ms=8, mew=1.75)
+
+
+# plot markers in inset, using same color as parent, loop through
+color = iter(cm.rainbow_r(np.linspace(0, 1, len(ra_px_ls))))
+for i, (x, y, xerr, yerr) in enumerate(zip(ra_px_ls, dec_px_ls, ra_err_ls, dec_err_ls)):
+    if i != 1:
+        c = next(color)
+    m = axins.errorbar(x=[x], y=[y], xerr=[xerr], yerr=[yerr],
+                       marker='+', ms=8, mec=c, mew=2, zorder=3.1, ecolor=c,
+                       capsize=1.5, capthick=1.5, lw=2)
+    m[0].set_path_effects([path_effects.Stroke(linewidth=2.5, foreground='black'), path_effects.Normal()])
+    m[1][0].set_path_effects([path_effects.Stroke(linewidth=2.5, foreground='black'), path_effects.Normal()])
+    m[1][1].set_path_effects([path_effects.Stroke(linewidth=2.5, foreground='black'), path_effects.Normal()])
+    m[1][2].set_path_effects([path_effects.Stroke(linewidth=2.5, foreground='black'), path_effects.Normal()])
+    m[1][3].set_path_effects([path_effects.Stroke(linewidth=2.5, foreground='black'), path_effects.Normal()])
+    m[2][0].set_path_effects([path_effects.Stroke(linewidth=2.5, foreground='black'), path_effects.Normal()])
+    m[2][1].set_path_effects([path_effects.Stroke(linewidth=2.5, foreground='black'), path_effects.Normal()])
+
 plt.tight_layout(h_pad=0.4, w_pad=0.1)
-plt.show()
+plt.show(block=False)
 a.close()
 User_input = raw_input('Save figure? (Y/N): ')
 if User_input == 'Y':
@@ -273,7 +325,7 @@ if User_input == 'Y':
     fig.savefig(Plotpath + filename, dpi=100,
                 bbox_inches="tight", pad_inches=0.1)
     print "-- Saved figure as : %s --" % (Plotpath + filename)
-import sys; sys.exit()
+
 # -------------------------------
 theta_rad = abs(np.arctan((dec_coord_ls[0] - dec_coord_ls[-1]) / ((ra_coord_ls[0] - ra_coord_ls[-1]) * np.cos(np.mean(dec_coord_ls) * np.pi/180.))))
 theta_deg = theta_rad * 180. / np.pi
@@ -283,6 +335,13 @@ print(" \n PA along the `major axis`: {} deg. \n ").format(PA_deg)
 # --------------------------------------------
 # fit a major axis through the px coordinate
 # --------------------------------------------
+# remove companion
+ra_px_ls.pop(1)
+dec_px_ls.pop(1)
+ra_err_ls.pop(1)
+dec_err_ls.pop(1)
+
+#
 xdata = np.array(ra_px_ls)
 ydata = np.array(dec_px_ls)
 xerr = np.array(ra_err_ls)
@@ -348,6 +407,7 @@ for i in range(len(pfit)):
         error.append(0.00)
 perr = np.array(error)
 
+print best, pfit
 
 # ------------------------------------------
 # take into account err in both x, y directions
@@ -416,7 +476,7 @@ if plotMajorFit:
     plt.ylabel("Residuals")
     residuals.grid()
     plt.minorticks_on()
-    plt.show()
+    plt.show(block=False)
 
 youtfit = fun2(out.beta, xdata)
 
@@ -458,7 +518,7 @@ if plotMajor_FirstMom:
                 marker='+', ms=8, linestyle='None', mew=1.25, zorder=3.1, capsize=5 , capthick=2, lw=2)
     ax.plot(xdata, youtfit, 'k--', lw=1.2)
     plt.tight_layout()
-    plt.show()
+    plt.show(block=False)
 
 
 # -------------------------------------------------------
@@ -466,19 +526,25 @@ if plotMajor_FirstMom:
 # -------------------------------------------------------
 # convert the px positions along the fitted major axis to RA, Dec to calc. separation
 deg_to_arcsec = 3600.
-RA_major, Dec_major = wcs.wcs_pix2sky(ra_px_ls, youtfit, 1)       # degree
+
+
+# ALONG the fitted major axis
+# RA_major, Dec_major = wcs.wcs_pix2sky(ra_px_ls, youtfit, 1)       # degree
+# original points
+RA_major, Dec_major = wcs.wcs_pix2sky(ra_px_ls, dec_px_ls, 1)       # degree
+
 
 # arcsec
-RA_major_err = np.array([p_list_err[i][0] for i in range(len(p_list_err))])
-Dec_major_err = np.array([p_list_err[i][1] for i in range(len(p_list_err))])
+RA_major_err = np.array([p_list_err[i][0] for i in range(len(p_list_err)) if i != 1])
+Dec_major_err = np.array([p_list_err[i][1] for i in range(len(p_list_err)) if i!=1])
 
-def fitted_err_on_y(deltaP, x):
-    """ calc y_error of point on fit
+# def fitted_err_on_y(deltaP, x):
+#     """ calc y_error of point on fit
 
-    """
-    deltam, deltab = deltaP
-    dy = np.sqrt((x * deltam)**2 + (deltab)**2)
-    return dy
+#     """
+#     deltam, deltab = deltaP
+#     dy = np.sqrt((x * deltam)**2 + (deltab)**2)
+#     return dy
 
 def calc_dist(xloc, yloc, delta_x, delta_y): # , xcenter_err, ycenter_err):
     """ calc distance in arcsec offset along major axis
@@ -486,30 +552,30 @@ def calc_dist(xloc, yloc, delta_x, delta_y): # , xcenter_err, ycenter_err):
     Parameters
     ----------
     xloc: array
-        RA in deg of source position
+        RA in arcsec of source position
     yloc: array
-        dec in deg of source position along the fitted major axis
+        dec in arcsec of source position along the fitted major axis
     delta_x: array
         RA in arcsec
     delta_y: array
         Dec in arcsec
     Return
     ------
-    offset: array
+    R: array
         in arcsec along the major axis, w.r.t the central emission position
 
     """
-    delta_x0 = delta_x[4]
-    delta_y0 = delta_y[4]
+    delta_x0 = delta_x[3]
+    delta_y0 = delta_y[3]
 
-    diff_x = np.array([xloc[i] - xloc[4] for i in range(len(xloc))])
-    diff_y = np.array([yloc[i] - yloc[4] for i in range(len(yloc))])
+    diff_x = np.array([xloc[i] - xloc[3] for i in range(len(xloc))])
+    diff_y = np.array([yloc[i] - yloc[3] for i in range(len(yloc))])
     offset_sq = (diff_x * np.cos(np.mean(yloc/3600. * np.pi/180.)))**2 + diff_y**2
     R = np.sqrt(offset_sq)
     offset_err = np.sqrt((diff_x*delta_x)**2 + (diff_y*delta_y)**2 + (diff_x*delta_x0)**2 + (diff_y*delta_y0)**2) / R
 
     # put error bar on center point as well, in arcsec
-    xcenter_err, ycenter_err = p_list_err[4]
+#    xcenter_err, ycenter_err = p_list_err[4]   # 4th because p_list_err still has companion
     offset_err[np.where(np.isnan(offset_err))[0][0]] = np.sqrt(delta_x0**2 +delta_y0**2)
 
     return R, offset_err
@@ -520,14 +586,11 @@ def calc_dist(xloc, yloc, delta_x, delta_y): # , xcenter_err, ycenter_err):
 
 offset, offset_err = calc_dist(RA_major*deg_to_arcsec,
                                Dec_major*deg_to_arcsec,
-                               RA_major_err, Dec_major_err)
+                               RA_major_err, Dec_major_err) # arcsec
 # to show blue, red on left and right of central
-offset[5:] = -offset[5:]
+offset[4:] = -offset[4:]
 off = list(offset)
 offset_err = list(offset_err)
-off.pop(1)
-z.pop(1)
-offset_err.pop(1)
 z_err = 21.5*5/2.     # range of channels combined to make models/2. --> error bar
 if plotPV:
     f, ax = plt.subplots()
@@ -548,8 +611,6 @@ if plotPV:
 offset, offset_err = calc_dist(RA_major*deg_to_arcsec, Dec_major*deg_to_arcsec, RA_major_err, Dec_major_err)
 off = list(offset)
 offset_err = list(offset_err)
-off.pop(1)
-offset_err.pop(1)
 if plotRot:
     f, ax = plt.subplots()
     ax.errorbar(off[3], z[3], xerr=offset_err[3], yerr=z_err, fmt='go', label='line center')
@@ -916,7 +977,7 @@ from matplotlib.ticker import MaxNLocator
 plt.gca().yaxis.set_major_locator(MaxNLocator(prune='lower'))
 
 f2 = fig3.add_axes((.1, .1, .8, .2))
-plt.plot(xdataPV, resid_arctang2p, 'k--')
+plt.plot(xdataPV, resid_arctang2p, 'kx')
 plt.ylabel('Residuals')
 plt.xlabel('R kpc')
 plt.show()
