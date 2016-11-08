@@ -128,7 +128,7 @@ p_list_err = [(0.39, 0.3), (0.25, 0.2), (0.06, 0.21), (0.14, 0.22),
 # corresponding velocity in km/s for each points in p_list
 # z = [344.46, 344.46, 236.82, 129.16, 21.54, -86.08, -193.76, -301.38]   # observed frame
 
-z = [303, 196, 88, -19, -127, -234, -342]     # from z = 0.65406, Fig. 6
+z = [303.361, 195.854, 88.287, -19.260, -126.807, -234.373, -341.880]     # from z = 0.65406, Fig. 6
 
 plotMajorFit = True
 plotMajor_FirstMom = False
@@ -529,9 +529,9 @@ deg_to_arcsec = 3600.
 
 
 # ALONG the fitted major axis
-# RA_major, Dec_major = wcs.wcs_pix2sky(ra_px_ls, youtfit, 1)       # degree
+RA_major, Dec_major = wcs.wcs_pix2sky(ra_px_ls, youtfit, 1)       # degree
 # original points
-RA_major, Dec_major = wcs.wcs_pix2sky(ra_px_ls, dec_px_ls, 1)       # degree
+# RA_major, Dec_major = wcs.wcs_pix2sky(ra_px_ls, dec_px_ls, 1)       # degree
 
 
 # arcsec
@@ -895,21 +895,21 @@ if lmfit:
     fitout_arctang2p = minner_arctang2p.minimize()
     report_fit(fitout_arctang2p)
     # [[Fit Statistics]]
-    #     # function evals   = 74
-    #     # data points      = 7
-    #     # variables        = 3
-    #     chi-square         = 0.352
-    #     reduced chi-square = 0.088
-    #     Akaike info crit   = -14.928
-    #     Bayesian info crit = -15.090
+    # # function evals   = 8004
+    # # data points      = 7
+    # # variables        = 3
+    # chi-square         = 0.503
+    # reduced chi-square = 0.126
+    # Akaike info crit   = -12.434
+    # Bayesian info crit = -12.597
     # [[Variables]]
-    #     r_t:      10.7504224 +/- 6.986341 (64.99%) (init= 3)
-    #     vcsini:   974.812953 +/- 567.5189 (58.22%) (init= 50)
-    #     v_0:      32.5218778 +/- 8.678262 (26.68%) (init= 50)
+    # r_t:      10.9264634 +/- 7.754626 (70.97%) (init= 3)
+    # vcsini:   988.358354 +/- 618.2606 (62.55%) (init= 50)
+    # v_0:      7.8516e-06 +/- 8.608706 (109643234.20%) (init= 50)
     # [[Correlations]] (unreported correlations are <  0.100)
-    #     C(r_t, vcsini)               =  0.997
-    #     C(r_t, v_0)                  =  0.299
-    #     C(vcsini, v_0)               =  0.263
+    # C(r_t, vcsini)               =  0.998
+    # C(r_t, v_0)                  = -0.411
+    # C(vcsini, v_0)               = -0.400
 
     #
     # calc. CI for parameters
@@ -917,13 +917,18 @@ if lmfit:
     # resulting chi-sq is used to calc. the prob. w/ a given statistics (e.g. F-    stat)
     ci, trace = conf_interval(minner_arctang2p, fitout_arctang2p, sigmas=[0.68, 0.95], trace=True)  # to plot "profile traces"
 
+
     # Look and see if the estimates symmetric or asymmetric?
     # One can only assumed uncer. correspond to those from covariance matrix if the correlation plots is elliptical, which isn't in most cases
     report_ci(ci)
-    #           95.00%    68.00%    _BEST_    68.00%    95.00%
-    # r_t   :  -6.12896  -3.99844  10.75042  +0.79096  +1.40594
-    # vcsini:-483.24360-322.71178 974.81295      +inf      +inf
-    # v_0   : -18.36988  -8.08144  32.52188  +7.28447 +16.06363
+    # Warning, rel_change=0.0 < 0.01  at iteration 1 and prob(vcsini=1606.61904554) = 0.0 < max(sigmas).
+    # Warning, rel_change=0.0 < 0.01  at iteration 1 and prob(v_0=-0.000992148437634) = 0.0 < max(sigmas).
+    # Warning, rel_change=0.0 < 0.01  at iteration 1 and prob(v_0=0.00100785156237) = 0.0 < max(sigmas).
+    #            95.00%    68.00%    _BEST_    68.00%    95.00%
+    #  r_t   :  -5.70563  -3.11662  10.92646  +0.58405  +1.19222
+    #  vcsini:-443.86998-246.73380 988.35835      +inf      +inf
+    #  v_0   :      -inf      -inf   0.00001      +inf      +inf
+
 
     # to demonstrate the asymmetric in CI using correlation plots
     # here we plot profile traces
