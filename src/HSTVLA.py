@@ -1,12 +1,14 @@
 """
 Author: Daisy Leung
 
-Last edited: 2 Nov 2016
+Last edited: 11 Nov 2016
 
 Purpose:
 - Plot single panel 5GHz VLA continuum on HST F555W, investigate continuum offset
 
 History:
+Nov 11 2016:
+    - update contour intervals to +/-10%, 20%,... peak
 Nov 2 2016:
     - change lw from 2 to 1.2
 May 27 2016:
@@ -75,6 +77,7 @@ x_gap = 0.05
 x0 = 0.2
 dy = 0.9
 sigma = 1.3e-5
+Smax = 0.74e-3 # VLA
 
 ########################################
 # intialize base figure
@@ -103,7 +106,7 @@ fig1.show_grayscale(stretch='log', vmin=-0.01869, vmax=121, vmid=-0.025)
 ########################################
 # Contours
 ########################################
-fig1.show_contour(label_vla['C_R0'][0], colors="blue", levels=sigma_contour_VLA(sigma), linewidths=1.2)#, layer='fg')
+fig1.show_contour(label_vla['C_R0'][0], colors="blue", levels=sigma_contour_tenpercent(Smax), linewidths=1.2)#, layer='fg')
 
 # figred.show_contour(label_vla['red'][0], colors="lime", levels=sigma_contour_array(sigma_red), linewidths=2)
 
