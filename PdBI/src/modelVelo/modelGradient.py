@@ -4,9 +4,11 @@
 plot source locations from lens model of various channel as markers on observed 1st moment map.
 Kinematics.
 
-Last Modified: 05 Nov 2016
+Last Modified: 11 Nov 2016
 
 History:
+11 Nov 2016:
+  - update tick params
 08 Nov 2016:
   - updated 3rd axis (velocity) to rest-frame, consistent with labelling in Fig. 6
   - update marker color to show first two (companion and RXJ in redmost) using same color
@@ -130,12 +132,12 @@ p_list_err = [(0.39, 0.3), (0.25, 0.2), (0.06, 0.21), (0.14, 0.22),
 
 z = [303.361, 195.854, 88.287, -19.260, -126.807, -234.373, -341.880]     # from z = 0.65406, Fig. 6
 
-plotMajorFit = True
+plotMajorFit = False
 plotMajor_FirstMom = False
-plotPV = True
+plotPV = False
 plotRot = False
 plotODR_arctan = False
-lmfit = True
+lmfit = False
 # -----------------------------------------------
 #  Read fits file and Set up WCS
 # -----------------------------------------------
@@ -827,6 +829,7 @@ xarray = np.linspace(xdataPV.min()-xspace, xdataPV.max()+xspace, 500)
 fit.plot(xdataPV, np.array(z), 'ko', xarray, arctang(xarray, *pfit), 'b--')
 fit.errorbar(xdataPV, np.array(z), xerr=xerr, yerr=yerr, fmt='k+')
 plt.minorticks_on()
+plt.tick_params(which='both', length=7)
 plt.tight_layout()
 plt.show(block=False)
 User_input = raw_input('Save figure? (Y/N): ')
