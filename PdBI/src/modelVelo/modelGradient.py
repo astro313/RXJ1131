@@ -4,9 +4,13 @@
 plot source locations from lens model of various channel as markers on observed 1st moment map.
 Kinematics.
 
-Last Modified: 11 Nov 2016
+Last Modified: 14 Nov 2016
 
 History:
+14 Nov 2016:
+  - phyiscal distance after updating redshift from z=.65337 to .65406
+    - kpc = [ 6.19582973  2.97721957  2.25303559  0.          2.41395019  3.781857  6.03488232]
+    - kpc_err = [ 2.94848621  1.54739332  1.75058216  2.21485144  1.50982133  1.41402099 2.96503249]
 11 Nov 2016:
   - update tick params
 08 Nov 2016:
@@ -687,7 +691,6 @@ ydata = abs(np.array(z))
 yerr = z_err
 xdata = offset_to_physicalR(np.array(off), redshift)
 xerr = offset_to_physicalR(np.array(offset_err), redshift)
-
 # plot velocity v.s. physical radius
 if plotRot:
     plt.errorbar(xdata, ydata, yerr=yerr, fmt='ko', xerr=xerr)
