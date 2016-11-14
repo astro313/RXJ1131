@@ -23,7 +23,8 @@ lambda0 (1+z): 558.93 +277.89 -323.98 (low lim: 1.00 upper lim: 800.00) [um]
 lambda0 rest-frame: 337.91 +168.00 -195.87[um] 
 alpha: 1.64 +0.51 -0.56 (low lim: 0.10 upper lim: 20.00)
 Lambda peak: 159.3 +18.8 -39.6 [um]
-L_IR(42.5 to 122.5um): 3.81 +1.92 -1.97 [10^12 L_sun]
+L_FIR(42.5 to 122.5um): 3.81 +1.92 -1.97 [10^12 L_sun]
+L_IR(8-1000 µm): 8.22,  2.75,  2.98 [10^12 Lsun]
 M_d(kappa=2.64, lam=125.0um): 16.12 +-4.84 -12.31 [10^8 M_sun]
 Number of data points: 8
 ChiSquare of best fit point: 3.09
