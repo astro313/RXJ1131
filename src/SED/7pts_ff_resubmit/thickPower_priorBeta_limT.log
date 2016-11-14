@@ -1,0 +1,30 @@
+Starting fit
+  Using response integration
+  Doing burn in with 100 steps
+  Doing main chain with 250 steps
+  Fit complete
+   Mean acceptance fraction: 0.336416
+   Autocorrelation time: 
+    Number of burn in steps (100) should be larger than these
+	T:        69.100689
+	beta:     60.737655
+	lambda0:  53.099489
+	alpha:    62.311615
+	fnorm:    23.629676
+Computing peak obs-frame wavelength
+Computing L_IR (42.5-122.5um)
+Computing dust mass
+Fit results:
+T/(1+z): 32.95 +12.72 -12.18 (low lim: 1.00 upper lim: 80.00) [K]
+Trest: 54.50 +21.05 -20.15[K]
+beta: 2.22 +0.34 -0.33 (low lim: 0.10 upper lim: 20.00 prior: 1.90 0.50) 
+fnorm: 58.93 +5.55 -5.79 (low lim: 0.00) [mJy]
+lambda0 (1+z): 365.87 +111.16 -120.49 (low lim: 1.00 upper lim: 1000.00) [um]
+lambda0 rest-frame: 221.19 +67.21 -72.84[um] 
+alpha: 8.47 +6.96 -6.23 (low lim: 0.10 upper lim: 20.00)
+Lambda peak: 154.9 +37.6 -43.3 [um]
+L_IR(42.5 to 122.5um): 4.24 +2.17 -2.00 [10^12 L_sun]
+M_d(kappa=2.64, lam=125.0um): 13.70 +4.73 -7.43 [10^8 M_sun]
+Number of data points: 7
+ChiSquare of best fit point: 1.84
+Saving results to thickPower_priorBeta_limT.h5
