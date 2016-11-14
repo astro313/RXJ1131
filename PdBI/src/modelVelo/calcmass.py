@@ -3,9 +3,11 @@
 calculate dynamical mass
 
 
-Last modified: 21 June 16
+Last modified: 14 Nov 16
 
 History:
+14 Nov 2016:
+    - update physical size and velocity
 21 June 2016
     - add func. to calc dyn mass using disk model (Neri+03)
 17 May 2016
@@ -49,8 +51,8 @@ def M_encl(R_kpc, v):
     return M10
 
 # calc. mass within some physical dist from line center
-R_in_kpc = 6.22
-V_rot = 345
+R_in_kpc = 6.2
+V_rot = 303
 # no correction for incl. angle
 print("Mass enclosed within {:.2f} kpc: {:.2f} x 1e+10 Msun".format(R_in_kpc, M_encl(R_in_kpc, V_rot)))
 # corrected
