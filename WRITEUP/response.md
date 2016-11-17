@@ -84,11 +84,20 @@ We have fixed the number of decimals in spectral indices in Sec 3.3.
 11) We have corrected "blueshifted" to "redshifted", udpated the velocity offset from 780 km/s to 715 km/s using z = 0.65406.
 
 12) 
-a) 
+a) We have removed the statement regarding "AGN dynamically offset".
 
-We have removed the statement regarding "AGN dynamically offset". 
+Our CO measurement confirms that an offset between BLR and the systemic redshift, which is not known previously. We have updated this section, adding additional possible interpretation for the offset (e.g. gas inflows, geometric effects) in the discussion. 
 
-# While the AGN may not be dynamically offset, given the possible scenario dirivng the BLR velocity offset, as pointed out by the referee, our CO measurement confirms that an offset between BLR and the systemic redshift, which is not known/constrained previously. We updated this section. The dynamical timescale of a recoiling black hole...
+We agree that it is unlikely that all objects with offset AGN lines are black hole recoils. Here, we are not asserting that the offset arises due to a recoiling black hole, we only discuss the possibility of such interpretation given the data (showing evidence of large offset between BLR and the systemic redshift as traced by our CO data), the high spin parameter, and theoretical expectation from hierarchical model of galaxy evolution, among other possible scenarios, as listed by the referee. 
+
+
+We would greatly appreciate the referee if they can point us to a reference where it shows evidence of why the recoiling black hole scneario is highly unlikely and will gladly make the appropriate changes.
+
+
+3) Assuming that effects (e.g., inflow, geometric effect, micro-lensing) are accountable for part of the velocity offset, then the velocity offset of ~715 km/s would then be at most an upper limit on the line-of-sight velocity. Then  the true recoil velocity is thus most likely to be << 1000 km/s. Ignoring dynamical friction against stellar background and assuming t_recoil ~ 100 Myr, then the crude BH displacement estimate given in the referee report (~few 10kpc) would be possible (as pointed out to be theoretically possible 
+by Bonning+07, Loeb07). However, Loeb07 also pointed out that at low ejection speeds (few hundred km/s), the deceleration of the BH (damped) by the external gravitational potential of the galaxy and by dynamical friction (Chandrasekhar 1943; Apj 97, 255) on the background stars, dark matter, and gas would limit the displacement of the slow-moving BH and tend to bring it back to the center of its host galaxy within a few dynamical times (see also Madau & Quataert 04 for analytic results and Boylan-Kolchin+04 for numerical results). Therefore the displacement given in the referee report is unlikely to hold (see also Guedes+11).
+
+Finally, again, we acknowledge that offsets between BLR and NLR lines are quite common in Seyferts and quasars, but typically not as big of an offset. In this paper, we only discuss possible scenarios and do not assert that any one of mentioned scenario is necessary in RXJ1131.
 
 
 
