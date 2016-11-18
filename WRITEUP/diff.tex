@@ -7,8 +7,8 @@
 \usepackage[usenames]{xcolor}
 \definecolor{OliveGreen}{cmyk}{0.64,0,0.95,0.40}
 \definecolor{airforceblue}{rgb}{0.36, 0.54, 0.66}
-\newcommand{\new}[1]{\textcolor{red}{\bf #1}}
-\newcommand{\old}[1]{\textcolor{airforceblue}{\st{#1}}} % {\textcolor{green!55!blue}{\bf #1}} or  {\textcolor{OliveGreen}{\bf #1}}
+\newcommand{\new}[1]{\textcolor{blue}{\uwave{#1}}}
+\newcommand{\old}[1]{\textcolor{red}{\st{#1}}} % {\textcolor{green!55!blue}{\bf #1}} or  {\textcolor{OliveGreen}{\bf #1}}
 % -----------------------------------------------------------------------------------------------
 
 \input{preamble}
@@ -270,19 +270,17 @@ instability.
 %                                Results
 %--------------------------------------------------------------------------
 \section{Results} \label{sec:results}
-\new{The observed properties of \bco and \cco emission are summarized in \Tab{obsprop}.
-\input{table_obsprop}}
+\new{The observed properties of \bco and \cco emission are summarized in \Tab{obsprop}.}
+\input{table_obsprop}
 
 \subsection{\bco Emission} \label{sec:CO21}
 We detect \bco line emission toward the background source in the PdBI data
 at $\gtrsim$\,27$\sigma$ significance, \old{confirming the redshift at $z_{\rm CO}$\eq0.6537\,$\pm$\,0.0005.} \new{enabling us to constrain its redshift at
-$z_{\rm CO}$\eq0.6541\,$\pm$\,0.0002\footnote{This redshift is derived by fitting a double-Gaussian to
-the de-lensed spectrum, which is shown in \Fig{delensed}.
-% instead of the observed spectrum (\Fig{CO21spec}) to avoid biases in our
-% redshift determination of the dynamical center due to differential lensing (see \Sec{differential}).
-}}. \old{The emission is spatially and dynamically resolved} \new{The emission is spatially and kinematically resolved}
+$z_{\rm CO}$\eq0.6541\,$\pm$\,0.0002\mbox{\footnote{This redshift is derived by fitting a double-Gaussian to
+the de-lensed spectrum, which is shown in \Fig{delensed}}.}}
+\old{The emission is spatially and dynamically resolved} \new{The emission is spatially and kinematically resolved}
 with a highly asymmetric double-horned line profile
-as shown in \Fig{CO21spec}. Fitting a double Gaussian results in peak
+as shown in \mbox{\Fig{CO21spec}}. Fitting a double Gaussian results in peak
 flux densities of 75.3\pmm2.6 mJy and 24.0\pmm2.0 mJy, and a FWHM of
 179\pmm9 \kms and 255\pmm28 \kms for the two components, respectively. The peaks are separated by
 $\Delta v_{\rm sep}$\eq400\pmm12\,\kms. The total integrated line flux is \old{24.1\,$\pm$\,2.3 Jy \kms} \new{20.3\,$\pm$\,0.6 Jy \kms}. % see 15May16/
@@ -804,15 +802,15 @@ causing the redshifted emission to be apparently much brighter than the
 blueshifted component.
 This can be explained by the difference in magnification factor \mbox{$(\mu_{\rm L})$} which
 varies from 8.7 to 3.1 across the \mbox{\bco} line (\mbox{\Tab{model}}) and also partly due to a contribution from the companion in the redshifted velocity channels.}
-\new{\protect{Previous studies of RXJ1131 find evidence for differential lensing across
+\new{Previous studies of RXJ1131 find evidence for differential lensing across
 the {\it HST} $V$-, $I$-, and $H$-bands, where the
-magnification factor varies from 10.9 to 7.8 \citepalias{Claeskens06a}.
-Here, we find that the highly asymmetric \bco line profile is predominantly a result of
+magnification factor varies from 10.9 to 7.8 \mbox{\citepalias{Claeskens06a}}.
+Here, we find that the highly asymmetric \mbox{\bco} line profile is predominantly a result of
 differential lensing, where the redshifted emission is apparently much brighter than the
 blueshifted component, as indicated by the difference in their magnification factor $(\mu_{\rm L})$, which
-varies from 8.7 to 3.1 across the \bco line (\Tab{model}).
+varies from 8.7 to 3.1 across the \mbox{\bco} line (\mbox{\Tab{model})}.
 A secondary effect contributing to the asymmetry is caused by
-the CO emission in the companion in the redshifted velocity channels.}}
+the CO emission in the companion in the redshifted velocity channels.}
 The variation in $\mu_{\rm L}$ found across channels is consistent with the source plane
 positions relative to the caustics in \Fig{model}, where the red wing
 emission mainly originates near the cusp
@@ -1183,8 +1181,8 @@ the light blue solid line shows the unattenuated stellar emission. }
 %                                Discussion
 %--------------------------------------------------------------------------
 \section{Discussion} \label{sec:diss}
-\new{The properties of RXJ1131 and the companion derived in this section are summarized in \Tab{prop}.
-\input{table_propRXJ}}
+\new{The properties of RXJ1131 and the companion derived in this section are summarized in \Tab{prop}}.
+\input{table_propRXJ}
 
 \subsection{ISM Properties} \label{sec:properties}
 In this section, we derive the gas properties of the merging system RXJ1131
@@ -1464,7 +1462,7 @@ to the true systemic redshift \citep[e.g.,][]{Vrtilek85a, Nelson00a}.
 the central AGN, whereas this condition is not necessary for NLRs.
 From an SDSS sample of $>$3800 quasars, \mbox{\citet{Richards02a}} find a}
 \new{Offset between BLR and NLR lines have been reported in literature, e.g., 
-\citet{Richards02a} find a}
+\mbox{\citet{Richards02a}} find a}
  median of 97\kms and a dispersion of \mbox{269\,\kms} in the distribution of
 \old{the offset between [Mg\,{\scriptsize II}] and [O\,{\scriptsize III}] lines, suggesting
 that large offsets are uncommon. Nevertheless,
@@ -1480,8 +1478,8 @@ e.g., outflow/inflow of gas in the BLR, rotation of the accretion disk, viewing 
 inclination effect, in which clumps in the accretion disk may block emission towards the far side of the disk, and thus the observed BLR emission is only
 originating from
 the redshifted inflowing gas component in the near side of the accretion disk of RXJ1131.
-In the latter, \citet{Sluse07a} report a covering factor of 20\% based on \mgii absorption line at $z$\eq0.654.
-Additionally, differentially lensing of the compact BLR emission by microlensing in RXJ1131\citep[\eg][]{Sluse07a, Sluse12a} 
+In the latter, \mbox{\citet{Sluse07a}} report a covering factor of 20\% based on \mbox{\mgii} absorption line at $z$\eq0.654.
+Additionally, differentially lensing of the compact BLR emission by microlensing in RXJ1131 \mbox{\citep[\eg][]{Sluse07a, Sluse12a}}
 may have boosted the redshifted component more than the blueshifted component,
 thereby biasing the BLR line centroids towards longer wavelengths.}
 {\bf DR: is it because of the large linewidth (one component of \mgii is $>$20000\kms, and broad comp. of H$\beta$ is $\sim$2000$-$4000\kms) that the referee thinks it's more likely to be inflow and therefore doesn't like the recoil black hole?
