@@ -260,9 +260,19 @@
   \href{http://dx.doi.org/10.1111/j.1365-2966.2005.08979.x}{\JournalTitle{\mnras},
   359, 1165} (G05)
 
+\bibitem[{{Guedes} {et~al.}(2009){Guedes}, {Madau}, {Kuhlen}, {Diemand}, \&
+  {Zemp}}]{Guedes09a}
+{Guedes}, J., {Madau}, P., {Kuhlen}, M., {Diemand}, J., \& {Zemp}, M. 2009,
+  \href{http://dx.doi.org/10.1088/0004-637X/702/2/890}{\JournalTitle{\apj},
+  702, 890}
+
 \bibitem[{{H{\"a}ring} \& {Rix}(2004)}]{HR04a}
 {H{\"a}ring}, N., \& {Rix}, H.-W. 2004,
   \href{http://dx.doi.org/10.1086/383567}{\JournalTitle{\apjl}, 604, L89}
+
+\bibitem[{{Hernquist}(1990)}]{Hernquist90a}
+{Hernquist}, L. 1990,
+  \href{http://dx.doi.org/10.1086/168845}{\JournalTitle{\apj}, 356, 359}
 
 \bibitem[{{Hinshaw} {et~al.}(2013){Hinshaw}, {Larson}, {Komatsu}, {Spergel},
   {Bennett}, {Dunkley}, {Nolta}, {Halpern}, {Hill}, {Odegard}, {Page}, {Smith},
@@ -317,6 +327,12 @@
 \bibitem[{{Li} \& {Draine}(2001)}]{Li01a}
 {Li}, A., \& {Draine}, B.~T. 2001,
   \href{http://dx.doi.org/10.1086/323147}{\JournalTitle{\apj}, 554, 778}
+
+\bibitem[{{Libeskind} {et~al.}(2006){Libeskind}, {Cole}, {Frenk}, \&
+  {Helly}}]{Libeskind06a}
+{Libeskind}, N.~I., {Cole}, S., {Frenk}, C.~S., \& {Helly}, J.~C. 2006,
+  \href{http://dx.doi.org/10.1111/j.1365-2966.2006.10209.x}{\JournalTitle{\mnras},
+  368, 1381}
 
 \bibitem[{{Loeb}(2007)}]{Loeb07a}
 {Loeb}, A. 2007,
