@@ -2,9 +2,11 @@
 ! Plot pseudo spectrum of companion after correcting for diff. lensing.
 !
 !
-! Last modified: 05 Nov 2016
+! Last modified: 21 Nov 2016
 !
 ! History:
+! 21 Nov 2016
+!       - add save command to separate file for oplot companion
 ! 05 Nov 2016
 !       - add command to oplot companion de-lensed
 !       - update redshift to z=0.65406
@@ -96,14 +98,14 @@ pen 0 /dash 5 /weight 3
 histo /fill 0
 
 ! companion
-! column x 1 y 2 /file de-lensed_companion.spec
-! let x 139.256-(x/299792.458*139.256)
-! let x x*(1+0.65406)
-! let x (((230.538-x)/230.538)*299792.458)
-! pen /col 0 /dash 1 /weight 4
-! histo /base /fill 3
-! histo /fill 11
-! pen 0
+column x 1 y 2 /file de-lensed_companion.spec
+let x 139.256-(x/299792.458*139.256)
+let x x*(1+0.65406)
+let x (((230.538-x)/230.538)*299792.458)
+pen /col 0 /dash 1 /weight 4
+histo /base /fill 3
+histo /fill 11
+pen 0
 
 
 column x 1 y 2 /file de-lensed_RXJ1131.spec    ! de-lensed_RXJ1131_binned.spec
@@ -123,5 +125,8 @@ set expand 1
 label "Velocity offset [km/s]" /x
 label "Flux density [mJy]" /y
 
-sic delete de-lensedSpecCO21_complicated_unbinned_ylog.eps
-hard de-lensedSpecCO21_complicated_unbinned_ylog.eps /dev eps colo
+! sic delete de-lensedSpecCO21_complicated_unbinned_ylog.eps
+! hard de-lensedSpecCO21_complicated_unbinned_ylog.eps /dev eps colo
+
+sic delete de-lensedSpecCO21_complicated_unbinned_ylog_withCompanion.eps
+hard de-lensedSpecCO21_complicated_unbinned_ylog_withCompanion.eps /dev eps colo
