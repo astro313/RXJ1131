@@ -9,6 +9,7 @@ Purpose:
 History:
 Nov 21 2016:
     - add inverted HST
+    - no marker, zoom in
 July 20 2016:
     - change zoom to match VLA image (HSTVLA.py)
 May 27 2016:
@@ -69,7 +70,7 @@ figC = plt.figure(1)
 ########################################
 ra_center = 172.96434563888
 dec_center = -12.5328629
-sizep = 0.00215 # 0.002058066
+sizep = 0.0018 # 0.002058066
 
 ra_cross, dec_cross = ra_center, dec_center
 row_a = 0.1
@@ -140,7 +141,7 @@ standard_plot_setup(fig1, ra_center, dec_center, sizep, tickc=tickcolor)
 ########################################
 # markers
 ########################################
-markers_cross(fig1, ra_cross, dec_cross, layer='marker_set_1')
+# markers_cross(fig1, ra_cross, dec_cross, layer='marker_set_1')
 #markers_cross(figO, ra_cross, dec_cross, layer='marker_set_1')
 # markers_cross(figHST, ra_cross, dec_cross, layer='marker_set_1')
 # markers_cross(figred, ra_cross, dec_cross, layer='marker_set_1')

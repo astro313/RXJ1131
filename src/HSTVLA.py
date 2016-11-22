@@ -11,6 +11,7 @@ Nov 21 2016:
     - add inverted HST
     - update contour color
     - change contour levels
+    - no marker, zoom in
 Nov 11 2016:
     - update contour intervals to +/-10%, 20%,... peak
 Nov 2 2016:
@@ -71,7 +72,7 @@ figC = plt.figure(1)
 ########################################
 ra_center = 172.96434563888
 dec_center = -12.5328629
-sizep = 0.00215
+sizep = 0.0018
 
 ra_cross, dec_cross = ra_center, dec_center
 row_a = 0.1
@@ -144,7 +145,7 @@ standard_plot_setup(fig1, ra_center, dec_center, sizep, tickc=tickcolor)
 ########################################
 # markers
 ########################################
-markers_cross(fig1, ra_cross, dec_cross, layer='marker_set_1')
+# markers_cross(fig1, ra_cross, dec_cross, layer='marker_set_1')
 #markers_cross(figO, ra_cross, dec_cross, layer='marker_set_1')
 # markers_cross(figHST, ra_cross, dec_cross, layer='marker_set_1')
 # markers_cross(figred, ra_cross, dec_cross, layer='marker_set_1')
