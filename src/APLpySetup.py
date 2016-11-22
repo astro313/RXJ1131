@@ -16,9 +16,9 @@ def get_RA_dec(f):
 
 def sigma_contour_VLA(sigma):
     """
-    Return a list of contour levels, (4, 8, 16, 32..)*sqrt(2)*sigma
+    Return a list of contour levels, (4, 8, 16, 32..)*sigma
 
-    +/- 2^(n/2)*sigma; n from 2
+    +/- 2^(n)*sigma; n from 2
 
     Parameters
     ----------
@@ -34,7 +34,8 @@ def sigma_contour_VLA(sigma):
     arr = range(11)
     arr.remove(0)
     arr.remove(1)
-    arr = [2 ** i * np.sqrt(2) * sigma for i in arr]
+#     arr = [2 ** i * np.sqrt(2) * sigma for i in arr]
+    arr = [2 ** i * sigma for i in arr]
     arr.append(list(np.array(arr) * -1)[0])
     return arr
 
@@ -44,11 +45,11 @@ def sigma_contour_tenpercent(Smax):
     """
     return list of sigma multiples, +/- 10% max * n from 1 ....4
 
-    increment in 30% of max
+    increment in 15% of max
     """
     arr = [0.10 * Smax]
-    for i in np.arange(1, 4):
-        arr.append(0.3 * Smax * i + arr[0])
+    for i in np.arange(1, 7):
+        arr.append(0.15 * Smax * i + arr[0])
     Narr = -1 * arr
     arrE = np.hstack((Narr, arr))
     return arrE

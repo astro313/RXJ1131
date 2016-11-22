@@ -1,12 +1,14 @@
 """
 Author: Daisy Leung
 
-Last edited: 20 July 2016
+Last edited: 21 Nov 2016
 
 Purpose:
 - Overlay 2mm Cont contour on HST
 
 History:
+Nov 21 2016:
+    - add inverted HST
 July 20 2016:
     - change zoom to match VLA image (HSTVLA.py)
 May 27 2016:
@@ -78,18 +80,19 @@ x0 = 0.2
 dy = 0.9
 sigma = 0.085e-3     # theoretical: 0.0816E-03; off-region in map: 0.0888e-3
 
+inverted_HSTleft = True
+tickcolor = 'k' if inverted_HSTleft else 'white'
 ########################################
 # intialize base figure
 ########################################
-# fig1 = aplpy.FITSFigure(label['F555W_drzcroplinearShift'][0],
-#                         figure=figC, subplot=[x0, row_a, full_width, dy])#, north=True)
-# # fig1.show_grayscale(stretch='log', vmin=-0.45869, vmax=250, vmid=-0.85)
-# fig1.show_grayscale(stretch='log', vmin=-0.01869, vmax=151, vmid=-0.025)
-# #fig1.set_theme('publication')   # inverted grayscale
+fig1 = aplpy.FITSFigure(label['F555W_drzcroplinearShift'][0],
+                        figure=figC, subplot=[x0, row_a, full_width, dy])
+fig1.show_grayscale(stretch='log', vmin=-0.00256, vmax=1.922, vmid=-0.02)
+if inverted_HSTleft: fig1.set_theme('publication')
 
-fig1 = aplpy.FITSFigure(label['F555W_drzcroplinearShift'][0], \
-        figure=figC, subplot=[x0,row_a,full_width,dy])
-fig1.show_grayscale(stretch='log', vmin=-0.01869, vmax=125, vmid=-0.025)
+# fig1 = aplpy.FITSFigure(label['F555W_drzcroplinearShift'][0], \
+#         figure=figC, subplot=[x0,row_a,full_width,dy])
+# fig1.show_grayscale(stretch='log', vmin=-0.01869, vmax=125, vmid=-0.025)
 #figO = aplpy.FITSFigure(label['F555W_drzcroplinearShift'][0], \
 #        figure=figC, subplot=[x0+width+2*x_gap, row_a, width, dy])
 #figO.show_grayscale(stretch='log', vmin=-0.01869, vmax=151, vmid=-0.025)
@@ -105,14 +108,14 @@ fig1.show_grayscale(stretch='log', vmin=-0.01869, vmax=125, vmid=-0.025)
 ########################################
 # Contours
 ########################################
-fig1.show_contour(label_pdbi['cont'][0], colors="lime", levels=sigma_contour_array(sigma), linewidths=1.62)#, layer='fg')
+fig1.show_contour(label_pdbi['cont'][0], colors="black", levels=sigma_contour_array(sigma), linewidths=1.62)#, layer='fg')
 
 # figred.show_contour(label_pdbi['red'][0], colors="lime", levels=sigma_contour_array(sigma_red), linewidths=2)
 
 ########################################
 # beam
 ########################################
-fig1.show_beam(major=4.44/3600, minor=1.95/3600, angle=13., edgecolor='white', facecolor='white', linestyle='solid', linewidth=3, frame=False, alpha=0.8)
+fig1.show_beam(major=4.44/3600, minor=1.95/3600, angle=13., edgecolor='gray', facecolor='gray', linestyle='solid', linewidth=3, frame=False, alpha=0.8)
 
 ########################################
 # scale bar
@@ -125,7 +128,7 @@ lg_1arcsec = 1. / 3600
 ########################################
 # axes
 ########################################
-standard_plot_setup(fig1, ra_center, dec_center, sizep, tickc='white')
+standard_plot_setup(fig1, ra_center, dec_center, sizep, tickc=tickcolor)
 #standard_plot_setup(figO, ra_center, dec_center, sizep, tickc='white')
 # standard_plot_setup(figHST, ra_center, dec_center, sizep, tickc='white')
 # standard_plot_setup(figred, ra_center, dec_center, sizep, tickc='white')
@@ -147,8 +150,8 @@ markers_cross(fig1, ra_cross, dec_cross, layer='marker_set_1')
 ########################################
 # if '_' in sym[:-1]: symf = sym.replace('_', ' ')
 
-put_label(fig1, 0.15725, 0.95, 'RXJ1131', 'titleObj')
-put_label(fig1, 0.38, 0.9, 'HST F555W, 2 mm Continuum', 'titleBand')
+put_label(fig1, 0.15725, 0.95, 'RXJ1131', 'titleObj', c=tickcolor)
+put_label(fig1, 0.38, 0.9, 'HST F555W, 2 mm Continuum', 'titleBand', c=tickcolor)
 # put_label(figHST, 0.20, 0.95, 'HST F555W', 'titleBand')
 # put_label(figHST, 0.1825, 0.9, 'RXJ1131', 'titleObj')
 # put_label(figred, 0.40, 0.95, 'HST F555W, CO Red wing', 'titleBand')
