@@ -1,4 +1,4 @@
-\begin{thebibliography}{}
+ \begin{thebibliography}{}
 \providecommand\natexlab[1]{#1}
 \providecommand\JournalTitle[1]{#1}
 
@@ -52,7 +52,7 @@
 \bibitem[{{Brewer} \& {Lewis}(2008)}]{Brewer08a}
 {Brewer}, B.~J., \& {Lewis}, G.~F. 2008,
   \href{http://dx.doi.org/10.1111/j.1365-2966.2008.13715.x}{\JournalTitle{\mnras},
-  390, 39}
+  390, 39} (B08)
 
 \bibitem[{{Bruzual} \& {Charlot}(2003)}]{BC03a}
 {Bruzual}, G., \& {Charlot}, S. 2003,
@@ -99,7 +99,7 @@
   {Surdej}}]{Claeskens06a}
 {Claeskens}, J.-F., {Sluse}, D., {Riaud}, P., \& {Surdej}, J. 2006,
   \href{http://dx.doi.org/10.1051/0004-6361:20054352}{\JournalTitle{\aap}, 451,
-  865}
+  865} (C06)
 
 \bibitem[{{Combes} {et~al.}(2011){Combes}, {Garc{\'{\i}}a-Burillo}, {Braine},
   {Schinnerer}, {Walter}, \& {Colina}}]{Combes11a}
@@ -111,7 +111,7 @@
   {Schinnerer}, {Walter}, \& {Colina}}]{Combes13a}
 ---. 2013,
   \href{http://dx.doi.org/10.1051/0004-6361/201220392}{\JournalTitle{\aap},
-  550, A41}
+  550, A41} (C13)
 
 \bibitem[{{Coppin} {et~al.}(2008){Coppin}, {Swinbank}, {Neri}, {Cox},
   {Alexander}, {Smail}, {Page}, {Stevens}, {Knudsen}, {Ivison}, {Beelen},
@@ -196,7 +196,7 @@
 
 \bibitem[{{Downes} \& {Solomon}(1998)}]{Downes98a}
 {Downes}, D., \& {Solomon}, P.~M. 1998,
-  \href{http://dx.doi.org/10.1086/306339}{\JournalTitle{\apj}, 507, 615}
+  \href{http://dx.doi.org/10.1086/306339}{\JournalTitle{\apj}, 507, 615} (DS98)
 
 \bibitem[{{Draine} {et~al.}(2007){Draine}, {Dale}, {Bendo}, {Gordon}, {Smith},
   {Armus}, {Engelbracht}, {Helou}, {Kennicutt}, {Li}, {Roussel}, {Walter},
@@ -264,11 +264,21 @@
   {Kneib}}]{Greve05a}
 {Greve}, T.~R., {Bertoldi}, F., {Smail}, I., {et~al.} 2005,
   \href{http://dx.doi.org/10.1111/j.1365-2966.2005.08979.x}{\JournalTitle{\mnras},
-  359, 1165}
+  359, 1165} (G05)
+
+\bibitem[{{Guedes} {et~al.}(2009){Guedes}, {Madau}, {Kuhlen}, {Diemand}, \&
+  {Zemp}}]{Guedes09a}
+{Guedes}, J., {Madau}, P., {Kuhlen}, M., {Diemand}, J., \& {Zemp}, M. 2009,
+  \href{http://dx.doi.org/10.1088/0004-637X/702/2/890}{\JournalTitle{\apj},
+  702, 890}
 
 \bibitem[{{H{\"a}ring} \& {Rix}(2004)}]{HR04a}
 {H{\"a}ring}, N., \& {Rix}, H.-W. 2004,
   \href{http://dx.doi.org/10.1086/383567}{\JournalTitle{\apjl}, 604, L89}
+
+\bibitem[{{Hernquist}(1990)}]{Hernquist90a}
+{Hernquist}, L. 1990,
+  \href{http://dx.doi.org/10.1086/168845}{\JournalTitle{\apj}, 356, 359}
 
 \bibitem[{{Hinshaw} {et~al.}(2013){Hinshaw}, {Larson}, {Komatsu}, {Spergel},
   {Bennett}, {Dunkley}, {Nolta}, {Halpern}, {Hill}, {Odegard}, {Page}, {Smith},
@@ -542,17 +552,17 @@
   {Khmil}}]{Sluse03a}
 {Sluse}, D., {Surdej}, J., {Claeskens}, J.-F., {et~al.} 2003,
   \href{http://dx.doi.org/10.1051/0004-6361:20030904}{\JournalTitle{\aap}, 406,
-  L43}
+  L43} (S03)
 
 \bibitem[{{Solomon} {et~al.}(1997){Solomon}, {Downes}, {Radford}, \&
   {Barrett}}]{Solomon97a}
 {Solomon}, P.~M., {Downes}, D., {Radford}, S.~J.~E., \& {Barrett}, J.~W. 1997,
-  \JournalTitle{\apj}, 478, 144
+  \JournalTitle{\apj}, 478, 144 (S97)
 
 \bibitem[{{Solomon} \& {Vanden Bout}(2005)}]{SV05a}
 {Solomon}, P.~M., \& {Vanden Bout}, P.~A. 2005,
   \href{http://dx.doi.org/10.1146/annurev.astro.43.051804.102221}{\JournalTitle{\araa},
-  43, 677}
+  43, 677} (SV05)
 
 \bibitem[{{Springel} \& {Hernquist}(2005)}]{Springel05a}
 {Springel}, V., \& {Hernquist}, L. 2005,
