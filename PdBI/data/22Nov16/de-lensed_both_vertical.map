@@ -1,0 +1,169 @@
+!
+! Plot pseudo spectrum of companion & RXJ1131
+! after correcting for diff. lensing.
+! Excluding observed spectrum and dashed line showing binned channel slices
+!
+!
+! Last modified: 29 Nov 2016
+!
+! History:
+! 29 Nov 2016
+!   - top panel: observed and de-lensed of RXJ1131 & bottom: de-lensed of both RXJ1131 & companion in linear scale
+!   - created
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+dev xlandscape white
+set plot landscape
+pen 0 /col 0 /dash 1 /weight 3
+set box 3.6 20 3.6 20
+@window_tools.greg
+cle
+cle al
+@window_init
+pen 0
+@ window_xy 1 2 1        ! nx ny ith
+
+column x 1 y 2 /file full-res_centralChans.spec   ! velo axis w/o shifting, & is in z=0 frame
+
+let x 139.256-(x/299792.458*139.256)
+let x x*(1+0.65406)
+let x (((230.538-x)/230.538)*299792.458)                  ! vel. in z_guess frame
+
+define real ymin ymax yrange
+let ymax 98
+let ymin 1.2
+let yrange log(ymax)-log(ymin)
+let ymin exp(log(ymin)-0.1*yrange)
+let ymax exp(log(ymax)+0.1*yrange)
+limits -410 370 ymin ymax /ylog         ! x y range
+
+! marker location is rest-frame velocity
+set marker 2 0 2.5 0
+draw marker 360.5-120 87.5 /user
+draw marker 261.045-62 87.5 /user
+draw marker 153.52-62 87.5 /user
+draw marker 45.9976-62 87.5 /user
+draw marker -61.5264-62 87.5 /user
+draw marker -169.050-62 87.5 /user
+draw marker -270-10 87.5 /user
+
+set marker 2 0 0.5 90
+draw marker 367.8+55-64 87.5 /user
+draw marker 367.8-54-65 87.5 /user
+draw marker 261.045-54.5-65 87.5 /user
+draw marker 153.52-54-65 87.5 /user
+draw marker 45.9976-54-65 87.5 /user
+draw marker -61.5264-54-65 87.5 /user
+draw marker -169.050-54-65 87.5 /user
+draw marker -276.573-54.5-65 87.5 /user
+
+! NOTE this is only magnification of RXJ1131
+draw text 367.8-62 107 "6.7" /user
+draw text 261.045-62 107 "7.6" /user
+draw text 153.52-62 107 "8.7" /user
+draw text 45.9976-62 107 "4.1" /user
+draw text -61.5264-62 107 "4.2" /user
+draw text -169.050-62 107 "4.3" /user
+draw text -276.573-62 107 "3.1" /user
+
+histo /base /fill 5
+pen 0 /dash 3 /weight 5
+histo /fill 11
+
+! pen 0 /col 0 /dash 2 /weight 4
+! let y 0    ! dotted base line
+! connect x y
+pen 0
+
+column x 1 y 2 /file binned_centralChans.spec
+let x 139.256-(x/299792.458*139.256)
+let x x*(1+0.65406)
+let x (((230.538-x)/230.538)*299792.458)
+pen 0 /dash 5 /weight 3
+histo /fill 0
+
+
+column x 1 y 2 /file de-lensed_RXJ1131.spec
+let x 139.256-(x/299792.458*139.256)
+let x x*(1+0.65406)
+let x (((230.538-x)/230.538)*299792.458)
+pen /col 0 /dash 1 /weight 4
+histo /base /fill 4
+histo /fill 0
+pen 0
+
+! axis xlow
+axis xup
+axis yleft
+axis yright
+set expand 1
+! label "Velocity offset [km/s]" /x
+label "Flux density [mJy]" /y
+
+
+! ---------------------------------------------------------
+!!!!!!!!!!!!!!!!!!!!! SECOND PANEL !!!!!!!!!!!!!!!!!!!!!!!!
+! ---------------------------------------------------------
+@ window_xy 1 2 2
+column x 1 y 2 /file de-lensed_RXJ1131.spec
+let x 139.256-(x/299792.458*139.256)
+let x x*(1+0.65406)
+let x (((230.538-x)/230.538)*299792.458)
+
+limits -410 370 0 12
+
+! marker location is rest-frame velocity
+! set marker 2 0 2.5 0
+! draw marker 360.5-62 12.5 /user
+! draw marker 261.045-62 12.5 /user
+! draw marker 153.52-62 12.5 /user
+! draw marker 45.9976-62 12.5 /user
+! draw marker -61.5264-62 12.5 /user
+! draw marker -169.050-62 12.5 /user
+! draw marker -270-62 12.5 /user
+!
+! set marker 2 0 0.5 90
+! draw marker 367.8+55-64 12.5 /user
+! draw marker 367.8-54-65 12.5 /user
+! draw marker 261.045-54.5-65 12.5 /user
+! draw marker 153.52-54-65 12.5 /user
+! draw marker 45.9976-54-65 12.5 /user
+! draw marker -61.5264-54-65 12.5 /user
+! draw marker -169.050-54-65 12.5 /user
+! draw marker -276.573-54.5-65 12.5 /user
+!
+! draw text 367.8-62 13.5 "7.2" /user  ! << but companion also has a magnification!
+! draw text 261.045-62 13.5 "7.6" /user
+! draw text 153.52-62 13.5 "8.7" /user
+! draw text 45.9976-62 13.5 "4.1" /user
+! draw text -61.5264-62 13.5 "4.2" /user
+! draw text -169.050-62 13.5 "4.3" /user
+! draw text -276.573-62 13.5 "3.1" /user
+
+pen /col 0 /dash 1 /weight 4
+histo /base /fill 4
+histo /fill 0
+pen 0
+
+
+! companion
+column x 1 y 2 /file de-lensed_companion.spec
+let x 139.256-(x/299792.458*139.256)
+let x x*(1+0.65406)
+let x (((230.538-x)/230.538)*299792.458)
+pen /col 0 /dash 1 /weight 4
+histo /base /fill 3
+histo /fill 0
+pen 0
+
+box
+axis xlow
+! axis xup
+! axis yleft
+! axis yright
+! set expand 1
+label "Velocity offset [km/s]" /x
+label "Flux density [mJy]" /y
+
+
+sic delete de-lensedSpecCO21_withCompanion_swap_vertical.eps
+hard de-lensedSpecCO21_withCompanion_swap_vertical.eps /dev eps colo
