@@ -1,4 +1,4 @@
- \begin{thebibliography}{}
+\begin{thebibliography}{}
 \providecommand\natexlab[1]{#1}
 \providecommand\JournalTitle[1]{#1}
 
@@ -160,6 +160,14 @@
   \href{http://dx.doi.org/10.1088/0004-637X/713/1/686}{\JournalTitle{\apj},
   713, 686}
 
+\bibitem[{{Daddi} {et~al.}(2015){Daddi}, {Dannerbauer}, {Liu}, {Aravena},
+  {Bournaud}, {Walter}, {Riechers}, {Magdis}, {Sargent}, {B{\'e}thermin},
+  {Carilli}, {Cibinel}, {Dickinson}, {Elbaz}, {Gao}, {Gobat}, {Hodge}, \&
+  {Krips}}]{Daddi15a}
+{Daddi}, E., {Dannerbauer}, H., {Liu}, D., {et~al.} 2015,
+  \href{http://dx.doi.org/10.1051/0004-6361/201425043}{\JournalTitle{\aap},
+  577, A46}
+
 \bibitem[{{Dannerbauer} {et~al.}(2009){Dannerbauer}, {Daddi}, {Riechers},
   {Walter}, {Carilli}, {Dickinson}, {Elbaz}, \& {Morrison}}]{Dannerbauer09a}
 {Dannerbauer}, H., {Daddi}, E., {Riechers}, D.~A., {et~al.} 2009,
@@ -264,21 +272,11 @@
   {Kneib}}]{Greve05a}
 {Greve}, T.~R., {Bertoldi}, F., {Smail}, I., {et~al.} 2005,
   \href{http://dx.doi.org/10.1111/j.1365-2966.2005.08979.x}{\JournalTitle{\mnras},
-  359, 1165} (G05)
-
-\bibitem[{{Guedes} {et~al.}(2009){Guedes}, {Madau}, {Kuhlen}, {Diemand}, \&
-  {Zemp}}]{Guedes09a}
-{Guedes}, J., {Madau}, P., {Kuhlen}, M., {Diemand}, J., \& {Zemp}, M. 2009,
-  \href{http://dx.doi.org/10.1088/0004-637X/702/2/890}{\JournalTitle{\apj},
-  702, 890}
+  359, 1165}
 
 \bibitem[{{H{\"a}ring} \& {Rix}(2004)}]{HR04a}
 {H{\"a}ring}, N., \& {Rix}, H.-W. 2004,
   \href{http://dx.doi.org/10.1086/383567}{\JournalTitle{\apjl}, 604, L89}
-
-\bibitem[{{Hernquist}(1990)}]{Hernquist90a}
-{Hernquist}, L. 1990,
-  \href{http://dx.doi.org/10.1086/168845}{\JournalTitle{\apj}, 356, 359}
 
 \bibitem[{{Hinshaw} {et~al.}(2013){Hinshaw}, {Larson}, {Komatsu}, {Spergel},
   {Bennett}, {Dunkley}, {Nolta}, {Halpern}, {Hill}, {Odegard}, {Page}, {Smith},
@@ -449,10 +447,10 @@
 {Richards}, G.~T., {Vanden Berk}, D.~E., {Reichard}, T.~A., {et~al.} 2002,
   \href{http://dx.doi.org/10.1086/341167}{\JournalTitle{\aj}, 124, 1}
 
-\bibitem[{{Riechers} {et~al.}(2011){Riechers}, {Hodge}, {Walter}, {Carilli}, \&
-  {Bertoldi}}]{Riechers11a}
+\bibitem[{{Riechers} {et~al.}(2011{\natexlab{a}}){Riechers}, {Hodge}, {Walter},
+  {Carilli}, \& {Bertoldi}}]{Riechers11a}
 {Riechers}, D.~A., {Hodge}, J., {Walter}, F., {Carilli}, C.~L., \& {Bertoldi},
-  F. 2011,
+  F. 2011{\natexlab{a}},
   \href{http://dx.doi.org/10.1088/2041-8205/739/1/L31}{\JournalTitle{\apjl},
   739, L31}
 
@@ -460,6 +458,14 @@
   {Lewis}, {Bertoldi}, \& {Cox}}]{Riechers08a}
 {Riechers}, D.~A., {Walter}, F., {Brewer}, B.~J., {et~al.} 2008,
   \href{http://dx.doi.org/10.1086/591434}{\JournalTitle{\apj}, 686, 851}
+
+\bibitem[{{Riechers} {et~al.}(2011{\natexlab{b}}){Riechers}, {Carilli},
+  {Maddalena}, {Hodge}, {Harris}, {Baker}, {Walter}, {Wagg}, {Vanden Bout},
+  {Wei{\ss}}, \& {Sharon}}]{Riechers11b}
+{Riechers}, D.~A., {Carilli}, C.~L., {Maddalena}, R.~J., {et~al.}
+  2011{\natexlab{b}},
+  \href{http://dx.doi.org/10.1088/2041-8205/739/1/L32}{\JournalTitle{\apjl},
+  739, L32}
 
 \bibitem[{{Riechers} {et~al.}(2013){Riechers}, {Bradford}, {Clements},
   {Dowell}, {P{\'e}rez-Fournon}, {Ivison}, {Bridge}, {Conley}, {Fu}, {Vieira},

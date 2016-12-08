@@ -1,5 +1,5 @@
 We thank the referee for providing constructive and thoughtful
-comments that helped us to improve this manuscript. We have addressed all the concerns raised by the referee in the revised version of the manuscript. Our response can be found after each of the referee's points below. 
+comments that helped us to improve this manuscript. We have addressed all the concerns raised by the referee in the revised version of the manuscript. Our response can be found after each of the referee's points below and are marked by a "#" symbol at the beginning.
 
 
 COMMENTS IN DETAIL:
@@ -43,7 +43,7 @@ or simply:
 the Lensed Host Galaxy of the Quasar RXS J1131-1231".
 
 # RESPONSE:
-1a) To take the referee's point into account, we have changed the title to "Molecular gas kinematics of the strongly lensed quasar host galaxy RXSJ1131-1231". We agree that we study more than just the CO gas of the science target in this paper; however, a large fraction of the paper is based on our new CO data and the analysis (including lens modeling). 
+1a) To take the referee's point into account, we have changed the title to "Molecular gas kinematics and spectral energy distribution properties of the strongly lensed quasar host galaxy RXSJ1131-1231". We agree that we study more than just the CO gas of the science target in this paper; however, a large fraction of the paper is based on our new CO data and the analysis (including lens modeling) on which we thus place an emphasis.
 
 
 
@@ -79,7 +79,7 @@ Change to :
 
 
 # RESPONSE:
-We have taken into account the referee's comment and have updated the CO redshift based on the results from fitting a double-Gaussian to the de-lensed intrinsic line profile of our target (Fig. 5), and re-plotted all the relevant figures with the updated velocity scale. We have also changed our wording in fig. 1 caption "dynamical center" to "line center".
+We have taken into account the referee's comment and have updated the CO redshift based on the results from fitting a double-Gaussian to the de-lensed intrinsic line profile of our target (Fig. 5), and we have revised all relevant figures and derived quantities. We have also changed our wording in the caption of Fig. 1 from "dynamical center" to "line center".
 
 
 
@@ -130,11 +130,9 @@ This is not the same as magnification varying across the line profile,
 due to different source-plane positions, as you are claiming.
 
 # RESPONSE:
-We agree with the referee's comment and have changed "dynamical information" to "kinematic information", "reconstruct the intrinsic gas dynamics" to "reconstruct the intrinsic line profile and source-plane velocity structure".
+We agree with the referee's comment and have changed "dynamical information" to "kinematic information", and "reconstruct the intrinsic gas dynamics" to "reconstruct the intrinsic line profile and source-plane velocity structure".
 
-To address the referee's comment on the paragraph (2nd paragraph of Sec 4.1.2.) regarding the differential lensing effect in CO and that in the optical emission (Claeskens+06), we have re-written this paragraph to clarify what we seek to convey -- the difference in magnification factor between CO gas across all channels (µ ~ 5.5) versus those found in the optical emission indicates different morphology and spatial distribution between the CO gas, and the stellar population of different ages. 
-
-
+To address the referee's comment, we have re-written the 2nd paragraph of Section 4.1.2. Rather than saying the differential lensing effect in CO is *similar* to what is seen in the optical, we point out that different magnification factors have been reported in previous studies using optical images. This is done to illustrate the prominence of differential lensing effect in this source, and to demonstrate that the CO gas traces a different region in the source plane and has a different spatial distribution compared to the stellar populations.
 
 
 
@@ -218,7 +216,7 @@ used the full-resolution spectrum (Fig. 1 or Fig.5), rather than the heavily bin
 # RESPONSE:
 We have corrected nu_LO --> nu_obs.
 
-We agree with the referee and have re-fitted a doubled Gaussian to the de-lensed profile (Fig. 5) to updated the redshift to z=0.65406. We have therefore replotted all the relevant figures (and updated their captions correspondingly), updated column 1 in Table 3 and the labeling in Fig 7, refitted the arctangent model (Fig. 9) and updated parameters in Sec 4.3 correspondingly, and refitted SED with the updated redshift.
+We agree with the referee and have re-fitted a doubled Gaussian to the de-lensed profile (Fig. 5) to updated the redshift to z=0.6541. We have therefore replotted all the relevant figures (and updated their captions correspondingly), updated column 1 in Table 3 and the labeling in Fig 7, refitted the arctangent model (Fig. 9) and updated parameters in Section 4.3 correspondingly, and refitted SED with the updated redshift.
 
 
 
@@ -257,9 +255,9 @@ then the units on the vertical axis would again have to be [ mJy/beam ].
 In Fig.5,it would be good to show what you think is the contribution from the companion galaxy.
 
 # RESPONSE:
-The referee is correct and we found a bug in the GILDAS package that affected the statistics and fluxes within the map used for previous line-integrated flux extraction. In the resubmitted version, we have updated the intensity reported for CO(2-1) by summing the fluxes over the FWZI (20.3+/-0.6 Jy km/s). The updated intensity is in agreement with the double-Gaussian fitted to the  extracted spectrum (Fig. 1). Since our lensing-corrected M_gas for both RXJ1131 and the companion are derived from the flux in each channel, this does not change our conclusion.
+The referee is correct and we found a bug in the GILDAS package that affected the statistics and fluxes within the map used for previous line-integrated flux extraction. In the resubmitted version, we have updated the intensity reported for CO(2-1) by summing the fluxes over the FWZI (20.3+/-0.6 Jy km/s). The updated intensity is in agreement with the double-Gaussian fitted to the  extracted spectrum (Fig. 1). Since the lensing-corrected M_gas for both RXJ1131 and the companion are derived by first summing up the flux density of each channel within the FWZI, and then dividing by their respective magnification factors. This revision in the CO line intensity does not change our conclusion of this paper.
 
-We attempted to over-plot the companion's spectrum to Fig. 5, as suggested by the referee, but found the figure to be too busy as the plot is showing various spectra with different various linestyles and colors. This main message for this plot is to show that we recover an intrinsically symmetric line profile for the main galaxy which is informative about its gas kinematics.On the other hand, the useful information regarding the companion from the de-lensed spectrum is the gas mass, which we report in the text (and in the table, as suggested by the referee).
+We have adopted the suggestion provided by the referee and have updated Fig. 5 to include an additional figure showing the de-lensed spectra for RXJ1131 and the companion. 
 
 
 
@@ -318,17 +316,17 @@ that you quote elsewhere in the paper is too high:
 
 # RESPONSE:
 Source size: 
-We addressed the referee's comment on the *deconvolved* CO source size by  fitting a single Gaussian in uv-plane, which corresponds to 4.5" +/- 0.1" x 3.5" +/- 0.2", consistent with the reported CO size based on image-plane fitting within the uncertainties. We additionally report the source sizes by fitting two Gaussians to provide further evidence that the CO(2-1) emission is  spatially resolved. We have updated Section 3.1 to clarify the discussion.
+We addressed the referee's comment on the *deconvolved* CO source size by fitting a single Gaussian in uv-plane, which corresponds to 4.5" +/- 0.1" x 3.5" +/- 0.2", consistent with the reported CO size based on image-plane fitting within the uncertainties. We additionally report the source sizes by fitting two Gaussians to provide further evidence that the CO(2-1) emission is spatially resolved. We have updated Section 3.1 to clarify the discussion.
 
 CO physical size:
-The rough estimate of de-magnified CO diameter provided in the referee report is a valid first order estimate, but the true size of the source is complicated by the fact that
-1) the lensed emission is not uniformly stretched along the arc (and contains complex structures within the arc), and thus the magnification factor is not uniform across the partial Einstein ring.
-2) CO is not subject to dust extinction, therefore its emission may be more extended than optical emission. In the case of RXJ1131, the CO gas is likely to be more extended than the optical emission given that
+The rough estimate of the de-magnified CO diameter provided in the referee report is a valid first order estimate, but the true size of the source is complicated by the fact that
+1) the lensed emission is not uniformly stretched along the arc (and contains complex structures within the arc), and thus the magnification factor is not uniform across the partial Einstein ring. 
+2) CO is not subject to dust extinction, and its emission may be more extended than optical emission. In the case of RXJ1131, the CO gas is likely to be more extended than the optical emission given that
     i) the deconvolved source size of CO (see above and section 3.1) is larger than the diameter of the Einstein Ring in the optical (~3.6")
-    ii) the spatial extent of the CO emission as shown in Fig. 7, where the centroid of the blueshifted emission is further out in the SE compared to the lensed arc in the optical
-    iii) the source-plane spatial distribution from the best-fit lens models (Sec 4.3, Fig. 9), where the most extended velocity component is ~6.2 kpc from the line center position, indicating that the CO source size is unlikely to be R ≤ 3.5 kpc.
+    ii) the spatial extent of the CO emission as shown in Fig. 7, where centroid of the redshifted component is co-spatial with the lensed arc but centroid of the blueshifted component is offset to the SE of the lensed arc, tracing regions beyond the optical emission. 
+3) the source-plane distance of ~6.2 kpc between the centroid position of the most extended kinematic component and the line center position. This is also the value we use for reporting R_CO throughout this paper.
 
-The R_CO size of ~6 kpc reported throughout the paper is obtained based on the centroid position of the most extended kinematic component obtained from the best-fit lens models. See also Sec 4.3 and our response to point 14 in this referee report for a more detailed explanation regarding the CO size.
+See also Section 4.3 and our response to point 14 in this referee report for a more detailed explanation regarding the CO size.
 
 
 
@@ -374,7 +372,7 @@ So the wavelength is 1.4mm, not 1.5mm.
 #RESPONSE
 We have considered the referee's point of view, and agree that the most extreme peak to peak noise across two channels is from -50 to +50 mJy/beam. However, this is not representative of the noise across all channels that are being used to derive the line flux. We thus derive the uncertainty based on the RMS obtained from the intensity map.
 
-To address the referee's comment and to demonstrate the significance of our detection that is reported in the paper, we have extracted the peak fluxes and their corresponding uncertainties for the blue and red wing independently. For the blue wing, we find a peak flux density of 5.13 +/- 1.43 Jy km/s /beam in the intensity map, indicating a ≥3sigma detection in this component. For the red wing, we find a peak flux density of 11.45+/-1.99 Jy km/s /beam in the intensity map, indicating a ~6 sigma detection. The SNRs are thus consistent with the reported detection significance of ≥5sigma in the paper which was obtained based on the peak flux density in the intensity map obtained by summing over the full line profile (i.e., including emission in both wings). 
+To address the referee's comment and to demonstrate the significance of our detection that is reported in the paper, we have extracted the peak fluxes and their corresponding uncertainties for the blue and red wing independently. For the blue wing, we find a peak flux density of 5.13 +/- 1.43 Jy km/s /beam in the intensity map, indicating a ≥3sigma detection in this component alone. For the red wing, we find a peak flux density of 11.45+/-1.99 Jy km/s /beam in the intensity map, indicating a ~6 sigma detection. The SNRs are thus consistent with the reported detection significance of ≥5sigma in the paper which was obtained based on the peak flux density in the intensity map obtained by summing over the full line profile (i.e., including emission in both wings). 
 
 Since both CO lines are observed towards the same source, using prior knowledge about the blue wing from the CO(2-1) data to inform about the CO(3-2) emission also appears reasonable. 
 
@@ -443,7 +441,7 @@ In the residual map, the peak emission is 0.39 +/- 0.08 mJy. This flux (0.39 mJy
 
 The emission in the residual is detected at S/N > 4, which is the significance of the emission in the residual map (Data - Model). This together with the fact that this emission is co-spatial with the lensed arc in the optical image indicates that we detect 2mm continuum towards the background source.
 
-To taken into account the referee's comment, we have updated the 2mm flux in Table 1, and the flux uncertainty to include those from the uv-fitting process.
+To take into account the referee's comment, we have updated the 2mm flux in Table 1, and the flux uncertainty to include those from the uv-fitting process.
 
 The term "deblending" is a broadly used in photometry, and it is clear that it refers to the flux subtraction within the same paragraph. We therefore make no changes to the wording.
 
@@ -475,22 +473,15 @@ Any comment on the very flat spectrum for the lensing elliptical galaxy ?
 Is the 6cm emission mainly synchrotron? 
 Is the 2mm emission a mix of synchrotron flux and dust flux ?
 
-# RESPONSE: (explain better)
-While the radio-mm spectral slope of -0.35+/-0.21 derived for the background source has a large error bar associated with it due to the large uncertainty on the 2mm flux (0.39+/-0.12 mJy), the fact that it is flatter than the typical slope for pure synchrotron emission indicates that it is a constraint on the fraction of synchrotron emission at 2mm, and that a fraction of the 2mm flux arises from thermal dust and free-free emission. 
+# RESPONSE:
+While the radio-mm spectral slope of -0.35+/-0.21 derived for the background source has a large error bar associated with it due to the large uncertainty on the 2mm flux (0.39+/-0.12 mJy), the fact that it is significantly flatter than the typical slope for pure synchrotron emission indicates that it provides a limit on the amount of synchrotron emission at 2mm. Thus, we used this radio-mm spectral slope to estimate the expected flux from synchrotron emission at 2mm, and attribute the residual flux to thermal dust emission.Assuming a synchrotron index of alpha = -0.7 and using the 5GHz flux, we expect S_2mmm = 0.122+/-0.004 mJy to be arising from synchrotron emission. We thus find a flux excess of S_2mm = 0.39 - 0.12 = 0.27 mJy that is coming from thermal dust emission. We have updated our dust SED fitting using S_2mm = 0.27+/-0.08 mJy and the resulting parameters throughout the paper.
+
+We note that 0.27+/-0.08 mJy is consistent with our previous flux measurement used for SED fitting (0.39+/-0.12 mJy, including uncertainties from absolute flux calibration) within the uncertainties. Therefore changes to the physical parameters derived from SED fitting are only at most a few percent. We have updated the relevant quantities but this does not alter the conclusions of this paper. 
+
 
 Flat spectrum of foreground galaxy:
-We have also added a statement in the paper, stating that if the background source has a contribution in the point-source model assumed in our deblending procedure, such that its flux density would be higher than derived here (0.39 +/- 0.12 mJy), then the derived spectral index (-0.35) would be even shallower.
-In this case, the 2mm flux inferred for the foreground galaxy would lower, and thus steepening its spectral slope. Hence, a contribution from the background source to the point-source model 2mm flux may explain the atypical flat spectrum found for the foreground galaxy.
-
-Decompose synchrotron at 2mm for the background source:
-The flatter than pure synchrotron spectral slope found for the background source indicates that the 2mm continuum emission is not dominated by synchrotron emission. Assuming a synchrotron index of alpha = -0.7 and using the 5GHz flux, we expect S_2mmm = 0.122+/-0.004 mJy to be synchrotron emission.
-We thus find a flux excess of S_2mm = 0.39 - 0.12 = 0.27 mJy that is coming from thermal dust and free-free emission. We have updated our dust SED fitting using S_2mm = 0.27+/-0.08 mJy and the resulting parameters throughout the paper.
-
-We note that 0.27+/-0.09 mJy is consistent with our previous flux measurement used for SED fitting (0.39+/-0.23 mJy) within the uncertainties, where the uncertainties here include those from absolute flux calibration, therefore changes to the physical parameters derived from SED fitting are only at most a few percent. We have updated the relevant quantities but this does not alter the conclusions of this paper.
-
-
-
-
+We have also added a statement in the paper stating that if the background source has a contribution in the point-source model assumed in our deblending procedure, such that its flux density would be higher than derived here (0.39 +/- 0.12 mJy), then the derived spectral index (-0.35) would be even shallower.
+In this case, the 2mm flux inferred for the foreground galaxy would lower, and thus steepening its spectral slope. Hence, a contribution from the background source to the point-source model 2mm flux may explain the atypical flat spectrum found for the foreground galaxy. Alternatively, the foreground galaxy could be a core-dominated radio objects, and thus displays a flat spectrum. 
 
 
 
@@ -557,7 +548,7 @@ and spatially integrated fluxes.
 
 
 The same is true of the derived quantities. 
-Possible add another Table summarizing the other derived quantites:
+Possible add another Table summarizing the other derived quantities:
 
 
 --- R_CO (max) ---From whatever is the best method to estimate it.
@@ -580,7 +571,7 @@ Otherwise, the reader has to search for all these CO values and other quantities
 many different parts of the text.
 
 # RESPONSE:
-We adopted the good suggestions and have added additional tables summarizing the observed CO line properties and the derived physical parameters.
+We adopted these good suggestions and have added additional tables (Table 1 and 6) summarizing the observed CO line properties and the derived physical parameters.
 
 
 
@@ -615,9 +606,9 @@ index of the foreground galaxy to three decimal places
 (Sect. 3.3, last sentence).
 
 # RESPONSE:
-It is of standard practice to report flux measurements from interferometric observations excluding those from the absolute flux calibration and state those in the observations section (i.e. Section 2). Throughout the paper, uncertainties from absolute flux calibration are taken into account when deriving the error bars associated with physical parameters. To address the referee's concern, we have added a remark in table 1, and Sec 4.5 para 1 to avoid possible confusion for readers.
+It is the standard practice to report flux measurement uncertainties from interferometric observations separate from those due to absolute flux calibration and state those in the observations section (i.e. Section 2). However, we note that uncertainties from absolute flux calibration are taken into account when deriving the error bars associated with physical parameters throughout the paper. To address the referee's concern, we have added remarks in Table 1, and Section 4.5 paragraph 1 to remind the reader of these uncertainties.
 
-We have updated the number of decimals in the spectral indices reported in Sec 3.3, as suggested by the referee.
+We have updated the number of decimals in the spectral indices indexes reported in Section 3.3, as suggested by the referee.
 
 
 
@@ -641,7 +632,7 @@ But it is probably easiest to just explain the peak value in
 the figure caption.
 
 # RESPONSE
-We have replotted the figure with different contour intervals with thinner lines and added a sentence in the caption to improve the clarity of Fig 4.
+We agree with the referee and have revised Fig. 4 by using a different contour interval for the VLA data and changed the linewidths of the contours. We have also updated the caption to illustrate the significance of the radio detection towards RXJ1131.
 
 
 
@@ -692,7 +683,7 @@ Should be "... our CO observations confirm the redshifted BLR lines."
 not "blueshifted".
 
 # RESPONSE:
-We have corrected "blueshifted" to "redshifted", updated the velocity offset from 780 km/s to 715 km/s using z = 0.65406, as suggested by the referee.
+We have corrected "blueshifted" to "redshifted", updated the velocity offset from 780 km/s to 715 km/s using z = 0.6541, as suggested by the referee.
 
 
 
@@ -784,7 +775,7 @@ biasing the apparent redshift to the red side.
 
 2) BLUE SIDE OF THE LINE ATTENUATED BY ABSORPTION :
 
-Another possiblity is that the BLR shows mainly rotation 
+Another possibility is that the BLR shows mainly rotation 
 in the accretion disk, and also a biconical outflow region
 from the outer parts of the accretion disk, as in the BAL phenomenon.
 
@@ -821,8 +812,9 @@ between the peaks of the NLR lines and the BLR lines.
 We have removed the statement regarding "AGN dynamically offset", as suggested by the referee.
 
 1) & 2)
-Our CO measurement provides the most precise value for the velocity offset 
-between the BLR and the host galaxy. We thus feel that this is an invaluable addition to the literature. Taking into account the referee's comments, we have updated this section by listing other possible interpretations for the velocity offset (e.g. gas inflows, geometric effects) as part of the discussion, as outlined in detail by the referee.
+Our CO measurement provides the most precise value for the velocity offset between the BLR and the host galaxy. We thus feel that this is an invaluable addition to the literature. 
+
+We acknowledge that velocity offsets between BLR and NLR lines are quite common in Seyferts and quasars, but the offsets as large as that of RXJ1131 appear to be uncommon according to the distribution of offset among other AGN hosts (Richards+02, Bonning+07). To take into account the referee's comments, we have updated this section by including a brief discussion on other possible interpretations for the velocity offset (e.g. gas inflows, geometric effects), as outlined in detail by the referee.
 
 We agree with the referee that it is unlikely that all offsets in AGN lines are caused by black hole recoil. Considering the referee's comments, we have updated this section to as well discuss other possible scenarios. We only discuss the possibility of a recoil black hole as one of the interpretations for the velocity offset, given that 
     i) the magnitude of the offset in RXJ1131 (>700 km/s) appears to be an outlier in the distribution of offset found for large samples of QSOs (Richards+02, Bonning+07)
@@ -831,11 +823,6 @@ We agree with the referee that it is unlikely that all offsets in AGN lines are 
 
 3)
 The BH displacement estimated by the referee (~few 10kpc) has been shown to be theoretically possible in the absence of dynamical friction (Bonning+07, Loeb 2007). However, Loeb 2007 has showed that at low ejection speeds of a few hundred km/s, the recoil is expected to be damped by the external gravitational potential of the galaxy, dynamical friction against background stars, dark matter, and gas, thereby limiting the BH displacement and is likely to bring it back to the center of its host galaxy within a few dynamical times (Madau & Quataert 04, Boylan-Kolchin+04, Guedes+11).
-
-
-
-We acknowledge that velocity offsets between BLR and NLR lines are quite common in Seyferts and quasars, but the offsets as large as that of RXJ1131 appear to be uncommon according to the distribution of offset among other AGN hosts (Richards+02, Bonning+07). To take into account the referee's comments, we now also discuss other possible scenarios. 
-
 
 
 
@@ -862,7 +849,7 @@ Simply give a typical reference to the Markov chain, Monte Carlo method.
 # RESPONSE:
 The details of the model (e.g. how we reconstruct the likelihood functions) are described in other papers, which we reference to in the paper for brevity. 
 
-However, the description of our MCMC sampling has been retained since stating the priors and the methods to ensure convergence are necessary to make results reproducible, and provide crucial information for readers to decide how trust-worthy our inference are from a statistical viewpoint. Explicitly stating the priors is important to demonstrate that our choice are reasonable and physically motivated since they could affect the marginal posteriors strongly, and thus the inferred physical parameters. We therefore decide to keep them in the lens modeling (Sec 4.1) and SED fitting sections (Sec 4.5). 
+However, the description of our MCMC sampling has been retained since stating the priors and the methods to ensure convergence are necessary to make results reproducible, and provide crucial information for readers to decide how trust-worthy our inference are from a statistical viewpoint. Explicitly stating the priors is important to demonstrate that our choice are reasonable and physically motivated since they could affect the marginal posteriors strongly, and thus the inferred physical parameters. We therefore decided to keep them in the lens modeling (Section 4.1) and SED fitting sections (Section 4.5). 
 
 
 
@@ -919,15 +906,9 @@ and the Doppler shift could just be a radial component (inflow),
 superposed on the very fast rotational velocity of the accretion disk.
 
 # RESPONSE:
-We updated f_gas and f_mol using M_gas and M_dyn of both RXJ1131+companion , i.e., as a merger system. 
+We have updated f_gas and f_mol considering RXJ1131 and the companion as one system. That is, we have used the total M_gas obtained by summing up M_gas of RXJ1131 and of the companion in deriving f_gas, and the total M_dyn obtained by summing up M_gas of RXJ1131 and of the companion in deriving f_mol.
 
 For the other comments, please refer to our response to point 11 and 12, where we describe how we took them into account.
-
-
-
-
-
-
 
 
 
@@ -985,20 +966,21 @@ Is the right panel based on an additional model of a rotating disk, rather than
 the lens model points in Fig.9 (left)?
 
 # RESPONSE:
-Indeed, the plot on the left is to demonstrate that while the observed 1st moment map is distorted due to a combination of differential lensing and beam smearing effect, our dynamical lens modeling approach, which finds the best-fit models by taking into account the beam convolution indirectly, has enabled us to reconstruct the source-plane kinematic components. Therefore, we show the source-plane positions atop of the observed 1st moment map. To address the referee's concern, we have added some additional description in the caption to clarify what is being shown in the left panel.
+Indeed, the plot on the left is to demonstrate that while the observed 1st moment map is distorted due to a combination of differential lensing and beam smearing effects, our dynamical lens modeling approach, which finds the best-fit models by taking into account the beam convolution indirectly, has enabled us to reconstruct the source-plane positions for different kinematic components. Therefore, we show the source-plane positions atop of the observed 1st moment map. To address the referee's concern, we have added some additional description to the caption to clarify what is being shown in the left panel.
 
-The reconstructed source-plane positions display a clear velocity gradient. Taken together with previous results from literature (C06) and the intrinsically symmetric line profile (Fig. 5), we carried out dynamical modeling in Sec 4.3 assuming RXJ1131 is a disk galaxy. 
-
+The reconstructed source-plane positions display a clear velocity gradient that is reminiscent of a rotating disk-like object. Taken together with previous results from literature (C06) and the intrinsically symmetric line profile (Fig. 5), we carried out dynamical modeling in Section 4.3 assuming RXJ1131 is a disk galaxy. 
 
 
 PV: 
-We have detailed the reasons for why we interpret RXJ1131 as a disk galaxy in Sec 4.1.1. Under this assumption, the markers on the right plot are based on extracting along a fitted major axis of a disk (see first paragraph of Sec 4.3). 
+We have detailed the reasons for why we interpret RXJ1131 as a disk galaxy in Section 4.1.1. Under this assumption, the markers on the right plot are based on extracting along a fitted major axis of a disk (see first paragraph of Section 4.3). 
 
-To address the referee's concern and to improve the clarity of this section, we have re-iterate in the beginning of Sec 4.3 that we assume RXJ1131 to be a disk galaxy for dynamical modeling.
+To address the referee's concern and to improve the clarity of this section, we have added the following at the beginning of Section 4.3 to remind the reader that we are assuming RXJ1131 to be a disk galaxy for dynamical modeling.
+
+"As discussed in §4.1.1, we interpret RXJ1131 as a disk galaxy as it displays evidence of a source-plane velocity gradient in the CO emission, a symmetric double-horned line profile (Figure 5, Figure 6 and, left panel of Figure 9), and a disk-like morphology in the source-plane reconstruction of optical-NIR emission (C06)"
 
 
 Size:
-As explained in para. 3 of Sec 4.3, we use the maximum observed velocity (i.e.  corresponding to the redmost channel along the disk major axis) at 6+/-3kpc as a proxy for the rotation velocity. Thus the quoted CO disk radius corresponds to the extent of this velocity component, as measured from the centroid position at zero velocity.
+As explained in paragraph 3 of Section 4.3, we use the maximum observed velocity (i.e.  corresponding to the red-most channel along the disk major axis) at 6+/-3 kpc as a proxy for the rotation velocity. Thus the quoted CO disk radius corresponds to the extent of this velocity component, as measured from the centroid position at zero velocity.
 
 
 Clumps:

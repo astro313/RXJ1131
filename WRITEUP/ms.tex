@@ -11,7 +11,7 @@
 % -----------------------------------------------------------------------------------------------
 
 \input{preamble}
-\slugcomment{To be submitted to the ApJ}
+\slugcomment{To be submitted to the ApJ, with changes from the referee report }
  \makeatletter
 % \renewcommand\normalsize{\@setfontsize\normalsize\@xpt{11.56}}
 \renewcommand\normalsize{\@setfontsize\normalsize{10.56}{11.4}}
@@ -23,9 +23,8 @@
 \shortauthors{Leung, Riechers \& Pavesi}
 
 \begin{document}
-%{\tiny  \RevisionInfo}
 
-\title{Molecular Gas Kinematics of the Strongly-Lensed Quasar Host Galaxy RXS J1131$-$1231}
+\title{Molecular Gas Kinematics and Spectral Energy Distribution Properties of the Strongly-Lensed Quasar Host Galaxy RXS J1131$-$1231}
 \author{T. K. Daisy Leung, Dominik A. Riechers, and Riccardo Pavesi}
 \affil{Department of Astronomy, Space Sciences Building, Cornell University,
 Ithaca, NY 14853, USA; \myemail}
@@ -144,10 +143,11 @@ $\Omega_{\Lambda}$ = $0.71$ \citep{Hinshaw13a}.
 
 \subsection{CARMA \cco}
 Observations of the \cco rotational line 
-($\nu_{\rm rest}$\,=\,345.79599\,GHz) redshifted to $\nu_{\rm obs}$\eq209.10443\,GHz
-towards RXJ1131 at $z_{\rm QSO}$\eq0.658 
+($\nu_{\rm rest}$\,=\,345.79599\,GHz) towards RXJ1131 at $z_{\rm s, QSO}$\eq0.658 
 were carried out with the \carma (CARMA;
-Program ID: cf0098; PI: D. Riechers) in the D array configuration. They were carried out
+Program ID: cf0098; PI: D. Riechers) in the D array configuration. 
+The line frequency is redshifted to $\nu_{\rm obs}$\eq209.10443\,GHz at the quasar redshift.
+Observations were carried out
 on 2014 February 02 under poor 1.5\,mm
 weather conditions and on 2014 February 17 under good 1.5\,mm
 weather conditions.
@@ -187,7 +187,7 @@ of this system and the conclusion of this paper do not rely on this quantity.
 The \ncode{miriad} package was used to calibrate the visibility data.
 The calibrated visibility data were
 imaged and deconvolved using the CLEAN algorithm with ``natural'' weighting. This yields a synthesized clean
-beam size of 3\farcs2 $\times$ 1\farcs9 (PA\,=\,8\degr) for the lower sideband
+beam size of 3\farcs2 $\times$ 1\farcs9 at a position angle (PA) of 8\degr for the lower sideband
 image cube. The final rms noise is $\sigma$ = 13.3 mJy beam$^{-1}$
 over a channel width of 25\,MHz. An rms noise of
 $\sigma$\,=\,0.83\,mJy\,beam\pmOne is reached by averaging over the
@@ -196,11 +196,11 @@ line-free channels in both sidebands.
 \subsection{PdBI \bco}
 Observations of the \bco rotational line
 ($\nu_{\rm rest}$\,=\,$230.53800$ GHz) 
-redshifted to $\nu_{\rm obs}$\eq139.256\,GHz towards RXJ1131
-at the
-CARMA \cco redshift of $z_{\rm CO(3-2)}$\eq0.655
+towards RXJ1131
 were carried out using IRAM \pdbi (PdBI; Program ID: S14BX; PI: D.
 Riechers).
+Based on the CARMA \cco line redshift of $z_{\rm CO(3-2)}$\eq0.655,
+the \bco line is redshifted to $\nu_{\rm obs}$\eq139.256\,GHz.
 Two observing runs were carried out on 2014 December 06 and 2015
 February 05 under good weather conditions in the C and D array configurations,
 respectively.
@@ -297,7 +297,7 @@ The velocity scale is with respect to $z$\,=\,0.6541, which corresponds to the l
 the de-lensed line profile (\Fig{delensed}).
 A detailed discussion of this effect is presented in \Sec{differential}. \label{fig:CO21spec}}
 \end{figure}
-\vspace{.2em}
+
 % moment 0 map, highest SNR: CASA chan=125~159 <=> GILDAS 126-160 <=> python 125-160
 % - sigma = 0.305 Jy km/s/Beam
 %   - note that theoretical sigma is lower = 1.5 * sqrt(160-126+1) * 21.5 ~ 0.2 Jy km/s /beam, due to higher noise in some channels with emission
@@ -311,24 +311,23 @@ The peak flux density is 8.12\pmm0.30 Jy\,\kms\,beam\pmOne
 in the intensity map.
 Observed properties of the \bco emission line are summarized in \Tab{obsprop}.
 
-The deconvolved source size FWHM from fitting a single two-dimensional Gaussian 
-to the integrated line image yields 5\farcs1\pmm0\farcs7$\times$3\farcs7\pmm0\farcs7,  % In the image plane, the *convolved* size is 6.6"+/-0.5" x 4.5"+/-0.3". 
-consistent with that obtained by $uv$-plane fitting within the uncertainties. 
+The deconvolved source size FWHM obtained from fitting a single two-dimensional Gaussian 
+to the integrated line emission in the image plane yields 5\farcs1\pmm0\farcs7$\times$3\farcs7\pmm0\farcs7,  
+% In the image plane, the *convolved* size is 6.6"+/-0.5" x 4.5"+/-0.3". 
+which is consistent with that obtained by visibility-plane fitting within the uncertainties. 
 % UV plane: E_GAUSS: 4.5 +/- 0.1 x 3.5 +/- 0.2
-The spatial distribution of the observed CO emission is unlikely to be fully 
-encapsulated by a simple Gaussian 
-given its skewed emission, which also appears to be a superposition of two components (\Fig{CO21mom}). 
-% To better capture the spatial distribution of the line emission, we 
-We therefore also fit a model of two Gaussians which yeilds deconvolved source sizes of 
+Since the spatial distribution of the observed CO emission is unlikely to be fully described by a simple Gaussian
+and appears to be a superposition of two components (top left panel of \Fig{CO21mom}), 
+we also fit two Gaussians to the intensity map. 
+This yields deconvolved source sizes of 
 3\farcs8\pmm0\farcs4$\times$1\farcs9\pmm0\farcs4 and 3\farcs6\pmm0\farcs3$\times$1\farcs5\pmm0\farcs3, respectively.
-The deconvolved source size together with
-% complex morphology of a partial ``Einstein ring'' with 
-% structures along the arc and knots 
-% seen in optical and \nir emission (see \Fig{CO21mom}). %that were observed at higher resolution, 
-the spatially more extended blue wing compared to the optical 
-``Einstein ring" of diameter $\sim$3\farcs6 (top right panel of \Fig{CO21mom}) suggest that 
-the CO-emitting region in RXJ1131 is more extended than its stellar and quasar emission.
-
+The deconvolved source sizes of both models suggest that the gravitationally lensed CO emission is more extended 
+than the optical 
+``Einstein ring'', which has a diameter of $\sim$3\farcs6
+(i.e., the ``Einstein ring'' formed by CO emission is likely to have a larger diameter compared to the optical one). 
+This is consistent with the centroid position of the redshifted emission, which is along the quasar arc seen in the optical image, 
+and the blueshifted emission, which is offset further to the SE (top right of \Fig{CO21mom}).
+Therefore, the CO-emitting region in RXJ1131 is likely to be more extended than its stellar and quasar emission.
 
 \begin{figure*}[!htbp]
 \hspace{0.5em}
@@ -348,7 +347,7 @@ the CO-emitting region in RXJ1131 is more extended than its stellar and quasar e
 image.
 Top right: same as top left, except the contours are color-coded to represent the red- and blueshifted emission, which
 are extracted by integrating over $v$\,$\in$[$-$19, 357] \kms and $\in$[$-$395, $-$19] \kms, respectively.
-The contours in both top panels start at 3$\sigma$ and increment at steps of
+The contours in both top panels start at 3$\sigma$ and increment in steps of
 $\pm$3$\sigma$, where $\sigma$\,=\,0.3 mJy beam\pmOne for the top left panel,
 and
 $\sigma$ = 0.4 mJy beam\pmOne (red) and 0.5 mJy beam\pmOne (blue)
@@ -375,20 +374,21 @@ We extract the peak fluxes and their corresponding uncertainties for the blue an
 %For the blue wing, we find a peak line flux of 5.13\pmm1.43 Jy\,\kms beam\pmOne in the intensity map, indicating a $\gtrsim$3$\sigma$ detection for this component. 
 %For the red wing, we find a peak flux of 11.45\pmm1.99\,Jy\,\kms beam\pmOne in the intensity map, 
 % indicating a $\sim$\,6$\sigma$ detection. 
-We find a peak line flux of 5.13\pmm1.43 Jy\,\kms beam\pmOne for the blue wing, indicating a $\gtrsim$3$\sigma$ detection for this component, and a peak line flux of 11.45\pmm1.99\,Jy\,\kms beam\pmOne for the red wing, 
+We find a peak line flux of 5.13\pmm1.43 Jy\,\kms beam\pmOne for the blue wing, indicating a $\gtrsim$3$\sigma$ detection for this component alone, and a peak line flux of 11.45\pmm1.99\,Jy\,\kms beam\pmOne for the red wing, 
 indicating a $\sim$\,6$\sigma$ detection. 
 We estimate a line intensity of 35.7\,$\pm$\,6.9\,Jy\,\kms (\Tab{obsprop}) by summing up fluxes over the FWZI
-linewidth used to infer the \bco line intensity ($\sim$700 \kms).
+linewidth used to infer the \bco line intensity.
 
-Assuming the spatial extent of \bco and \cco is similar and therefore the emission is
+Assuming that the spatial extent of \bco and \cco is similar and therefore the emission is
 magnified by the same amount, the measured line intensities
 correspond to a brightness temperature ratio of
-$r_{\rm 32}$\,=\,$T_{\small \cco}$$/$$T_{\small \bco}$\,=\,0.78\,$\pm$\,0.37, where this error bar includes 
-the uncertainties in absolute flux calibration.
-This ratio is consistent with
+$r_{\rm 32}$\,=\,$T_{\small \cco}$$/$$T_{\small \bco}$\,=\,0.78\,$\pm$\,0.37.
+The quoted error bar is derived by adding the uncertainties associated with the CO line intensities 
+and those from absolute flux calibrations in quadrature.
+This brightness temperature ratio is consistent with
 thermalized excitation within the uncertainties, as commonly observed in nuclear regions of
-nearby ULIRGs and high-$z$ quasars \citep[e.g.,][]{Weiss07a, CW13}, but also
-with the lower excitation seen in normal star-forming disks \citep[e.g.,][]{Dannerbauer09a, CW13}.
+nearby ULIRGs and high-$z$ quasars \citep[e.g.,][]{Weiss07a, Riechers11b, CW13}, but also
+with the lower excitation seen in normal star-forming disks \citep[e.g.,][]{Dannerbauer09a, CW13, Daddi15a}.
 % see DANNERBAUER09 intro
 % i.e., we cannot rule out the possibility that this guy is similar to gal. pop. of either SF modes.
 
@@ -419,19 +419,19 @@ along the lensed arc is also detected.
 This suggests that we detect emission in both
 the foreground and the background galaxy and that the
 emission is marginally resolved along its major axis.
-We subtract a point source model in the $uv$-plane to remove the unresolved part of the
-emission, which we here assume to be dominated by the foreground galaxy. The peak emission
-in the residual map coincides with the lensed arc, with a flux density 
-of $S_{\nu}$\eq0.39\,$\pm$\,0.08\,mJy. 
-This peak flux is consistent with
-the difference between the integrated and the peak flux in the
+We subtract a point source model in the visibility-plane to remove the unresolved part of the
+emission, which we here assume to be dominated by the foreground galaxy. The emission
+in the residual map coincides spatially with the lensed arc. We measure a flux density 
+of $S_{\nu}$\eq0.39\,$\pm$\,0.08\,mJy for this residual component.
+This flux density is consistent with
+the difference between the integrated and the peak flux density measured in the
 original continuum map ($\sim$0.4 mJy). 
-We therefore adopt $S_{\nu}$\eq0.39\pmm0.12 mJy as the 2\,mm continuum flux measurement for 
+We therefore adopt $S_{\nu}$\eq0.39\pmm0.12 mJy as the best estimate for the 2\,mm continuum flux of 
 the background galaxy (RXJ1131). 
-The quoted uncertainty is derived by adding those associated with the flux density of the 
+We here quote a conservative uncertainty, which is derived by adding those associated with the flux density of the 
 point-source model ($\delta S_{\nu}$\eq0.088\,mJy) and 
 the peak flux in the residual map (0.08\,mJy) 
-in quadrature, and does not account for that in the 
+in quadrature. We caution that this does not account for that in the 
 de-blending procedure, where we have assigned 100\% of the point source flux to the foreground galaxy.
 We report the peak flux in the original map
 ($S_{\nu}$\,=\,799\pmm88\,$\mu$Jy\,beam\pmOne) for the foreground galaxy, which
@@ -442,13 +442,13 @@ is the best estimate possible at the resolution of our observations, but we ackn
 \includegraphics[trim=12 27 0 1, clip, width=0.475\textwidth]{../Figures/F555W_ContPdBI.eps}
 \includegraphics[trim=10 5 0 0, clip, width=0.4695\textwidth]{../Figures/F555W_ContVLA.eps}
 \caption{Top: overlay of the PdBI 2\,mm continuum emission on the optical image.
-Contours start and increment at steps of
+Contours start and increment in steps of
 $\pm$3$\sigma$, where $\sigma_{\rm 2mm}$\,=\,0.082 mJy beam\pmOne.
-Bottom: overlap of the VLA 5\,GHz continuum emission on the optical image.
+Bottom: overlay of the VLA 5\,GHz continuum emission on the optical image.
 Contours correspond to $\pm2^n\sigma$, where 
 $\sigma_{\rm 5GHz}$\,=\,13 $\mu$Jy beam\pmOne 
-and $n$ is an integer starting from 2 to 5. 
-Radio emission towards the foreground radio core is detected at $\gtrsim$57$\sigma$.
+and $n$ is an integer running from 2 to 5. 
+Radio emission towards the foreground radio core is detected at $\gtrsim$57$\sigma$ significance.
 The synthesis beam size is 4\farcs4 $\times$ 2\farcs0, at PA = 13$\degr$ for
 the PdBI observations (top), and
 0\farcs5 $\times$ 0\farcs4 (PA = 0.18$\degr$) for
@@ -465,19 +465,19 @@ We extract the flux densities for the lensing arc and the radio core in \Tab{pho
 We find a spectral index of $\alpha^{\rm 2mm}_{\rm 6cm}$\,=\,$-$0.02\pmm0.07
 for the foreground galaxy and $\alpha^{\rm 2mm}_{\rm 6cm}$\,=\,$-$0.35\pmm0.21 % differential
 for the background galaxy by fitting
-power-laws ($S_\nu \propto \nu^{\alpha}$) to their continuum emission at
+power-laws ($S_\nu \propto \nu^{\alpha}$) to their continuum fluxes at
 5\,GHz and 2\,mm. 
-The spectral slope derived for the background source is flatter than the typical slope of pure synchrotron emission \citep[$\alpha$\ssim$-$0.7; ][]{Andreani93a}, suggesting 
-that a fraction of the observed 2\,mm emission arises from thermal dust and free-free emission. 
+The spectral slope derived for the background source is flatter than the typical slope of pure synchrotron emission \citep[$\alpha$\ssim$-$0.7; e.g.,][]{Andreani93a}. This likely suggests % {\bf DR: 3C273 flat-spectrum radio source BLAH}
+that a fraction of the observed 2\,mm emission arises from thermal dust  emission. 
 This spectral slope would be even shallower 
-if the background source has a contribution in the
-2\,mm flux of the point-source model used
-in the deblending process. This would also 
-explain the flat spectrum found for the foreground galaxy that is atypical of elliptical galaxies. 
-Assuming a synchrotron slope of $\alpha$\ssim$-$0.7, we find
+if the background source contributes to the unresolved fraction of the
+2\,mm flux. This would also 
+explain the flat spectrum found for the foreground galaxy, which is atypical of elliptical galaxies. 
+Assuming a synchrotron slope of $\alpha$\ssim$-$0.7, we would expect
 a flux density of $S_{\rm 2mm}$\eq0.122\pmm0.004 mJy at 2\,mm      % (139.256/4.8815)**-0.7 *1.273 = 0.122; error: 1.273 +/- 0.042 --> 0.042/1.273 * 0.122 = 0.004
-for the background source based on its 5\,GHz flux,
-and thus a flux excess of $S_{\rm 2mm}$\eq0.27\pmm0.08\,mJy that arises from thermal dust emission.
+for the background source due to synchrotron radiation,
+and thus a flux excess of $S_{\rm 2mm}$\eq0.27\pmm0.08\,mJy relative to this expectation
+likely arises due to thermal dust emission.
 
 % We thus adopt the flux excess of $S_{\rm 2mm}$\eq0.27\pmm0.08\,mJy as
 % thermal dust emission. % (0.12/0.39)^2 + (0.004/0.122)^2]^1/2 *  0.27
@@ -603,12 +603,14 @@ that cover the full linewidth of $\sim$750\,\kms.
 
 \begin{figure}[!htbp]
 \includegraphics[width=0.45\textwidth]{../Figures/de-lensedSpecCO21_complicated_unbinned_ylog.eps}
-\caption{The full resolution \bco spectrum (yellow histogram) and
+\caption{Top: the full resolution \bco spectrum (yellow histogram) and
 the binned spectrum (dashed line) with the seven $\Delta v$\,$\sim$\,105\,\kms channels used for lens modeling. The
-blue histogram shows the ``intrinsic'' line profile of RXJ1131
+light blue histogram shows the ``intrinsic'' line profile of RXJ1131
 after subtracting a contribution from its companion galaxy and
 correcting for lensing using the magnification factor $\mu_{\rm L}$ as annotated by the horizontal bar shown
 above each respective model channel.
+Bottom: the ``intrinsic'' line profile of RXJ1131 (light blue) and of its companion (dark blue).
+The y-axis is shown on log scale (top) and linear scale (bottom).
 \label{fig:delensed}}
 \end{figure}
 
@@ -720,8 +722,8 @@ factors may be under-predicted \citep[see e.g.,][]{Bussmann15a,Dye15a,Rybak15a}.
 \includegraphics[width=0.98\textwidth]{../Figures/PostageStampResiduals.eps}
 \end{tabular}
 \caption{Best-fit lens models of the PdBI \bco data in different velocity channels, as listed in \Tab{model}.
-Top: each panel corresponds to a channel map of width 107.5\,\kms around the labelled central velocity where
-the observed emission (red contours) is over-plotted atop the best-fit model (grayscale). 
+Top: each panel corresponds to a channel map of width 107.5\,\kms centered on the indicated velocity.
+The observed emission (red contours) is over-plotted atop the best-fit model (grayscale). 
 % the velocity annotated in each panel is the center velocity of each of the seven channels used in lens modelling.
 Bottom: residual images obtained by
 taking a Fourier transform after subtracting the best-fit model from the
@@ -731,7 +733,7 @@ its critical curve is traced by the orange solid line; locations and
 morphologies (half-light radii) of the reconstructed sources are
 represented by magenta ellipses; the caustic curves are represented as cyan lines.
 Contours start
-at $\pm$3$\sigma$ and increment at steps of 3$\times$2$^n\sigma$,
+at $\pm$3$\sigma$ and increment in steps of 3$\times$2$^n\sigma$,
 where $n$ is a positive integer.
 The beam of the PdBI observations is shown in the bottom right corner. % of each panel.
 The reconstructed source-plane positions, as represented by the magenta ellipses, demonstrate an intrinsic velocity gradient of the \bco emission in RXJ1131.
@@ -741,10 +743,11 @@ The best-fit model of the red-most channel (top left panel) contains two source 
 
 \subsubsection{Spatial Extent and Differential Lensing} \label{sec:differential}
 In the image-plane integrated line map shown in \Fig{CO21mom}, the redshifted component is
-cospatial with the Einstein ring seen in the
-optical image, with most of its apparent flux originating from the lensed arc
-in the southeast, whereas the blue component is predominately coming from
-solely the lensed arc. To further illustrate this, we show the
+cospatial with the Einstein ring that is seen in the
+optical image, with most of its apparent flux originating along the lensed arc, 
+whereas centroid of the blueshifted emission is offset to the SE of
+the lensed arc. This suggests that the CO-emitting region in RXJ1131 is extended.
+To further illustrate this, we show the
 channel maps of 21.5\,\kms width and a spatial spectra map of 1\farcs5 resolution in
 \Fig{chanmap} and \Fig{spatialSpec}, respectively. These figures
 show that redshifted emission
@@ -768,7 +771,7 @@ which correspond to components ABCD in \citetalias{Claeskens06a}). The central w
 star indicates the position of the foreground lensing galaxy (component G
 in \citetalias{Claeskens06a}).
 Central velocities are shown at the top of each map.
-Contours start and increment at steps of
+Contours start and increment in steps of
 $\pm$3$\sigma$. The beam is denoted in the bottom right panel. \label{fig:chanmap}}
 \end{figure*}
 
@@ -789,18 +792,16 @@ The velocity and flux density scales are denoted in the top right panel.
 
 Previous studies of RXJ1131 find evidence for differential lensing across 
 the {\it HST} $V$-, $I$-, and $H$-bands, where the
-magnification factor varies from 10.9 to 7.8 \citepalias{Claeskens06a}, indicating that
-the spatial positions and extents of different stellar populations within the host galaxy are dissimilar with respect
-to the caustic.
-Here, 
-the best-fit lens models obtained for different CO channel slices show that differential lensing also plays 
+magnification factor varies from 10.9 to 7.8 \citepalias{Claeskens06a}.
+This indicates that the spatial positions and extents of different stellar populations 
+within the host galaxy are dissimilar with respect to the caustic which may be a result of dust extinction and reddening.
+The best-fit lens models obtained here for different CO channel slices show that differential lensing also plays 
 an important role in the observed \bco emission, with a magnification factor $(\mu_{\rm L})$ that varies
 from 8.7 to 3.1 across different kinematic components (\Tab{model}).
 The asymmetry in the line profile is therefore predominantly a result of differential lensing, where 
 the redshifted CO-emitting gas is only apparently much brighter than the
 blueshifted component due to a higher magnification factor.
-A secondary effect contributing to the asymmetry is likely caused by 
-the CO emission in the companion at the reddest velocities.
+A secondary effect is likely a result of including the CO emission from the companion in the most redshifted velocity channels.
 The variation in $\mu_{\rm L}$ found across channels is consistent with the source plane
 positions relative to the caustics in \Fig{model}, where the red wing
 emission mainly originates near the cusp
@@ -851,15 +852,17 @@ bright quasar and in the process of merging.
 
 \subsection{\bco Dynamical Modeling} \label{sec:dynamics}
 As discussed in \Sec{caveat}, we interpret RXJ1131 as a disk galaxy as it displays
-evidence of a source-plane velocity gradient in the CO emission,
+a kinematically-ordered velocity gradient in the source-plane velocity map of CO emission,
 a symmetric double-horned line profile (\Fig{delensed}, \Fig{model} and, left panel of \Fig{PV}), 
 and a disk-like morphology in the source-plane reconstruction of optical-NIR emission
 \citepalias{Claeskens06a}.
-We extract a one dimensional PV profile as shown in the right panel of \Fig{PV}
-by assuming the velocities of the respective channels used in
-lens modeling correspond to solely the tangential component of the
+We extract a one dimensional position-velocity (PV) profile 
+by assuming that the source-plane centroids of different velocity components
+obtained from dynamical lens modeling
+are dominated by the tangential component of the
 true velocity vector of a rotating disk, i.e., each velocity component would 
-be seen lying along the major axis of a rotating disk if observed with sufficiently high angular resolution.
+be seen as lying along the major axis of a rotating disk if observed with sufficiently high angular resolution 
+(see right panel of \Fig{PV}).
 In this process, the positions for each velocity component (plotted as data points in the right panel of \Fig{PV})
 are extracted along the best-fitted major axis, which is along a PA of 121\degr.
 
@@ -892,10 +895,11 @@ Pearson coefficient $R$\,=\,0.998, and $-$0.400 between $V_{a}$ and $V_0$. % bea
 \centering
 \includegraphics[trim=0 0 30 0, clip, width=0.4\textwidth]{../Figures/veloGradient_markers}
 \includegraphics[width=0.525\textwidth]{../Figures/bestfit_PV.eps}
-\caption{Left: Source-plane positions obtained from the best-fit lens models (presented in \Sec{lensmodel}) are shown 
+\caption{Velocity gradient of the \bco emission observed in RXJ1131 and the de-lensed velocity gradient obtained from lens modeling.
+Left: source-plane positions obtained from the best-fit lens models (presented in \Sec{lensmodel}) are shown 
 as markers color-coded by their velocities
 atop the observed first moment map (i.e., in the image-plane; see \Fig{CO21mom}). 
-The contours are at steps of 50\,\kms. 
+The contours are in steps of 50\,\kms. 
 Despite the distorted first moment map in the image-plane due to differential lensing and beam smearing effects, the source-plane velocity gradient reconstructed from dynamical lens modeling suggests that
 RXJ1131 is intrinsically a kinematically-ordered disk.
 Right: PV slice extracted along the fitted major axis at PA\,=\,121\degr based on 
@@ -1028,13 +1032,13 @@ We fit dust SED models to the 24\,\micron$-$2.2\,mm photometry
 using a modified-blackbody (MBB)
 function with a power-law attached to the Wien side to account for the MIR excess due to
 emission of warm and small dust grains.
-The IRAS 60\,$\micron$ and 100\,$\micron$ upper limits are included to constrain the dust peak and 
-an uncertainty from absolute flux calibration of $\sim$15\% is added in quadrature 
-% to obtain the total uncertainties 
-for the PdBI 2\,mm continuum photometry in our fitting procedure. 
+The IRAS 60\,$\micron$ and 100\,$\micron$ upper limits are included to constrain the dust peak.
 Here, we use a flux density of $S_{\rm 2mm}$\eq0.27\pmm0.08 mJy derived in \Sec{deblend} 
-instead of the deblended 0.39\,mJy listed in \Tab{photometry} 
-to exclude synchrotron emission (see \Sec{deblend}) in dust SED modeling.
+instead of the deblended flux listed in \Tab{photometry} 
+to exclude a potential contribution due to synchrotron emission (see \Sec{deblend}) in the dust SED modeling.
+An uncertainty from absolute flux calibration of $\sim$15\% is added in quadrature 
+to the PdBI 2\,mm continuum photometry in our fitting procedure. 
+
 
 The fit is performed using the code
 \ncode{mbb\_emcee} \citep[e.g.,][]{Riechers13a,Dowell14a}, which samples the posterior
@@ -1069,7 +1073,7 @@ the 24\,$\micron$ data. Based on the resulting posterior PDFs, we find an appare
 IR luminosity (rest-frame 8\,$-$\,1000\,$\micron$) of 8.22\petm{2.75}{2.98}\E{12} \Lsun, a
 \fir luminosity (rest-frame 42.5\,$-$\,122.5\,$\micron$) of
 3.81\petm{1.92}{1.97}\E{12}\,\Lsun, and a
-dust mass of 16\petm{5}{12}\E{8}\,\Msun, all of which are not lensing-corrected.
+dust mass of 16\petm{5}{12}\E{8}\,\Msun, all of which are not corrected for lensing magnification.
 For the mass absorption coefficient, we adopt
 $\kappa$\,=\,2.64\,m$^2$kg\pmOne at rest-frame 125.0\,$\micron$
 \citep{Dunne03a}.
@@ -1160,8 +1164,8 @@ shown in light blue circles, which are corrected for lensing magnification (see 
 Assuming an MBB$+$power-law model for the thermal dust emission towards RXJ1131,
 the dashed (dashed-dotted) line corresponds to the best-fit model
 with (without) MIR constraint at 24\,$\micron$.
-The solid black line shows the best-fit SED model with dust attenuation obtained using the \ncode{magphys} code, whereas
-the light blue solid line shows the unattenuated stellar emission. 
+The solid black line shows the best-fit SED model obtained using the \ncode{magphys} code.
+The light blue solid line shows the unattenuated stellar emission. 
 \label{fig:SED}}
 \end{figure}
 
@@ -1169,7 +1173,6 @@ the light blue solid line shows the unattenuated stellar emission.
 %                                Discussion
 %--------------------------------------------------------------------------
 \section{Discussion} \label{sec:diss}
-The properties of RXJ1131 and the companion derived in this section are summarized in \Tab{prop}.
 \input{table_propRXJ}
 
 \subsection{ISM Properties} \label{sec:properties}
@@ -1265,7 +1268,7 @@ If we instead use the ``Galactic'' \alphaco value, which may be more appropriate
 the gas mass (and thus gas-to-dust ratio) would be $\sim$6 times higher.
 We note that this gas mass is physically possible based on the dynamical mass constraints derived in \Sec{dyn}.
 On the other hand, we would also obtain a higher gas mass if
-we assumed sub-thermal excitation between \bco and \aco emission.
+we were to assume sub-thermal excitation between \bco and \aco emission.
 % but this may be a minor effect as CO emission in local ULIRGs is typically thermalized up to $J$ = 3 or 4 \citep{,CW13}.
 We also note that the gas-to-dust ratio derived for RXJ1131 may be biased low as the gas is likely to
 be more extended than the optically thick dust. Consequently, the overall magnification factor
@@ -1433,69 +1436,73 @@ elliptical galaxies, as in the classical picture \citep{Toomre72a}.
 % require different velocity offsets in Balmer and forbidden lines (Zamanov02a)
 % line origins:
 % \mgii & Hbeta: outer part of the BLR (Goad12a) compared to high-ionization lines (\eg CIV)
+% \oiii is forbidden, must be from low-density region (further out)
 % Hbeta can also come from NLR
 
 \citet[]{Sluse07a} report two sets of AGN lines observed in RXJ1131.
-The first set of lines is at $z$\ssim0.654, including the narrow component of the Balmer lines, the \oiii lines, and the \mgii absorption line; the second set is at $z$\ssim0.658, including the broad component of the Balmer lines and the \mgii emission line.
+The first set of lines is at $z$\ssim0.654, including the narrow component of the Balmer lines, the \oiii lines, and the \mgii absorption line; the second set is at 
+$z_{\rm s, QSO}$\ssim0.658, including the broad component of the Balmer lines and the \mgii emission line.
 Using the CO line center redshift as the systemic redshift,
 we find that the redshift of the first set is fully consistent with the systemic redshift. This
 supports previous claims that [O\,{\scriptsize III}] lines, tracing the narrow line region (NLR),
 are good proxies
 to the true systemic redshift \citep[e.g.,][]{Vrtilek85a, Nelson00a}.
 On the other hand, the second set of lines is redshifted by $\sim$715\,\kms.
-Velocity offsets between broad line region (BLR) and NLR lines have been reported in literature, e.g., 
-\citet{Richards02a} find a
-median of 97\kms and a dispersion of 269\,\kms in the distribution of
-offset between [Mg\,{\scriptsize II}] and [O\,{\scriptsize III}] lines in a
-sample of $>$3800 quasars, 
-and \citet{Bonning07a} find a mean offset of 100\,\kms with a dispersion of 212\,\kms
+Velocity offsets between broad line region (BLR) and NLR lines have been reported in literature.
+\citet{Richards02a} find an offset of 
+% median of 97\kms and a dispersion of 269\,\kms in the distribution of offset
+$\sim$100\pmm270\,\kms 
+between [Mg\,{\scriptsize II}] and [O\,{\scriptsize III}] lines in a
+sample of $>$3800 quasars,
+and \citet{Bonning07a} report
+an offset of 
+% a mean offset of 
+% 100\,\kms with a dispersion of 212\,\kms
 %FWHM = 500
+$\sim$100\pmm210\,\kms
 between the broad component of
 H$\beta$ and [O\,{\scriptsize III}] lines in a sample of $\sim$2600 quasars at 0.1$<$$z$$<$0.8,
-where only $\lesssim$20 of them are found to have offset $>$800\,\kms.
+where only $\lesssim$20 of them ((i.e., $<$1\%) are found to have offsets $>$800\,\kms.
 Thus, large velocity offsets between BLR and NLR lines 
 comparable to that of RXJ1131 are uncommon but have been observed in some cases.
 
 The observed velocity offset between the BLR and NLR lines may be explained by
 a recoiling black hole (BH), 
-where its BLR is moving at high velocity relative to the bulk of its host galaxy
+where the BLR is moving at high velocity relative to the bulk of its host galaxy
 \citep{Madau04a, Bonning07a, Loeb07a}.
 A recoiling black hole is expected
 when a pair of uneven mass BH coalesce, during which their orbital energy is being released
 as gravitational wave and a non-zero net angular momentum is being carried away.
 Depending on their initial conditions (e.g., black hole mass ratio, spin-orbit orientation, spin magnitude), 
-numerical relativity simulations have shown that the recoil velocity can reach up to 
+numerical relativity simulations have shown that recoil velocities can reach up to 
 $v_{\rm kick}$\ssim4000\,\kms for spinning BHs, 
-with a typical offset recoil velocity of $v_{\rm kick}$\ssim100\,$-$\,500\,\kms 
+with typical recoil velocities of $v_{\rm kick}$\ssim100\,$-$\,500\,\kms 
 \citep[\eg][]{Libeskind06a,Campanelli07a}.
-Several sources have been proposed as recoiling BH candidates, such as CID-42 at $z$\,=\,0.359 \citep{Civano10a},
-SDSS 0956+5127 at $z$\,$\sim$\,0.714 \citep{Steinhardt12a}, and
-SDSS J0927+2943 at $z$\,$\sim$\,0.713.
-In the case of SDSS J0927+2943, the black hole recoil scenario was proposed based on
-the velocity offset between a set of redshifted narrow lines and a second set of 
-blueshifted broad AGN lines \citep{Komossa08a}.
-However, this was recently refuted by \citet{Decarli14a}, who find that the
-BLR lines in SDSSJ0927+2943 are indeed consistent with its CO systemic redshift.
-This is in contrast with RXJ1131, where our CO observations confirm the redshifted BLR lines.
+Several sources have been proposed as recoiling BH candidates \citep[][]{Komossa08a, Civano10a, Steinhardt12a}.
+% For the candidate SDSS J0927+2943 at $z$\,$\sim$\,0.713 \citep{Komossa08a}, 
+However, \citet{Decarli14a} have recently refuted 
+such scenario for one of the candidates --- SDSS J0927+2943 --- by finding that the redshift of its
+BLR lines is indeed consistent with its CO systemic redshift.
+This is in contrast with RXJ1131, where our CO observations confirm 
+the redshifted BLR lines compared to the CO systemic redshift.
 Since this scenario requires a coalesced BH, it would imply that RXJ1131 
 is a product of a previous merger, which is not implausible and 
 might also explain the highly spinning BH in RX1131 \citep[$a$\ssim0.9;][]{Reis14a}. 
 
 Alternative scenarios 
-e.g., outflow/inflow of gas in the BLR, rotation of the accretion disk, viewing angle towards the accretion disk, and 
-inclination effect together with a clumpy accretion disk
-are more commonly invoked to explain velocity offsets between BLR and systemic redshift.
-% , in which clumps in the accretion disk may block emission towards the far side of the disk, and thus the observed BLR emission is only originating from
-% the redshifted inflowing gas component in the near side of the accretion disk of RXJ1131.
-In the context of the last scenario, 
+e.g., outflow/inflow of gas in the BLR, viewing angle towards the accretion disk, and 
+obscuration in the clumpy accretion disk
+are more commonly invoked to explain velocity offsets between BLR and systemic redshift. 
+Since the BLR lines of RXJ1131 show positive velocity offsets with respect to its systemic redshift, it may imply that 
+obscuration may be causing the observed 
+BLR line emission to be dominated by gas that is flowing into the central BH or the receding component of
+the accretion disk.
 \citet{Sluse07a} report a covering factor of 20\% for the accretion disk in RXJ1131
 based on its broad \mgii absorption line at $z$\eq0.654.
 Additionally, the centroids of the BLR lines in RXJ1131 may be biased towards longer wavelengths due to
 microlensing \citep[\eg][]{Sluse07a, Sluse12a}, which may have
 magnified the redshifted component of the compact BLR more strongly than its blueshifted component.
-
-With the existing data, we do not favor a particular scenario mentioned above as the interpretation for 
-the observed velocity offset.
+% gas motion (Woo+15, 16).
 
 \subsection{The $M_{\rm BH}$$-$\mbulge Relation}
 We find a $M_{\rm BH}$$/$$M_{\rm bulge}$ ratio of $>$0.27\petm{0.11}{0.08}\%
@@ -1514,7 +1521,7 @@ suggests that the bulk of the black hole mass of RXJ1131 is largely in place whi
 \section{Summary and Conclusions} \label{sec:sum}
 We present PdBI \bco and CARMA \cco observations towards the
 quadruply-imaged quasar RXJ1131 at $z_{\rm CO}$\ssim$0.654$, making this the first
-resolved CO study at intermediate redshift.
+resolved CO study at intermediate redshift. 
 Using the CO line intensities, we find a brightness temperature ratio of $r_{32}$\eq$0.78\,\pm\,0.37$
 between the \bco and \cco lines,
 consistent with thermalized excitation but also with the lower excitation seen in normal star-forming disks.
@@ -1524,8 +1531,8 @@ and resolved radio continuum emission at 5\,GHz in archival VLA data
 in both the foreground lensing galaxy and RXJ1131.
 
 Based on our lens modeling analysis of different \bco velocity channels,
-we find a secondary CO-emitting source near RXJ1131 whose coordinates
-are consistent with those of an optically faint companion reported in previous optical studies
+we find a secondary CO-emitting source near RXJ1131 whose spatial position
+is consistent with those of an optically faint companion reported in previous optical studies
 \citepalias{Claeskens06a,Brewer08a}.
 %The source-plane positions form a symmetric velocity field,
 % which is consistent with a kinematically-ordered disk galaxy.
@@ -1536,8 +1543,10 @@ of the gas are magnified inhomogeneously, similar to what was found for the $z$$
 PSS J2322$+$1944 \citep{Riechers08a}.
 Upon correcting for lensing magnification and subtracting a contribution from the companion,
 we find an intrinsically symmetric double-horned \bco line profile for RXJ1131.
-This together with a symmetric source-plane velocity gradient argues for a rotating disk in RXJ1131, in good agreement with previous findings \citepalias{Claeskens06a}.
-We find a lensing-corrected gas mass of $M_{\rm gas}$\,=\,$($1.38\pmm0.33$)$\,\E{10} \Msun
+This together with a symmetric source-plane velocity gradient argues for a rotating disk in RXJ1131, in good agreement with previous findings \citepalias{Claeskens06a}. Physical quantities derived for RXJ1131 and the companion throughout this paper are summarized in \Tab{prop}. 
+
+Based on the lensing-corrected \bco line intensities, 
+we find an intrinsic gas mass of $M_{\rm gas}$\,=\,$($1.38\pmm0.33$)$\,\E{10} \Msun
 for RXJ1131
 and $($1.92\pmm0.09$)$\,\E{9} \Msun for the companion,
 corresponding to a gas mass ratio of $\sim$7:1.
@@ -1586,13 +1595,22 @@ larger stellar bulge in the merger remnant upon coalescing.
 
 Using the CO redshift as systemic redshift for the host galaxy of RXJ1131, we find
 that the redshift inferred from NLR lines reported in previous studies are consistent with this systemic redshift
-but the optical BLR lines are redshifted by $\sim$715\,\kms. 
+but that the BLR lines are redshifted by $\sim$715\,\kms. 
 We raise several plausible scenarios that may explain the observed velocity offset, \eg
 outflow/inflow of gas in the BLR, kinematics of the accretion disk, geometric effects,
 microlensing, and a recoiling black hole.
-The latter scenario might also explain the high black hole spin parameter reported by \citet[$a$\ssim0.9][]{Reis14a}.
-With the available data, 
-we do not favor a particular scenario mentioned above as the interpretation for the observed velocity offset.
+The latter scenario would also explain the high black hole spin parameter reported by \citet[$a$\ssim0.9][]{Reis14a}, but 
+further evidence is needed to confirm or rule out this scenario.
+% spin up scenario: 
+% Wang+16: """ The spin of a BH is widely believed to play a crucial role in
+% determining the radio emission from SMBHs. The scenario that
+% an energy is extracted from an SMBH being spun up by a BH?
+% BH merger (e.g., Chiaberge & Marconi 2011) is favored for
+% high-mass SMBHs. This spin-up scenario is, however, almost
+% infeasible for low-mass SMBHs because they are believed to
+% largely build from secular evolution driven by internal
+% dynamical processes in the disk growth rather than from two
+% BHs merging (e.g., Kormendy & Ho 2013).
 
 Adopting the stellar mass as an upper limit to the bulge mass, we find a
 $M_{\rm BH}$$/$$M_{\rm bulge}$$>$0.27\petm{0.11}{0.08}\% for RXJ1131, providing
