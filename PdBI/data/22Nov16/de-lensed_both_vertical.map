@@ -4,9 +4,12 @@
 ! Excluding observed spectrum and dashed line showing binned channel slices
 !
 !
-! Last modified: 29 Nov 2016
+! Last modified: 12 Dec 2016
 !
 ! History:
+! 12 Dec 2016:
+!   - both log scale
+!
 ! 29 Nov 2016
 !   - top panel: observed and de-lensed of RXJ1131 & bottom: de-lensed of both RXJ1131 & companion in linear scale
 !   - created
@@ -109,7 +112,13 @@ let x 139.256-(x/299792.458*139.256)
 let x x*(1+0.65406)
 let x (((230.538-x)/230.538)*299792.458)
 
-limits -410 370 0 12
+! limits -410 370 0 12        ! linear
+! ylog
+let ymax 15
+let yrange log(ymax)-log(ymin)
+let ymin exp(log(ymin)-0.1*yrange)
+let ymax exp(log(ymax)+0.1*yrange)
+limits -410 370 ymin ymax /ylog         ! x y range
 
 ! marker location is rest-frame velocity
 ! set marker 2 0 2.5 0
