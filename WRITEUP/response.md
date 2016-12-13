@@ -43,7 +43,7 @@ or simply:
 the Lensed Host Galaxy of the Quasar RXS J1131-1231".
 
 # RESPONSE:
-1a) To take the referee's point into account, we have changed the title to "Molecular gas kinematics and spectral energy distribution properties of the strongly lensed quasar host galaxy RXSJ1131-1231". We agree that we study more than just the CO gas of the science target in this paper; however, a large fraction of the paper is based on our new CO data and the analysis (including lens modeling) on which we thus place an emphasis.
+1a) To take the referee's point into account, we have changed the title to "Molecular gas kinematics and star formation properties of the strongly lensed quasar host galaxy RXSJ1131-1231". We agree that we study more than just the CO gas of the science target in this paper; however, a large fraction of the paper is based on our new CO data and the analysis (including lens modeling) on which we thus place an emphasis.
 
 
 
@@ -594,7 +594,7 @@ index of the foreground galaxy to three decimal places
 # RESPONSE:
 It is the standard practice to report flux measurement uncertainties from interferometric observations separate from those due to absolute flux calibration and state those in the observations section (i.e. Section 2). However, we note that uncertainties from absolute flux calibration are taken into account when deriving the error bars associated with physical parameters throughout the paper. To address the referee's concern, we have added remarks in Table 1, and Section 4.5 paragraph 1 to remind the reader of these uncertainties.
 
-We have updated the number of decimals in the spectral indices indexes reported in Section 3.3, as suggested by the referee.
+We have updated the number of decimals in the spectral indices reported in Section 3.3, as suggested by the referee.
 
 
 
