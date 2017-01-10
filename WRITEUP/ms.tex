@@ -11,7 +11,7 @@
 % -----------------------------------------------------------------------------------------------
 
 \input{preamble}
-\slugcomment{To be submitted to the ApJ, with changes from the referee report }
+\slugcomment{With changes from the referee report}
  \makeatletter
 % \renewcommand\normalsize{\@setfontsize\normalsize\@xpt{11.56}}
 \renewcommand\normalsize{\@setfontsize\normalsize{10.56}{11.4}}
@@ -42,22 +42,19 @@ Our lens modeling shows that the asymmetry in the double-horned \bco line profil
 is mainly a result of differential lensing, where
 the magnification factor varies from $\sim$3 to $\sim$9 across
 different kinematic components.
-The intrinsically symmetric line profile with a conspicuous source-plane velocity
-gradient suggests that
+The intrinsically symmetric line profile and a smooth source-plane velocity
+gradient suggest that
 the host galaxy is an extended rotating disk, with a CO size of $R_{\rm CO}$$\sim$6\,kpc and
 a dynamical mass of $M_{\rm dyn}$\ssim8\E{10}\,\Msun.
-In addition, we find a secondary CO-emitting source near RXS\,J1131$-$1231 whose location is
+We also find a secondary CO-emitting source near RXS\,J1131$-$1231 whose location is
 consistent with the optically-faint companion reported in previous studies.
 The lensing-corrected molecular gas masses are $M_{\rm gas}$\eq(1.4\pmm0.3)\E{10}\,\Msun
 and (2.0\pmm0.1)\E{9}\,\Msun for RXS\,J1131$-$1231 and the companion, respectively.
-The gas mass fraction of $f_{\rm gas}$\eq18\pmm4\% inferred for RXS\,J1131$-$1231 is consistent with the trend of decreasing molecular gas fraction since $z$\ssim2 reported in recent studies.
 We find a lensing-corrected stellar mass of
 $M_{*}$\eq(3\pmm1)\E{10}\,\Msun and a star formation rate of SFR$_{\rm FIR}$\eq(120\pmm63)\,\sfrU,
-corresponding to a specific SFR and star formation efficiency that are comparable to non-quasar host 
-disk galaxies at $z$\ssim1.
-This together with a gas mass fraction following the redshift evolution indicates
-that no evidence for quenching of star formation is seen in RXS\,J1131$-$1231.
-This is in agreement with its elevated \mbox{$M_{\rm BH}$$/$$M_{\rm bulge}$} ratio of \mbox{$>$0.27\petm{0.11}{0.08}\%} compared to the
+corresponding to a specific SFR and star formation efficiency comparable to  
+$z$\ssim1 disk galaxies not hosting quasars.
+The implied gas mass fraction of $\sim$18\pmm4\% is consistent with the previously-observed cosmic decline since $z$\ssim2. We thus find no evidence for quenching of star formation in RXS\,J1131$-$1231. This agrees with our finding of an elevated \mbox{$M_{\rm BH}$$/$$M_{\rm bulge}$} ratio of \mbox{$>$0.27\petm{0.11}{0.08}\%} compared to the
 local value, suggesting that the bulk of its black hole 
 mass is largely in place while its stellar bulge is still assembling.
 \end{abstract}
@@ -272,8 +269,6 @@ instability.
 %                                Results
 %--------------------------------------------------------------------------
 \section{Results} \label{sec:results}
-\input{table_obsprop}
-
 \subsection{\bco Emission} \label{sec:CO21}
 We detect \bco line emission towards the background source RXJ1131 in the PdBI data
 at $\gtrsim$\,27$\sigma$ significance. Based on this measurement, we refine the redshift of RXJ1131 to
@@ -288,6 +283,9 @@ as shown in \Fig{CO21spec}. Fitting a double Gaussian results in peak
 flux densities of 75.3\pmm2.6 mJy and 24.0\pmm2.0 mJy, and a FWHM of
 179\pmm9 \kms and 255\pmm28 \kms for the two components, respectively. The peaks are separated by
 $\Delta v_{\rm sep}$\eq400\pmm12\,\kms. The total integrated line flux is 20.3\,$\pm$\,0.6 Jy \kms. % see 15May16/
+
+\input{table_obsprop}
+
 
 \begin{figure}[htbp]
 \centering
@@ -440,9 +438,8 @@ We report the peak flux in the original map
 is the best estimate possible at the resolution of our observations, but we acknowledge that a non-negligible contribution from the background source to the peak flux cannot be ruled out.
 
 \begin{figure}[!htbp]
-%\centering
-\includegraphics[trim=12 27 0 1, clip, width=0.475\textwidth]{../Figures/F555W_ContPdBI.eps}
-\includegraphics[trim=10 5 0 0, clip, width=0.4695\textwidth]{../Figures/F555W_ContVLA.eps}
+\includegraphics[trim=12 27 0 1, clip, width=0.47\textwidth]{../Figures/F555W_ContPdBI.eps}
+\includegraphics[trim=10 5 0 0, clip, width=0.47\textwidth]{../Figures/F555W_ContVLA.eps}
 \caption{Top: overlay of the PdBI 2\,mm continuum emission on the optical image.
 Contours start and increment in steps of
 $\pm$3$\sigma$, where $\sigma_{\rm 2mm}$\,=\,0.082 mJy beam\pmOne.
@@ -600,7 +597,7 @@ which is also lensed into an Einstein ring configuration.
 To ensure adequate SNRs for lens modeling, we bin the frequency channels by a factor of five
 to produce seven independent $\Delta v$\,$\sim$\,105\,\kms channels (dashed line in \Fig{delensed})
 that cover the full linewidth of $\sim$750\,\kms.
-
+\input{table_medianLens}
 
 \begin{figure}[!htbp]
 \includegraphics[width=0.45\textwidth]{../Figures/de-lensedSpecCO21_complicated_unbinned_ylog.eps}
@@ -646,7 +643,6 @@ use the final $\sim$5,000 steps, sampled by 128 walkers, to identify
 the posterior. Here, we
 identify the best-fit model and the quoted uncertainties using the
 median and the 68\% confidence intervals in the marginal PDFs.
-\input{table_medianLens}
 
 We first obtain a preliminary lens model for each channel slice independently,
 where their lens parameters are allowed to vary and are initialized according
@@ -794,15 +790,13 @@ The velocity and flux density scales are denoted in the top right panel.
 Previous studies of RXJ1131 find evidence for differential lensing across
 the {\it HST} $V$-, $I$-, and $H$-bands, where the
 magnification factor varies from 10.9 to 7.8 \citepalias{Claeskens06a}.
-This indicates that emission from different stellar populations
-within the host galaxy are dissimilar with respect to the caustic.
-%This imply that different stellar populations in the host galaxy are not co-spatial, and have
-%different spatial extents, or
+This indicates that the emission from different stellar populations
+within the host galaxy have various spatial extents and positions with respect to the caustic.
 %may be a result of dust extinction and reddening.
-The best-fit lens models obtained here for different CO channel slices show that differential lensing also plays
+The best-fit lens models obtained here for different CO channels show that differential lensing also plays
 an important role in the observed \bco emission, with a magnification factor $(\mu_{\rm L})$ that varies
 from 8.7 to 3.1 across different kinematic components (\Tab{model}).
-The asymmetry in the line profile (\Fig{co21spec} and \Fig{delensed}) is therefore predominantly a result of
+The asymmetry in the line profile (\Fig{CO21spec} and \Fig{delensed}) is therefore predominantly a result of
 the redshifted CO-emitting gas being more strongly-magnified
 than the
 blueshifted component.
@@ -1259,6 +1253,7 @@ which has been suggested as the cause for the decline in sSFR and cosmic \SF his
 Using the lensing-corrected dust mass, we find a galactic-scale %galaxy-wide
 gas-to-dust ratio (GDR) of
 54\pmm13.   %  (1.38e2+0.192e2)/16*5.5 +/- ((0.33/1.38)**2+(0.09/1.92)**2 + (12/16)**2)**.5*54
+This would be higher by a factor of two if we were to adopt a dust mass from the other SED fit that is unconstrained at 24\,$\micron$.
 This GDR is lower than the statistical average of 206
 in the \citetalias{Combes13a} sample but is well within the broad
 range of values measured over their entire sample ($\sim$1$-$770).
@@ -1303,7 +1298,7 @@ we find an SFE of 58\pmm10 \Lsun $M_{\odot}^{-1}$, % I believe here we are takin
 which is on the low end among other U/LIRGs at $z$\,$<$\,0.6
 % \citep[$\sim$180\pmm160 \Lsun $M_{\odot}^{-1}$;][]{Solomon97a, Combes11a}
 \citep[\citetalias{Solomon97a};][]{Combes11a} but consistent with those of
-low-$z$ spiral galaxies \citepalias[$z$\,$<$\,0.1;][]{SV05a} and high-$z$ disk-like
+low-$z$ spiral galaxies \citep[$z$\,$<$\,0.1;][]{SV05a} and high-$z$ disk-like
 galaxies, which are also IR luminous galaxies with \LIR$\sim$10$^{12}$\,\Msun \citep{Daddi08a, Daddi10a}.
 This suggests that the merger system is converting gas into stars at an efficiency
 similar to those of ``normal'' star-forming
@@ -1323,18 +1318,9 @@ The specific star formation rate (sSFR\eq SFR/$M_*$) of 4\petm{2.6}{2.4}\,Gyr\pm
 is $\lesssim$1.5$\sigma$ above the main sequence according to
 the redshift-dependent ``main sequence'' relation in \citet[and references therein]{Tacconi13a}.
 %  and is consistent with those of the \cite{dacunha10a} sample of local ULIRGs.
-Given that RXJ1131 share similar \SF rate, \SF efficiency, and CO disk size as other ``main sequence'' disk galaxies,
+Given that RXJ1131 shares similar \SF rate, \SF efficiency, and CO disk size as other ``main sequence'' disk galaxies,
 the small elevation in sSFR over the main sequence at $z$\ssim0.7 suggests
 that the \SF activity in RXJ1131 may be enhanced by interactions with the companion.
-In addition, a SFE and sSFR comparable to those of high-$z$ disk 
-galaxies, which are not known to host AGNs,
-together with a molecular gas mass fraction that follows the redshift evolution reported in other studies (\Sec{frac})
-suggest that no quenching of star formation is observed in RXJ1131, despite 
-that fact that it is hosting a quasar.
-This is suggestive that for some AGN host galaxies at intermediate redshift, 
-their contribution to the decline in the cosmic star formation history since $z$\ssim2 is mainly a 
-manifestation of the redshift evolution in the molecular gas content 
-rather than a result of the negative feedback driven by their central AGNs.
 
 % ================================================
 %local ULIRGs are in the majority starbursts caused by
@@ -1460,15 +1446,16 @@ The first set of lines is at $z$\ssim0.654, including the narrow component of th
 $z_{\rm s, QSO}$\ssim0.658, including the broad component of the Balmer lines and the \mgii emission line.
 Using the CO line center redshift as the systemic redshift,
 we find that the redshift of the first set is fully consistent with the systemic redshift. This
-supports previous claims that [O\,{\scriptsize III}] lines, tracing the narrow line region (NLR),
+supports previous claims that [O{\scriptsize III}] lines, tracing the narrow line region (NLR),
 are good proxies
 to the true systemic redshift \citep[e.g.,][]{Vrtilek85a, Nelson00a}.
 On the other hand, the second set of lines is redshifted by $\sim$715\,\kms.
+
 Velocity offsets between broad line region (BLR) and NLR lines have been reported in literature.
 \citet{Richards02a} find a median offset of
 % median of 97\kms and a dispersion of 269\,\kms in the distribution of offset
 $\sim$100\pmm270\,\kms
-between [Mg\,{\scriptsize II}] and [O\,{\scriptsize III}] lines in a
+between [Mg{\scriptsize II}] and [O{\scriptsize III}] lines in a
 sample of $>$3800 quasars,
 and \citet{Bonning07a} report
 a mean offset of
@@ -1477,7 +1464,7 @@ a mean offset of
 %FWHM = 500
 $\sim$100\pmm210\,\kms
 between the broad component of
-H$\beta$ and [O\,{\scriptsize III}] lines in a sample of $\sim$2600 quasars at 0.1$<$$z$$<$0.8,
+H$\beta$ and [O{\scriptsize III}] lines in a sample of $\sim$2600 quasars at 0.1$<$$z$$<$0.8,
 where only $\lesssim$20 of them (i.e., $<$1\%) are found to have offsets $>$800\,\kms
 and $\sim$1\% 
 are found to have offsets $>$500\,\kms \footnote{\citet{Bonning07a} report the fraction of objects with offset velocities greater 
@@ -1617,20 +1604,8 @@ where we find an elevated \mbox{$M_{\rm BH}$$/$$M_{\rm bulge}$} ratio of $>$0.27
 RXJ1131 compared to the local value.
 This suggests that the stellar bulge of RXJ1131 is still assembling in order to evolve onto the local relation.
 
-Theoretical studies have suggested that negative feedback from an AGN may remove a 
-large fraction of the molecular gas from its host galaxy, thereby quenching its star formation \mbox{\citep[e.g., ][]{DiMatteo05a}}.
-In this study, we find that the star formation efficiency and specific SFR derived for RXJ1131 are comparable to those of 
-non-AGN host disk galaxies at $z$\ssim1$-$1.5, and that the 
-derived molecular gas mass fraction is consistent with the redshift evolution reported in other studies. 
-We thus find no evidence of negative AGN feedback on the molecular gas content 
-and on the star formation activity in RXJ1131 at the resolution of our data.
-Our results suggest that for some AGN host galaxies at intermediate redshift, 
-their contribution to the decline in the cosmic star formation history since $z$\ssim2 is mainly a 
-manifestation of the redshift evolution in the molecular gas content 
-rather than a result of the negative feedback driven by their central AGNs.
-
-Using the CO redshift as systemic redshift for the host galaxy of RXJ1131, we find
-that the redshift inferred from NLR lines reported in previous studies are consistent with this systemic redshift
+We find that the redshift inferred from the NLR lines reported in previous studies are consistent with the  systemic redshift as measured
+from the CO line,
 but that the BLR lines are redshifted by $\sim$715\,\kms.
 We raise several plausible scenarios that may explain the observed velocity offset, \eg
 outflow/inflow of gas in the BLR, kinematics of the accretion disk, geometric effects,
@@ -1658,6 +1633,25 @@ further evidence is needed to confirm or rule out this scenario.
 % \citep[e.g.,][]{Walter04a, Peng06a,McLure06a}.
 % The elevated ratio also suggests that the stellar bulge component of RXJ1131 is still assembling in order to evolve onto the local  $M_{\rm BH}$$-$$M_{\rm bulge}$ relation.
 
+Theoretical studies have suggested that negative feedback from an AGN may remove a 
+large fraction of the molecular gas from its host galaxy, thereby quenching its star formation \mbox{\citep[e.g., ][]{DiMatteo05a}}.
+In this study, we find that the star formation efficiency and specific SFR of RXJ1131 are comparable to those of 
+$z$\ssim1$-$1.5 disk galaxies, which are not known to host quasars, and that its
+molecular gas mass fraction is consistent with the observed cosmic decline for star-forming 
+galaxies since $z$\ssim2$-$3.
+Hence, we find no evidence of negative AGN feedback on the cold molecular gas fraction 
+and on the star formation activity in RXJ1131.
+Future observations at higher resolution will allow us to better constrain the molecular gas kinematics and dynamics of
+RXJ1131 to investigate any potential interplay with the quasar on smaller scales.
+More broadly, systematic studies of the correlations between the molecular gas fraction, stellar mass, and AGN luminosity 
+at different redshifts 
+% constraining the molecular gas fraction
+% as a function of stellar mass together with 
+% the molecular gas fraction as a function of AGN luminosity normalized 
+% by the stellar mass ($L_{\rm QSO}$$/$M$_*$) for a sample of AGN host galaxies at different redshifts
+% between 0$<$\,$z$\,$<$2 % at a given galaxy mass 
+will enable us to better understand the relative importance of AGN feedback and of the 
+evolution in the molecular gas mass fraction on the decline of star formation history and black hole accretion history.
 
 %==============================================================================
 %                                Back matters
@@ -1666,7 +1660,7 @@ further evidence is needed to confirm or rule out this scenario.
 %-----------------
 \acknowledgments
 
-We thank the referee for providing detailed and constructive comments that helped improved the clarify of this manuscript.
+We thank the referee for providing detailed and constructive comments that helped to improve the clarity of this manuscript.
 DR and RP acknowledge support from the National Science Foundation
 under grant number AST-1614213 to Cornell University. RP acknowledges
 support through award SOSPA3-008 from the NRAO. DR acknowledges the
