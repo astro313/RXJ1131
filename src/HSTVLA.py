@@ -70,7 +70,7 @@ for k in label_vla.iterkeys():
     label_vla[k] = file_vla
 # print label_vla
 
-figC = plt.figure(1)
+figC = plt.figure(1, figsize=(12, 8))
 # figRed = plt.figure(2, figsize=(12, 7))
 ########################################
 # user define area
@@ -161,8 +161,8 @@ standard_plot_setup(fig1, ra_center, dec_center, sizep, tickc=tickcolor)
 # if '_' in sym[:-1]: symf = sym.replace('_', ' ')
 
 # put_label(fig1, 0.20, 0.95, 'HST F555W', 'titleBand')
-put_label(fig1, 0.38, 0.9, 'HST F555W, 5GHz Continuum', 'titleBand', c=tickcolor)
-put_label(fig1, 0.15725, 0.95, 'RXJ1131', 'titleObj', c=tickcolor)
+put_label(fig1, 0.295, 0.87, 'HST F555W, 5GHz Continuum', 'titleBand', c=tickcolor)
+put_label(fig1, 0.15725, 0.92, 'RXJ1131', 'titleObj', c=tickcolor)
 # put_label(figHST, 0.20, 0.95, 'HST F555W', 'titleBand')
 # put_label(figHST, 0.1825, 0.9, 'RXJ1131', 'titleObj')
 # put_label(figred, 0.40, 0.95, 'HST F555W, CO Red wing', 'titleBand')

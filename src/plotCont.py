@@ -74,7 +74,7 @@ figC = plt.figure(1, figsize=(12, 8))
 ########################################
 ra_center = 172.96434563888
 dec_center = -12.5328629
-sizep = 0.0015 # 0.002058066
+sizep = 0.0014
 
 ra_cross, dec_cross = ra_center, dec_center
 row_a = 0.1
@@ -155,8 +155,8 @@ standard_plot_setup(fig1, ra_center, dec_center, sizep, tickc=tickcolor)
 ########################################
 # if '_' in sym[:-1]: symf = sym.replace('_', ' ')
 
-put_label(fig1, 0.15725, 0.95, 'RXJ1131', 'titleObj', c=tickcolor)
-put_label(fig1, 0.38, 0.9, 'HST F555W, 2 mm Continuum', 'titleBand', c=tickcolor)
+put_label(fig1, 0.15725, 0.92, 'RXJ1131', 'titleObj', c=tickcolor)
+put_label(fig1, 0.295, 0.87, 'HST F555W, 2 mm Continuum', 'titleBand', c=tickcolor)
 # put_label(figHST, 0.20, 0.95, 'HST F555W', 'titleBand')
 # put_label(figHST, 0.1825, 0.9, 'RXJ1131', 'titleObj')
 # put_label(figred, 0.40, 0.95, 'HST F555W, CO Red wing', 'titleBand')
