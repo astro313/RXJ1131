@@ -1,12 +1,15 @@
 """
 Author: Daisy Leung
 
-Last edited: 21 Nov 2016
+Last edited: 9 Jan 2016
 
 Purpose:
 - Overlay 2mm Cont contour on HST
 
 History:
+Jan 9 2016:
+    - zoom in
+    - use np.sort() w/ contour level, to satisfy mpl version > 1.5.3
 Nov 21 2016:
     - add inverted HST
     - no marker, zoom in
@@ -32,6 +35,7 @@ log.setLevel('ERROR')
 import glob
 import matplotlib.pyplot as plt
 import matplotlib as mpl
+import numpy as np
 from APLpySetup import *
 
 path = '../HST/'
@@ -63,14 +67,14 @@ for k in label_pdbi.iterkeys():
     label_pdbi[k] = file_pdBI
 # print label_pdbi
 
-figC = plt.figure(1)
+figC = plt.figure(1, figsize=(12, 8))
 # figRed = plt.figure(2, figsize=(12, 7))
 ########################################
 # user define area
 ########################################
 ra_center = 172.96434563888
 dec_center = -12.5328629
-sizep = 0.0018 # 0.002058066
+sizep = 0.0015 # 0.002058066
 
 ra_cross, dec_cross = ra_center, dec_center
 row_a = 0.1
@@ -109,7 +113,7 @@ if inverted_HSTleft: fig1.set_theme('publication')
 ########################################
 # Contours
 ########################################
-fig1.show_contour(label_pdbi['cont'][0], colors="black", levels=sigma_contour_array(sigma), linewidths=1.62)#, layer='fg')
+fig1.show_contour(label_pdbi['cont'][0], colors="black", levels=np.sort(sigma_contour_array(sigma)), linewidths=1.62)#, layer='fg')
 
 # figred.show_contour(label_pdbi['red'][0], colors="lime", levels=sigma_contour_array(sigma_red), linewidths=2)
 
