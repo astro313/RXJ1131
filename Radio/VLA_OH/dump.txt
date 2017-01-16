@@ -1,0 +1,144 @@
+# Our understanding of OHM is limited to $z$$\lesssim$0.2
+# OHM and galaxy evolution
+OHMs is associated w/ merging galaxies and extreme SB while the ...
+OH megamaser emission at 1.67 GHz is known to be ubiqutous in nearby (U)LIRGs/mergers \cite{}.
+- w/in few hundred pc of the core of ULIRG \citep{Richards05a}
+- nuclear SB triggered by merger
+Local studies report that all OMHs are associated w/ merging/(U)LIRGs system.
+Locally, OH megamasers are assocaited with FIR-luminous galaxies (usually also merger).
+All OHM host galaxies known to date are IR luminous galaxies (U/LIRGs) merging galaxies and SB galaxies. (not all are merging, but in generally all are SB-ting), a large fraction of which are also hosting AGN.
+Over 95% OHMs known to date are found in (ultra)-luminous IR galaxies (U)LIRGs (LFIR > 1e11 Lsun) at $z$$<$0.3, which are mostly mergers with intense SB and/or AGN activity \citep[see][for a review]{Lo05a}. OHM detection rate increases w/ LFIR (Darling02a, Zhang14a, Baan91), where \LOH$\propto$\LIR$^2$scaling relation. (but revised to L_OH \propto \LFIR 1.2 by Darling02b) Since the necessary excitation of OHMs can be provided by IR pumping with large molecular column density \citep{Baan89a}, where the required radiation is believed to be comeing from dust absorbing starlight from SB that are thought to be merger-driven (and AGN), and the high density at center easily reached in mergers.
+
+- OHM are associated w/ (U)LIRG/mergers undergoing extreme bursts of star formation. 
+- OMHs have therefore been proposed to be promising traces of merging galaxies at high-z. \citep{Darling02aLF}
+As these galaxies are formed through violent mergers, studying the co-moving density of OH maser galaxies across cosmic time will allow the merger rate of the Universe to be determined in an independent way. IR LF --> merger rate evolution w/ (1+z)^m --> galaxy merger history in galaxy evolution.
+
+Given that LOH scales with \LIR and therefore the number density of OHMs is expected to increase at higher-z, where the the merger rate is expected to be higher, and thus more sources with extremely high LIR \citep{Briggs98a, }. Predictions based on submm \obs indicate that we should be able to detect OHM at high-z with the commonly observed LIR of >1e12 Lsun \citep{Darling02aLF}.
+- e.g. Briggs98a: 16 @ z=2 / deg^2 per 50 MHz bandpass at sigma = 0.2 mJy
+
+dusty environment w/ sufficient MIR photons to pump the OH molecule and masing..
+"The association of OHMs w/ IR-luminous galaxies/merges suggests that the density of OHMs is expected to much higher at z\ssim2, when the merger rate is expected to be higher and he SFRD is peaks"
+
+
+# current problem
+Based on scaling relations between LOH and LIR, and merger rate as a function of z, --> expected to detect OHMs out to at least z~3.
+The number density of OHMs is predicted to increase w/ z up to at least z\ssim2 \citep{Darling02bLF}, when the LFIR is expected to be the highest. This argues the need for a systematic survey of OHMs at high-z. 
+
+However, Willett 2012 the largest systematic OHMs at z>1, but the highest-z detected is at z=0.265 (Baan+92). 
+Currently, the highest redshift sources detected are ... the gigmasers at z=0.2blah and 0.265...
+An effort has been done at even higher-z with the lensed APM \citep{Ivison06a}, however, not detected. Therefore, it appears that origin of OHMs at earlier epoch may not be the same as what we think in local. 
+Still lack a decent understanding of potential evolution L_OH-L_FIR that may 
+indicate a different OHM triggering mechanism at higher z.
+Therefore, to better understand the evolution in LOH-LFIR that may indicate a different powering mechanism/origin of OHMs beyond z\ssim0.2.
+Here we propose to blah in a intermediate IR-luminous AGN merger system at z=0.65 as a test bed to .... Our target is strongly-lensed by .... (assuming X-ray magnification that traces the compact region).
+None of the sourcess in the Willett sample is gravitationally lensed. Lensing increases, thereby allowing ....
+
+- problem w/ this is Willett have much larger sample and even out to higher z, all of which are just upper limits.. --> need to convince why we think we would detect it in RXJ....
+    + their sample exclude AGN, which could potentially provide OH pumping 
+
+
+# A particular well-suited source
+- known redshift --> checked that RFI is not a problem, which has been a main challenge for carrying out partly searches of high-z OHMs (the last one being Willet11).
+- lensed
+- merger
+- high FIR, already full SED w/ good constrain on the L_FIR 
+- Given the LOH-LFIR relation, evidence of ongoing SB (V band), presence of large molecular gas, which appear to be the require conditions for OHMs, highly suggestive that RXJ1131 would be a strong OHM host. 
+- at intermediate z
+    + can provide useful constrain on L_OH and intermediate
+    + the first L_OH - L_FIR measuremnt at intermediate-z (already seen a discrepancy at z=3)
+        + look for potential discrepancy between expectation based on nearby studies 
+        + to improve models for prediction for future survey design
+            * where the current plan for FAST, APERTIF/WSRT, ASKAP is/it has been proposed to use do large (high-z) survey of OHM and use OHM LF to better understand the merger history (since locally OHMs are detected in (U)LIRGs/mergers).
+            * provides important data for the planning of the observing strategies for future missions.
+            * want to use as independent constraint of the cosmic merger rate to help distinguish between different galaxy evolution models and better understanding of main processes evolved in formation of present-day massive galaxies. 
+        --> detection/non-detection at this redshift is crucial for development of this techinique for future
+- have a quasar w/ high L_X and L_FIR, a lot of molecular medium that may provide the condition for pumping.
+
+In addition to that, detecting OHM at higher redshift will give confidence on using the OHM as an important tool for studying the properties (dynamics) of the molecular nuclei at high redshifts when observed at high reoslution w/ the VLBI. (since OHMs originates from less than few hundred pcs). Understanding their properties will allow us to learn about the nuclear tori and the energy source.
+
+Another way of saying:
+Our investigation will enable us to see if OHMs may be serve as useful tool for constraining the merger rate / merger history indepndent of IR LF, as proposed in old studies, since our target is known to be a merger. I.e., would expect to detect it. If not detected, then it may imply that OHM may not be as prominent as expected at higher-z, and therefore OHM LF may not be as useful for constraining merger history as we originally thought. Therefore our investigation will serve as important benchmark for future studies of OHM pushing to the epoch of SF, where the extremely IR luminous sources are much more common than present-day, with next facilities like FAST. 
+
+A non-detection would be useful in this way as well this will improve our understanding of the ULIRGs population at low and high-z.
+
+
+# Radio.. pumping.., to give an alternative view on OH maser pumping mechanism (collisional or radiative - absorption of radiation; energy transfer) and efficiency in OHMs at higher z.
+This is an idea source because we aleady have C-band continuum flux that is detected towards RXJ1131, i.e. the detection of OHM in RXJ1131 will also allow us to investigate the pumping effcieincy at higher z (through the L_OH-LFIR scaling relation, slope <2 (i.e, deviations from the quadrature may suggest that the amplificatin process is less efficient at higher FIR luminosity; since optical depth increases w/ increasing FIR radiation field, the simple picture of low-gain amp. will likey break down resulting in deviations from the quadratic relation) and whether at higher redshift the masing is saturated or not ...), and whether the "low-gain amlification" picture (unsaturated masing) found to be consistent w/ local OHMs is still true at higher z.
+Darling02b: find evidence of a mixture of saturated and unsaturated masers. 
+
+The FIR radiation field can invert the OH population via the pumping lines at 35 and 53 um rotation transition (i.e., radiatively). Masing can then be stimulated by 18 cm (i.e. ~1.6GHz, nu_obs ~ 1 GHz, which we have already obtained high-resolution C band continuum that can be used as a proxy) emission from starbursts or AGNs.
+- even in the case of non-detection, the data we have already obtained regarding this potential OHM host galaxy will allow us to compare its host properties against those of other local OHM host galaxies to improve our current understanding of OHM.  # the masing conditions for OHM, the relationship betweeen the maser emission and the environment of the host galaxy (e.g. SFR or LFIR, LIR, OHM, L_radio). and a future higher-res follow-up obs. can allow us to .. the phyiscal conditions of the moleuclar medium in generating OHMs.
+
+As Henkel & Bratz (2003) pointed out, all ULIRGs with a luminosity LIR > 1\E{12}\Lsun should contain a megamaser, but some are not detected because of beaming and orientation effects. 
+
+# regarding the intrinsic LOH that is expected to originate from nuclear regions (Darling07), we will correct for lensing using the magnification factor based on X-ray, MIR lens model, whose emission is expected to orginate from nuclear region.  
+
+
+
+# figure
+- prediction of OHM at high-z
+- correlation L_OH and L_FIR
+    + Darling02b, fig 8a
+- SED
+
+
+# TJ
+
+v_center = 1.00804 GHz 
+
+# continuum
+- From our extrapolation of the SED of RXJ1131 and its lensing galaxy. 
+- We expect unresolved continuum to be blah mJy from RXJ1131 and blah from lensing galaxy.
+- We expect to be dominated by foreground
+
+# line width
+typical Line width of OH in nearby ~150 km/s (Darling & Giovanelli 2002; Willett 2012)
+
+highest redshift sources - IRAS 14070+0525 @ 0.265,IRAS 12032+1707 @ 0.217, both seem to have very broad FWZI of 1500-2000 km/s (Baan92a, Pihlstrom+05)
+- also the most powerful known.
+- However, ∆v could a combo of disk rotation and gas motion (inflow, outflows)
+- BUT Darling2002a ∆v FWHM: 596 & 853 km/s
+
+Darling02LF: 
+- also IRAS 16300+1558 @ z=0.242
+- ∆v FWHM = 131 km/s
+
+~ 1500/3e5 * 1 E3 
+WIDAR would be sufficient to cover the full line (∆v of xyz MHz)
+
+# Darling02b: log LOH = (1.57) log \LFIR - (15.76) .. but let's adopt the more conservative estimate.. log LOH = 1.2 * logLFIR - 11.7, Eqn 4
+# note that LFIR was derived using IRAS 60µm, which is L_60 = BLAH and LFIR = BLAH for RXJ1131.
+
+------------
+(a) - ect_optA_5sigma.pdf
+LOH = 1.04e-3 * (S [Jy] * ∆v) * nu_rest * (1+z)^-1 D_L^2
+D_L for RXJ =  3964.7 Mpc 
+if we use LFIR = (8.8 ± 0.4)E11 (μL /5.5)^-1 Lsun --> LFIR lensed = 4.84e12 Lsun --> LOH = 3.3 E 3 Lsun
+--> S = 2.2 mJy; I = S * 150 =  330 mJy km/s
+say 5 sigma detection --> sigma_peak = 2.2 / 5 mJy / beam (unresolved) over the FWHM 150 km/s = 0.44 mJy/B
+-------------
+(b) - ect_optB_5sigma_3spectral_300kms.pdf
+If we instead assume S/N of 5, ∆v of 300 km/s, but resolve over 3 spectral resolution element
+- I = S * ∆v = 330 mJy km/s
+- S_peak = 330 / 300 mJy = 1.1 mJy = 5 * sigma
+- sigma = 0.22 mJy/B 
+- --> to resolve over 3 spectral res. elements --> ∆v = 100 km/s
+
+# size: 
+The full extent of the lensed emission is ~3.6" in diameter. Therefore, we do not expect the emission to be resolved.
+
+
+
+# RFI 
+is primarily a problem within the low frequency bands (C, S, L, and the low-band system), and is most serious to the D configuration.  With increasing frequency and increasing resolution comes an increasing fringe rate, which is often very effective in reducing interference to tolerable levels.
+
+# correlator
+The 3-bit samplers will be more susceptible to RFI signals than the 8-bit samplers, since the latter have more 'levels' within which these strong signals can be accommodated. 
+
+
+# why higher spectral resolution
+Identification and removal of RFI is always more effective when the spectral and temporal resolutions are high.  
+
+
+# post-processing
+Calibration of VLA data when strong RFI is present within a subband can be difficult. Careful editing of the data, using newly available programs within CASA and AIPS, will be necessary before sensible calibration can be done. The use of spectral smoothing, typically Hanning, prior to editing and calibration is strongly recommended when RFI is present within a subband.
