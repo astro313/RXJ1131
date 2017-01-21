@@ -6,3 +6,4 @@ updated ms.tex to include .pdf after filename
 
 - also need to upload .sty files
 - also need to upload RXJ.bib file & !! the ms.bbl file because arxiv doesn't do bibtex!! 
+- copy the one from ../, becuase of the manual (C13) aliases
