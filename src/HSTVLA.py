@@ -1,12 +1,14 @@
 """
 Author: Daisy Leung
 
-Last edited: 9 Jan 2016
+Last edited: 21 Jan 2016
 
 Purpose:
 - Plot single panel 5GHz VLA continuum on HST F555W, investigate continuum offset
 
 History:
+Jan 21 2016:
+    - update contour color
 Jan 9 2016:
     - zoom in
     - use np.sort() w/ contour level, to satisfy mpl version > 1.5.3
@@ -118,7 +120,8 @@ if inverted_HSTleft: fig1.set_theme('publication')
 # Contours
 ########################################
 # fig1.show_contour(label_vla['C_R0'][0], colors="green", levels=sigma_contour_tenpercent(Smax), linewidths=1.0)#, layer='fg')
-fig1.show_contour(label_vla['C_R0'][0], colors="red", levels=np.sort(sigma_contour_VLA(sigma)), linewidths=1.2)#, layer='fg')
+fig1.show_contour(label_vla['C_R0'][0], colors="#99ff00", levels=np.sort(sigma_contour_VLA(sigma)), linewidths=1.2)#, layer='fg')
+# fig1.show_contour(label_vla['C_R0'][0], colors="#ffff00", levels=np.sort(sigma_contour_VLA(sigma)), linewidths=1.2)#, layer='fg')
 
 # figred.show_contour(label_vla['red'][0], colors="lime", levels=sigma_contour_array(sigma_red), linewidths=2)
 
