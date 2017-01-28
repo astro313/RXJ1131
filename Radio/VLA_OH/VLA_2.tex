@@ -1,0 +1,361 @@
+% abstract:
+% An exceptionally rare lensing configuration ?, providing a unique opportunity to explore the ISM conditions in this important but thus far unobservable(unexplored?unexploited?) regime of galaxy evolution. We propose to take advantage of the magnification of the lensed galaxy RXJ1131, a gas-rich merger with prodigious star formation rate of 120 \Msun yr\pmOne to search for OHM at intermediate-$z$, when the merger rate and ... . By combining this information with existing ?, we will ? These observations will ...
+% inform future systematic searches of high-$z$ OHMs 
+% OH maser emission at 1.67 GHz is known to be associated with regions of intense star formation within ULIRGs. As these galaxies are formed through violent mergers, studying the co-moving density of OH maser galaxies across cosmic time will allow the merger rate of the Universe to be determined in an independent way. This merger rate is an important parameter in galaxy formation and evolution scenarios.
+
+
+%% Suggested LaTeX template for the scientific justification
+%% to be submitted as part of an NRAO observing proposal
+%%
+%% Version for GBT/VLA/VLBA/HSA dated 2013 July 23
+
+\documentclass[letterpaper,11pt]{article}
+\usepackage{graphics,graphicx}
+\usepackage{cprotect}
+\usepackage{subcaption}
+\usepackage{amssymb, amsmath}
+\usepackage{xspace}
+\usepackage{natbibspacing, natbib}
+\usepackage{aas_macros}
+\usepackage{wrapfig}
+\usepackage{floatrow}
+\usepackage{sidecap}
+%% In the graphics and graphicx packages, Postscript and eps figures
+%% can be included using the \includegraphics command. The graphics
+%% package is part of standard LaTeX2e and provides a basic way of
+%% including a figure. The graphicx package is not standard, but
+%% extends the \includegraphics command to make it more user-friendly.
+%% If graphicx is not available on your system please remove it from
+%% the list of included packages above.
+
+%% Syntax:
+%% In the graphics package:
+%%
+%% \begin{figure}
+%% \includegraphics[llx,lly][urx,ury]{file}
+%% \end{figure}
+%%
+%% where ll denotes 'lower left' and ur 'upper right' and the x and y
+%% values are the coordinates of the PostScript bounding box in
+%% points. There are 72 points in an inch.
+%%
+%% In the graphicx package:
+%%
+%% \begin{figure}
+%% \includegraphics[key=val,key=val,...]{file}
+%% \end{figure}
+%%
+%% where some of the useful keys are: angle, width, height,
+%% keepaspectratio (='true' or 'false') and scale. Bounding box values
+%% can be given as [bb=llx lly urx ury].
+%%
+%% In either case you have to use LaTeX figure placement commands to
+%% position the figure on the page; \includegraphics will not do
+%% that. Both these commands also have other options that are listed
+%% in the LaTeX manual (for the graphics package) and in ``The LaTeX
+%% Graphics Companion'' (for the graphicx package).
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\newcommand{\Lsun}{\mbox{$L_{\odot}$}\xspace}
+\newcommand{\Msun}{\mbox{$M_{\odot}$}\xspace}
+\newcommand{\LIR}{\mbox{$L_{\rm IR}$}\xspace}
+\newcommand{\LFIR}{\mbox{$L_{\rm FIR}$}\xspace}
+\newcommand{\LOH}{$L_{\rm OH}$\xspace}
+\newcommand{\rarr}{$\rightarrow$}
+% \newcommand{\civ}{C{\scriptsize IV}}
+% \newcommand{\heii}{He{\scriptsize II}}
+\newcommand{\bco}{\mbox{CO(2-1)}\xspace}
+\newcommand{\cco}{\mbox{CO(3-2)}\xspace}
+\newcommand{\lohmax}{$L_{\rm OH}^{\rm max}$\xspace}
+\newcommand{\lohpred}{$L_{\rm OH}^{\rm pred}$\xspace}
+\newcommand{\lohlfir}{$L_{\rm OH}$-$L_{\rm FIR}$\xspace}
+
+% \newcommand{\Lp}[1][CO]{\mbox{$L^{\prime}_\textrm{\fontsize{8pt}{12pt}\selectfont{#1}}$}}
+% \newcommand{\LpU}{\mbox{K\,\,km\,\,s$^{-1}$\,\,pc$^2$}}
+\newcommand{\kms}{km\,s$^{-1}$\xspace}
+\newcommand{\pmOne}{\mbox{$^{-1}$}\xspace}
+\newcommand{\Fig}[1]{Fig.~\ref{fig:#1}}
+\newcommand{\Eq}[1]{Equation~\ref{eq:#1}}
+%
+\newcommand{\E}[1]{\mbox{$\times10^{#1}$}}
+\newcommand{\eq}{\,=\,}
+\newcommand{\ssim}{\,$\sim$\,}
+\newcommand{\pmm}{\,$\pm$\,}
+%
+\newcommand{\SF}{star formation\xspace}
+\newcommand{\highz}{high-$z$\space}
+\newcommand{\athighz}{at high redshifts\xspace}
+\newcommand{\atinterz}{at intermediate redshifts\xspace}
+\newcommand{\SB}{starburst\xspace}
+\newcommand{\bh}{black hole\xspace}
+\newcommand{\hr}{high resolution\xspace}
+\newcommand{\obs}{observations\xspace}
+\newcommand{\stu}{studies\xspace}
+\newcommand{\galpop}{galaxy populations\xspace}
+\newcommand{\qsohosts}{quasar host galaxies\xspace}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+% compact bib
+\citestyle{aa}
+\bibliographystyle{apj_w_etal_3auth}
+\usepackage{paralist}
+\renewenvironment{thebibliography}[1]{%
+%\section*{\refname}%
+%  {\normalsize {\textbf{References:}}}
+  \let\par\relax\let\newblock\relax%
+  \inparaitem[{[}1{]}]}{\endinparaitem}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%% Page dimensions %%%%%
+%%%%%  DO NOT CHANGE  %%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\setlength{\textwidth}{6.5in} \setlength{\textheight}{9in}
+\setlength{\topmargin}{-0.0625in} \setlength{\oddsidemargin}{0in}
+\setlength{\evensidemargin}{0in} \setlength{\headheight}{0in}
+\setlength{\headsep}{0in} \setlength{\hoffset}{0in}
+\setlength{\voffset}{0in}
+\setlength{\parskip}{0.5em}
+
+
+
+% added by D. Leung
+\setlength{\intextsep}{10pt plus 1.0pt minus 2.0pt}
+\setlength{\textfloatsep}{10pt plus 1.0pt minus2.0pt}
+\setlength{\floatsep}{10pt plus 1.0pt minus 2.0pt}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%% Section heading format %%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\makeatletter
+\renewcommand{\section}{\@startsection%
+{section}{1}{0mm}{-0.4\baselineskip}%
+{0.1\baselineskip}{\normalfont\fontsize{11}{11}\bfseries}}%
+\makeatother
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%% Start of document %%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\begin{document}
+\pagestyle{plain}
+\pagenumbering{arabic}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%% Title of proposal %%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\begin{center}
+{\large{\bf{Probing OH Megamaser in a Strongly-Lensed Gas-Rich Merger at $z$\ssim0.65}}}
+\end{center}
+\vspace{-.8em}
+\textbf{OH megamasers and the physical conditions of low- and high-$z$ \galpop}
+% Galaxy evolution and the history of galaxy mergers} 
+Studying the properties of high-redshift ($z$) galaxies is crucial to understand the formation and evolution of present-day galaxies.
+High-$z$ galaxies are IR-luminous due to their intense bursts 
+of obscured star formation and/or their central active galactic nuclei (AGNs),
+which are sustained by their massive molecular gas reservoirs ($M_{\rm gas}$$>$10$^{10}$\,\Msun; see \citet{CW13} for a review).
+The gas-rich and starbursting nature of high-$z$ galaxies may be a result of galaxy mergers
+\citep{Riechers11a, Hayward12a, Riechers13b}, 
+consistent with the notion that galaxies grow through hierarchical merging \citep{White91a}.
+%  merging in the hierarchical model of galaxy formation \citep{White91a}.
+The merger rate is thus expected to increase towards higher redshift \citep[e.g.,][]{LeFloch05a, Magnelli09a}, and constraining 
+its evolution allows us to track the origin and evolution of present-day populations. % emergence of current day populations.
+
+\noindent The steep dependence between OH and FIR luminosities ($L_{\rm OH}^2\propto L_{\rm FIR}^2$; \Fig{model}a) 
+found in local OH ``megamasers'' (OHMs;  see \citealt[]{Lo05a} for a review) and 
+the ubiquity of strong IR-emitting galaxies found at high $z$ suggest that
+the number density of OHM may improve current constraints on
+the cosmic merger history \citep[hereafter DG02]{Darling02b_LF}.
+Existing models predict that detections of  
+OHMs out to at least $z$\ssim3 are possible with current facilities (e.g. the GBT; \Fig{model}b).
+Yet, despite several attempts, 
+the most distant OHM known-to-date was discovered over two decades ago, at $z$\eq0.265 \citep{Baan92a}.
+The null detection in a $z$\ssim4 extremely IR-bright galaxy (\LIR$>10^{14}$\Lsun; \citealt{Ivison06a}) and 
+the remarkably low detection rate (7\%) from a sample of $>$120 IR-luminous galaxies 
+at $z$\,$\lesssim$\,1.5 ($L_{\rm IR}>10^{11}$\Lsun; \Fig{model}b; \citealt{Willett12a}) 
+suggest a potential redshift evolution in the \LOH-\LFIR relation.
+Detecting OHM beyond $z$\eq0.265 is therefore needed to enable a better understanding of the 
+OHM trigger mechanism, which may differ at earlier epochs due to different physical conditions of galaxies,
+and to improve existing predictions to plan for future OHM surveys with upcoming facilities 
+\citep[e.g., FAST, APERTIF/WSRT, ASKAP;][]{Zhang14b}.
+Here we propose to observe OH 1667 MHz line emission in the 
+gravitationally-lensed starbursting galaxy merger
+RXJ1131 at $z$\eq0.65 (\Fig{hst}) using the VLA's B-array configuration. 
+
+\noindent \textbf{An ideal target --- a lensed gas-rich, starbursting merger at $z$\,$>$\,0.6}\\
+\noindent High-resolution imaging and spectroscopy in optical wavelength show that RXJ1131 is 
+lensed by a foreground galaxy at $z$\ssim0.3 (\Fig{hst}; \citealt{Sluse03a}).
+By exploiting the effect of lensing magnification, 
+our proposed detection experiment requires {\bf an on-source time of  % sigma scales as 1/root(t) --> t scales as 1/sigma^2
+$\sim$30 times less} than otherwise needed to reach the same sensitivity. 
+The unique lensing configuration of RXJ1131 has led to extensive follow-up studies spanning X-ray to radio \citep[\Fig{hst}e; e.g.,][]{Claeskens06a, Sluse07a, Leung17a}, 
+making it one of the best-studied galaxies at $z$$>$0.5 and 
+the only source at 0.2$<$$z$$<$1 with spatially-resolved imaging of the molecular gas distribution \citep{Leung17a}. 
+% X-ray studies  a highly compact source of emission 
+% in the innermost region near the accretion disk down to pc-scale
+% \citep[$\sim$20\,AU][]{Dai10a}.
+Modeling of the X-ray spectrum reveals substantial amount of neutral gas with column density of
+ % The continuum is strongly absorbed at soft energies by a 
+$N_{\rm H}\sim$10$^{23}$ cm$^{-2}$ in the innermost region near % the accretion disk % w.in the X-ray emitting region
+% The spectrum at lower energies is heavily absorbed by neutral gas with a hydrogen column density $N_{\rm H}$.
+% Soft X-ray continuum suggest the presence of a substantial amount of gas.
+the $L_X$$\gtrsim$10$^{45}$\,\Lsun AGN \citep{Pooley07a, Reis14a}. 
+Our best-fit spectral energy distribution (SED) model indicates
+a strong apparent far-IR luminosity of \LFIR$\sim$5\E{12}\Lsun, which corresponds to
+an intense star formation rate of SFR\ssim120 \Msun yr\pmOne (lensing-corrected).
+The large column density together with the strong FIR radiation field % of $\sim$10$^{12}$\Lsun (lensing-corrected),
+% recent star formation (as traced by rest-frame UV emission), 
+% presence of a nearby companion, and % at $\sim$2.4\,kpc away, and 
+and the large molecular gas reservoir of $M_{\rm gas}$\,$\gtrsim$\,10$^{10}$\Msun (\Fig{hst}b, c) 
+are favourable for generating OH masers, making RXJ1131 an ideal candidate 
+to search for OHMs beyond the nearby universe. Assuming the Malmquist-bias corrected relation
+($L_{\rm OH}\propto L_{\rm FIR}^{1.2}$; DG02), we expect an apparent OH luminosity of \LOH= 3.3\E{3}\,\Lsun (orange marker in \Fig{model}b).
+
+\noindent In addition, the redshift of RXJ1131 has been spectroscopically confirmed with CO lines down to a precision of 
+$\Delta z$\eq0.0002, indicating that the proposed OH line is redshifted to a fortuitous region 
+free of RFI at the low-end of the L-band. 
+Together with the high fringe rate of the B-array configuration, the proposed \obs will
+reach a sensitivity deeper than previous high-$z$ OHM searches beyond $z$$>$0.4, which were carried out 
+with single-dish telescopes \citep[\Fig{model}b; e.g.][]{Darling02a, Willett12a}.
+
+\noindent \textbf{Science goals}
+\vspace{.2em}\\
+\indent {\bf Testing OHM as a tracer of merger}
+The proposed \obs will establish the first OHM measurement in a {\it bona-fide} high-$z$ merger, thereby
+demonstrating the feasibility of using it as a tracer of distant mergers and 
+testing the long-envisaged hypothesis of using its number density to constrain 
+the redshift evolution of merger rate. 
+Such a detection will also allow us to better constrain the
+\LOH-\LFIR relation out to higher $z$, % which may provide a handle on the pumping efficiency (\LOH/\LFIR) 
+% that may be closer to other high-$z$ galaxies if their physical conditions are more similar than compared to low-z (\LOH/\LFIR)
+and thus improve predictions on the required sensitivity needed for future searches of high-$z$ OHMs.
+Since our target is a merger, 
+a null detection would also indicate that the notion of 
+using the OHM number density to constrain the merger history requires revision before designing future OHM surveys.
+
+%
+% OHM help us understand the physical conditions of high-z galaxies: different circumnuclear environment, optical depth? - likely already know about the cirucmnuclear env part from X-ray, but then could be use for other high-z sources w/o detailed characterization?
+{\bf Physical conditions and OH pumping mechanisms in low- and high-$z$ galaxies}
+% Classical model: foreground amplification of background radio continuum, expect quadratic relationship, if the population inversion is pumped by the FIR radiation field and the radio continuum (which itself is proportional to the FIR luminosity) is being amplified by an unsaturated maser cloud.
+Null detections in previous high-$z$ OHM searches suggest a shallower \LOH-\LFIR dependence, which may be
+reflecting the different physical conditions of the inner few hundred pc (where OHMs are generated) 
+between low- and high-$z$ IR-luminous galaxies.
+The lower \LOH/\LFIR indicate that the OH amplification is less efficient at the same FIR luminosity 
+and that collisional pumping (e.g. due to the strong AGN, and high gas mass and density; \citealt{Field94a}) % volume density 
+% while locally, not all OHM are AGN hosts, suggesting the FIR radiation from the SB is the dominant pumping source, but the non-detection based on local extrapolation and such maser model may suggest a different energy source/powering mechanism at higher-z, where quasars are more active, and may indicate that something about AGN/radio pumping
+%
+% Since a purely radiative pumping mechanism is possible 
+% only at relatively low densities ($n_{\rm OH}$\ssim10$^{-4}$\,cm$^{-3}$), and collisional processes can theoretically predominate at high OH densities, and saturated amplification can become important \citep{Field94a}.
+may play a dominant role in these gas-rich \highz systems.
+Obtaining a definitive OHM measurement in RXJ1131 will provide a handle on the OH pumping efficiency (\LOH/\LFIR) out to higher $z$.
+This together with the detailed properties derived for our target (e.g., \LFIR, \LIR, SFR, $L_{\rm radio}$, molecular and dust content)
+will elucidate the role of collisional over radiative pumping
+that may be prevalent in \highz galaxies given their physical properties, which are more similar to RXJ1131 than 
+local starbursts. % more violent star formation in a more gas-rich turbulent ISM.
+	% [NOT applicable] Since the optical depth increases with FIR radiation field, the simple picture of low-gain amplification
+	% (i.e., unsaturated masing) found to be consistent with local OHMs...
+	%
+% % implying the simple picture of low-gain amplification (i.e., unsaturated masing, quadrature, low density)  \citep{Henkel90a,Randell95a} found to be consistent with local OHMs will likely break down; (i.e., not all OHMs are unsaturated). 
+% While in the nearby universe (z\ssim0), OHMs appear to be unsaturated. 
+
+{\bf OHM as a tracer of the kinematics in the innermost region of distant galaxies}
+The much broader linewidths found in $z$$>$0.2 OHMs compared to those at $z$\eq0 already indicate 
+different dynamical properties in the innermost regions of their hosts \citep{Baan92a,Darling02a}.
+Detecting the OHM in RXJ1131 will therefore demonstrate the feasibility of 
+using it as a trace of the kinematics in the circumnuclear regions of \highz galaxies, which will improve 
+our understanding of the internal dynamics of IR-luminous, starbursting galaxies at high $z$.
+
+{\bf Radio continuum}
+In addition, the proposed \obs will provide an additional constraint on the radio continuum emission at 1\,GHz 
+towards RXJ1131 (\Fig{hst}e).
+
+% --- finally ----
+\noindent 
+With the aid of lensing and the rich multi-wavelength data available for this potential OHM host, RXJ1131 is an exceptional target
+for high-$z$ OHM search. 
+Detecting the OHM will provide a handle on the pumping efficiency (\LOH/\LFIR)
+and enable a better understanding of the OHM triggering mechanism at $z$\ssim0.65, which 
+would reflect the different physical conditions between low- and high-$z$ IR-luminous galaxies.
+The detection will also demonstrate the utility of OHMs as tracers of distant mergers, and
+of the kinematics in the inner few hundred pc 
+of starburst galaxies beyond the nearby universe. %, out to a lookback time of $\sim$6 Gyr.
+The proposed investigation will therefore serve as an
+important benchmark for future studies of high-$z$ OHMs out to earlier epochs,
+when extremely IR-luminous sources are much more common. 
+
+
+
+%% ------------------------------------------------------------
+%% REFERENCES
+%% ------------------------------------------------------------
+\noindent \textbf{References}
+{\fontsize{10pt}{12pt}\selectfont
+    \bibliography{master_cleanup}
+}
+% \vspace{-1.25em}
+
+
+\begin{figure}[ptbh]
+\includegraphics[trim=10 305 270 0, clip, scale=0.825]{Fig/OHFIR} \hspace{-1.25em}
+% \includegraphics[trim=0 400 200 0, clip, scale=0.85]{Fig/Darling02b_distribution}
+%  \includegraphics[trim=0 0 0 0, clip, scale=0.625]{Fig/Willett11_distribution}\\ \vspace{1.5em}
+% \includegraphics[trim=0 0 0 0, clip, scale=0.42]{Fig/Darling02_predictionf4}
+\includegraphics[trim=0 -20 155 0, clip, scale=0.41]{Fig/willett12_fig1_mod.pdf}
+\caption{{\bf \LOH-\LFIR correlation and existing OHMs measurements}
+{\it (a):} Since the OH line strength increases with \LFIR,
+the ubiquity of IR-luminous galaxies at high $z$ suggest that OHM can be used to trace distant mergers 
+($L_{\rm IR}$$\gtrsim$10$^{12}$\Lsun; DG02).
+{\it (b):} The highest-$z$ OHM known ($z$\eq0.265) was discovered over two decades ago. 
+A remarkably low detection rate of $\sim$7\% was reported in subsequent surveys (black and green symbols), 
+suggesting a potential redshift evolution in the \LOH/\LFIR relation
+due to the different physical properties between low- and high-$z$ IR-luminous galaxies.
+Assuming $L_{\rm OH}\propto L_{\rm FIR}^{1.2}$ (Malmquist-bias corrected; DG02), 
+we expect an apparent OH luminosity of \LOH= 3.3\E{3}\,\Lsun in our target (orange marker). (Figure adopted from 
+\citealt{Willett12a})
+Here we propose to observe OH 1667 MHz line emission in the gravitationally-lensed starbursting 
+galaxy merger RXJ1131 at $z$\eq0.65.
+The proposed sensitivity will
+probe deeper than existing OHM surveys, and to fainter intrinsic (i.e., lensing-corrected) \LOH beyond $z$$\gtrsim$0.2.
+The proposed \obs will measure the \LOH/\LFIR 
+and its redshift evolution, and thus improve model predictions for designing 
+future surveys to search for high-$z$ OHMs with upcoming facilities. 
+\label{fig:model}}
+\end{figure}
+
+
+\begin{figure}[ptbh]
+% \hspace{-1.6em}
+\centering
+\includegraphics[trim=0 0 300 0, clip, scale=.75]{Fig/Fig2} 
+\vspace{-0.25em}
+\caption{
+{\bf Our target RXJ1131, a gas-rich, starbursting merger at $z$\,$>$\,0.6 with a well-sampled spectral energy distribution (SED) spanning rest-frame UV to radio.} 
+{\em (a):} Source-plane reconstruction of {\it HST} images shows recent star formation in our target and
+the presence of a nearby companion (\citealt{Claeskens06a}).
+{\em (b):} 
+CO line emission overlaid on an {\it HST} image, which shows BLAH BLAH
+that RXJ1131 is lensed into an Einstein ring of diameter $\sim$3.6".
+{\em (c):}
+Our CO \obs reveal large molecular gas reservoir of $M_{\rm gas}$\,$\gtrsim$\,10$^{10}$\Msun in RXJ1131 and 
+confirmed the presence of the nearby companion, with a gas mass ratio of 7:1 \citep{Leung17a}. 
+{\em (d):}
+Our VLA radio continuum image at 5\,GHz in this target. 
+The proposed \obs will provide an additional constraint on the radio continuum at 1\,GHz.
+{\em (e):} Our best-fit model to the well-sampled SED 
+indicates a strong apparent far-IR radiation of \LFIR$>$4\E{12}\,\Lsun, corresponding to
+an intense star formation rate of SFR\ssim120 \Msun yr\pmOne (lensing-corrected).
+The large molecular gas reservoir, on-going star formation, and the high \LFIR together
+are favourable for generating OHM, and thus RXJ1131 is an
+ideal candidate for high-$z$ OHM search.
+The proposed \obs together with our existing data acquired for this target will allow us to 
+compare its (host) properties against those of local OHM hosts to better understand 
+the physical environment that triggers OHM out to a look-back time of 6 Gyr.
+\label{fig:hst}}
+\end{figure}
+
+
+\end{document}
